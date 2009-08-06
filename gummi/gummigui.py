@@ -126,7 +126,7 @@ class gummigui:
 
 	def on_menu_quit_activate(self, menuitem, data=None):
 		if self.check_for_save(): self.on_menu_save_activate(None, None)
-		print "Thanks for using Gummi! I welcome your feedback at \nhttp://code.google.com/p/gummi-latex-editor"
+		print "Thanks for using Gummi! I welcome your feedback at \nhttp://code.google.com/p/gummi/"
 		quit()
 
 	def on_menu_undo_activate(self, menuitem, data=None):
@@ -167,9 +167,9 @@ class gummigui:
 		about_dialog.set_destroy_with_parent(True)
 		about_dialog.set_name("Gummi")
 		about_dialog.set_version("0.1-test")
-		about_dialog.set_copyright("")
-		about_dialog.set_website("http://code.google.com/p/gummi-latex-editor")
-		about_dialog.set_comments("Simple GTK LaTex Editor")
+		about_dialog.set_copyright("Copyright \xc2\xa9 2009 Alexander van der Mey")
+		about_dialog.set_website("http://code.google.com/p/gummi/")
+		about_dialog.set_comments("Simple LaTex Editor for GTK users")
 		about_dialog.set_authors            (authors)
 		about_dialog.set_logo_icon_name     (gtk.STOCK_EDIT)
 
@@ -190,7 +190,7 @@ class gummigui:
 	
 	def gtk_main_quit(self, menuitem, data=None):
 		#if self.check_for_save(): self.on_menu_save_activate(None, None)
-		print "Thanks for using Gummi! I welcome your feedback at \nhttp://code.google.com/p/gummi-latex-editor"
+		print "Thanks for using Gummi! I welcome your feedback at \nhttp://code.google.com/p/gummi/"
 		quit()
 
 
