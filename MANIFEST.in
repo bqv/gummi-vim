@@ -1,0 +1,12 @@
+include gummi
+include gummi/gui/gummi.xml
+include gummi/gui/prefs.xml
+include gummi/gui/icon.png
+include gummi/docs/LICENSE
+include gummi/docs/CHANGES
+include gummi/misc/gummi
+include gummi/misc/gummi.desktop
+include gummi/misc/gummi.png
+
+
+
