@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=0.1a
+Name=Gummi
+GenericName=LaTex editor
+Comment=Simple LaTex editor
+Exec=gummi
+Icon=gummi
+Terminal=false
+Type=Application
+Categories=Office;
+StartupNotify=true
