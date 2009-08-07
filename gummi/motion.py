@@ -7,11 +7,10 @@
 # --------------------------------------------------------------------------------
 
 import os
-import sys
 import gtk
 import gobject
 import time
-import thread, threading
+import thread
 import tempfile 
 import subprocess
 import traceback
@@ -27,6 +26,7 @@ class motion:
 		self.status = 1
 		self.workfile = None
 		self.pdffile = None
+		self.texfile = None
 
 		gobject.threads_init()
 		gtk.gdk.threads_init()
@@ -82,7 +82,9 @@ class motion:
 					self.previewpane.refresh_previewpane()			
 					gtk.gdk.threads_leave
 			except:
-				traceback.print_exc()		
+				print "something is wrong with the refresh thread"
+				print traceback.print_exc()
+	
 			time.sleep(1.0)
 		
 
