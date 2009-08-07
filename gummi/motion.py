@@ -63,9 +63,10 @@ class motion:
 		
 	def update_workfile(self):
 		buff = self.editorpane.editorview.get_buffer()	
-		self.editorpane.editorview.set_sensitive(False)
+		# these two lines make the program hang in certain situations, look into it later. 		
+		#self.editorpane.editorview.set_sensitive(False)
 		text = buff.get_text(buff.get_start_iter(), buff.get_end_iter())
-		self.editorpane.editorview.set_sensitive(True)
+		#self.editorpane.editorview.set_sensitive(True)
 		tmpmake = open(self.workfile, "w")
 		tmpmake.write(text)
 		tmpmake.close()
