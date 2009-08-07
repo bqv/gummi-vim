@@ -24,7 +24,7 @@ setup(
 	author = 'Alexander van der Mey',
 	author_email = 'alexvandermey@gmail.com',
 	url = 'http://code.google.com/p/gummi/',
-	license = 'GPLv2',
+	license = 'MIT/Beerware',
     	packages = ['gummi'],
 	package_data = {'gummi' : files },
 	scripts = ['gummi/misc/gummi'],
