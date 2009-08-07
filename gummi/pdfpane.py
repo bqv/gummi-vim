@@ -6,8 +6,6 @@
 # this stuff is worth it, you can buy me a beer in return -Alexander van der Mey
 # --------------------------------------------------------------------------------
 
-import os
-import sys
 import gtk
 import poppler
 

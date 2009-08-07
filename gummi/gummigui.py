@@ -10,8 +10,8 @@ import os
 import sys
 import gtk
 import gobject
-import gtkunixprint
-import gconf
+#import gtkunixprint
+#import gconf
 
 import texpane
 import pdfpane
@@ -101,6 +101,9 @@ class gummigui:
 		self.motion.initial_preview()
 		
 	def on_menu_open_activate(self, menuitem, data=None):
+		if os.getcwd() == '/tmp':
+			activeusr = os.getenv('USERNAME')
+			os.chdir('/home/' + activeusr)	
 		if self.check_for_save(): self.on_menu_save_activate(None, None)        
 		filename = self.get_open_filename()
 		if filename: self.load_file(filename)
@@ -109,7 +112,7 @@ class gummigui:
 		if os.getcwd() == '/tmp':
 			activeusr = os.getenv('USERNAME')
 			os.chdir('/home/' + activeusr)		
-		if self.filename == None: 
+		if self.filename is None: 
 			filename = self.get_save_filename()
 			if filename: self.write_file(filename)
 		if os.path.dirname(self.filename) == "/tmp":
@@ -166,7 +169,7 @@ class gummigui:
 		about_dialog.set_transient_for(self.mainwindow)
 		about_dialog.set_destroy_with_parent(True)
 		about_dialog.set_name("Gummi")
-		about_dialog.set_version("0.1-test")
+		about_dialog.set_version("0.1b")
 		about_dialog.set_copyright("Copyright \xc2\xa9 2009 Alexander van der Mey")
 		about_dialog.set_website("http://code.google.com/p/gummi/")
 		about_dialog.set_comments("Simple LaTex Editor for GTK users")
@@ -251,7 +254,7 @@ class gummigui:
 			self.motion.create_environment(self.filename)
 			self.motion.initial_preview()
 			self.update_statusbar("File: " + self.motion.texfile)
-			self.add_to_recentfiles(filename)
+			#self.add_to_recentfiles(filename)
 		except:
 			self.error_message ("Could not open file: %s" % filename)
 

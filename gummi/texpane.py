@@ -6,13 +6,11 @@
 # this stuff is worth it, you can buy me a beer in return -Alexander van der Mey
 # --------------------------------------------------------------------------------
 
-import os
-import sys
 import gtk
 import gtksourceview2
 import pango
 import gobject
-from datetime import date, datetime
+from datetime import datetime
 
 
 class texpane:

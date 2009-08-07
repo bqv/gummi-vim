@@ -118,15 +118,15 @@ class prefs:
 
 	def check_for_defaults(self):
 		textwrapping = self.gconf_client.get_string("/apps/gummi/text_wrapping")
-		if textwrapping == None:
+		if textwrapping is None:
 			self.gconf_client.set_string("/apps/gummi/text_wrapping", "word")
 		textlines = self.gconf_client.get_string("/apps/gummi/text_lines")
-		if textlines == None:
+		if textlines is None:
 			self.gconf_client.set_string("/apps/gummi/text_lines", "True")
 		texthighlight = self.gconf_client.get_string("/apps/gummi/text_highlight")
-		if texthighlight == None:
+		if texthighlight is None:
 			self.gconf_client.set_string("/apps/gummi/text_highlight", "True")
 		default = self.gconf_client.get_string("/apps/gummi/default-text")		
-		if default == None:
+		if default is None:
 			self.gconf_client.set_string("/apps/gummi/default-text", WELCOME)
 
