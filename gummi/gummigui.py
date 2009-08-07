@@ -141,8 +141,8 @@ class gummigui:
 			self.editorpane.editorview.get_buffer().redo()
 
 	def on_menu_cut_activate(self, menuitem, data=None):
-        	buff = self.editorpane.editorview.get_buffer();
-        	buff.cut_clipboard (gtk.clipboard_get(), True);
+		buff = self.editorpane.editorview.get_buffer();
+		buff.cut_clipboard (gtk.clipboard_get(), True);
 
 	def on_menu_copy_activate(self, menuitem, data=None):
 		buff = self.editorpane.editorview.get_buffer();
