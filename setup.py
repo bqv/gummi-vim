@@ -18,7 +18,7 @@ files = ["gummi.xml",
 
 setup(
 	name = 'gummi',
-	version = '0.1beta',
+	version = '0.1b',
 	summary = 'Simple LaTeX editor',
 	description = 'Simple LaTex editor for GTK users',
 	author = 'Alexander van der Mey',
