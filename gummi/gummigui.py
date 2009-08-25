@@ -42,19 +42,25 @@ class gummigui:
 
 		self.mainwindow = builder.get_object("mainwindow")
 		self.pdfdrawarea = builder.get_object("pdf_drawarea")
-		self.editorport = builder.get_object("editor_viewport")
 		self.menu1 = builder.get_object("menu1")
 		self.statusbar = builder.get_object("statusbar")
+		self.searchwindow = builder.get_object("searchwindow")
+		self.searchentry = builder.get_object("searchentry")
 		self.statusbar_cid = self.statusbar.get_context_id("Gummi")
+		self.editorscroll = builder.get_object("editor_scroller")		
 
 		self.editorpane = texpane.texpane()
-		self.editorport.add(self.editorpane.editorview)
+		self.editorscroll.add(self.editorpane.editorview)
 		self.previewpane = pdfpane.pdfpane()
 		self.motion = motion.motion(self)
 		self.prefs = prefs.prefs(self)
 
 		self.initial_document()	
 		self.mainwindow.show_all()
+
+		#self.bufferS = self.editorpane.editorview.get_buffer()		
+		#start = self.bufferS.get_iter_at_line(0)
+		#self.editorpane.editorview.scroll_to_iter(start, 0)
 
 
 	def initial_document(self):
@@ -90,6 +96,25 @@ class gummigui:
 	
 	def on_button_zoomnormal_clicked(self, button, data=None):
 		self.previewpane.zoom_normal_pane()
+
+	def on_button_searchwindow_close_clicked(self, button, data=None):
+		self.searchwindow.hide()
+		return True
+
+	def on_button_searchwindow_find_clicked(self, button, data=None):
+		buff = self.editorpane.editorview.get_buffer()
+		term = self.searchentry.get_text()
+		try:
+			find_iter = buff.get_iter_at_mark(buff.get_selection_bound())
+			ins, bound = find_iter.forward_search(term, flags=0, limit=None)
+		except:
+			find_iter = buff.get_start_iter()
+			ins, bound = find_iter.forward_search(term, flags=0, limit=None)
+
+		buff.place_cursor(ins)
+		buff.select_range(ins, bound)
+		self.editorpane.editorview.scroll_to_iter(ins, 0)
+
 
 	def on_menu_new_activate(self, menuitem, data=None):
 		if self.check_for_save(): self.on_menu_save_activate(None, None)
@@ -156,6 +181,15 @@ class gummigui:
 	def on_menu_selectall_activate(self, menuitem, data=None):
 		buff = self.editorpane.editorview.get_buffer();
 		buff.select_range(buff.get_start_iter(),buff.get_end_iter())
+
+	def on_menu_find_activate(self, menuitem, data=None):
+		self.searchentry.set_text("")
+		self.searchwindow.show()
+		
+
+	def on_searchwindow_delete_event(self, widget, data=None):
+		self.searchwindow.hide()
+		return True
 
 	def on_menu_preferences_activate(self, menuitem, data=None):
 		self.prefs.create_gui()

@@ -19,9 +19,9 @@ WELCOME = """\\documentclass{article}
 \\large	{You are using the svn version.\\\\
 	I welcome your suggestions at:\\\\
 	http://code.google.com/p/gummi\\\\
-
+\\\\
 \\end{document}"""
-	
+
 
 class prefs:
 	
