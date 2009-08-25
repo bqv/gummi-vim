@@ -120,8 +120,7 @@ class gummigui:
 
 	def on_menu_saveas_activate(self, menuitem, data=None):	
 		if os.getcwd() == '/tmp':
-			activeusr = os.getenv('USERNAME')
-			os.chdir('/home/' + activeusr)
+			os.chdir(os.environ['HOME'])
 		filename = self.get_save_filename()
 		if filename: self.write_file(filename)
 
