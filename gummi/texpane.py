@@ -55,7 +55,7 @@ class texpane:
 
 
 	def set_text_change(self, widget, event):
-		self.bufferS.set_modified(True)
+		#self.bufferS.set_modified(True)
 		self.textchange = datetime.now()
 
 

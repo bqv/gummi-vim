@@ -58,13 +58,10 @@ class gummigui:
 		self.initial_document()	
 		self.mainwindow.show_all()
 
-		#self.bufferS = self.editorpane.editorview.get_buffer()		
-		#start = self.bufferS.get_iter_at_line(0)
-		#self.editorpane.editorview.scroll_to_iter(start, 0)
-
 
 	def initial_document(self):
 		self.editorpane.bufferS.set_text(self.prefs.get_config_value("string", "default-text"))
+		self.editorpane.bufferS.set_modified(False)
 		self.filename = '/tmp/gummi-default'	
 		self.motion.create_environment(self.filename)
 		self.motion.initial_preview()
