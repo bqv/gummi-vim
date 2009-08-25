@@ -430,13 +430,13 @@
       </object>
     </child>
   </object>
-  <object class="GtkAction" id="action1"/>
   <object class="GtkWindow" id="searchwindow">
     <property name="title" translatable="yes">Find</property>
     <property name="window_position">center</property>
     <property name="default_width">360</property>
     <property name="default_height">140</property>
     <property name="destroy_with_parent">True</property>
+    <property name="icon">icon.png</property>
     <signal name="destroy_event" handler="on_searchwindow_delete_event"/>
     <signal name="delete_event" handler="on_searchwindow_delete_event"/>
     <child>
@@ -464,6 +464,8 @@
                 <property name="has_focus">True</property>
                 <property name="invisible_char">&#x2022;</property>
                 <property name="primary_icon_stock">gtk-find</property>
+                <accelerator key="Return" signal="activate"/>
+                <signal name="activate" handler="on_button_searchwindow_find_clicked"/>
               </object>
               <packing>
                 <property name="position">1</property>

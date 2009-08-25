@@ -183,6 +183,7 @@ class gummigui:
 		buff.select_range(buff.get_start_iter(),buff.get_end_iter())
 
 	def on_menu_find_activate(self, menuitem, data=None):
+		self.searchentry.grab_focus()
 		self.searchentry.set_text("")
 		self.searchwindow.show()
 		
