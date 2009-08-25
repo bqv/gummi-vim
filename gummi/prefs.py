@@ -56,14 +56,14 @@ class prefs:
 
 	def get_current_status(self):
 		self.textwrap_char.set_active(1)
-		if self.get_config_value("text_wrapping") == "char":
+		if self.get_config_value("string", "text_wrapping") == "char":
 			self.textwrap_char.set_active(1)
-		if self.get_config_value("text_wrapping") == "word":
+		if self.get_config_value("string", "text_wrapping") == "word":
 			self.textwrap_char.set_active(1)
 			self.textwrap_word.set_active(1)
-		if self.get_config_value("text_lines") == "True":
+		if self.get_config_value("string", "text_lines") == "True":
 			self.textlines_display.set_active(1)
-		if self.get_config_value("text_highlight") == "True":
+		if self.get_config_value("string", "text_highlight") == "True":
 			self.textlines_highlight.set_active(1)
 
 
