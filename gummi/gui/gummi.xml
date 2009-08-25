@@ -437,7 +437,9 @@
     <property name="default_height">140</property>
     <property name="destroy_with_parent">True</property>
     <property name="icon">icon.png</property>
+    <accelerator key="Escape" signal="activate-default"/>
     <signal name="destroy_event" handler="on_searchwindow_delete_event"/>
+    <signal name="activate_default" handler="on_searchwindow_delete_event"/>
     <signal name="delete_event" handler="on_searchwindow_delete_event"/>
     <child>
       <object class="GtkVBox" id="vbox3">
@@ -465,6 +467,7 @@
                 <property name="invisible_char">&#x2022;</property>
                 <property name="primary_icon_stock">gtk-find</property>
                 <accelerator key="Return" signal="activate"/>
+                <accelerator key="Escape" signal="activate" modifiers="GDK_SHIFT_MASK"/>
                 <signal name="activate" handler="on_button_searchwindow_find_clicked"/>
               </object>
               <packing>
