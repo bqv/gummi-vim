@@ -221,7 +221,7 @@ class gummigui:
 		about_dialog.show()
 	
 	def gtk_main_quit(self, menuitem, data=None):
-		#if self.check_for_save(): self.on_menu_save_activate(None, None)
+		if self.check_for_save(): self.on_menu_save_activate(None, None)
 		print "Thanks for using Gummi! I welcome your feedback at \nhttp://code.google.com/p/gummi/"
 		quit()
 
