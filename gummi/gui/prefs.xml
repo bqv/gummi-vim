@@ -7,7 +7,7 @@
     <property name="title" translatable="yes">Gummi Preferences</property>
     <property name="resizable">False</property>
     <property name="modal">True</property>
-    <property name="window_position">center</property>
+    <property name="window_position">center-on-parent</property>
     <property name="icon">icon.png</property>
     <child>
       <object class="GtkHBox" id="hbox1">

@@ -35,6 +35,8 @@ class prefs:
 		builder.add_from_file(self.parent.installdir + "/gui/prefs.xml")
 
 		self.prefwindow = builder.get_object("prefwindow")
+		self.prefwindow.set_transient_for(self.parent.mainwindow)
+
 		self.box = builder.get_object("hbox1")
 		self.notebook = builder.get_object("notebook1")
 		self.textwrap_char = builder.get_object("textwrap_char")
