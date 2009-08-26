@@ -70,6 +70,16 @@
                       </object>
                     </child>
                     <child>
+                      <object class="GtkImageMenuItem" id="gtk-print">
+                        <property name="label">gtk-print</property>
+                        <property name="visible">True</property>
+                        <property name="use_underline">True</property>
+                        <property name="use_stock">True</property>
+                        <accelerator key="p" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                        <signal name="activate" handler="on_button_print_clicked"/>
+                      </object>
+                    </child>
+                    <child>
                       <object class="GtkMenuItem" id="menu_recent1">
                         <property name="no_show_all">True</property>
                         <property name="label" translatable="yes">_1. </property>
@@ -101,6 +111,7 @@
                         <property name="visible">True</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
+                        <accelerator key="q" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                         <signal name="activate" handler="on_menu_quit_activate"/>
                       </object>
                     </child>
