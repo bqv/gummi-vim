@@ -49,8 +49,6 @@ class texpane:
 	def grab_wrapmode(self):
 		textwrap = self.gconf_client.get_bool("/apps/gummi/tex_textwrapping")
 		wordwrap = self.gconf_client.get_bool("/apps/gummi/tex_wordwrapping")
-		print textwrap
-		print wordwrap
 		if textwrap is False:
 			return gtk.WRAP_NONE
 		if wordwrap is True:
