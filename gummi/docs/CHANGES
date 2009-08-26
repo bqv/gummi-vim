@@ -1,7 +1,24 @@
 -------------------------------------------------------------------
-Gummi Latex Editor
+Gummi CHANGELOG
 -------------------------------------------------------------------
 
-0.1:
-	* initial document
+Gummi 0.1f (August 26th, 2009):
+
+	Bugs fixed:
+	* Problems with opening and saving for non-gnome users fixed. 
+	* Fixed problem that prevented preferences window from opening.
+	* Fixed several problems with the check_for_save routine.
+	* Mainwindow no longer hides when check_for_save prompts user on quit.
+	* Preferences window is now correctly centered on parent window
+	* Tex editor settings now correctly active on program init
+	
+	Features:
+	* Added primitive search function (will extend it later)
+	* Added hotkeys and keyboard shortcuts to menu items
+	* Added toolbar to the main window for easy menuitems access
+
+Gummi 0.1b (August 7th, 2009):
+
+	* initial version
  
+

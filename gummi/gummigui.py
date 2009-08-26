@@ -198,7 +198,7 @@ class gummigui:
 		about_dialog.set_transient_for(self.mainwindow)
 		about_dialog.set_destroy_with_parent(True)
 		about_dialog.set_name("Gummi")
-		about_dialog.set_version("0.1b")
+		about_dialog.set_version("0.1f")
 		about_dialog.set_copyright("Copyright \xc2\xa9 2009 Alexander van der Mey")
 		about_dialog.set_website("http://code.google.com/p/gummi/")
 		about_dialog.set_comments("Simple LaTex Editor for GTK users")
