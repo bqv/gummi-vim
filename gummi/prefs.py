@@ -11,7 +11,7 @@ import sys
 import gtk
 import gconf
 
-WELCOME = """\\documentclass{article}
+DEFAULT = """\\documentclass{article}
 \\begin{document}
 
 \\noindent\huge{Welcome to Gummi} \\\\
@@ -22,13 +22,41 @@ WELCOME = """\\documentclass{article}
 \\\\
 \\end{document}"""
 
+GCONFPATH = "/apps/gummi/"
 
 class prefs:
 	
 	def __init__(self, parent):
 		self.parent = parent
-		self.gconf_client = gconf.client_get_default()
-		self.check_for_defaults()
+		self.gconf_client = gconf.client_get_default()		
+		
+		firstrun = self.gconf_client.get_string(GCONFPATH + "set_defaults")
+		if firstrun is None:
+			self.set_defaults()
+
+
+	
+	def get_config_value(self, type, item):
+		if type == "string":
+			configitem = self.gconf_client.get_string(GCONFPATH + item)
+			return configitem
+		if type == "list":
+			configitem = self.gconf_client.get_list(GCONFPATH + item)
+			return configitem
+		if type == "bool":		
+			configitem = self.gconf_client.get_bool(GCONFPATH + item)		
+			return configitem
+
+
+	def set_config_bool(self, item, value):
+		self.gconf_client.set_bool(GCONFPATH + item, value)
+
+	def set_config_string(self, item, value):
+		self.gconf_client.set_string(GCONFPATH + item, value)
+
+	def set_config_list(self, item, value):
+		self.gconf_client.set_list(GCONFPATH + item, value)
+
 
 	def create_gui(self):
 		builder = gtk.Builder()	
@@ -39,96 +67,86 @@ class prefs:
 
 		self.box = builder.get_object("hbox1")
 		self.notebook = builder.get_object("notebook1")
-		self.textwrap_char = builder.get_object("textwrap_char")
-		self.textwrap_word = builder.get_object("textwrap_word")
-		self.textlines_display = builder.get_object("textlines_display")
-		self.textlines_highlight = builder.get_object("textlines_highlight")
 		self.box.pack_start(self.notebook, expand=False)
+
+		self.button_textwrap = builder.get_object("button_textwrap")
+		self.button_wordwrap = builder.get_object("button_wordwrap")
+		self.button_linenumbers = builder.get_object("button_linenumbers")
+		self.button_highlighting = builder.get_object("button_highlighting")
+
+		self.check_current_setting(self.button_textwrap, "tex_textwrapping")
+		self.check_current_setting(self.button_wordwrap, "tex_wordwrapping")
+		self.check_current_setting(self.button_linenumbers, "tex_linenumbers")
+		self.check_current_setting(self.button_highlighting, "tex_highlighting")
+
+		self.button_textwrap.connect("toggled", self.toggle_button, "tex_textwrapping")
+		self.button_wordwrap.connect("toggled", self.toggle_button, "tex_wordwrapping")
+		self.button_linenumbers.connect("toggled", self.toggle_button, "tex_linenumbers")
+		self.button_highlighting.connect("toggled", self.toggle_button, "tex_highlighting")
 		
-		self.textwrap_char.connect("toggled", self.run_wrapping_char, "textwrap char")
-		self.textwrap_word.connect("toggled", self.run_wrapping_word, "textwrap word")
-		self.textlines_display.connect("toggled", self.run_lines, "textlines display")
-		self.textlines_highlight.connect("toggled", self.run_highlight, "textlines highlight")
-
-		self.get_current_status()
-
 		builder.connect_signals(self)
 		self.prefwindow.show_all()
 
-
-	def get_current_status(self):
-		self.textwrap_char.set_active(1)
-		if self.get_config_value("string", "text_wrapping") == "char":
-			self.textwrap_char.set_active(1)
-		if self.get_config_value("string", "text_wrapping") == "word":
-			self.textwrap_char.set_active(1)
-			self.textwrap_word.set_active(1)
-		if self.get_config_value("string", "text_lines") == "True":
-			self.textlines_display.set_active(1)
-		if self.get_config_value("string", "text_highlight") == "True":
-			self.textlines_highlight.set_active(1)
+	def check_current_setting(self, button, item):
+		check = self.get_config_value("bool", item)
+		if check is True:
+			button.set_active(True)
+		if check is False:
+			button.set_active(False)
 
 
-	def run_wrapping_char(self, widget, data=None):
+	def toggle_button(self, widget, data=None):
 		if widget.get_active() == False:
-			self.textwrap_word.set_active(0)
-			self.parent.editorpane.set_wrapping("None")
+			self.set_config_bool(data, False)
 		else:
-			self.parent.editorpane.set_wrapping("char")
+			self.set_config_bool(data, True)
+		if self.button_textwrap.get_active() is False:
+			self.button_wordwrap.set_active(False)
+			self.button_wordwrap.set_sensitive(False)
+		if self.button_textwrap.get_active() is True:
+			self.button_wordwrap.set_sensitive(True)
+		self.engage(widget, data)
+
+	def engage(self, widget, data):
+		if data is "tex_textwrapping":
+			if widget.get_active() == False:
+				self.parent.editorpane.set_wrapping("none")
+			else:
+				self.parent.editorpane.set_wrapping("char")
+		if data is "tex_wordwrapping":
+			if widget.get_active() == False:
+				self.parent.editorpane.set_wrapping("char")
+			else:
+				self.parent.editorpane.set_wrapping("word")
+		if data is "tex_linenumbers":
+			if widget.get_active() == False:
+				self.parent.editorpane.editorview.set_show_line_numbers(False)
+			else:
+				self.parent.editorpane.editorview.set_show_line_numbers(True)
+		if data is "tex_highlighting":
+			if widget.get_active() == False:
+				self.parent.editorpane.editorview.set_highlight_current_line(False)
+			else:
+				self.parent.editorpane.editorview.set_highlight_current_line(True)
 
 
-	def run_wrapping_word(self, widget, data=None):
-		if widget.get_active() == False:
-			self.parent.editorpane.set_wrapping("char")
-		if widget.get_active() == True:
-			self.parent.editorpane.set_wrapping("word")
+	def set_defaults(self):
 
+		tex_linenumbers = self.gconf_client.get_bool(GCONFPATH + "tex_linenumbers")
+		self.gconf_client.set_bool(GCONFPATH + "tex_linenumbers", True)
 
-	def run_lines(self, widget, data=None):
-		if widget.get_active() == False:
-			self.parent.editorpane.editorview.set_show_line_numbers(False)
-			self.gconf_client.set_string("/apps/gummi/text_lines", "False")
-		else:
-			self.parent.editorpane.editorview.set_show_line_numbers(True)
-			self.gconf_client.set_string("/apps/gummi/text_lines", "True")
+		tex_highlighting = self.gconf_client.get_bool(GCONFPATH + "tex_highlighting")
+		self.gconf_client.set_bool(GCONFPATH + "tex_highlighting", True)
 
+		tex_textwrapping = self.gconf_client.get_bool(GCONFPATH + "tex_textwrapping")
+		self.gconf_client.set_bool(GCONFPATH + "tex_textwrapping", True)
 
-	def run_highlight(self, widget, data=None):
-		if widget.get_active() == False:
-			self.parent.editorpane.editorview.set_highlight_current_line(False)
-			self.gconf_client.set_string("/apps/gummi/text_highlight", "False")
-		else:
-			self.parent.editorpane.editorview.set_highlight_current_line(True)
-			self.gconf_client.set_string("/apps/gummi/text_highlight", "True")
+		tex_wordwrapping = self.gconf_client.get_bool(GCONFPATH + "tex_wordwrapping")
+		self.gconf_client.set_bool(GCONFPATH + "tex_wordwrapping", True)
 
+		tex_defaulttext = self.gconf_client.get_string(GCONFPATH + "tex_defaulttext")
+		self.gconf_client.set_string(GCONFPATH + "tex_defaulttext", DEFAULT)
 
-	def get_config_value(self, type, item):
-		if type == "string":
-			configitem = self.gconf_client.get_string("/apps/gummi/" + item)
-			return configitem
-		if type == "list":
-			configitem = self.gconf_client.get_string("/apps/gummi/" + item)
-			return configitem
+		self.gconf_client.set_string(GCONFPATH + "set_defaults", "OK")
 
-
-	def get_config_status(self, item):
-		if self.gconf_client.get_string("/apps/gummi/" + item) == "True":
-			return 1
-		else:
-			return 0
-	
-
-	def check_for_defaults(self):
-		textwrapping = self.gconf_client.get_string("/apps/gummi/text_wrapping")
-		if textwrapping is None:
-			self.gconf_client.set_string("/apps/gummi/text_wrapping", "word")
-		textlines = self.gconf_client.get_string("/apps/gummi/text_lines")
-		if textlines is None:
-			self.gconf_client.set_string("/apps/gummi/text_lines", "True")
-		texthighlight = self.gconf_client.get_string("/apps/gummi/text_highlight")
-		if texthighlight is None:
-			self.gconf_client.set_string("/apps/gummi/text_highlight", "True")
-		default = self.gconf_client.get_string("/apps/gummi/default-text")		
-		if default is None:
-			self.gconf_client.set_string("/apps/gummi/default-text", WELCOME)
 

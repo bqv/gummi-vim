@@ -40,7 +40,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkCheckButton" id="textwrap_char">
+                  <object class="GtkCheckButton" id="button_textwrap">
                     <property name="label" translatable="yes">Enable text wrapping</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
@@ -54,7 +54,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkCheckButton" id="textwrap_word">
+                  <object class="GtkCheckButton" id="button_wordwrap">
                     <property name="label" translatable="yes">Do not split words over two lines</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
@@ -84,7 +84,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkCheckButton" id="textlines_display">
+                  <object class="GtkCheckButton" id="button_linenumbers">
                     <property name="label" translatable="yes">Display line numbers</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
@@ -114,7 +114,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkCheckButton" id="textlines_highlight">
+                  <object class="GtkCheckButton" id="button_highlighting">
                     <property name="label" translatable="yes">Highlight current line</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>

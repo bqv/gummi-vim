@@ -60,7 +60,7 @@ class gummigui:
 
 
 	def initial_document(self):
-		self.editorpane.bufferS.set_text(self.prefs.get_config_value("string", "default-text"))
+		self.editorpane.bufferS.set_text(self.prefs.get_config_value("string", "tex_defaulttext"))
 		self.editorpane.bufferS.set_modified(False)
 		self.filename = '/tmp/gummi-default'	
 		self.motion.create_environment(self.filename)
