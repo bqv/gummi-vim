@@ -4,6 +4,7 @@ include gummi/gui/prefs.xml
 include gummi/gui/icon.png
 include gummi/docs/LICENSE
 include gummi/docs/CHANGES
+include gummi/docs/INSTALL
 include gummi/misc/gummi
 include gummi/misc/gummi.desktop
 include gummi/misc/gummi.png

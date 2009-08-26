@@ -11,6 +11,7 @@ _data_files = [
 files = ["gummi.xml",
 	 "docs/CHANGES", 
 	 "docs/LICENSE",
+	 "docs/INSTALL",
 	 "gui/gummi.xml",
 	 "gui/prefs.xml",
 	 "gui/icon.png"
