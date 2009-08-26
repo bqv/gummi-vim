@@ -110,14 +110,14 @@ class prefs:
 	def engage(self, widget, data):
 		if data is "tex_textwrapping":
 			if widget.get_active() == False:
-				self.parent.editorpane.set_wrapping("none")
+				self.parent.editorpane.editorview.set_wrap_mode(gtk.WRAP_NONE)
 			else:
-				self.parent.editorpane.set_wrapping("char")
+				self.parent.editorpane.editorview.set_wrap_mode(gtk.WRAP_CHAR)
 		if data is "tex_wordwrapping":
 			if widget.get_active() == False:
-				self.parent.editorpane.set_wrapping("char")
+				self.parent.editorpane.editorview.set_wrap_mode(gtk.WRAP_CHAR)
 			else:
-				self.parent.editorpane.set_wrapping("word")
+				self.parent.editorpane.editorview.set_wrap_mode(gtk.WRAP_WORD)
 		if data is "tex_linenumbers":
 			if widget.get_active() == False:
 				self.parent.editorpane.editorview.set_show_line_numbers(False)

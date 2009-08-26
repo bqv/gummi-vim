@@ -9,6 +9,7 @@
 import gtk
 import gtksourceview2
 import pango
+import gconf
 import gobject
 from datetime import datetime
 
@@ -25,10 +26,10 @@ class texpane:
 		self.bufferS.set_highlight_syntax(True)
 		self.editorview = gtksourceview2.View(self.bufferS)
 
-		#todo: replace with gconf values from prefs
-		self.editorview.set_show_line_numbers(True)
-		self.editorview.set_highlight_current_line(True)
-		self.editorview.set_wrap_mode(gtk.WRAP_WORD)
+		self.gconf_client = gconf.client_get_default()
+		self.editorview.set_show_line_numbers(self.gconf_client.get_bool("/apps/gummi/tex_linenumbers"))
+		self.editorview.set_highlight_current_line(self.gconf_client.get_bool("/apps/gummi/tex_highlighting"))
+		self.editorview.set_wrap_mode(self.grab_wrapmode())
 		
 		self.editorview.modify_font(pango.FontDescription("monospace 10"))
 		
@@ -45,13 +46,20 @@ class texpane:
 		self.status = 1
 
 
-	def set_wrapping(self, wrapmode):
-		if wrapmode == "None":
-			self.editorview.set_wrap_mode(gtk.WRAP_NONE)
-		elif wrapmode == "char":
-			self.editorview.set_wrap_mode(gtk.WRAP_CHAR)
+	def grab_wrapmode(self):
+		textwrap = self.gconf_client.get_bool("/apps/gummi/tex_textwrapping")
+		wordwrap = self.gconf_client.get_bool("/apps/gummi/tex_wordwrapping")
+		print textwrap
+		print wordwrap
+		if textwrap is False:
+			return gtk.WRAP_NONE
+		if wordwrap is True:
+			return gtk.WRAP_WORD
 		else:
-			self.editorview.set_wrap_mode(gtk.WRAP_WORD)
+			return gtk.WRAP_CHAR
+
+
+
 
 
 	def set_text_change(self, widget, event):
