@@ -101,8 +101,9 @@ class gummigui:
 	def on_button_searchwindow_find_clicked(self, button, data=None):
 		buff = self.editorpane.editorview.get_buffer()
 		term = self.searchentry.get_text()
-		find_iter = buff.get_iter_at_mark(buff.get_selection_bound())
+
 		try:
+			find_iter = buff.get_iter_at_mark(buff.get_selection_bound())
 			ins, bound = find_iter.forward_search(term, flags=0, limit=None)
 		except:
 			find_iter = buff.get_start_iter()
@@ -194,10 +195,6 @@ class gummigui:
 
 	def on_menu_about_activate(self, menuitem, data=None):
 		
-		if self.about_dialog:
-			self.about_dialog.present()
-			return		
-
 		authors = ["Alexander van der Mey"]
 		about_dialog = gtk.AboutDialog()
 		about_dialog.set_transient_for(self.mainwindow)
