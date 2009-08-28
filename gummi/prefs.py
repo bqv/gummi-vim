@@ -10,6 +10,7 @@ import os
 import sys
 import gtk
 import gconf
+import pango
 
 DEFAULT = """\\documentclass{article}
 \\begin{document}
@@ -35,7 +36,6 @@ class prefs:
 			self.set_defaults()
 
 
-	
 	def get_config_value(self, type, item):
 		if type == "string":
 			configitem = self.gconf_client.get_string(GCONFPATH + item)
@@ -61,6 +61,7 @@ class prefs:
 	def create_gui(self):
 		builder = gtk.Builder()	
 		builder.add_from_file(self.parent.installdir + "/gui/prefs.xml")
+		builder.connect_signals(self)
 
 		self.prefwindow = builder.get_object("prefwindow")
 		self.prefwindow.set_transient_for(self.parent.mainwindow)
@@ -73,6 +74,10 @@ class prefs:
 		self.button_wordwrap = builder.get_object("button_wordwrap")
 		self.button_linenumbers = builder.get_object("button_linenumbers")
 		self.button_highlighting = builder.get_object("button_highlighting")
+		self.default_textfield = builder.get_object("default_textfield")
+
+		self.default_textfield.modify_font(pango.FontDescription("monospace 10"))
+
 
 		self.check_current_setting(self.button_textwrap, "tex_textwrapping")
 		self.check_current_setting(self.button_wordwrap, "tex_wordwrapping")
@@ -84,7 +89,6 @@ class prefs:
 		self.button_linenumbers.connect("toggled", self.toggle_button, "tex_linenumbers")
 		self.button_highlighting.connect("toggled", self.toggle_button, "tex_highlighting")
 		
-		builder.connect_signals(self)
 		self.prefwindow.show_all()
 
 	def check_current_setting(self, button, item):
@@ -128,6 +132,13 @@ class prefs:
 				self.parent.editorpane.editorview.set_highlight_current_line(False)
 			else:
 				self.parent.editorpane.editorview.set_highlight_current_line(True)
+
+
+	def on_prefs_close_clicked(self, widget, data=None):
+		self.prefwindow.destroy()
+
+	def on_prefs_reset_clicked(self, widget, data=None):
+		print "reset"	
 
 
 	def set_defaults(self):
