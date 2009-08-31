@@ -144,8 +144,8 @@ class gummigui:
 	def on_menu_saveas_activate(self, menuitem, data=None):	
 		if os.getcwd() == '/tmp':
 			os.chdir(os.environ['HOME'])
-		filename = self.get_save_filename()
-		if filename: self.write_file(filename)
+		self.filename = self.get_save_filename()
+		if self.filename: self.write_file(self.filename)
 
 	def on_menu_quit_activate(self, menuitem, data=None):
 		if self.check_for_save(): self.on_menu_save_activate(None, None)
