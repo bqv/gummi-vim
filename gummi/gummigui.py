@@ -196,7 +196,7 @@ class gummigui:
 
 	def on_menu_about_activate(self, menuitem, data=None):
 		
-		authors = ["Alexander van der Mey"]
+		authors = ["Alexander van der Mey\n<alexvandermey@gmail.com>"]
 		about_dialog = gtk.AboutDialog()
 		about_dialog.set_transient_for(self.mainwindow)
 		about_dialog.set_destroy_with_parent(True)
