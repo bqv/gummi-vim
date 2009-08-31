@@ -142,7 +142,6 @@ class prefs:
 		self.prefwindow.destroy()
 
 	def on_prefs_reset_clicked(self, widget, data=None):
-		print self.notebook.get_current_page()
 		if self.notebook.get_current_page() is 0:
 			self.set_config_bool("tex_linenumbers", True)
 			self.set_config_bool("tex_highlighting", True)
