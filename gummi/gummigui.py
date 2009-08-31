@@ -146,6 +146,7 @@ class gummigui:
 			os.chdir(os.environ['HOME'])
 		self.filename = self.get_save_filename()
 		if self.filename: self.write_file(self.filename)
+		self.motion.create_environment(self.filename)
 
 	def on_menu_quit_activate(self, menuitem, data=None):
 		if self.check_for_save(): self.on_menu_save_activate(None, None)
@@ -285,7 +286,7 @@ class gummigui:
 			self.filename = filename
 			self.motion.create_environment(self.filename)
 			self.motion.initial_preview()
-			self.update_statusbar("File: " + self.motion.texfile)
+			self.update_statusbar("Loaded: " + self.motion.texfile)
 			#self.add_to_recentfiles(filename)
 		except:
 			self.error_message ("Could not open file: %s" % filename)
@@ -302,8 +303,8 @@ class gummigui:
 			else: fout = open(self.filename, "w")
 			fout.write(text)
 			fout.close()
-
 			if filename: self.filename = filename        
+			self.update_statusbar("Saved: " + self.motion.texfile)		
 		except:
 			self.error_message ("Could not save file: %s" % filename)
 
