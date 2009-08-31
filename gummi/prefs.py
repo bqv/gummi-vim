@@ -80,7 +80,6 @@ class prefs:
 		self.default_buffer = self.default_textfield.get_buffer()
 		self.default_buffer.set_text(self.get_config_value("string", "tex_defaulttext"))
 
-
 		self.check_current_setting(self.button_textwrap, "tex_textwrapping")
 		self.check_current_setting(self.button_wordwrap, "tex_wordwrapping")
 		self.check_current_setting(self.button_linenumbers, "tex_linenumbers")
@@ -143,7 +142,21 @@ class prefs:
 		self.prefwindow.destroy()
 
 	def on_prefs_reset_clicked(self, widget, data=None):
-		print "reset"	
+		print self.notebook.get_current_page()
+		if self.notebook.get_current_page() is 0:
+			self.set_config_bool("tex_linenumbers", True)
+			self.set_config_bool("tex_highlighting", True)
+			self.set_config_bool("tex_textwrapping", True)
+			self.set_config_bool("tex_wordwrapping", True)		
+			self.check_current_setting(self.button_textwrap, "tex_textwrapping")
+			self.check_current_setting(self.button_wordwrap, "tex_wordwrapping")
+			self.check_current_setting(self.button_linenumbers, "tex_linenumbers")
+			self.check_current_setting(self.button_highlighting, "tex_highlighting")		
+		if self.notebook.get_current_page() is 1:
+			return
+		if self.notebook.get_current_page() is 2:
+			self.set_config_string("tex_defaulttext", DEFAULT)
+			self.default_buffer.set_text(self.get_config_value("string", "tex_defaulttext"))
 
 	def set_defaults(self):
 
