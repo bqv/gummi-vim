@@ -66,9 +66,9 @@ class prefs:
 		self.prefwindow = builder.get_object("prefwindow")
 		self.prefwindow.set_transient_for(self.parent.mainwindow)
 
-		self.box = builder.get_object("hbox1")
+		#self.box = builder.get_object("hbox1")
 		self.notebook = builder.get_object("notebook1")
-		self.box.pack_start(self.notebook, expand=False)
+		#self.box.pack_start(self.notebook, expand=False)
 
 		self.button_textwrap = builder.get_object("button_textwrap")
 		self.button_wordwrap = builder.get_object("button_wordwrap")
