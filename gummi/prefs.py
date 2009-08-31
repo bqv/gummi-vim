@@ -77,6 +77,8 @@ class prefs:
 		self.default_textfield = builder.get_object("default_textfield")
 
 		self.default_textfield.modify_font(pango.FontDescription("monospace 10"))
+		self.default_buffer = self.default_textfield.get_buffer()
+		self.default_buffer.set_text(self.get_config_value("string", "tex_defaulttext"))
 
 
 		self.check_current_setting(self.button_textwrap, "tex_textwrapping")
@@ -135,11 +137,13 @@ class prefs:
 
 
 	def on_prefs_close_clicked(self, widget, data=None):
+		if self.notebook.get_current_page() is 2:
+			newtext = self.default_buffer.get_text(self.default_buffer.get_start_iter(), self.default_buffer.get_end_iter())
+			self.set_config_string("tex_defaulttext", newtext)	
 		self.prefwindow.destroy()
 
 	def on_prefs_reset_clicked(self, widget, data=None):
 		print "reset"	
-
 
 	def set_defaults(self):
 
