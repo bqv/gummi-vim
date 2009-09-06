@@ -504,10 +504,11 @@
     </child>
   </object>
   <object class="GtkWindow" id="searchwindow">
+    <property name="border_width">15</property>
     <property name="title" translatable="yes">Find</property>
     <property name="window_position">center-on-parent</property>
     <property name="default_width">360</property>
-    <property name="default_height">140</property>
+    <property name="default_height">180</property>
     <property name="destroy_with_parent">True</property>
     <property name="icon">icon.png</property>
     <property name="transient_for">mainwindow</property>
@@ -540,8 +541,8 @@
                 <property name="has_focus">True</property>
                 <property name="invisible_char">&#x2022;</property>
                 <property name="primary_icon_stock">gtk-find</property>
-                <accelerator key="Return" signal="activate"/>
                 <accelerator key="Escape" signal="activate" modifiers="GDK_SHIFT_MASK"/>
+                <accelerator key="Return" signal="activate"/>
                 <signal name="activate" handler="on_button_searchwindow_find_clicked"/>
               </object>
               <packing>
@@ -554,57 +555,85 @@
           </packing>
         </child>
         <child>
-          <object class="GtkHBox" id="hbox3">
+          <object class="GtkCheckButton" id="toggle_matchcase">
+            <property name="label" translatable="yes">Match case</property>
             <property name="visible">True</property>
-            <property name="homogeneous">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">False</property>
+            <property name="active">True</property>
+            <property name="draw_indicator">True</property>
+            <signal name="toggled" handler="toggle_searchwindow_matchcase"/>
+          </object>
+          <packing>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkCheckButton" id="toggle_wholeword">
+            <property name="label" translatable="yes">Match entire word only</property>
+            <property name="visible">True</property>
+            <property name="sensitive">False</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">False</property>
+            <property name="draw_indicator">True</property>
+          </object>
+          <packing>
+            <property name="position">2</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkCheckButton" id="toggle_backwards">
+            <property name="label" translatable="yes">Search backwards</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">False</property>
+            <property name="draw_indicator">True</property>
+          </object>
+          <packing>
+            <property name="position">3</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkFixed" id="fixed1">
+            <property name="height_request">36</property>
+            <property name="visible">True</property>
             <child>
-              <placeholder/>
-            </child>
-            <child>
-              <placeholder/>
-            </child>
-            <child>
-              <object class="GtkButton" id="button_searchwindow_close">
-                <property name="label" translatable="yes">Close</property>
+              <object class="GtkButton" id="button1">
+                <property name="label">gtk-close</property>
+                <property name="width_request">100</property>
+                <property name="height_request">40</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="image">image1</property>
+                <property name="use_stock">True</property>
                 <signal name="clicked" handler="on_button_searchwindow_close_clicked"/>
               </object>
               <packing>
-                <property name="position">2</property>
+                <property name="x">144</property>
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="button_searchwindow_find">
-                <property name="label" translatable="yes">Find</property>
+              <object class="GtkButton" id="button2">
+                <property name="label">gtk-find</property>
+                <property name="width_request">100</property>
+                <property name="height_request">40</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="image">image2</property>
+                <property name="use_stock">True</property>
                 <signal name="clicked" handler="on_button_searchwindow_find_clicked"/>
               </object>
               <packing>
-                <property name="position">3</property>
+                <property name="x">251</property>
               </packing>
             </child>
           </object>
           <packing>
-            <property name="expand">False</property>
             <property name="fill">False</property>
-            <property name="position">1</property>
+            <property name="position">4</property>
           </packing>
         </child>
       </object>
     </child>
-  </object>
-  <object class="GtkImage" id="image1">
-    <property name="visible">True</property>
-    <property name="stock">gtk-close</property>
-  </object>
-  <object class="GtkImage" id="image2">
-    <property name="visible">True</property>
-    <property name="stock">gtk-find</property>
   </object>
 </interface>

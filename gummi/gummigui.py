@@ -10,6 +10,7 @@ import os
 import sys
 import gtk
 import gobject
+import gtksourceview2
 #import gtkunixprint
 #import gconf
 
@@ -36,6 +37,10 @@ class gummigui:
 		self.filename = None
 		self.installdir = INSTALLDIR
 
+		self.start_iter = None
+		self.current_iter = None
+		self.searchflags = 0
+
 		builder = gtk.Builder()	
 		builder.add_from_file(INSTALLDIR + "/gui/gummi.xml")
 		builder.connect_signals(self)	
@@ -47,7 +52,8 @@ class gummigui:
 		self.searchwindow = builder.get_object("searchwindow")
 		self.searchentry = builder.get_object("searchentry")
 		self.statusbar_cid = self.statusbar.get_context_id("Gummi")
-		self.editorscroll = builder.get_object("editor_scroller")		
+		self.editorscroll = builder.get_object("editor_scroller")
+		self.backwards = builder.get_object("toggle_backwards")	
 
 		self.editorpane = texpane.texpane()
 		self.editorscroll.add(self.editorpane.editorview)
@@ -55,6 +61,7 @@ class gummigui:
 		self.motion = motion.motion(self)
 		self.prefs = prefs.prefs(self)
 
+		self.buffer = self.editorpane.bufferS
 		self.initial_document()	
 		self.mainwindow.show_all()
 
@@ -99,19 +106,44 @@ class gummigui:
 		return True
 
 	def on_button_searchwindow_find_clicked(self, button, data=None):
-		buff = self.editorpane.editorview.get_buffer()
 		term = self.searchentry.get_text()
-
-		try:
-			find_iter = buff.get_iter_at_mark(buff.get_selection_bound())
-			ins, bound = find_iter.forward_search(term, flags=0, limit=None)
-		except:
-			find_iter = buff.get_start_iter()
-			ins, bound = find_iter.forward_search(term, flags=0, limit=None)
-
-		buff.place_cursor(ins)
-		buff.select_range(ins, bound)
+		if self.backwards.get_active() is False: 
+			try:
+				ins, bound = gtksourceview2.iter_forward_search(self.current_iter, term, self.searchflags, limit=None)
+				self.current_iter = bound			
+			except:			
+				return	
+		else:	
+			try:
+				ins, bound = gtksourceview2.iter_backward_search(self.current_iter, term, self.searchflags, limit=None)
+				self.current_iter = ins			
+			except:
+				return
+		self.buffer.place_cursor(ins)
+		self.buffer.select_range(ins, bound)
 		self.editorpane.editorview.scroll_to_iter(ins, 0)
+
+
+	# maybe integrate it into the search function.. 
+	def toggle_searchwindow_matchcase(self, widget, data=None):
+		if widget.get_active() is True:
+			self.searchflags = 0
+		else:
+			self.searchflags = (gtksourceview2.SEARCH_CASE_INSENSITIVE)
+
+	#def toggle_searchwindow_wholeword(self):
+
+	def on_menu_find_activate(self, menuitem, data=None):
+		self.start_iter = self.buffer.get_start_iter()
+		self.current_iter = self.buffer.get_iter_at_mark(self.buffer.get_insert())		
+		self.searchentry.grab_focus()
+		self.searchentry.set_text("")
+		self.searchwindow.show()
+		
+
+	def on_searchwindow_delete_event(self, widget, data=None):
+		self.searchwindow.hide()
+		return True
 
 
 	def on_menu_new_activate(self, menuitem, data=None):
@@ -181,15 +213,6 @@ class gummigui:
 		buff = self.editorpane.editorview.get_buffer();
 		buff.select_range(buff.get_start_iter(),buff.get_end_iter())
 
-	def on_menu_find_activate(self, menuitem, data=None):
-		self.searchentry.grab_focus()
-		self.searchentry.set_text("")
-		self.searchwindow.show()
-		
-
-	def on_searchwindow_delete_event(self, widget, data=None):
-		self.searchwindow.hide()
-		return True
 
 	def on_menu_preferences_activate(self, menuitem, data=None):
 		self.prefs.create_gui()
