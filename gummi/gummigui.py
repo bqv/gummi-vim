@@ -245,12 +245,6 @@ class gummigui:
 
 		self.about_dialog = about_dialog
 		about_dialog.show()
-	
-	def gtk_main_quit(self, menuitem, data=None):
-		self.mainwindow.show()
-		if self.check_for_save(): self.on_menu_save_activate(None, None)
-		print "Thanks for using Gummi! I welcome your feedback at \nhttp://code.google.com/p/gummi/"
-		quit()
 
 
 	def get_open_filename(self):
@@ -330,6 +324,13 @@ class gummigui:
 			self.update_statusbar("Saved: " + self.motion.texfile)		
 		except:
 			self.error_message ("Could not save file: %s" % filename)
+
+
+	def gtk_main_quit(self, menuitem, data=None):
+		if self.check_for_save(): self.on_menu_save_activate(None, None)	
+		print "Thanks for using Gummi! I welcome your feedback at \nhttp://code.google.com/p/gummi/"
+		quit()
+
 
 if __name__ == "__main__":
 	editor = gummigui()
