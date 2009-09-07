@@ -36,7 +36,6 @@ class motion:
 		self.start_monitoring()
 
 	def create_environment(self, filename):	
-
 		self.texfile = filename
 		self.texpath = os.path.dirname(self.texfile) + "/"
 		if ".tex" in self.texfile:
@@ -46,7 +45,8 @@ class motion:
 		fd, path = tempfile.mkstemp(".tex")
 		self.workfile = os.readlink("/proc/self/fd/%d" % fd)
 		self.pdffile = self.texpath + self.texname + ".pdf"
-		print "\nEnvironment created for " + self.texfile + "\nWorkfile is " + self.workfile + "\nPdffile is " + self.pdffile + "\n"
+		print "\nEnvironment created for: \nTEX: " + self.texfile + "\nTMP: " + self.workfile + "\nPDF: " + self.pdffile + "\n"
+		self.initial_preview() 
 
 	def initial_preview(self):
 		self.update_workfile()

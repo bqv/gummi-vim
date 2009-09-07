@@ -71,7 +71,6 @@ class gummigui:
 		self.editorpane.bufferS.set_modified(False)
 		self.filename = '/tmp/gummi-default'	
 		self.motion.create_environment(self.filename)
-		self.motion.initial_preview()
 		self.update_statusbar("")
 		
 
@@ -153,7 +152,6 @@ class gummigui:
 						"\end{document}\n")
 		self.editorpane.bufferS.set_modified(False)
 		self.motion.create_environment("/tmp/gummi-new")
-		self.motion.initial_preview()
 		
 	def on_menu_open_activate(self, menuitem, data=None):
 		if os.getcwd() == '/tmp':
@@ -302,7 +300,6 @@ class gummigui:
 			self.editorpane.editorview.set_sensitive(True)
 			self.filename = filename
 			self.motion.create_environment(self.filename)
-			self.motion.initial_preview()
 			self.update_statusbar("Loaded: " + self.motion.texfile)
 			#self.add_to_recentfiles(filename)
 		except:
