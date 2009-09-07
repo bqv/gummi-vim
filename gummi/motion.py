@@ -28,6 +28,8 @@ class motion:
 		self.pdffile = None
 		self.texfile = None
 
+		self.buffer = self.editorpane.bufferS
+
 		gobject.threads_init()
 		gtk.gdk.threads_init()
 
@@ -62,10 +64,10 @@ class motion:
 		pdfmaker.wait()
 		
 	def update_workfile(self):
-		buff = self.editorpane.editorview.get_buffer()	
 		# these two lines make the program hang in certain situations, look into it later. 		
 		#self.editorpane.editorview.set_sensitive(False)
-		text = buff.get_text(buff.get_start_iter(), buff.get_end_iter())
+		start_iter, end_iter = self.buffer.get_start_iter(), self.buffer.get_end_iter()
+		text = self.buffer.get_text(start_iter, end_iter)
 		#self.editorpane.editorview.set_sensitive(True)
 		tmpmake = open(self.workfile, "w")
 		tmpmake.write(text)
