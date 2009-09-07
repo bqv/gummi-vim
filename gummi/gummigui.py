@@ -25,6 +25,7 @@ else:
 	path = __file__
 
 INSTALLDIR = os.path.abspath(os.path.dirname(path))
+VERSION = "svn"
 
 
 class gummigui:
@@ -222,10 +223,10 @@ class gummigui:
 		about_dialog.set_transient_for(self.mainwindow)
 		about_dialog.set_destroy_with_parent(True)
 		about_dialog.set_name("Gummi")
-		about_dialog.set_version("0.1f")
+		about_dialog.set_version(VERSION)
 		about_dialog.set_copyright("Copyright \xc2\xa9 2009 Alexander van der Mey")
-		about_dialog.set_website("http://code.google.com/p/gummi/")
-		about_dialog.set_comments("Simple LaTex Editor for GTK users")
+		about_dialog.set_website("http://gummi.googlecode.com")
+		about_dialog.set_comments("Simple LaTex Editor for GTK+ users")
 		about_dialog.set_authors            (authors)
 		about_dialog.set_logo_icon_name     (gtk.STOCK_EDIT)
 
