@@ -251,6 +251,18 @@ class gummigui:
 										gtk.FILE_CHOOSER_ACTION_OPEN,
 										(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
 										gtk.STOCK_OPEN, gtk.RESPONSE_OK))
+		
+		plainfilter = gtk.FileFilter()
+		plainfilter.set_name('Text files')
+		plainfilter.add_mime_type("text/plain")
+		chooser.add_filter(plainfilter)
+
+		latexfilter = gtk.FileFilter()
+		latexfilter.set_name('LaTeX files')
+		latexfilter.add_pattern('*.tex')
+		chooser.add_filter(latexfilter)
+		chooser.set_filter(plainfilter)
+
 		response = chooser.run()
 		if response == gtk.RESPONSE_OK: filename = chooser.get_filename()
 		chooser.destroy()
@@ -262,7 +274,17 @@ class gummigui:
 										gtk.FILE_CHOOSER_ACTION_SAVE,
 										(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, 
 										gtk.STOCK_SAVE, gtk.RESPONSE_OK))
-		#todo: add a file filter
+		plainfilter = gtk.FileFilter()
+		plainfilter.set_name('Text files')
+		plainfilter.add_mime_type("text/plain")
+		chooser.add_filter(plainfilter)
+
+		latexfilter = gtk.FileFilter()
+		latexfilter.set_name('LaTeX files')
+		latexfilter.add_pattern('*.tex')
+		chooser.add_filter(latexfilter)
+		chooser.set_filter(plainfilter)
+
 		response = chooser.run()
 		if response == gtk.RESPONSE_OK: filename = chooser.get_filename()
 		chooser.destroy()
