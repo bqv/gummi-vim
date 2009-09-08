@@ -153,6 +153,7 @@ class gummigui:
 						"\end{document}\n")
 		self.editorpane.bufferS.set_modified(False)
 		self.motion.create_environment("/tmp/gummi-new")
+		self.filename = None
 		
 	def on_menu_open_activate(self, menuitem, data=None):
 		if os.getcwd() == '/tmp':
@@ -177,7 +178,7 @@ class gummigui:
 			os.chdir(os.environ['HOME'])
 		self.filename = self.get_save_filename()
 		if self.filename: self.write_file(self.filename)
-		self.motion.create_environment(self.filename)
+		#self.motion.create_environment(self.filename)
 
 	def on_menu_quit_activate(self, menuitem, data=None):
 		if self.check_for_save(): self.on_menu_save_activate(None, None)
@@ -266,10 +267,14 @@ class gummigui:
 										(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, 
 										gtk.STOCK_SAVE, gtk.RESPONSE_OK))
 		self.set_file_filters(chooser)
-
+		
 		response = chooser.run()
-		if response == gtk.RESPONSE_OK: filename = chooser.get_filename()
-		chooser.destroy()
+		if response == gtk.RESPONSE_OK: 
+			filename = chooser.get_filename()
+			if not ".tex" in filename[-4:]:
+				filename = filename + ".tex"
+			self.motion.create_environment(filename)		
+			chooser.destroy()
 		return filename
 
 
