@@ -2,6 +2,23 @@
 Gummi CHANGELOG
 -------------------------------------------------------------------
 
+Gummi 0.2b (September 8th, 2009):
+	
+	Bugs fixed:
+	* Rescaled icon to look nicer on a gnome panel
+	* Preferences window no longer triggers a GTKwarning
+	* New file environment is now correctly created on load/saveas	
+	* Mainwindow no longer blinks on check_for_save/program exit
+	* Preview pane will no longer stop refreshing after a Save-as
+	* Tex extension is now forced upon documents when saved
+	* And several minor annoyances.. 
+
+	Features:
+	* Preferences can now be reset to defaults
+	* Default text shown in new documents can now be changed
+	* Added many improvements to the search function
+	* Added file filters to open & save dialogs
+
 Gummi 0.1f (August 26th, 2009):
 
 	Bugs fixed:
