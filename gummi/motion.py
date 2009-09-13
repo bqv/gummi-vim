@@ -7,6 +7,7 @@
 # --------------------------------------------------------------------------------
 
 import os
+import sys
 import gtk
 import gobject
 import time
@@ -60,7 +61,9 @@ class motion:
 	def update_pdffile(self):	
 		os.chdir(self.texpath)
 		output = tempfile.NamedTemporaryFile(mode='w+b')
-		pdfmaker = subprocess.Popen('pdflatex -interaction=nonstopmode -jobname="%s" "%s"' % (self.texname, self.workfile), shell=True, stdout=output)
+		pdfmaker = subprocess.Popen('pdflatex -interaction=nonstopmode -jobname="%s" "%s"' % (self.texname, self.workfile), shell=True, stdout = subprocess.PIPE)
+		output = pdfmaker.communicate()[0]
+		self.parent.errorbuffer.set_text(output)
 		pdfmaker.wait()
 		
 	def update_workfile(self):

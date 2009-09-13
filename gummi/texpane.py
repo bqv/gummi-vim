@@ -46,16 +46,16 @@ class texpane:
 		self.status = 1
 
 
-	def insert_package(self, package):
+	def insert_package(self, package, current_iter):
 		pkgspace = "\\begin{document}"		
 		start_iter = self.bufferS.get_start_iter()
 		begin_iter, end = gtksourceview2.iter_forward_search(start_iter, pkgspace, flags=0, limit=None)
-		self.bufferS.place_cursor(begin_iter)
 		pkgsearchstr = "{" + package + "}"
 		if gtksourceview2.iter_forward_search(start_iter, pkgsearchstr, flags=0, limit=begin_iter):
 			return
 		else:
 			self.bufferS.insert(begin_iter, "\\usepackage{" + package + "}\n")
+
 
 
 	def grab_wrapmode(self):
