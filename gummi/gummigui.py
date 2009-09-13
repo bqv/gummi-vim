@@ -190,10 +190,6 @@ class gummigui:
 		if self.filename: self.write_file(self.filename)
 		#self.motion.create_environment(self.filename)
 
-	def on_menu_quit_activate(self, menuitem, data=None):
-		if self.check_for_save(): self.on_menu_save_activate(None, None)
-		print "Thanks for using Gummi! I welcome your feedback at \nhttp://code.google.com/p/gummi/"
-		quit()
 
 	def on_menu_undo_activate(self, menuitem, data=None):
 		if self.editorpane.editorview.get_buffer().can_undo():
@@ -364,7 +360,10 @@ class gummigui:
 
 	def gtk_main_quit(self, menuitem, data=None):
 		if self.check_for_save(): self.on_menu_save_activate(None, None)	
-		print "Thanks for using Gummi! I welcome your feedback at \nhttp://code.google.com/p/gummi/"
+		print "   ___ "
+		print "  {o,o}	  Thanks for using Gummi!"
+		print "  |)__)	  I welcome your feedback at:"
+		print '  -"-"-	  http://gummi.googlecode.com\n'
 		quit()
 
 
