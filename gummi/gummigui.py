@@ -14,7 +14,6 @@ import codecs
 import traceback
 import gtksourceview2
 
-
 import texpane
 import pdfpane
 import motion
@@ -36,7 +35,9 @@ class gummigui:
 
 	def __init__(self):
 
-		self.filename = None
+		if len(sys.argv) > 1: 
+			self.filename = sys.argv[1]
+		else: self.filename = None
 		self.installdir = INSTALLDIR
 
 		self.start_iter = None
@@ -69,10 +70,14 @@ class gummigui:
 
 
 	def initial_document(self):
-		self.editorpane.bufferS.set_text(self.prefs.get_config_value("string", "tex_defaulttext"))
+		if self.filename is None:
+			self.editorpane.bufferS.set_text(self.prefs.get_config_value("string", "tex_defaulttext"))
+			self.filename = '/tmp/gummi-default'	
+			self.editorpane.bufferS.set_modified(False)
+			self.motion.create_environment(self.filename)		
+		else:
+			self.load_file(self.filename)	
 		self.editorpane.bufferS.set_modified(False)
-		self.filename = '/tmp/gummi-default'	
-		self.motion.create_environment(self.filename)
 		self.update_statusbar("")
 		
 
@@ -330,7 +335,7 @@ class gummigui:
 			#self.add_to_recentfiles(filename)
 		except:
 			print traceback.print_exc()
-			self.error_message ("Could not open file: %s" % filename)
+
 
 	def write_file(self, filename):
 		try:
@@ -351,7 +356,6 @@ class gummigui:
 			self.update_statusbar("Saved: " + self.motion.texfile)		
 		except:
 			print traceback.print_exc()
-			self.error_message ("Could not save file: %s" % filename)
 
 
 	def gtk_main_quit(self, menuitem, data=None):
