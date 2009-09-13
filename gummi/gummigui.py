@@ -58,7 +58,7 @@ class gummigui:
 		self.statusbar_cid = self.statusbar.get_context_id("Gummi")
 		self.editorscroll = builder.get_object("editor_scroller")
 		self.backwards = builder.get_object("toggle_backwards")	
-		self.errorfield = builder.get_object("errorfield")
+		self.errorviewer = builder.get_object("errorfield")
 
 		self.editorpane = texpane.texpane()
 		self.editorscroll.add(self.editorpane.editorview)
@@ -67,8 +67,8 @@ class gummigui:
 		self.prefs = prefs.prefs(self)
 
 		self.buffer = self.editorpane.bufferS
-		self.errorfield.modify_font(pango.FontDescription("monospace 8"))
-		self.errorbuffer = self.errorfield.get_buffer()		
+		self.errorviewer.modify_font(pango.FontDescription("monospace 8"))
+		self.errorbuffer = self.errorviewer.get_buffer()		
 		self.initial_document()	
 		self.mainwindow.show_all()
 
