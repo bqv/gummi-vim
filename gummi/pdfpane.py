@@ -37,6 +37,7 @@ class pdfpane:
 		self.drawarea.connect("expose-event", self.on_expose)
 
 	def refresh_previewpane(self):
+		self.drawarea.show()
 		self.uri = "file://" + self.pdffile
 		self.document = poppler.document_new_from_file(self.uri, None)
 		self.page_total = self.document.get_n_pages()

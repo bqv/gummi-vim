@@ -52,8 +52,11 @@ class motion:
 	def initial_preview(self):
 		self.update_workfile()
 		self.update_pdffile()
-		self.previewpane.create_previewpane(self.pdffile, self.parent.pdfdrawarea)
-		self.previewpane.refresh_previewpane()
+		try:		
+			self.previewpane.create_previewpane(self.pdffile, self.parent.pdfdrawarea)
+			self.previewpane.refresh_previewpane()
+		except:
+			self.previewpane.drawarea.hide()
 
 	def start_monitoring(self):
 		self.refresh = thread.start_new_thread(self.start_preview_monitor, ())
