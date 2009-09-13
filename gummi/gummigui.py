@@ -10,9 +10,10 @@ import os
 import sys
 import gtk
 import gobject
+import codecs
+import traceback
 import gtksourceview2
-#import gtkunixprint
-#import gconf
+
 
 import texpane
 import pdfpane
@@ -312,13 +313,15 @@ class gummigui:
 		while gtk.events_pending(): gtk.main_iteration()
 		
 		try:
+			
 			fin = open(filename, "r")
 			text = fin.read()
+			decodedtxt = text.decode("iso-8859-1")
 			fin.close()
 
 			self.editorpane.editorview.set_sensitive(False)
 			buff = self.editorpane.editorview.get_buffer()
-			buff.set_text(text)
+			buff.set_text(decodedtxt)
 			buff.set_modified(False)
 			self.editorpane.editorview.set_sensitive(True)
 			self.filename = filename
@@ -326,6 +329,7 @@ class gummigui:
 			self.update_statusbar("Loaded: " + self.motion.texfile)
 			#self.add_to_recentfiles(filename)
 		except:
+			print traceback.print_exc()
 			self.error_message ("Could not open file: %s" % filename)
 
 	def write_file(self, filename):
@@ -338,11 +342,15 @@ class gummigui:
 			
 			if filename: fout = open(filename, "w")
 			else: fout = open(self.filename, "w")
-			fout.write(text)
+
+			encodedtxt = text.encode("iso-8859-1")
+			fout.write(encodedtxt)
 			fout.close()
+
 			if filename: self.filename = filename        
 			self.update_statusbar("Saved: " + self.motion.texfile)		
 		except:
+			print traceback.print_exc()
 			self.error_message ("Could not save file: %s" % filename)
 
 
