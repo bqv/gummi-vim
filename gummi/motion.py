@@ -61,13 +61,6 @@ class motion:
 	def start_monitoring(self):
 		self.refresh = thread.start_new_thread(self.start_preview_monitor, ())
 
-	def update_pdffile(self):	
-		os.chdir(self.texpath)
-		output = tempfile.NamedTemporaryFile(mode='w+b')
-		pdfmaker = subprocess.Popen('pdflatex -interaction=nonstopmode -jobname="%s" "%s"' % (self.texname, self.workfile), shell=True, stdout = subprocess.PIPE)
-		output = pdfmaker.communicate()[0]
-		self.parent.errorbuffer.set_text(output)
-		pdfmaker.wait()
 		
 	def update_workfile(self):
 		# these two lines make the program hang in certain situations, look into it later. 		
@@ -79,6 +72,23 @@ class motion:
 		tmpmake.write(text)
 		tmpmake.close()
 		self.editorpane.editorview.grab_focus() #editorpane regrabs focus
+
+	
+	def update_pdffile(self):	
+		os.chdir(self.texpath)
+		output = tempfile.NamedTemporaryFile(mode='w+b')
+		pdfmaker = subprocess.Popen('pdflatex -interaction=nonstopmode -jobname="%s" "%s"' % (self.texname, self.workfile), shell=True, stdout = subprocess.PIPE)
+		output = pdfmaker.communicate()[0]
+		self.parent.errorbuffer.set_text(output)
+		err1 = "Fatal error"
+		err2 = "Emergency stop"
+		err3 = "LaTeX Error"
+		if err1 in output or err2 in output or err3 in output:
+			self.parent.statuslight.set_stock_id("gtk-no")
+		else:
+			self.parent.statuslight.set_stock_id("gtk-yes")
+		pdfmaker.wait()
+		
 
 	def start_preview_monitor(self):
 		while True:

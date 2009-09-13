@@ -290,60 +290,91 @@
           </packing>
         </child>
         <child>
-          <object class="GtkToolbar" id="maintoolbar">
+          <object class="GtkHBox" id="hbox3">
             <property name="visible">True</property>
-            <property name="toolbar_style">icons</property>
             <child>
-              <object class="GtkToolButton" id="toolbutton1">
+              <object class="GtkToolbar" id="maintoolbar">
                 <property name="visible">True</property>
-                <property name="label" translatable="yes">toolbutton1</property>
-                <property name="use_underline">True</property>
-                <property name="stock_id">gtk-new</property>
-                <signal name="clicked" handler="on_menu_new_activate"/>
+                <property name="toolbar_style">icons</property>
+                <child>
+                  <object class="GtkToolButton" id="toolbutton1">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">toolbutton1</property>
+                    <property name="use_underline">True</property>
+                    <property name="stock_id">gtk-new</property>
+                    <signal name="clicked" handler="on_menu_new_activate"/>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="homogeneous">True</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkToolButton" id="toolbutton2">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">toolbutton2</property>
+                    <property name="use_underline">True</property>
+                    <property name="stock_id">gtk-open</property>
+                    <signal name="clicked" handler="on_menu_open_activate"/>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="homogeneous">True</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkToolButton" id="toolbutton3">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">toolbutton3</property>
+                    <property name="use_underline">True</property>
+                    <property name="stock_id">gtk-save</property>
+                    <signal name="clicked" handler="on_menu_save_activate"/>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="homogeneous">True</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkToolButton" id="toolbutton4">
+                    <property name="visible">True</property>
+                    <property name="sensitive">False</property>
+                    <property name="label" translatable="yes">toolbutton4</property>
+                    <property name="use_underline">True</property>
+                    <property name="stock_id">gtk-print</property>
+                    <signal name="clicked" handler="on_button_print_clicked"/>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="homogeneous">True</property>
+                  </packing>
+                </child>
               </object>
               <packing>
-                <property name="expand">False</property>
-                <property name="homogeneous">True</property>
+                <property name="position">0</property>
               </packing>
             </child>
             <child>
-              <object class="GtkToolButton" id="toolbutton2">
+              <object class="GtkToolbar" id="toolbar2">
                 <property name="visible">True</property>
-                <property name="label" translatable="yes">toolbutton2</property>
-                <property name="use_underline">True</property>
-                <property name="stock_id">gtk-open</property>
-                <signal name="clicked" handler="on_menu_open_activate"/>
+                <property name="toolbar_style">icons</property>
+                <property name="show_arrow">False</property>
+                <child>
+                  <object class="GtkToolButton" id="statuslight">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">toolbutton5</property>
+                    <property name="use_underline">True</property>
+                    <property name="stock_id">gtk-yes</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="homogeneous">True</property>
+                  </packing>
+                </child>
               </object>
               <packing>
                 <property name="expand">False</property>
-                <property name="homogeneous">True</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkToolButton" id="toolbutton3">
-                <property name="visible">True</property>
-                <property name="label" translatable="yes">toolbutton3</property>
-                <property name="use_underline">True</property>
-                <property name="stock_id">gtk-save</property>
-                <signal name="clicked" handler="on_menu_save_activate"/>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="homogeneous">True</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkToolButton" id="toolbutton4">
-                <property name="visible">True</property>
-                <property name="sensitive">False</property>
-                <property name="label" translatable="yes">toolbutton4</property>
-                <property name="use_underline">True</property>
-                <property name="stock_id">gtk-print</property>
-                <signal name="clicked" handler="on_button_print_clicked"/>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="homogeneous">True</property>
+                <property name="position">1</property>
               </packing>
             </child>
           </object>
@@ -605,8 +636,8 @@
                 <property name="has_focus">True</property>
                 <property name="invisible_char">&#x2022;</property>
                 <property name="primary_icon_stock">gtk-find</property>
-                <accelerator key="Return" signal="activate"/>
                 <accelerator key="Escape" signal="activate" modifiers="GDK_SHIFT_MASK"/>
+                <accelerator key="Return" signal="activate"/>
                 <signal name="activate" handler="on_button_searchwindow_find_clicked"/>
               </object>
               <packing>
