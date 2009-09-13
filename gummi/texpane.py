@@ -46,6 +46,18 @@ class texpane:
 		self.status = 1
 
 
+	def insert_package(self, package):
+		pkgspace = "\\begin{document}"		
+		start_iter = self.bufferS.get_start_iter()
+		begin_iter, end = gtksourceview2.iter_forward_search(start_iter, pkgspace, flags=0, limit=None)
+		self.bufferS.place_cursor(begin_iter)
+		pkgsearchstr = "{" + package + "}"
+		if gtksourceview2.iter_forward_search(start_iter, pkgsearchstr, flags=0, limit=begin_iter):
+			return
+		else:
+			self.bufferS.insert(begin_iter, "\\usepackage{" + package + "}\n")
+
+
 	def grab_wrapmode(self):
 		textwrap = self.gconf_client.get_bool("/apps/gummi/tex_textwrapping")
 		wordwrap = self.gconf_client.get_bool("/apps/gummi/tex_wordwrapping")
@@ -55,9 +67,6 @@ class texpane:
 			return gtk.WRAP_WORD
 		else:
 			return gtk.WRAP_CHAR
-
-
-
 
 
 	def set_text_change(self, widget, event):
