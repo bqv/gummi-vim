@@ -41,7 +41,10 @@ class pdfpane:
 		self.uri = "file://" + self.pdffile
 		self.document = poppler.document_new_from_file(self.uri, None)
 		self.page_total = self.document.get_n_pages()
-		self.current_page = self.document.get_page(self.page_displayed)
+		if self.page_total <= (self.page_displayed):
+			self.current_page = self.document.get_page(self.page_total - 1)
+		else:		
+			self.current_page = self.document.get_page(self.page_displayed)
 		self.drawarea.queue_draw() 
 
 	def jump_to_nextpage(self):
