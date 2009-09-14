@@ -336,13 +336,47 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkToolButton" id="toolbutton4">
+                  <object class="GtkSeparatorToolItem" id="toolbutton8">
                     <property name="visible">True</property>
-                    <property name="sensitive">False</property>
-                    <property name="label" translatable="yes">toolbutton4</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="homogeneous">True</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkToolButton" id="tool_style_bold">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">toolbutton5</property>
                     <property name="use_underline">True</property>
-                    <property name="stock_id">gtk-print</property>
-                    <signal name="clicked" handler="on_button_print_clicked"/>
+                    <property name="icon_name">format-text-bold</property>
+                    <signal name="clicked" handler="on_bold_button_clicked"/>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="homogeneous">True</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkToolButton" id="tool_style_italic">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">toolbutton6</property>
+                    <property name="use_underline">True</property>
+                    <property name="icon_name">format-text-italic</property>
+                    <signal name="clicked" handler="on_italic_button_clicked"/>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="homogeneous">True</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkToolButton" id="tool_style_unline">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">toolbutton7</property>
+                    <property name="use_underline">True</property>
+                    <property name="icon_name">format-text-underline</property>
+                    <signal name="clicked" handler="on_unline_button_clicked"/>
                   </object>
                   <packing>
                     <property name="expand">False</property>

@@ -97,6 +97,16 @@ class gummigui:
 		#printDialog.show_all()
 
 
+	def on_bold_button_clicked(self, widget, data=None):
+		self.editorpane.set_selection_bold(widget)
+
+	def on_italic_button_clicked(self, widget, data=None):
+		self.editorpane.set_selection_italic(widget)
+
+	def on_unline_button_clicked(self, widget, data=None):
+		self.editorpane.set_selection_unline(widget)
+
+
 	def on_button_pageback_clicked(self, button, data=None):
 		self.previewpane.jump_to_prevpage()
 

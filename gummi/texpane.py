@@ -57,6 +57,36 @@ class texpane:
 			self.bufferS.insert(begin_iter, "\\usepackage{" + package + "}\n")
 
 
+	def set_selection_bold(self, widget):
+		try:		
+			ins = self.bufferS.get_selection_bounds()[0]
+			if widget.get_name() == "tool_style_bold":
+				self.bufferS.insert(ins, "\\textbf{")
+				end = self.bufferS.get_selection_bounds()[1]
+				self.bufferS.insert(end, "}")
+				self.textchange = datetime.now()
+		except:	return	
+
+	def set_selection_italic(self, widget):
+		try:		
+			ins = self.bufferS.get_selection_bounds()[0]
+			if widget.get_name() == "tool_style_italic":
+				self.bufferS.insert(ins, "\\textit{")
+				end = self.bufferS.get_selection_bounds()[1]
+				self.bufferS.insert(end, "}")
+				self.textchange = datetime.now()
+		except: return
+
+	def set_selection_unline(self, widget):
+		try:		
+			ins = self.bufferS.get_selection_bounds()[0]
+			if widget.get_name() == "tool_style_unline":
+				self.bufferS.insert(ins, "\\underline{")
+				end = self.bufferS.get_selection_bounds()[1]
+				self.bufferS.insert(end, "}")
+				self.textchange = datetime.now()
+		except: return
+
 
 	def grab_wrapmode(self):
 		textwrap = self.gconf_client.get_bool("/apps/gummi/tex_textwrapping")
