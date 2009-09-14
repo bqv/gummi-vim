@@ -83,7 +83,7 @@ class pdfpane:
 		self.scale = 1
 		self.height = 841.89 
 		self.width = 595.276 
-		self.drawarea.set_size_request(int(self.height), int(self.width))
+		self.drawarea.set_size_request(int(self.width), int(self.height))
 		self.refresh_previewpane()
 
 	def on_expose(self, widget, event):
