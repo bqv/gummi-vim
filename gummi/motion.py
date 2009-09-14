@@ -76,9 +76,11 @@ class motion:
 	
 	def update_pdffile(self):	
 		os.chdir(self.texpath)
-		output = tempfile.NamedTemporaryFile(mode='w+b')
-		pdfmaker = subprocess.Popen('pdflatex -interaction=nonstopmode -jobname="%s" "%s"' % (self.texname, self.workfile), shell=True, stdout = subprocess.PIPE)
+		pdfmaker = subprocess.Popen('pdflatex -interaction=nonstopmode -jobname="%s" "%s"' % (self.texname, self.workfile), shell=True, stdin=None, stdout = subprocess.PIPE, stderr=None)
 		output = pdfmaker.communicate()[0]
+		pdfmaker.wait()
+		if pdfmaker.returncode is None:
+			pdfmaker.kill()
 		self.parent.errorbuffer.set_text(output)
 		err1 = "Fatal error"
 		err2 = "Emergency stop"
@@ -87,7 +89,7 @@ class motion:
 			self.parent.statuslight.set_stock_id("gtk-no")
 		else:
 			self.parent.statuslight.set_stock_id("gtk-yes")
-		pdfmaker.wait()
+		
 		
 
 	def start_preview_monitor(self):
