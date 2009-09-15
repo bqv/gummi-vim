@@ -1,6 +1,21 @@
--------------------------------------------------------------------
+-----------------------------------------------------------------------------
 Gummi CHANGELOG
--------------------------------------------------------------------
+-----------------------------------------------------------------------------
+
+Gummi 0.2f (September 15th, 2009):
+	
+	Bugs fixed:
+	* Documents with non-ascii characters no longer crash editor pane
+	* Gummi will now correctly launch with filename argument
+	* Zoom normal button no longer sets wrong dimensions
+	* Preview pane will browse backwards if content is deleted
+	* Removed the redundant tempfile from the pdf update process
+	
+	Features:
+	* Added a window containing the pdflatex output for error tracking
+	* Added a status light to see current error status of document
+	* Added three text style buttons for quick bold/italic/underline
+	* Added mechanism to check whether new gummi version is available
 
 Gummi 0.2b (September 8th, 2009):
 	
