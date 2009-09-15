@@ -17,6 +17,7 @@ import gtksourceview2
 
 import texpane
 import pdfpane
+import updatecheck
 import motion
 import prefs
 
@@ -40,6 +41,7 @@ class gummigui:
 			self.filename = sys.argv[1]
 		else: self.filename = None
 		self.installdir = INSTALLDIR
+		self.version = VERSION
 
 		self.start_iter = None
 		self.current_iter = None
@@ -233,6 +235,9 @@ class gummigui:
 
 	def on_menu_preferences_activate(self, menuitem, data=None):
 		self.prefs.create_gui()
+
+	def on_menu_update_activate(self, menuitem, data=None):
+		self.updater = updatecheck.updatecheck(self)
 
 	def on_menu_about_activate(self, menuitem, data=None):
 		

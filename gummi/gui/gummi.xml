@@ -263,19 +263,22 @@
                   <object class="GtkMenu" id="menu5">
                     <property name="visible">True</property>
                     <child>
-                      <object class="GtkImageMenuItem" id="menu_commands">
-                        <property name="label">gtk-info</property>
+                      <object class="GtkImageMenuItem" id="menu_update">
+                        <property name="label">Check _Updates</property>
                         <property name="visible">True</property>
                         <property name="use_underline">True</property>
-                        <property name="use_stock">True</property>
+                        <property name="image">image1</property>
+                        <property name="use_stock">False</property>
+                        <signal name="activate" handler="on_menu_update_activate"/>
                       </object>
                     </child>
                     <child>
                       <object class="GtkImageMenuItem" id="menu_about">
-                        <property name="label">gtk-about</property>
+                        <property name="label">_About Gummi</property>
                         <property name="visible">True</property>
                         <property name="use_underline">True</property>
-                        <property name="use_stock">True</property>
+                        <property name="image">image2</property>
+                        <property name="use_stock">False</property>
                         <signal name="activate" handler="on_menu_about_activate"/>
                       </object>
                     </child>
@@ -670,8 +673,8 @@
                 <property name="has_focus">True</property>
                 <property name="invisible_char">&#x2022;</property>
                 <property name="primary_icon_stock">gtk-find</property>
-                <accelerator key="Escape" signal="activate" modifiers="GDK_SHIFT_MASK"/>
                 <accelerator key="Return" signal="activate"/>
+                <accelerator key="Escape" signal="activate" modifiers="GDK_SHIFT_MASK"/>
                 <signal name="activate" handler="on_button_searchwindow_find_clicked"/>
               </object>
               <packing>
@@ -764,5 +767,13 @@
         </child>
       </object>
     </child>
+  </object>
+  <object class="GtkImage" id="image1">
+    <property name="visible">True</property>
+    <property name="icon_name">system-software-update</property>
+  </object>
+  <object class="GtkImage" id="image2">
+    <property name="visible">True</property>
+    <property name="stock">gtk-about</property>
   </object>
 </interface>
