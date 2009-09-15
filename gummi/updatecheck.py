@@ -14,7 +14,7 @@ class updatecheck:
 	
 	def __init__(self, parent):
 		self.parent = parent
-		self.url = urllib.urlopen("http://gummi.googlecode.com/files/latest")
+		self.url = urllib.urlopen("http://gummi.googlecode.com/svn/trunk/dev/latest")
 		latest = str(self.url.readline())
 		
 		message = gtk.MessageDialog(None, gtk.DIALOG_MODAL, gtk.MESSAGE_INFO, gtk.BUTTONS_NONE, 
