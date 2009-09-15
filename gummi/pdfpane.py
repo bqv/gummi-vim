@@ -30,7 +30,7 @@ class pdfpane:
 		self.uri = "file://" + pdffile
 		self.document = poppler.document_new_from_file(self.uri, None)
 		self.page_total = self.document.get_n_pages()
-		self.current_page = self.document.get_page(self.page_displayed)
+		self.current_page = self.document.get_page(0)
 		self.width, self.height = self.current_page.get_size()
 		self.drawarea.set_size_request(int(self.width), int(self.height))
 		self.drawarea.modify_bg(gtk.STATE_NORMAL, gtk.gdk.Color(6400, 6400, 6440))
@@ -41,8 +41,8 @@ class pdfpane:
 		self.uri = "file://" + self.pdffile
 		self.document = poppler.document_new_from_file(self.uri, None)
 		self.page_total = self.document.get_n_pages()
-		if self.page_total <= (self.page_displayed):
-			self.current_page = self.document.get_page(self.page_total - 1)
+		if self.page_total <= (self.page_displayed):		
+			self.current_page = self.document.get_page(self.page_total - 1)			
 		else:		
 			self.current_page = self.document.get_page(self.page_displayed)
 		self.drawarea.queue_draw() 
