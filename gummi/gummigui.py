@@ -61,7 +61,7 @@ class gummigui:
 		self.editorscroll = builder.get_object("editor_scroller")
 		self.backwards = builder.get_object("toggle_backwards")	
 		self.errorviewer = builder.get_object("errorfield")
-		self.statuslight = builder.get_object("statuslight")
+		self.statuslight = builder.get_object("tool_statuslight")
 
 		self.editorpane = texpane.texpane()
 		self.editorscroll.add(self.editorpane.editorview)
