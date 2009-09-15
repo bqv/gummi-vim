@@ -30,11 +30,11 @@ the package that will make things easier. The following code shows the three ste
 
 1) retrieving the tarball:
 
-wget http://gummi.googlecode.com/files/gummi-0.2b.tar.gz
+wget http://gummi.googlecode.com/files/gummi-0.2f.tar.gz
 
 2) unpacking the archive:
 
-tar -xvf gummi-0.2b.tar.gz
+tar -xvf gummi-0.2f.tar.gz
 
 3) running the setup script to install the python modules:
 
