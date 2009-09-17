@@ -66,16 +66,19 @@ class Motion:
 			self.previewpane.drawarea.hide()
 
 	def update_workfile(self):
-		# these two lines make the program hang in certain situations, no clue why	
-		#self.editorpane.editorview.set_sensitive(False)
-		self.buffer = self.editorpane.editorviewer.get_buffer()
-		start_iter, end_iter = self.buffer.get_start_iter(), self.buffer.get_end_iter()
-		content = self.buffer.get_text(start_iter, end_iter)
-		#self.editorpane.editorview.set_sensitive(True)
-		tmpmake = open(self.workfile, "w")
-		tmpmake.write(content)
-		tmpmake.close()
-		self.editorviewer.grab_focus() #editorpane regrabs focus
+		try:
+			# these two lines make the program hang in certain situations, no clue why	
+			#self.editorpane.editorview.set_sensitive(False)
+			self.buffer = self.editorpane.editorviewer.get_buffer()
+			start_iter, end_iter = self.buffer.get_start_iter(), self.buffer.get_end_iter()
+			content = self.buffer.get_text(start_iter, end_iter)
+			#self.editorpane.editorview.set_sensitive(True)
+			tmpmake = open(self.workfile, "w")
+			tmpmake.write(content)
+			tmpmake.close()
+			self.editorviewer.grab_focus() #editorpane regrabs focus
+		except:
+			print traceback.print_exc()
 
 	def update_pdffile(self):	
 		os.chdir(self.texpath)
