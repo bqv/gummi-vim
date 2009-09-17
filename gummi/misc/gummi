@@ -9,9 +9,9 @@
 
 import os, sys, gtk
 
-from gummi import gummigui
+from gummi import GummiGUI
 
-maingui = gummigui.gummigui()
-maingui.mainwindow.show()
+instance = GummiGUI.GummiGUI()
+instance.mainwindow.show()
 gtk.main()
 

@@ -6,69 +6,48 @@
 # this stuff is worth it, you can buy me a beer in return -Alexander van der Mey
 # --------------------------------------------------------------------------------
 
-import os
-import sys
 import gtk
 import gconf
 import pango
 
-DEFAULT = """\\documentclass{article}
+VERSION = "svn"
+GCONFPATH = "/apps/gummi/"
+UPDATEURL = "http://gummi.googlecode.com/svn/trunk/dev/latest"
+DEFAULT_TEXT = """\\documentclass{article}
 \\begin{document}
 
 \\noindent\huge{Welcome to Gummi} \\\\
 \\\\
-\\large	{You are using the svn version.\\\\
+\\large	{You are using the """ + VERSION + """ version.\\\\
 	I welcome your suggestions at:\\\\
 	http://code.google.com/p/gummi}\\\\
 \\\\
 \\end{document}"""
 
-GCONFPATH = "/apps/gummi/"
 
-class prefs:
-	
+class Preferences:
+
+	# TODO: Rewrite everything in this class
+
 	def __init__(self, parent):
 		self.parent = parent
-		self.gconf_client = gconf.client_get_default()		
-		
+		self.gconf_client = gconf.client_get_default()
+	
+		# replace with schema soon
 		firstrun = self.gconf_client.get_string(GCONFPATH + "set_defaults")
 		if firstrun is None:
 			self.set_defaults()
 
+	def test(self):
+		print "test werkt"
 
-	def get_config_value(self, type, item):
-		if type == "string":
-			configitem = self.gconf_client.get_string(GCONFPATH + item)
-			return configitem
-		if type == "list":
-			configitem = self.gconf_client.get_list(GCONFPATH + item)
-			return configitem
-		if type == "bool":		
-			configitem = self.gconf_client.get_bool(GCONFPATH + item)		
-			return configitem
-
-
-	def set_config_bool(self, item, value):
-		self.gconf_client.set_bool(GCONFPATH + item, value)
-
-	def set_config_string(self, item, value):
-		self.gconf_client.set_string(GCONFPATH + item, value)
-
-	def set_config_list(self, item, value):
-		self.gconf_client.set_list(GCONFPATH + item, value)
-
-
-	def create_gui(self):
+	def display_preferences(self):
 		builder = gtk.Builder()	
-		builder.add_from_file(self.parent.installdir + "/gui/prefs.xml")
+		builder.add_from_file(self.parent.CWD + "/gui/prefs.xml")
 		builder.connect_signals(self)
 
 		self.prefwindow = builder.get_object("prefwindow")
-		self.prefwindow.set_transient_for(self.parent.mainwindow)
-
-		#self.box = builder.get_object("hbox1")
 		self.notebook = builder.get_object("notebook1")
-		#self.box.pack_start(self.notebook, expand=False)
 
 		self.button_textwrap = builder.get_object("button_textwrap")
 		self.button_wordwrap = builder.get_object("button_wordwrap")
@@ -78,7 +57,7 @@ class prefs:
 
 		self.default_textfield.modify_font(pango.FontDescription("monospace 10"))
 		self.default_buffer = self.default_textfield.get_buffer()
-		self.default_buffer.set_text(self.get_config_value("string", "tex_defaulttext"))
+		self.default_buffer.set_text(self.get_value("string", "tex_defaulttext"))
 
 		self.check_current_setting(self.button_textwrap, "tex_textwrapping")
 		self.check_current_setting(self.button_wordwrap, "tex_wordwrapping")
@@ -89,11 +68,32 @@ class prefs:
 		self.button_wordwrap.connect("toggled", self.toggle_button, "tex_wordwrapping")
 		self.button_linenumbers.connect("toggled", self.toggle_button, "tex_linenumbers")
 		self.button_highlighting.connect("toggled", self.toggle_button, "tex_highlighting")
-		
+
+		self.prefwindow.set_transient_for(self.parent.mainwindow)
 		self.prefwindow.show_all()
 
+	def get_value(self, type, item):
+		if type == "string":
+			configitem = self.gconf_client.get_string(GCONFPATH + item)
+			return configitem
+		if type == "list":
+			configitem = self.gconf_client.get_list(GCONFPATH + item)
+			return configitem
+		if type == "bool":		
+			configitem = self.gconf_client.get_bool(GCONFPATH + item)		
+			return configitem
+
+	def set_config_bool(self, item, value):
+		self.gconf_client.set_bool(GCONFPATH + item, value)
+
+	def set_config_string(self, item, value):
+		self.gconf_client.set_string(GCONFPATH + item, value)
+
+	def set_config_list(self, item, value):
+		self.gconf_client.set_list(GCONFPATH + item, value)
+
 	def check_current_setting(self, button, item):
-		check = self.get_config_value("bool", item)
+		check = self.get_value("bool", item)
 		if check is True:
 			button.set_active(True)
 		if check is False:
@@ -115,24 +115,24 @@ class prefs:
 	def engage(self, widget, data):
 		if data is "tex_textwrapping":
 			if widget.get_active() == False:
-				self.parent.editorpane.editorview.set_wrap_mode(gtk.WRAP_NONE)
+				self.parent.editorpane.editorviewer.set_wrap_mode(gtk.WRAP_NONE)
 			else:
-				self.parent.editorpane.editorview.set_wrap_mode(gtk.WRAP_CHAR)
+				self.parent.editorpane.editorviewer.set_wrap_mode(gtk.WRAP_CHAR)
 		if data is "tex_wordwrapping":
 			if widget.get_active() == False:
-				self.parent.editorpane.editorview.set_wrap_mode(gtk.WRAP_CHAR)
+				self.parent.editorpane.editorviewer.set_wrap_mode(gtk.WRAP_CHAR)
 			else:
-				self.parent.editorpane.editorview.set_wrap_mode(gtk.WRAP_WORD)
+				self.parent.editorpane.editorviewer.set_wrap_mode(gtk.WRAP_WORD)
 		if data is "tex_linenumbers":
 			if widget.get_active() == False:
-				self.parent.editorpane.editorview.set_show_line_numbers(False)
+				self.parent.editorpane.editorviewer.set_show_line_numbers(False)
 			else:
-				self.parent.editorpane.editorview.set_show_line_numbers(True)
+				self.parent.editorpane.editorviewer.set_show_line_numbers(True)
 		if data is "tex_highlighting":
 			if widget.get_active() == False:
-				self.parent.editorpane.editorview.set_highlight_current_line(False)
+				self.parent.editorpane.editorviewer.set_highlight_current_line(False)
 			else:
-				self.parent.editorpane.editorview.set_highlight_current_line(True)
+				self.parent.editorpane.editorviewer.set_highlight_current_line(True)
 
 
 	def on_prefs_close_clicked(self, widget, data=None):
@@ -154,8 +154,8 @@ class prefs:
 		if self.notebook.get_current_page() is 1:
 			return
 		if self.notebook.get_current_page() is 2:
-			self.set_config_string("tex_defaulttext", DEFAULT)
-			self.default_buffer.set_text(self.get_config_value("string", "tex_defaulttext"))
+			self.set_config_string("tex_defaulttext", DEFAULT_TEXT)
+			self.default_buffer.set_text(self.get_value("string", "tex_defaulttext"))
 
 	def set_defaults(self):
 
@@ -172,8 +172,11 @@ class prefs:
 		self.gconf_client.set_bool(GCONFPATH + "tex_wordwrapping", True)
 
 		tex_defaulttext = self.gconf_client.get_string(GCONFPATH + "tex_defaulttext")
-		self.gconf_client.set_string(GCONFPATH + "tex_defaulttext", DEFAULT)
+		self.gconf_client.set_string(GCONFPATH + "tex_defaulttext", DEFAULT_TEXT)
 
 		self.gconf_client.set_string(GCONFPATH + "set_defaults", "OK")
+
+
+
 
 

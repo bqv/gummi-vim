@@ -9,36 +9,42 @@
 import os
 import sys
 import gtk
-import gobject
-import time
 import thread
-import tempfile 
 import subprocess
 import traceback
+import tempfile
+import gobject
+import time
+
+import Preferences
 
 
-class motion:
+class Motion:
+	
+	def __init__(self, tex, pdf, error, light):
+		self.editorpane = tex
+		self.previewpane = pdf
+		self.statuslight = light
 
-	def __init__(self, parent):
-		self.parent = parent
-		self.previewpane = self.parent.previewpane
-		self.editorpane = self.parent.editorpane
-
-		self.status = 1
-		self.workfile = None
+		self.texfile = None		
+		self.tmpfile = None
 		self.pdffile = None
-		self.texfile = None
+		self.status = 1
 
-		self.buffer = self.editorpane.bufferS
+		self.editorviewer = self.editorpane.editorviewer
+		self.editorbuffer = self.editorpane.editorbuffer
+		self.errorbuffer = error.get_buffer()
 
 		gobject.threads_init()
 		gtk.gdk.threads_init()
-
 		self.start_monitoring()
+
+	def start_monitoring(self):
+		self.refresh = thread.start_new_thread(self.update_preview, ())
 
 	def create_environment(self, filename):	
 		self.texfile = filename
-		self.texpath = os.path.dirname(self.texfile) + "/"
+		self.texpath = os.path.dirname(self.texfile) + "/"	
 		if ".tex" in self.texfile:
 			self.texname = os.path.basename(self.texfile)[:-4] 
 		else:
@@ -46,67 +52,60 @@ class motion:
 		fd, path = tempfile.mkstemp(".tex")
 		self.workfile = os.readlink("/proc/self/fd/%d" % fd)
 		self.pdffile = self.texpath + self.texname + ".pdf"
-		print "\nEnvironment created for: \nTEX: " + self.texfile + "\nTMP: " + self.workfile + "\nPDF: " + self.pdffile + "\n"
-		self.initial_preview() 
+		print ("\nEnvironment created for: \nTEX: " + self.texfile + 
+		       "\nTMP: " + self.workfile + "\nPDF: " + self.pdffile + "\n")
+		self.initial_preview()
 
 	def initial_preview(self):
 		self.update_workfile()
 		self.update_pdffile()
 		try:		
-			self.previewpane.create_previewpane(self.pdffile, self.parent.pdfdrawarea)
-			self.previewpane.refresh_previewpane()
+			self.previewpane.create_preview(self.pdffile)
+			self.previewpane.refresh_preview()
 		except:
 			self.previewpane.drawarea.hide()
 
-	def start_monitoring(self):
-		self.refresh = thread.start_new_thread(self.start_preview_monitor, ())
-
-		
 	def update_workfile(self):
-		# these two lines make the program hang in certain situations, look into it later. 		
+		# these two lines make the program hang in certain situations, no clue why	
 		#self.editorpane.editorview.set_sensitive(False)
+		self.buffer = self.editorpane.editorviewer.get_buffer()
 		start_iter, end_iter = self.buffer.get_start_iter(), self.buffer.get_end_iter()
-		text = self.buffer.get_text(start_iter, end_iter)
+		content = self.buffer.get_text(start_iter, end_iter)
 		#self.editorpane.editorview.set_sensitive(True)
 		tmpmake = open(self.workfile, "w")
-		tmpmake.write(text)
+		tmpmake.write(content)
 		tmpmake.close()
-		self.editorpane.editorview.grab_focus() #editorpane regrabs focus
+		self.editorviewer.grab_focus() #editorpane regrabs focus
 
-	
 	def update_pdffile(self):	
 		os.chdir(self.texpath)
 		pdfmaker = subprocess.Popen('pdflatex -interaction=nonstopmode -jobname="%s" "%s"' % (self.texname, self.workfile), shell=True, stdin=None, stdout = subprocess.PIPE, stderr=None)
 		output = pdfmaker.communicate()[0]
 		pdfmaker.wait()
-		if pdfmaker.returncode is None:
-			pdfmaker.kill()
-		self.parent.errorbuffer.set_text(output)
+		self.errorbuffer.set_text(output)
 		err1 = "Fatal error"
 		err2 = "Emergency stop"
 		err3 = "LaTeX Error"
 		if err1 in output or err2 in output or err3 in output:
-			self.parent.statuslight.set_stock_id("gtk-no")
+			self.statuslight.set_stock_id("gtk-no")
 		else:
-			self.parent.statuslight.set_stock_id("gtk-yes")
-		
+			self.statuslight.set_stock_id("gtk-yes")
 		
 
-	def start_preview_monitor(self):
+	def update_preview(self):
 		while True:
 			try:
-				if self.previewpane and self.status == 1 and self.parent.editorpane.check_text_change():
+				if self.previewpane and self.status == 1 and self.editorpane.check_text_change():
 					gtk.gdk.threads_enter
-					self.parent.editorpane.check_text_change()
+					self.editorpane.check_text_change()
 					self.update_workfile()
 					self.update_pdffile()
-					self.previewpane.refresh_previewpane()			
+					self.previewpane.refresh_preview()			
 					gtk.gdk.threads_leave
 			except:
 				print "something is wrong with the refresh thread"
 				print traceback.print_exc()
-	
 			time.sleep(1.0)
-		
+
 
 

@@ -9,21 +9,23 @@
 import gtk
 import urllib
 
+import Preferences
 
-class updatecheck:
-	
-	def __init__(self, parent):
-		self.parent = parent
-		self.url = urllib.urlopen("http://gummi.googlecode.com/svn/trunk/dev/latest")
-		latest = str(self.url.readline())
+
+class UpdateCheck:
+
+	def __init__(self):
+		url = urllib.urlopen(Preferences.UPDATEURL)
+		latest = str(url.readline())
 		
 		message = gtk.MessageDialog(None, gtk.DIALOG_MODAL, gtk.MESSAGE_INFO, gtk.BUTTONS_NONE, 
-		"Currently installed:\n" + parent.version + "\n\nCurrently available:\n" + latest)
+		"Currently installed:\n" + Preferences.VERSION + "\n\nCurrently available:\n" + latest)
 		message.add_button(gtk.STOCK_CLOSE, gtk.RESPONSE_CLOSE)
 		message.set_title("Update Check")
 		resp = message.run()
 		if resp == gtk.RESPONSE_CLOSE:
 			message.destroy()
+
 
 
 

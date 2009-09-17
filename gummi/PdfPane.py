@@ -9,24 +9,22 @@
 import gtk
 import poppler
 
+ORIGINAL_HEIGHT = 841.89 
+ORIGINAL_WIDTH  = 595.276 
 
-class pdfpane:
-	
-	def __init__(self):
 
-		self.pdffile = None
-		self.drawarea = None
-		self.page_displayed = 0
-		self.page_total = None
-		
+class PdfPane:
+
+	def __init__(self, drawarea):
+		self.drawarea = drawarea
 		self.scale = 1
 		self.maxscale = 1.6 
-		self.minscale = 1.0	
-		self.scale_rate = 0.1
+		self.minscale = 1.0
+		self.page_displayed = 0
+		self.page_total = None
 
-	def create_previewpane(self, pdffile, drawarea):
-		self.pdffile = pdffile
-		self.drawarea = drawarea	
+	def create_preview(self, pdffile):
+		self.pdffile = pdffile	
 		self.uri = "file://" + pdffile
 		self.document = poppler.document_new_from_file(self.uri, None)
 		self.page_total = self.document.get_n_pages()
@@ -36,7 +34,7 @@ class pdfpane:
 		self.drawarea.modify_bg(gtk.STATE_NORMAL, gtk.gdk.Color(6400, 6400, 6440))
 		self.drawarea.connect("expose-event", self.on_expose)
 
-	def refresh_previewpane(self):
+	def refresh_preview(self):
 		self.drawarea.show()
 		self.uri = "file://" + self.pdffile
 		self.document = poppler.document_new_from_file(self.uri, None)
@@ -45,7 +43,7 @@ class pdfpane:
 			self.current_page = self.document.get_page(self.page_total - 1)			
 		else:		
 			self.current_page = self.document.get_page(self.page_displayed)
-		self.drawarea.queue_draw() 
+		self.drawarea.queue_draw()
 
 	def jump_to_nextpage(self):
 		if (self.page_displayed + 1) < self.page_total:
@@ -71,7 +69,7 @@ class pdfpane:
 			self.width = (self.width * 1.1)
 			self.height = (self.height * 1.1)
 			self.drawarea.set_size_request(int(self.width), int(self.height))
-			self.refresh_previewpane()
+			self.refresh_preview()
 
 	def zoom_out_pane(self):
 		if self.scale > self.minscale:
@@ -79,15 +77,14 @@ class pdfpane:
 			self.width = (self.width / 1.1) 
 			self.height = (self.height / 1.1) 
 			self.drawarea.set_size_request(int(self.width), int(self.height))
-			self.refresh_previewpane()
+			self.refresh_preview()
 
 	def zoom_normal_pane(self):
-		# method needs rewrite
 		self.scale = 1
-		self.height = 841.89 
-		self.width = 595.276 
+		self.height = ORIGINAL_HEIGHT
+		self.width = ORIGINAL_WIDTH
 		self.drawarea.set_size_request(int(self.width), int(self.height))
-		self.refresh_previewpane()
+		self.refresh_preview()
 
 	def on_expose(self, widget, event):
 		cr = widget.window.cairo_create()
@@ -98,5 +95,6 @@ class pdfpane:
 		cr.rectangle(0, 0, self.width, self.height)
 		cr.fill()
 		self.current_page.render(cr)
+
 
 

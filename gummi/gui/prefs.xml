@@ -139,11 +139,12 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="button2">
-                <property name="label" translatable="yes">placeholder</property>
+              <object class="GtkViewport" id="viewport1">
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
+                <property name="resize_mode">queue</property>
+                <child>
+                  <placeholder/>
+                </child>
               </object>
               <packing>
                 <property name="position">1</property>

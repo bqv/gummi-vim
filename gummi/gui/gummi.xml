@@ -14,7 +14,7 @@
         <property name="visible">True</property>
         <property name="orientation">vertical</property>
         <child>
-          <object class="GtkMenuBar" id="menubar1">
+          <object class="GtkMenuBar" id="menu_bar">
             <property name="visible">True</property>
             <child>
               <object class="GtkMenuItem" id="menu_file">
@@ -65,43 +65,21 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkSeparatorMenuItem" id="separatormenuitem1">
+                      <object class="GtkSeparatorMenuItem" id="separator1">
                         <property name="visible">True</property>
                       </object>
                     </child>
                     <child>
-                      <object class="GtkImageMenuItem" id="gtk-print">
+                      <object class="GtkImageMenuItem" id="menu_print">
                         <property name="label">gtk-print</property>
                         <property name="visible">True</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                         <accelerator key="p" signal="activate" modifiers="GDK_CONTROL_MASK"/>
-                        <signal name="activate" handler="on_button_print_clicked"/>
                       </object>
                     </child>
                     <child>
-                      <object class="GtkMenuItem" id="menu_recent1">
-                        <property name="no_show_all">True</property>
-                        <property name="label" translatable="yes">_1. </property>
-                        <property name="use_underline">True</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkMenuItem" id="menu_recent2">
-                        <property name="no_show_all">True</property>
-                        <property name="label" translatable="yes">_2. </property>
-                        <property name="use_underline">True</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkMenuItem" id="menu_recent3">
-                        <property name="no_show_all">True</property>
-                        <property name="label" translatable="yes">_3. </property>
-                        <property name="use_underline">True</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkSeparatorMenuItem" id="separatormenuitem">
+                      <object class="GtkSeparatorMenuItem" id="separator2">
                         <property name="visible">True</property>
                       </object>
                     </child>
@@ -148,7 +126,7 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkSeparatorMenuItem" id="separatormenuitem2">
+                      <object class="GtkSeparatorMenuItem" id="separator3">
                         <property name="visible">True</property>
                       </object>
                     </child>
@@ -193,7 +171,7 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkSeparatorMenuItem" id="separatormenuitem3">
+                      <object class="GtkSeparatorMenuItem" id="separator4">
                         <property name="visible">True</property>
                       </object>
                     </child>
@@ -351,13 +329,13 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkToolButton" id="tool_style_bold">
+                  <object class="GtkToolButton" id="tool_bold">
                     <property name="visible">True</property>
                     <property name="tooltip_text" translatable="yes">Bold text</property>
                     <property name="label" translatable="yes">toolbutton5</property>
                     <property name="use_underline">True</property>
                     <property name="icon_name">format-text-bold</property>
-                    <signal name="clicked" handler="on_bold_button_clicked"/>
+                    <signal name="clicked" handler="on_tool_bold_activate"/>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -365,13 +343,13 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkToolButton" id="tool_style_italic">
+                  <object class="GtkToolButton" id="tool_italic">
                     <property name="visible">True</property>
                     <property name="tooltip_text" translatable="yes">Italic text</property>
                     <property name="label" translatable="yes">toolbutton6</property>
                     <property name="use_underline">True</property>
                     <property name="icon_name">format-text-italic</property>
-                    <signal name="clicked" handler="on_italic_button_clicked"/>
+                    <signal name="clicked" handler="on_tool_italic_activate"/>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -379,13 +357,13 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkToolButton" id="tool_style_unline">
+                  <object class="GtkToolButton" id="tool_unline">
                     <property name="visible">True</property>
                     <property name="tooltip_text" translatable="yes">Underline text</property>
                     <property name="label" translatable="yes">toolbutton7</property>
                     <property name="use_underline">True</property>
                     <property name="icon_name">format-text-underline</property>
-                    <signal name="clicked" handler="on_unline_button_clicked"/>
+                    <signal name="clicked" handler="on_tool_unline_activate"/>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -433,7 +411,7 @@ active document</property>
             <property name="visible">True</property>
             <property name="homogeneous">True</property>
             <child>
-              <object class="GtkScrolledWindow" id="editor_scroller">
+              <object class="GtkScrolledWindow" id="editor_scroll">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="has_focus">True</property>
@@ -460,20 +438,20 @@ active document</property>
                     <property name="can_focus">True</property>
                     <property name="tab_border">0</property>
                     <child>
-                      <object class="GtkScrolledWindow" id="pdf_scroller">
+                      <object class="GtkScrolledWindow" id="preview_scroll">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="hscrollbar_policy">automatic</property>
                         <property name="vscrollbar_policy">automatic</property>
                         <property name="window_placement_set">True</property>
                         <child>
-                          <object class="GtkViewport" id="pdf_viewport">
+                          <object class="GtkViewport" id="preview_viewport">
                             <property name="visible">True</property>
                             <property name="border_width">4</property>
                             <property name="resize_mode">queue</property>
                             <property name="shadow_type">etched-in</property>
                             <child>
-                              <object class="GtkDrawingArea" id="pdf_drawarea">
+                              <object class="GtkDrawingArea" id="preview_drawarea">
                                 <property name="visible">True</property>
                               </object>
                             </child>
@@ -482,7 +460,7 @@ active document</property>
                       </object>
                     </child>
                     <child type="tab">
-                      <object class="GtkLabel" id="label2">
+                      <object class="GtkLabel" id="preview_label">
                         <property name="visible">True</property>
                         <property name="label" translatable="yes">Preview Pane</property>
                       </object>
@@ -491,7 +469,7 @@ active document</property>
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkScrolledWindow" id="scrolledwindow1">
+                      <object class="GtkScrolledWindow" id="error_scroll">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="border_width">4</property>
@@ -516,7 +494,7 @@ active document</property>
                       </packing>
                     </child>
                     <child type="tab">
-                      <object class="GtkLabel" id="label3">
+                      <object class="GtkLabel" id="error_label">
                         <property name="visible">True</property>
                         <property name="label" translatable="yes">Error output</property>
                       </object>
@@ -529,7 +507,7 @@ active document</property>
                       <placeholder/>
                     </child>
                     <child type="tab">
-                      <object class="GtkLabel" id="label4">
+                      <object class="GtkLabel" id="tmp_label">
                         <property name="visible">True</property>
                         <property name="label" translatable="yes">Error output</property>
                       </object>
@@ -544,7 +522,7 @@ active document</property>
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkToolbar" id="toolbar1">
+                  <object class="GtkToolbar" id="previewbuttonbar">
                     <property name="visible">True</property>
                     <property name="toolbar_style">both</property>
                     <property name="icon_size">4</property>
@@ -658,9 +636,9 @@ active document</property>
     <property name="icon">icon.png</property>
     <property name="transient_for">mainwindow</property>
     <accelerator key="Escape" signal="activate-default"/>
-    <signal name="destroy_event" handler="on_searchwindow_delete_event"/>
-    <signal name="activate_default" handler="on_searchwindow_delete_event"/>
-    <signal name="delete_event" handler="on_searchwindow_delete_event"/>
+    <signal name="destroy_event" handler="on_button_searchwindow_close_clicked"/>
+    <signal name="activate_default" handler="on_button_searchwindow_close_clicked"/>
+    <signal name="delete_event" handler="on_button_searchwindow_close_clicked"/>
     <child>
       <object class="GtkVBox" id="vbox3">
         <property name="visible">True</property>
@@ -707,7 +685,6 @@ active document</property>
             <property name="receives_default">False</property>
             <property name="active">True</property>
             <property name="draw_indicator">True</property>
-            <signal name="toggled" handler="toggle_searchwindow_matchcase"/>
           </object>
           <packing>
             <property name="position">1</property>
