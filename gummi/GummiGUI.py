@@ -190,13 +190,13 @@ class GummiGUI:
 		about_dialog.show()
 
 	def on_tool_bold_activate(self, button, data=None):
-		self.editorpane.set_selection_textstyle(widget)
+		self.editorpane.set_selection_textstyle(button)
 
 	def on_tool_italic_activate(self, button, data=None):
-		self.editorpane.set_selection_textstyle(widget)
+		self.editorpane.set_selection_textstyle(button)
 
 	def on_tool_unline_activate(self, button, data=None):
-		self.editorpane.set_selection_textstyle(widget)
+		self.editorpane.set_selection_textstyle(button)
 
 	def on_button_pageback_clicked(self, button, data=None):
 		self.previewpane.jump_to_prevpage()
