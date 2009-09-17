@@ -41,10 +41,13 @@ class TexPane:
 		self.editorbuffer.set_modified(False)
 
 	def fill_buffer(self, text):
+		self.editorbuffer.begin_not_undoable_action()
 		self.editorviewer.set_sensitive(False)
-		self.editorbuffer.set_text(text)
-		self.editorbuffer.set_modified(False)
+		start = self.editorbuffer.get_start_iter()
+		self.editorbuffer.insert(start, text)		
+		self.editorbuffer.set_modified(False)		
 		self.editorviewer.set_sensitive(True)
+		self.editorbuffer.end_not_undoable_action()
 
 	def grab_buffer(self):
 		buff = self.editorviewer.get_buffer()
