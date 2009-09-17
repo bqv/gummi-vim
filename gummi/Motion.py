@@ -82,6 +82,8 @@ class Motion:
 		pdfmaker = subprocess.Popen('pdflatex -interaction=nonstopmode -jobname="%s" "%s"' % (self.texname, self.workfile), shell=True, stdin=None, stdout = subprocess.PIPE, stderr=None)
 		output = pdfmaker.communicate()[0]
 		pdfmaker.wait()
+		try: os.close(3)
+		except: pass	
 		self.errorbuffer.set_text(output)
 		err1 = "Fatal error"
 		err2 = "Emergency stop"
