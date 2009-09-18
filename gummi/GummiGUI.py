@@ -13,6 +13,9 @@ import gtksourceview2
 import traceback
 import pango
 
+try: import glib
+except: pass
+
 import TexPane
 import PdfPane
 import Motion
@@ -213,6 +216,13 @@ class GummiGUI:
 	def on_button_zoomnormal_clicked(self, button, data=None):
 		self.previewpane.zoom_normal_pane()
 
+	def set_status(self, message):
+		self.statusbar.push(self.statusbar_cid, message)
+		glib.timeout_add(4000, self.remove_status)
+
+	def remove_status(self):
+		self.statusbar.push(self.statusbar_cid, "")
+
 	def set_file_filters(self, dialog):
 		plainfilter = gtk.FileFilter()
 		plainfilter.set_name('Text files')
@@ -276,6 +286,7 @@ class GummiGUI:
 			self.editorpane.fill_buffer(decode)
 			self.filename = filename
 			self.motion.create_environment(self.filename)
+			self.set_status("Loading: " + self.filename)
 		except:
 			print traceback.print_exc()
 
@@ -288,7 +299,7 @@ class GummiGUI:
 			fout.write(encoded)
 			fout.close()
 			if filename: self.filename = filename   
-			#self.update_statusbar("Saved: " + self.motion.texfile)			
+			self.set_status("Saving: " + self.filename)		
 		except:
 			print traceback.print_exc()
 
