@@ -9,6 +9,7 @@
 import os
 import sys
 import gtk
+import locale
 import gtksourceview2
 import traceback
 import pango
@@ -68,12 +69,22 @@ class GummiGUI:
 	def decode_text(self, filename):
 		loadfile = open(filename, "r")
 		content = loadfile.read()
-		decoded_content = content.decode("iso-8859-1")
+		lang, encoding = locale.getdefaultlocale()
+		try: decoded_content = content.decode(encoding)
+		except (UnicodeError, TypeError):
+			try: decoded_content = content.decode("iso-8859-1", 'replace')
+			except (UnicodeError, TypeError):
+				decoded_content = content.decode("ascii", 'replace')
 		loadfile.close()
 		return decoded_content
 
 	def encode_text(self, text):
-		encoded_content = text.encode("iso-8859-1")
+		lang, encoding = locale.getdefaultlocale()
+		try: decoded_content = text.encode(encoding)
+		except (UnicodeError, TypeError):
+			try: encoded_content = text.encode("iso-8859-1", 'replace')
+			except (UnicodeError, TypeError):
+				decoded_content = content.decode("ascii", 'replace')
 		return encoded_content
 
 	def update_statusbar(self, message):
