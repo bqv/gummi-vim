@@ -6,8 +6,10 @@
 # this stuff is worth it, you can buy me a beer in return -Alexander van der Mey
 # --------------------------------------------------------------------------------
 
+
 import gtk
 import poppler
+import os.path
 
 ORIGINAL_HEIGHT = 841.89 
 ORIGINAL_WIDTH  = 595.276 
@@ -35,15 +37,16 @@ class PdfPane:
 		self.drawarea.connect("expose-event", self.on_expose)
 
 	def refresh_preview(self):
-		self.drawarea.show()
-		self.uri = "file://" + self.pdffile
-		self.document = poppler.document_new_from_file(self.uri, None)
-		self.page_total = self.document.get_n_pages()
-		if self.page_total <= (self.page_displayed):		
-			self.current_page = self.document.get_page(self.page_total - 1)			
-		else:		
-			self.current_page = self.document.get_page(self.page_displayed)
-		self.drawarea.queue_draw()
+		if os.path.exists(self.pdffile): # only attempt refresh if file exists
+			self.drawarea.show()
+			self.uri = "file://" + self.pdffile
+			self.document = poppler.document_new_from_file(self.uri, None)
+			self.page_total = self.document.get_n_pages()
+			if self.page_total <= (self.page_displayed):		
+				self.current_page = self.document.get_page(self.page_total - 1)			
+			else:		
+				self.current_page = self.document.get_page(self.page_displayed)
+			self.drawarea.queue_draw()
 
 	def jump_to_nextpage(self):
 		if (self.page_displayed + 1) < self.page_total:
