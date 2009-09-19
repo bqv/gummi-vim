@@ -310,7 +310,8 @@ class GummiGUI:
 			fout.write(encoded)
 			fout.close()
 			if filename: self.filename = filename   
-			self.set_status("Saving: " + self.filename)		
+			self.set_status("Saving: " + self.filename)
+			self.motion.export_pdffile()	
 		except:
 			print traceback.print_exc()
 

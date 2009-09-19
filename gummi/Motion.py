@@ -10,6 +10,7 @@ import os
 import sys
 import gtk
 import thread
+import shutil
 import subprocess
 import traceback
 import tempfile
@@ -51,7 +52,7 @@ class Motion:
 			self.texname = os.path.basename(self.texfile)
 		fd, path = tempfile.mkstemp(".tex")
 		self.workfile = os.readlink("/proc/self/fd/%d" % fd)
-		self.pdffile = self.texpath + self.texname + ".pdf"
+		self.pdffile = self.workfile[:-4] + ".pdf"
 		print ("\nEnvironment created for: \nTEX: " + self.texfile + 
 		       "\nTMP: " + self.workfile + "\nPDF: " + self.pdffile + "\n")
 		self.initial_preview()
@@ -64,6 +65,12 @@ class Motion:
 			self.previewpane.refresh_preview()
 		except:
 			self.previewpane.drawarea.hide()
+
+	def export_pdffile(self):
+		try: # export the pdf file if one exists
+			export = self.texpath + self.texname + ".pdf"
+			shutil.copy2(self.pdffile, export)
+		except IOError: pass
 
 	def update_workfile(self):
 		try:
@@ -81,8 +88,8 @@ class Motion:
 			print traceback.print_exc()
 
 	def update_pdffile(self):	
-		os.chdir(self.texpath)
-		pdfmaker = subprocess.Popen('pdflatex -interaction=nonstopmode -jobname="%s" "%s"' % (self.texname, self.workfile), shell=True, stdin=None, stdout = subprocess.PIPE, stderr=None)
+		#os.chdir(self.texpath)
+		pdfmaker = subprocess.Popen('pdflatex -interaction=nonstopmode --output-directory=/tmp/ "%s"' % (self.workfile), shell=True, stdin=None, stdout = subprocess.PIPE, stderr=None)
 		output = pdfmaker.communicate()[0]
 		pdfmaker.wait()
 		try: os.close(3)
