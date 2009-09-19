@@ -70,6 +70,7 @@ class Motion:
 		try: # export the pdf file if one exists
 			export = self.texpath + self.texname + ".pdf"
 			shutil.copy2(self.pdffile, export)
+			os.chdir(self.texpath)
 		except IOError: pass
 
 	def update_workfile(self):

@@ -65,6 +65,8 @@ class GummiGUI:
 			self.filename = "/tmp/gummi-default"
 			self.editorpane.fill_buffer(self.config.get_value("string", "tex_defaulttext"))
 			self.motion.create_environment(self.filename)
+			os.chdir(os.environ['HOME'])
+
 
 	def decode_text(self, filename):
 		loadfile = open(filename, "r")
