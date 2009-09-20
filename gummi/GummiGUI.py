@@ -46,6 +46,9 @@ class GummiGUI:
 		self.statusbar = builder.get_object("statusbar")
 		self.statusbar_cid = self.statusbar.get_context_id("Gummi")
 		self.errorfield.modify_font(pango.FontDescription("monospace 8"))
+		self.recent1 = builder.get_object("menu_recent1")		
+		self.recent2 = builder.get_object("menu_recent2")
+		self.recent3 = builder.get_object("menu_recent3")
 
 		self.config = Preferences.Preferences(self)
 		self.editorpane = TexPane.TexPane(self.config)
@@ -65,6 +68,7 @@ class GummiGUI:
 			self.editorpane.fill_buffer(self.config.get_string("tex_defaulttext"))
 			self.motion.create_environment(self.filename)
 			os.chdir(os.environ['HOME'])
+		self.setup_recentfiles()
 
 
 	def decode_text(self, filename):
@@ -235,6 +239,40 @@ class GummiGUI:
 	def remove_status(self):
 		self.statusbar.push(self.statusbar_cid, "")
 
+	def setup_recentfiles(self):
+		self.check_recentfile(0, self.recent1)
+		self.check_recentfile(1, self.recent2)
+		self.check_recentfile(2, self.recent3)
+
+	def check_recentfile(self, i, widget):
+		recents = self.config.get_list("recent_files")
+		try:
+			recents[i]
+			entry = os.path.basename(recents[i])
+			widget.get_children()[0].set_label(str(i+1) + ". " + entry)
+			widget.show()
+		except IndexError: widget.hide()
+
+	def on_menu_recent_activate(self, widget, data=None):
+		recents = self.config.get_list("recent_files")
+		widget = widget.get_name()
+		if widget == "menu_recent1": self.load_recentfile(recents[0])
+		if widget == "menu_recent2": self.load_recentfile(recents[1])
+		if widget == "menu_recent3": self.load_recentfile(recents[2])
+
+	def add_recentfile(self, filename):
+		recents = self.config.get_list("recent_files")
+		if filename not in recents:			
+			recents.insert(0, filename)
+			if len(recents) > 3:
+				del recents[3]
+			self.config.set_list("recent_files", recents)
+			self.setup_recentfiles()
+
+	def load_recentfile(self, filename):
+		self.check_for_save()
+		self.load_file(filename)		
+
 	def set_file_filters(self, dialog):
 		plainfilter = gtk.FileFilter()
 		plainfilter.set_name('Text files')
@@ -299,6 +337,7 @@ class GummiGUI:
 			self.filename = filename
 			self.motion.create_environment(self.filename)
 			self.set_status("Loading: " + self.filename)
+			self.add_recentfile(filename)
 		except:
 			print traceback.print_exc()
 
@@ -324,8 +363,6 @@ class GummiGUI:
 		print "  |)__)	  I welcome your feedback at:"
 		print '  -"-"-	  http://gummi.googlecode.com\n'
 		quit()
-
-
 
 
 if __name__ == "__main__":
