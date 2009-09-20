@@ -13,7 +13,6 @@ import locale
 import gtksourceview2
 import traceback
 import pango
-
 try: import glib
 except: pass
 
@@ -63,7 +62,7 @@ class GummiGUI:
 			self.load_file(self.filename)
 		else: 
 			self.filename = "/tmp/gummi-default"
-			self.editorpane.fill_buffer(self.config.get_value("string", "tex_defaulttext"))
+			self.editorpane.fill_buffer(self.config.get_string("tex_defaulttext"))
 			self.motion.create_environment(self.filename)
 			os.chdir(os.environ['HOME'])
 

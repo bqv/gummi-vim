@@ -27,8 +27,8 @@ class TexPane:
 		self.editorviewer = gtksourceview2.View(self.editorbuffer)
 		self.editorviewer.modify_font(pango.FontDescription("monospace 10"))
 
-		self.editorviewer.set_show_line_numbers(config.get_value("bool", "tex_linenumbers"))
-		self.editorviewer.set_highlight_current_line(config.get_value("bool", "tex_highlighting"))
+		self.editorviewer.set_show_line_numbers(config.get_bool("tex_linenumbers"))
+		self.editorviewer.set_highlight_current_line(config.get_bool("tex_highlighting"))
 		self.editorviewer.set_wrap_mode(self.grab_wrapmode())
 
 		self.start_iter = None
@@ -94,8 +94,8 @@ class TexPane:
 		self.editorviewer.scroll_to_iter(ins, 0)
 
 	def grab_wrapmode(self):
-		textwrap = self.config.get_value("bool", "tex_textwrapping")
-		wordwrap = self.config.get_value("bool", "tex_wordwrapping")
+		textwrap = self.config.get_bool("tex_textwrapping")
+		wordwrap = self.config.get_bool("tex_wordwrapping")
 		if textwrap is False:
 			return gtk.WRAP_NONE
 		if wordwrap is True:

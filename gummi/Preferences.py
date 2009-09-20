@@ -24,6 +24,11 @@ DEFAULT_TEXT = """\\documentclass{article}
 \\\\
 \\end{document}"""
 
+TEX_HIGHLIGHTING = True
+TEX_LINENUMBERS = True
+TEX_TEXTWRAPPING = True
+TEX_WORDWRAPPING = True
+
 
 class Preferences:
 
@@ -32,14 +37,39 @@ class Preferences:
 	def __init__(self, parent):
 		self.parent = parent
 		self.gconf_client = gconf.client_get_default()
-	
-		# replace with schema soon
-		firstrun = self.gconf_client.get_string(GCONFPATH + "set_defaults")
-		if firstrun is None:
-			self.set_defaults()
 
-	def test(self):
-		print "test werkt"
+	def get_default(self, key):
+		if key is "tex_highlighting": return TEX_HIGHLIGHTING
+		elif key is "tex_linenumbers": return TEX_LINENUMBERS
+		elif key is "tex_textwrapping": return TEX_TEXTWRAPPING
+		elif key is "tex_wordwrapping": return TEX_WORDWRAPPING
+		elif key is "tex_defaulttext": return DEFAULT_TEXT
+		else: return 1
+	
+	def get_bool(self,key):
+		item = self.gconf_client.get(GCONFPATH + key)
+		if item == None:
+			default = self.get_default(key)
+			self.gconf_client.set_bool(GCONFPATH + key, default)
+			self.gconf_client.set_bool(GCONFPATH + key, default)
+			return default
+		else:
+			return self.gconf_client.get_bool(GCONFPATH + key)
+
+	def set_bool(self, key, value):
+		self.gconf_client.set_bool(GCONFPATH + key, value)	
+
+	def get_string(self,key):
+		item = self.gconf_client.get(GCONFPATH + key)
+		if item == None:
+			default = self.get_default(key)
+			self.gconf_client.set_string(GCONFPATH + key, default)
+			return default
+		else:
+			return self.gconf_client.get_string(GCONFPATH + key)
+
+	def set_string(self, key, value):
+		self.gconf_client.set_string(GCONFPATH + key, value)	
 
 	def display_preferences(self):
 		builder = gtk.Builder()	
@@ -57,7 +87,7 @@ class Preferences:
 
 		self.default_textfield.modify_font(pango.FontDescription("monospace 10"))
 		self.default_buffer = self.default_textfield.get_buffer()
-		self.default_buffer.set_text(self.get_value("string", "tex_defaulttext"))
+		self.default_buffer.set_text(self.get_string("tex_defaulttext"))
 
 		self.check_current_setting(self.button_textwrap, "tex_textwrapping")
 		self.check_current_setting(self.button_wordwrap, "tex_wordwrapping")
@@ -72,39 +102,18 @@ class Preferences:
 		self.prefwindow.set_transient_for(self.parent.mainwindow)
 		self.prefwindow.show_all()
 
-	def get_value(self, type, item):
-		if type == "string":
-			configitem = self.gconf_client.get_string(GCONFPATH + item)
-			return configitem
-		if type == "list":
-			configitem = self.gconf_client.get_list(GCONFPATH + item)
-			return configitem
-		if type == "bool":		
-			configitem = self.gconf_client.get_bool(GCONFPATH + item)		
-			return configitem
-
-	def set_config_bool(self, item, value):
-		self.gconf_client.set_bool(GCONFPATH + item, value)
-
-	def set_config_string(self, item, value):
-		self.gconf_client.set_string(GCONFPATH + item, value)
-
-	def set_config_list(self, item, value):
-		self.gconf_client.set_list(GCONFPATH + item, value)
-
 	def check_current_setting(self, button, item):
-		check = self.get_value("bool", item)
+		check = self.get_bool(item)
 		if check is True:
 			button.set_active(True)
 		if check is False:
 			button.set_active(False)
 
-
 	def toggle_button(self, widget, data=None):
 		if widget.get_active() == False:
-			self.set_config_bool(data, False)
+			self.set_bool(data, False)
 		else:
-			self.set_config_bool(data, True)
+			self.set_bool(data, True)
 		if self.button_textwrap.get_active() is False:
 			self.button_wordwrap.set_active(False)
 			self.button_wordwrap.set_sensitive(False)
@@ -138,15 +147,15 @@ class Preferences:
 	def on_prefs_close_clicked(self, widget, data=None):
 		if self.notebook.get_current_page() is 2:
 			newtext = self.default_buffer.get_text(self.default_buffer.get_start_iter(), self.default_buffer.get_end_iter())
-			self.set_config_string("tex_defaulttext", newtext)	
+			self.set_string("tex_defaulttext", newtext)	
 		self.prefwindow.destroy()
 
 	def on_prefs_reset_clicked(self, widget, data=None):
 		if self.notebook.get_current_page() is 0:
-			self.set_config_bool("tex_linenumbers", True)
-			self.set_config_bool("tex_highlighting", True)
-			self.set_config_bool("tex_textwrapping", True)
-			self.set_config_bool("tex_wordwrapping", True)		
+			self.set_bool("tex_linenumbers", self.get_default("tex_linenumbers"))
+			self.set_bool("tex_highlighting", self.get_default("tex_highlighting"))
+			self.set_bool("tex_textwrapping", self.get_default("tex_textwrapping"))
+			self.set_bool("tex_wordwrapping", self.get_default("tex_wordwrapping"))		
 			self.check_current_setting(self.button_textwrap, "tex_textwrapping")
 			self.check_current_setting(self.button_wordwrap, "tex_wordwrapping")
 			self.check_current_setting(self.button_linenumbers, "tex_linenumbers")
@@ -154,29 +163,7 @@ class Preferences:
 		if self.notebook.get_current_page() is 1:
 			return
 		if self.notebook.get_current_page() is 2:
-			self.set_config_string("tex_defaulttext", DEFAULT_TEXT)
-			self.default_buffer.set_text(self.get_value("string", "tex_defaulttext"))
-
-	def set_defaults(self):
-
-		tex_linenumbers = self.gconf_client.get_bool(GCONFPATH + "tex_linenumbers")
-		self.gconf_client.set_bool(GCONFPATH + "tex_linenumbers", True)
-
-		tex_highlighting = self.gconf_client.get_bool(GCONFPATH + "tex_highlighting")
-		self.gconf_client.set_bool(GCONFPATH + "tex_highlighting", True)
-
-		tex_textwrapping = self.gconf_client.get_bool(GCONFPATH + "tex_textwrapping")
-		self.gconf_client.set_bool(GCONFPATH + "tex_textwrapping", True)
-
-		tex_wordwrapping = self.gconf_client.get_bool(GCONFPATH + "tex_wordwrapping")
-		self.gconf_client.set_bool(GCONFPATH + "tex_wordwrapping", True)
-
-		tex_defaulttext = self.gconf_client.get_string(GCONFPATH + "tex_defaulttext")
-		self.gconf_client.set_string(GCONFPATH + "tex_defaulttext", DEFAULT_TEXT)
-
-		self.gconf_client.set_string(GCONFPATH + "set_defaults", "OK")
-
-
-
+			self.set_string("tex_defaulttext", DEFAULT_TEXT)
+			self.default_buffer.set_text(self.get_string("tex_defaulttext"))
 
 
