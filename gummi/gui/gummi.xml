@@ -238,6 +238,16 @@
                   <object class="GtkMenu" id="menu4">
                     <property name="visible">True</property>
                     <child>
+                      <object class="GtkImageMenuItem" id="menu_image">
+                        <property name="label" translatable="yes">Insert _Image</property>
+                        <property name="visible">True</property>
+                        <property name="use_underline">True</property>
+                        <property name="image">image3</property>
+                        <property name="use_stock">False</property>
+                        <signal name="activate" handler="on_menu_image_activate"/>
+                      </object>
+                    </child>
+                    <child>
                       <object class="GtkImageMenuItem" id="menu_preferences">
                         <property name="label">gtk-preferences</property>
                         <property name="visible">True</property>
@@ -382,6 +392,28 @@
                     <property name="use_underline">True</property>
                     <property name="icon_name">format-text-underline</property>
                     <signal name="clicked" handler="on_tool_unline_activate"/>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="homogeneous">True</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkSeparatorToolItem" id="tool_separator2">
+                    <property name="visible">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="homogeneous">True</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkToolButton" id="tool_image">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">toolbutton1</property>
+                    <property name="use_underline">True</property>
+                    <property name="icon_name">insert-image</property>
+                    <signal name="clicked" handler="on_menu_image_activate"/>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -783,5 +815,9 @@ active document</property>
   <object class="GtkImage" id="image2">
     <property name="visible">True</property>
     <property name="stock">gtk-about</property>
+  </object>
+  <object class="GtkImage" id="image3">
+    <property name="visible">True</property>
+    <property name="icon_name">insert-image</property>
   </object>
 </interface>

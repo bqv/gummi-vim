@@ -85,11 +85,11 @@ class GummiGUI:
 
 	def encode_text(self, text):
 		lang, encoding = locale.getdefaultlocale()
-		try: decoded_content = text.encode(encoding)
+		try: encoded_content = text.encode(encoding)
 		except (UnicodeError, TypeError):
 			try: encoded_content = text.encode("iso-8859-1", 'replace')
 			except (UnicodeError, TypeError):
-				decoded_content = content.decode("ascii", 'replace')
+				encoded_content = content.encode("ascii", 'replace')
 		return encoded_content
 
 	def update_statusbar(self, message):
