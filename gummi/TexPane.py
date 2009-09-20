@@ -58,6 +58,16 @@ class TexPane:
 		buff.set_modified(False)
 		return content
 
+	def insert_package(self, package, current_iter):
+		pkgspace = "\\begin{document}"		
+		start_iter = self.editorbuffer.get_start_iter()
+		begin_iter, end = gtksourceview2.iter_forward_search(start_iter, pkgspace, flags=0, limit=None)
+		pkgsearchstr = "{" + package + "}"
+		if gtksourceview2.iter_forward_search(start_iter, pkgsearchstr, flags=0, limit=begin_iter):
+			return
+		else:
+			self.editorbuffer.insert(begin_iter, "\\usepackage{" + package + "}\n")
+
 	def set_selection_textstyle(self, widget):
 		try:	
 			ins = self.editorbuffer.get_selection_bounds()[0]
@@ -71,6 +81,10 @@ class TexPane:
 			self.editorbuffer.insert(end, "}")
 			self.textchange = datetime.now()
 		except:	return
+
+	def get_current_position(self):
+		return self.editorbuffer.get_iter_at_mark(self.editorbuffer.get_insert())
+
 
 	def start_searchfunction(self):
 		self.start_iter = self.editorbuffer.get_start_iter()
@@ -107,6 +121,9 @@ class TexPane:
 		self.textchange = datetime.now()
 
 	def set_text_change(self, widget, event):
+		self.textchange = datetime.now()
+
+	def text_changed(self):
 		self.textchange = datetime.now()
 
 	def check_text_change(self):	

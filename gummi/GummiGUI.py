@@ -18,6 +18,7 @@ except: pass
 
 import TexPane
 import PdfPane
+import Importer
 import Motion
 import Preferences
 import UpdateCheck
@@ -49,6 +50,14 @@ class GummiGUI:
 		self.recent1 = builder.get_object("menu_recent1")		
 		self.recent2 = builder.get_object("menu_recent2")
 		self.recent3 = builder.get_object("menu_recent3")
+
+		self.importpane = builder.get_object("importpane")
+		self.image_file = builder.get_object("image_file")
+		self.image_caption = builder.get_object("image_caption")
+		self.image_label = builder.get_object("image_label")
+		self.image_scaler = builder.get_object("image_scaler")
+		self.scaler = builder.get_object("scaler")
+
 
 		self.config = Preferences.Preferences(self)
 		self.editorpane = TexPane.TexPane(self.config)
@@ -170,6 +179,47 @@ class GummiGUI:
 		flags = self.get_search_flags()
 		self.editorpane.search_buffer(term, flags)
 
+	def on_image_file_activate(self, button, event, data=None):
+		imagefile = None
+		chooser = gtk.FileChooserDialog("Open File...", self.mainwindow,
+								gtk.FILE_CHOOSER_ACTION_OPEN,
+								(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
+								gtk.STOCK_OPEN, gtk.RESPONSE_OK))
+		imagefilter = gtk.FileFilter()
+		imagefilter.set_name('Image files')
+		imagefilter.add_mime_type("image/*")
+		chooser.add_filter(imagefilter)
+
+		response = chooser.run()
+		if response == gtk.RESPONSE_OK: imagefile = chooser.get_filename()
+		chooser.destroy()
+		self.image_label.set_sensitive(True)
+		self.image_scaler.set_sensitive(True)
+		self.image_caption.set_sensitive(True)
+		self.scaler.set_value(1.00)
+		self.image_file.set_text(imagefile)
+		return imagefile
+
+	def prepare_image_import(self, imagefile):
+		begin = "\\begin{center}\n"
+		include = "\t\\includegraphics"
+		scale = "[scale=" + str(self.scaler.get_value()) + "]"
+		file = "{" + self.image_file.get_text() + "}\n"
+		caption = "\t\\captionof{" + self.image_caption.get_text() + "}\n"
+		label = "\t\\label{" + self.image_label.get_text() + "}\n"
+		end = "\\end{center}\n"
+		return begin + include + scale + file + caption + label + end
+
+	def on_button_imagewindow_apply_clicked(self, button, data=None):
+		if self.image_file.get_text() is not "":
+			iter = self.editorpane.get_current_position()		
+			self.editorpane.insert_package("graphicx", iter)		
+			code = self.prepare_image_import("")		
+			iter = self.editorpane.get_current_position()			
+			self.editorpane.editorbuffer.insert(iter, code)
+			self.editorpane.text_changed()
+		self.importpane.hide()			
+
 	def get_search_flags(self):
 		flags = [False, 0]
 		if self.backwards.get_active() is True: flags[0] = True
@@ -177,6 +227,9 @@ class GummiGUI:
 		if self.matchcase.get_active() is True: flags[1] = 0
 		else: flags[1] = (gtksourceview2.SEARCH_CASE_INSENSITIVE)
 		return flags
+
+	def on_menu_image_activate(self, menuitem, data=None):
+		self.importpane.show()
 
 	def on_menu_preferences_activate(self, menuitem, data=None):
 		self.config.display_preferences()
