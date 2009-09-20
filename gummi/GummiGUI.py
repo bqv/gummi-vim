@@ -18,7 +18,6 @@ except: pass
 
 import TexPane
 import PdfPane
-import Importer
 import Motion
 import Preferences
 import UpdateCheck
@@ -201,7 +200,7 @@ class GummiGUI:
 		return imagefile
 
 	def prepare_image_import(self, imagefile):
-		begin = "\\begin{center}\n"
+		begin = "\n\\begin{center}\n"
 		include = "\t\\includegraphics"
 		scale = "[scale=" + str(self.scaler.get_value()) + "]"
 		file = "{" + self.image_file.get_text() + "}\n"
