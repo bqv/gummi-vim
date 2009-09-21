@@ -231,9 +231,6 @@ class GummiGUI:
 		else: flags[1] = (gtksourceview2.SEARCH_CASE_INSENSITIVE)
 		return flags
 
-	def on_menu_image_activate(self, menuitem, data=None):
-		self.importpane.show()
-
 	def on_menu_preferences_activate(self, menuitem, data=None):
 		self.config.display_preferences()
 
