@@ -50,13 +50,12 @@ class GummiGUI:
 		self.recent2 = builder.get_object("menu_recent2")
 		self.recent3 = builder.get_object("menu_recent3")
 
-		self.importpane = builder.get_object("importpane")
+		self.image_pane = builder.get_object("image_pane")
 		self.image_file = builder.get_object("image_file")
 		self.image_caption = builder.get_object("image_caption")
 		self.image_label = builder.get_object("image_label")
-		self.image_scaler = builder.get_object("image_scaler")
+		self.image_scale = builder.get_object("image_scale")
 		self.scaler = builder.get_object("scaler")
-
 
 		self.config = Preferences.Preferences(self)
 		self.editorpane = TexPane.TexPane(self.config)
@@ -66,7 +65,7 @@ class GummiGUI:
 
 		self.create_initial_document()
 		self.mainwindow.show_all()
-
+	
 	def create_initial_document(self):
 		if len(sys.argv) > 1: 
 			self.filename = sys.argv[1]		
@@ -77,7 +76,6 @@ class GummiGUI:
 			self.motion.create_environment(self.filename)
 			os.chdir(os.environ['HOME'])
 		self.setup_recentfiles()
-
 
 	def decode_text(self, filename):
 		loadfile = open(filename, "r")
@@ -178,6 +176,12 @@ class GummiGUI:
 		flags = self.get_search_flags()
 		self.editorpane.search_buffer(term, flags)
 
+	def on_import_tabs_switch_page(self, notebook, page, page_num):
+		newactive = notebook.get_nth_page(page_num).get_name()
+		if newactive == "box_image": self.image_pane.show()
+		if newactive == "box_minimize": self.image_pane.hide()
+		if newactive == "box_table": self.image_pane.hide()
+
 	def on_image_file_activate(self, button, event, data=None):
 		imagefile = None
 		chooser = gtk.FileChooserDialog("Open File...", self.mainwindow,
@@ -193,7 +197,7 @@ class GummiGUI:
 		if response == gtk.RESPONSE_OK: imagefile = chooser.get_filename()
 		chooser.destroy()
 		self.image_label.set_sensitive(True)
-		self.image_scaler.set_sensitive(True)
+		self.image_scale.set_sensitive(True)
 		self.image_caption.set_sensitive(True)
 		self.scaler.set_value(1.00)
 		self.image_file.set_text(imagefile)
@@ -217,7 +221,7 @@ class GummiGUI:
 			iter = self.editorpane.get_current_position()			
 			self.editorpane.editorbuffer.insert(iter, code)
 			self.editorpane.text_changed()
-		self.importpane.hide()			
+		self.image_pane.hide()			
 
 	def get_search_flags(self):
 		flags = [False, 0]
