@@ -18,6 +18,7 @@ except: pass
 
 import TexPane
 import PdfPane
+import Importer
 import Motion
 import Preferences
 import UpdateCheck
@@ -56,6 +57,9 @@ class GummiGUI:
 		self.image_label = builder.get_object("image_label")
 		self.image_scale = builder.get_object("image_scale")
 		self.scaler = builder.get_object("scaler")
+		self.table_pane = builder.get_object("table_pane")
+		self.table_rows = builder.get_object("table_rows")
+		self.table_cols = builder.get_object("table_cols")
 
 		self.config = Preferences.Preferences(self)
 		self.editorpane = TexPane.TexPane(self.config)
@@ -178,9 +182,17 @@ class GummiGUI:
 
 	def on_import_tabs_switch_page(self, notebook, page, page_num):
 		newactive = notebook.get_nth_page(page_num).get_name()
-		if newactive == "box_image": self.image_pane.show()
-		if newactive == "box_minimize": self.image_pane.hide()
-		if newactive == "box_table": self.image_pane.hide()
+		if newactive == "box_image": 
+			self.image_pane.show()
+			self.table_pane.hide()
+		if newactive == "box_minimize": 
+			self.image_pane.hide()
+			self.table_pane.hide()
+		if newactive == "box_table": 
+			self.image_pane.hide()
+			self.table_pane.show()
+			self.table_cols.set_value(3)
+			self.table_rows.set_value(3)
 
 	def on_image_file_activate(self, button, event, data=None):
 		imagefile = None
@@ -203,21 +215,24 @@ class GummiGUI:
 		self.image_file.set_text(imagefile)
 		return imagefile
 
-	def prepare_image_import(self, imagefile):
-		begin = "\n\\begin{center}\n"
-		include = "\t\\includegraphics"
-		scale = "[scale=" + str(self.scaler.get_value()) + "]"
-		file = "{" + self.image_file.get_text() + "}\n"
-		caption = "\t\\captionof{" + self.image_caption.get_text() + "}\n"
-		label = "\t\\label{" + self.image_label.get_text() + "}\n"
-		end = "\\end{center}\n"
-		return begin + include + scale + file + caption + label + end
+	def on_button_tablepane_apply_clicked(self, button, data=None):
+		iter = self.editorpane.get_current_position()				
+		t = Importer.Importer()
+		code = t.generate_table(self.table_rows.get_value(), self.table_cols.get_value())	
+		iter = self.editorpane.get_current_position()			
+		self.editorpane.editorbuffer.insert(iter, code)
+		self.editorpane.text_changed()
 
-	def on_button_imagewindow_apply_clicked(self, button, data=None):
+	def on_button_imagepane_apply_clicked(self, button, data=None):
 		if self.image_file.get_text() is not "":
 			iter = self.editorpane.get_current_position()		
 			self.editorpane.insert_package("graphicx", iter)		
-			code = self.prepare_image_import("")		
+			i = Importer.Importer()
+			f = self.image_file.get_text()			
+			s = self.scaler.get_value()
+			c = self.image_caption.get_text()
+			l = self.image_label.get_text()
+			code = i.generate_image(f, s, c, l)	
 			iter = self.editorpane.get_current_position()			
 			self.editorpane.editorbuffer.insert(iter, code)
 			self.editorpane.text_changed()

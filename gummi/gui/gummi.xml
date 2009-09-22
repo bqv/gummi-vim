@@ -458,6 +458,93 @@ active document</property>
                   </packing>
                 </child>
                 <child>
+                  <object class="GtkViewport" id="table_pane">
+                    <property name="height_request">73</property>
+                    <property name="no_show_all">True</property>
+                    <property name="resize_mode">queue</property>
+                    <child>
+                      <object class="GtkTable" id="table_layout">
+                        <property name="visible">True</property>
+                        <property name="n_rows">2</property>
+                        <property name="n_columns">3</property>
+                        <child>
+                          <object class="GtkButton" id="table_apply">
+                            <property name="label">gtk-apply</property>
+                            <property name="width_request">100</property>
+                            <property name="height_request">34</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
+                            <property name="border_width">3</property>
+                            <property name="use_stock">True</property>
+                            <signal name="clicked" handler="on_button_tablepane_apply_clicked"/>
+                          </object>
+                          <packing>
+                            <property name="left_attach">2</property>
+                            <property name="right_attach">3</property>
+                            <property name="top_attach">1</property>
+                            <property name="bottom_attach">2</property>
+                            <property name="x_options">GTK_FILL</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkSpinButton" id="spinbutton1">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="invisible_char">&#x2022;</property>
+                            <property name="xalign">0.5</property>
+                            <property name="adjustment">table_rows</property>
+                          </object>
+                          <packing>
+                            <property name="top_attach">1</property>
+                            <property name="bottom_attach">2</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkSpinButton" id="spinbutton2">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="invisible_char">&#x2022;</property>
+                            <property name="xalign">0.5</property>
+                            <property name="adjustment">table_cols</property>
+                          </object>
+                          <packing>
+                            <property name="left_attach">1</property>
+                            <property name="right_attach">2</property>
+                            <property name="top_attach">1</property>
+                            <property name="bottom_attach">2</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="label6">
+                            <property name="visible">True</property>
+                            <property name="yalign">0.80000001192092896</property>
+                            <property name="label" translatable="yes">Rows:</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="label7">
+                            <property name="visible">True</property>
+                            <property name="yalign">0.80000001192092896</property>
+                            <property name="label" translatable="yes">Columns:</property>
+                          </object>
+                          <packing>
+                            <property name="left_attach">1</property>
+                            <property name="right_attach">2</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <placeholder/>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
                   <object class="GtkViewport" id="image_pane">
                     <property name="height_request">110</property>
                     <property name="no_show_all">True</property>
@@ -477,7 +564,7 @@ active document</property>
                             <property name="receives_default">True</property>
                             <property name="border_width">3</property>
                             <property name="use_stock">True</property>
-                            <signal name="clicked" handler="on_button_imagewindow_apply_clicked"/>
+                            <signal name="clicked" handler="on_button_imagepane_apply_clicked"/>
                           </object>
                           <packing>
                             <property name="left_attach">2</property>
@@ -604,7 +691,7 @@ active document</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
-                    <property name="position">1</property>
+                    <property name="position">2</property>
                   </packing>
                 </child>
                 <child>
@@ -678,7 +765,7 @@ active document</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
-                    <property name="position">2</property>
+                    <property name="position">3</property>
                   </packing>
                 </child>
               </object>
@@ -1029,6 +1116,20 @@ active document</property>
     <property name="lower">0.10000000000000001</property>
     <property name="upper">5</property>
     <property name="step_increment">0.10000000000000001</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="table_rows">
+    <property name="value">3</property>
+    <property name="lower">1</property>
+    <property name="upper">100</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="table_cols">
+    <property name="value">3</property>
+    <property name="lower">1</property>
+    <property name="upper">100</property>
+    <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
 </interface>
