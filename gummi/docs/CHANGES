@@ -2,6 +2,22 @@
 Gummi CHANGELOG
 -----------------------------------------------------------------------------
 
+
+Gummi 0.3b (September 22th, 2009):
+	
+	Bugs fixed:
+	* Preview pane no longer crashes after extended period of use
+	* Toolbar buttons now display a tooltip on mouseover
+	* Undo is no longer able to erase the original document content
+	* Statusbar messages will now correctly fade after a x interval
+	* More solid character decoding/encoding
+	* Preview pane will now temporarly disable itself when pdf invalid
+	
+	Features:
+	* New save behaviour no longer exports .aux and .log files 
+	* Added a toolbar for quick insertion of images and tables
+	* Recent files are saved and displayed in the file-menu
+
 Gummi 0.2f (September 15th, 2009):
 	
 	Bugs fixed:
