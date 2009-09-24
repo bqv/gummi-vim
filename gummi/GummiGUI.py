@@ -380,6 +380,7 @@ class GummiGUI:
 				filename = filename + ".tex"		
 			chooser.destroy()
 			self.motion.create_environment(filename)	
+		chooser.destroy()
 		return filename
 
 	def check_for_save(self):
