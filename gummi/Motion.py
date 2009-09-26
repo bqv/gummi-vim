@@ -22,10 +22,11 @@ import Preferences
 
 class Motion:
 	
-	def __init__(self, tex, pdf, error, light):
+	def __init__(self, tex, pdf, error, light, tempdir):
 		self.editorpane = tex
 		self.previewpane = pdf
 		self.statuslight = light
+		self.tempdir = tempdir
 
 		self.texfile = None		
 		self.tmpfile = None
@@ -43,7 +44,7 @@ class Motion:
 	def start_monitoring(self):
 		self.refresh = thread.start_new_thread(self.update_preview, ())
 
-	def create_environment(self, filename):	
+	def create_environment(self, filename):
 		self.texfile = filename
 		self.texpath = os.path.dirname(self.texfile) + "/"	
 		if ".tex" in self.texfile:
@@ -90,7 +91,7 @@ class Motion:
 
 	def update_pdffile(self):	
 		#os.chdir(self.texpath)
-		pdfmaker = subprocess.Popen('pdflatex -interaction=nonstopmode --output-directory=/tmp/ "%s"' % (self.workfile), shell=True, stdin=None, stdout = subprocess.PIPE, stderr=None)
+		pdfmaker = subprocess.Popen('pdflatex -interaction=nonstopmode --output-directory="%s" "%s"' % (self.tempdir, self.workfile), shell=True, stdin=None, stdout = subprocess.PIPE, stderr=None)
 		output = pdfmaker.communicate()[0]
 		pdfmaker.wait()
 		try: os.close(3)

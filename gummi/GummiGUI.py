@@ -61,10 +61,12 @@ class GummiGUI:
 		self.table_rows = builder.get_object("table_rows")
 		self.table_cols = builder.get_object("table_cols")
 
+		self.tempdir = os.environ.get("TMPDIR", "/tmp")
+
 		self.config = Preferences.Preferences(self)
 		self.editorpane = TexPane.TexPane(self.config)
 		self.previewpane = PdfPane.PdfPane(self.drawarea)
-		self.motion = Motion.Motion(self.editorpane, self.previewpane, self.errorfield, self.statuslight)
+		self.motion = Motion.Motion(self.editorpane, self.previewpane, self.errorfield, self.statuslight, self.tempdir)
 		self.editorscroll.add(self.editorpane.editorviewer)
 
 		self.create_initial_document()
@@ -75,7 +77,7 @@ class GummiGUI:
 			self.filename = sys.argv[1]		
 			self.load_file(self.filename)
 		else: 
-			self.filename = "/tmp/gummi-default"
+			self.filename = self.tempdir + "/gummi-default"
 			self.editorpane.fill_buffer(self.config.get_string("tex_defaulttext"))
 			self.motion.create_environment(self.filename)
 			os.chdir(os.environ['HOME'])
@@ -110,28 +112,28 @@ class GummiGUI:
 		self.editorpane.fill_buffer(Preferences.DEFAULT_TEXT)
 		self.editorpane.editorbuffer.set_modified(False)
 		self.filename = None
-		self.motion.create_environment("/tmp/gummi-new")
+		self.motion.create_environment(self.tempdir + "/gummi-new")
 
 	def on_menu_open_activate(self, menuitem, data=None):
-		if os.getcwd() == '/tmp':
+		if os.getcwd() == self.tempdir:
 			os.chdir(os.environ['HOME'])	
 		if self.check_for_save(): self.on_menu_save_activate(None, None)        
 		filename = self.get_open_filename()
 		if filename: self.load_file(filename)
 
 	def on_menu_save_activate(self, menuitem, data=None):
-		if os.getcwd() == '/tmp':
+		if os.getcwd() == self.tempdir:
 			os.chdir(os.environ['HOME'])	
 		if self.filename is None: 
 			filename = self.get_save_filename()
 			if filename: self.write_file(filename)
-		if os.path.dirname(self.filename) == "/tmp":
+		if os.path.dirname(self.filename) == self.tempdir:
 			filename = self.get_save_filename()
 			if filename: self.write_file(filename)
 		else: self.write_file(None)
 
 	def on_menu_saveas_activate(self, menuitem, data=None):	
-		if os.getcwd() == '/tmp':
+		if os.getcwd() == self.tempdir:
 			os.chdir(os.environ['HOME'])
 		self.filename = self.get_save_filename()
 		if self.filename: self.write_file(self.filename)
