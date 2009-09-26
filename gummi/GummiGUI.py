@@ -29,6 +29,7 @@ class GummiGUI:
 	def __init__(self):
 
 		self.filename = None
+		self.exitinterrupt = False
 		self.CWD = CWD
 
 		builder = gtk.Builder()
@@ -376,6 +377,8 @@ class GummiGUI:
 										gtk.STOCK_SAVE, gtk.RESPONSE_OK))
 		self.set_file_filters(chooser)
 		response = chooser.run()
+		if response == gtk.RESPONSE_CANCEL:
+			self.exitinterrupt = True
 		if response == gtk.RESPONSE_OK: 
 			filename = chooser.get_filename()
 			if not ".tex" in filename[-4:]:
@@ -429,11 +432,13 @@ class GummiGUI:
 
 	def gtk_main_quit(self, menuitem, data=None):
 		if self.check_for_save(): self.on_menu_save_activate(None, None)	
-		print "   ___ "
-		print "  {o,o}	  Thanks for using Gummi!"
-		print "  |)__)	  I welcome your feedback at:"
-		print '  -"-"-	  http://gummi.googlecode.com\n'
-		quit()
+		if self.exitinterrupt is False:	
+			print "   ___ "
+			print "  {o,o}	  Thanks for using Gummi!"
+			print "  |)__)	  I welcome your feedback at:"
+			print '  -"-"-	  http://gummi.googlecode.com\n'
+			quit()
+		else: self.exitinterrupt = False; return True
 
 
 if __name__ == "__main__":
