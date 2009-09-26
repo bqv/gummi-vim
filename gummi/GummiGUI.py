@@ -52,6 +52,7 @@ class GummiGUI:
 		self.recent2 = builder.get_object("menu_recent2")
 		self.recent3 = builder.get_object("menu_recent3")
 
+		self.import_tabs = builder.get_object("import_tabs")
 		self.image_pane = builder.get_object("image_pane")
 		self.image_file = builder.get_object("image_file")
 		self.image_caption = builder.get_object("image_caption")
@@ -225,6 +226,7 @@ class GummiGUI:
 		iter = self.editorpane.get_current_position()			
 		self.editorpane.editorbuffer.insert(iter, code)
 		self.editorpane.text_changed()
+		self.import_tabs.set_current_page(0)
 
 	def on_button_imagepane_apply_clicked(self, button, data=None):
 		if self.image_file.get_text() is not "":
@@ -239,7 +241,7 @@ class GummiGUI:
 			iter = self.editorpane.get_current_position()			
 			self.editorpane.editorbuffer.insert(iter, code)
 			self.editorpane.text_changed()
-		self.image_pane.hide()			
+		self.import_tabs.set_current_page(0)		
 
 	def get_search_flags(self):
 		flags = [False, 0]
