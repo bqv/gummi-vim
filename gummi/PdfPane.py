@@ -9,6 +9,7 @@
 
 import gtk
 import poppler
+import traceback
 import os.path
 
 ORIGINAL_HEIGHT = 841.89 
@@ -24,6 +25,7 @@ class PdfPane:
 		self.minscale = 1.0
 		self.page_displayed = 0
 		self.page_total = None
+		self.previewactive = 0
 
 	def create_preview(self, pdffile):
 		self.pdffile = pdffile	
@@ -35,18 +37,22 @@ class PdfPane:
 		self.drawarea.set_size_request(int(self.width), int(self.height))
 		self.drawarea.modify_bg(gtk.STATE_NORMAL, gtk.gdk.Color(6400, 6400, 6440))
 		self.drawarea.connect("expose-event", self.on_expose)
+		self.previewactive = 1
 
 	def refresh_preview(self):
-		if os.path.exists(self.pdffile): # only attempt refresh if file exists
-			self.drawarea.show()
-			self.uri = "file://" + self.pdffile
-			self.document = poppler.document_new_from_file(self.uri, None)
-			self.page_total = self.document.get_n_pages()
-			if self.page_total <= (self.page_displayed):		
-				self.current_page = self.document.get_page(self.page_total - 1)			
-			else:		
-				self.current_page = self.document.get_page(self.page_displayed)
-			self.drawarea.queue_draw()
+		if self.previewactive is 0: self.create_preview(self.pdffile)
+		try:
+			if os.path.exists(self.pdffile): # only attempt refresh if file exists
+				self.drawarea.show()
+				self.uri = "file://" + self.pdffile
+				self.document = poppler.document_new_from_file(self.uri, None)
+				self.page_total = self.document.get_n_pages()
+				if self.page_total <= (self.page_displayed):		
+					self.current_page = self.document.get_page(self.page_total - 1)			
+				else:		
+					self.current_page = self.document.get_page(self.page_displayed)
+				self.drawarea.queue_draw()
+		except: print traceback.print_exc()
 
 	def jump_to_nextpage(self):
 		if (self.page_displayed + 1) < self.page_total:
