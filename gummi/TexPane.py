@@ -12,6 +12,7 @@ import gtksourceview2
 from datetime import datetime
 
 import Preferences
+import Formatting
 
 
 class TexPane:
@@ -69,40 +70,8 @@ class TexPane:
 			self.editorbuffer.insert(begin_iter, "\\usepackage{" + package + "}\n")
 
 	def set_selection_textstyle(self, widget):
-		try: # maybe migrate tag insertion to own class soon
-			self.editorbuffer.begin_user_action()
-			ins = self.editorbuffer.get_selection_bounds()[0]
-			if widget.get_name() == "tool_bold":
-				self.editorbuffer.insert(ins, "\\textbf{")
-			if widget.get_name() == "tool_italic":
-				self.editorbuffer.insert(ins, "\\textit{")
-			if widget.get_name() == "tool_unline":
-				self.editorbuffer.insert(ins, "\\underline{")
-			end = self.editorbuffer.get_selection_bounds()[1]
-			self.editorbuffer.insert(end, "}")
-			self.editorbuffer.end_user_action()
-			self.textchange = datetime.now()
-		except:	return
-
-	def set_selection_textindent(self, widget):
-		try: # maybe migrate tag insertion to own class soon
-			self.editorbuffer.begin_user_action()
-			ins = self.editorbuffer.get_selection_bounds()[0]
-			if widget.get_name() == "tool_left":
-				self.editorbuffer.insert(ins, "\\begin{flushleft}")
-				end = self.editorbuffer.get_selection_bounds()[1]
-				self.editorbuffer.insert(end, "\\end{flushleft}")
-			elif widget.get_name() == "tool_center":
-				self.editorbuffer.insert(ins, "\\begin{center}")
-				end = self.editorbuffer.get_selection_bounds()[1]
-				self.editorbuffer.insert(end, "\\end{center}")
-			elif widget.get_name() == "tool_right":
-				self.editorbuffer.insert(ins, "\\begin{flushright}")
-				end = self.editorbuffer.get_selection_bounds()[1]
-				self.editorbuffer.insert(end, "\\end{flushright}")
-			self.editorbuffer.end_user_action()			
-			self.textchange = datetime.now()
-		except:	return
+		insert = Formatting.Formatting(widget, self.editorbuffer)		
+		self.text_changed()
 
 	def get_current_position(self):
 		return self.editorbuffer.get_iter_at_mark(self.editorbuffer.get_insert())
