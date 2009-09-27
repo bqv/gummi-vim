@@ -7,7 +7,7 @@
 # --------------------------------------------------------------------------------
 
 STYLES = ["tool_bold", "tool_italic", "tool_unline"]
-INDENT = ["tool_left", "tool_center", "tool_right"]
+ALLIGN = ["tool_left", "tool_center", "tool_right"]
 
 
 class Formatting:
@@ -34,7 +34,7 @@ class Formatting:
 			elif caller == "tool_italic": begintag = "\\textit{"
 			elif caller == "tool_unline": begintag = "\\underline{"
 			endtag = "}"
-		elif caller in INDENT:
+		elif caller in ALLIGN:
 			if caller == "tool_left": cmd = "flushleft"
 			elif caller == "tool_center": cmd = "center"
 			elif caller == "tool_right": cmd = "flushright"

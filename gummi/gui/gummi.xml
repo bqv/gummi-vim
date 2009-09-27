@@ -400,6 +400,7 @@
                 <child>
                   <object class="GtkToolButton" id="tool_left">
                     <property name="visible">True</property>
+                    <property name="tooltip_text" translatable="yes">Allign left</property>
                     <property name="label" translatable="yes">toolbutton1</property>
                     <property name="use_underline">True</property>
                     <property name="icon_name">format-justify-left</property>
@@ -413,6 +414,7 @@
                 <child>
                   <object class="GtkToolButton" id="tool_center">
                     <property name="visible">True</property>
+                    <property name="tooltip_text" translatable="yes">Center text</property>
                     <property name="label" translatable="yes">toolbutton2</property>
                     <property name="use_underline">True</property>
                     <property name="icon_name">format-justify-center</property>
@@ -426,6 +428,7 @@
                 <child>
                   <object class="GtkToolButton" id="tool_right">
                     <property name="visible">True</property>
+                    <property name="tooltip_text" translatable="yes">Allign right</property>
                     <property name="label" translatable="yes">toolbutton3</property>
                     <property name="use_underline">True</property>
                     <property name="icon_name">format-justify-right</property>
@@ -1048,8 +1051,8 @@ active document</property>
                 <property name="has_focus">True</property>
                 <property name="invisible_char">&#x2022;</property>
                 <property name="primary_icon_stock">gtk-find</property>
-                <accelerator key="Escape" signal="activate" modifiers="GDK_SHIFT_MASK"/>
                 <accelerator key="Return" signal="activate"/>
+                <accelerator key="Escape" signal="activate" modifiers="GDK_SHIFT_MASK"/>
                 <signal name="activate" handler="on_button_searchwindow_find_clicked"/>
               </object>
               <packing>
