@@ -70,6 +70,7 @@ class TexPane:
 
 	def set_selection_textstyle(self, widget):
 		try: # maybe migrate tag insertion to own class soon
+			self.editorbuffer.begin_user_action()
 			ins = self.editorbuffer.get_selection_bounds()[0]
 			if widget.get_name() == "tool_bold":
 				self.editorbuffer.insert(ins, "\\textbf{")
@@ -79,11 +80,13 @@ class TexPane:
 				self.editorbuffer.insert(ins, "\\underline{")
 			end = self.editorbuffer.get_selection_bounds()[1]
 			self.editorbuffer.insert(end, "}")
+			self.editorbuffer.end_user_action()
 			self.textchange = datetime.now()
 		except:	return
 
 	def set_selection_textindent(self, widget):
 		try: # maybe migrate tag insertion to own class soon
+			self.editorbuffer.begin_user_action()
 			ins = self.editorbuffer.get_selection_bounds()[0]
 			if widget.get_name() == "tool_left":
 				self.editorbuffer.insert(ins, "\\begin{flushleft}")
@@ -96,7 +99,8 @@ class TexPane:
 			elif widget.get_name() == "tool_right":
 				self.editorbuffer.insert(ins, "\\begin{flushright}")
 				end = self.editorbuffer.get_selection_bounds()[1]
-				self.editorbuffer.insert(end, "\\end{flushright}")			
+				self.editorbuffer.insert(end, "\\end{flushright}")
+			self.editorbuffer.end_user_action()			
 			self.textchange = datetime.now()
 		except:	return
 
