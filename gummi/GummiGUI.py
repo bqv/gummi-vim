@@ -290,6 +290,15 @@ class GummiGUI:
 	def on_tool_unline_activate(self, button, data=None):
 		self.editorpane.set_selection_textstyle(button)
 
+	def on_tool_left_activate(self, button, data=None):
+		self.editorpane.set_selection_textindent(button)
+
+	def on_tool_center_activate(self, button, data=None):
+		self.editorpane.set_selection_textindent(button)
+
+	def on_tool_right_activate(self, button, data=None):
+		self.editorpane.set_selection_textindent(button)
+
 	def on_button_pageback_clicked(self, button, data=None):
 		self.previewpane.jump_to_prevpage()
 
