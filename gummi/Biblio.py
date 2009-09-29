@@ -81,24 +81,10 @@ class Biblio:
 
 	def compile_bibliography(self):
 		self.editorpane.insert_package("cite")
-		bibfile = self.select_listdata()
+		bibfile = self.select_listdata(1)
 		tempdir = os.environ.get("TMPDIR", "/tmp")
 		bibname = os.path.basename(bibfile)[:-4]
 		print bibfile, tempdir, bibname
-
-		#shutil.copy2(value, tempdir
-		
-		
-
-
-
-
-
-#pdfmaker = subprocess.Popen('pdflatex -interaction=nonstopmode --output-directory="%s" "%s"' % (self.tempdir, self.workfile), shell=True, stdin=None, stdout = subprocess.PIPE, stderr=None)
-#		output = pdfmaker.communicate()[0]
-#		pdfmaker.wait()
-		try: os.close(3)
-shutil.copy2(self.pdffile, export)
 
 
 
