@@ -89,6 +89,12 @@ class Motion:
 		except:
 			print traceback.print_exc()
 
+	def update_auxfile(self):
+		auxupdate = subprocess.Popen('pdflatex --draftmode --output-directory="%s" "%s"' % (self.tempdir, self.workfile), shell=True, stdin=None, stdout=subprocess.PIPE, stderr=None)
+		output = auxupdate.communicate()[0]
+		auxupdate.wait()
+
+
 	def update_pdffile(self):	
 		#os.chdir(self.texpath)
 		pdfmaker = subprocess.Popen('pdflatex -interaction=nonstopmode --output-directory="%s" "%s"' % (self.tempdir, self.workfile), shell=True, stdin=None, stdout = subprocess.PIPE, stderr=None)

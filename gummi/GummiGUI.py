@@ -39,6 +39,7 @@ class GummiGUI:
 		self.builder = builder
 
 		self.mainwindow = builder.get_object("mainwindow")
+		self.mainnotebook = builder.get_object("main_notebook")
 		self.editorscroll = builder.get_object("editor_scroll")
 		self.drawarea = builder.get_object("preview_drawarea")
 		self.errorfield = builder.get_object("errorfield")
@@ -279,8 +280,10 @@ class GummiGUI:
 		self.biblio.del_bibliography()
 
 	def on_button_bibapply_clicked(self, button, data=None):
-		self.biblio.compile_bibliography()
-	
+		try: self.biblio.compile_bibliography()
+		except: pass 
+		if button.get_name() == "bibapply":
+			self.mainnotebook.set_current_page(0)
 
 	def set_status(self, message):
 		self.statusbar.push(self.statusbar_cid, message)

@@ -72,19 +72,21 @@ class TexPane:
 			self.editorbuffer.end_not_undoable_action()
 		self.text_changed()
 
-	def insert_bib(self, package, current_iter):
+	def insert_bib(self, package):
 		pkgspace = "\\end{document}"	
 		end_iter = self.editorbuffer.get_end_iter()
 		begin_iter, end = gtksourceview2.iter_backward_search(end_iter, pkgspace, flags=0, limit=None)
-		pkgsearchstr = "{" + package + "}"
+		pkgsearchstr = "\\bibliography{"
 		aa = self.editorbuffer.get_start_iter()
 		bb = self.editorbuffer.get_end_iter()
 		if gtksourceview2.iter_forward_search(aa, pkgsearchstr, flags=0, limit=bb):
 			return
 		else:
-			self.editorbuffer.insert(begin_iter, "\\bibliography{" + package + "}{}\n" + "\\bibliographystyle{plain}\n")		
+			self.editorbuffer.begin_not_undoable_action()
+			self.editorbuffer.insert(begin_iter, "\\bibliography{" + package + "}{}\n" + "\\bibliographystyle{plain}\n")
+			self.editorbuffer.end_not_undoable_action()	
 		self.text_changed()
-		#self.editorbuffer.g
+
 
 	def set_selection_textstyle(self, widget):
 		insert = Formatting.Formatting(widget, self.editorbuffer)		

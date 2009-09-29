@@ -246,6 +246,16 @@
                   <object class="GtkMenu" id="menu4">
                     <property name="visible">True</property>
                     <child>
+                      <object class="GtkImageMenuItem" id="menu_bibupdate">
+                        <property name="label" translatable="yes">Update _Bibliography</property>
+                        <property name="visible">True</property>
+                        <property name="use_underline">True</property>
+                        <property name="image">image3</property>
+                        <property name="use_stock">False</property>
+                        <signal name="activate" handler="on_button_bibapply_clicked"/>
+                      </object>
+                    </child>
+                    <child>
                       <object class="GtkImageMenuItem" id="menu_preferences">
                         <property name="label">gtk-preferences</property>
                         <property name="visible">True</property>
@@ -682,6 +692,15 @@ active document</property>
                               </packing>
                             </child>
                             <child>
+                              <object class="GtkHSeparator" id="hseparator1">
+                                <property name="visible">True</property>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="position">1</property>
+                              </packing>
+                            </child>
+                            <child>
                               <object class="GtkHButtonBox" id="hbuttonbox1">
                                 <property name="height_request">100</property>
                                 <property name="visible">True</property>
@@ -689,7 +708,7 @@ active document</property>
                                 <property name="homogeneous">True</property>
                                 <property name="layout_style">center</property>
                                 <child>
-                                  <object class="GtkButton" id="button3">
+                                  <object class="GtkButton" id="bibadd">
                                     <property name="label">gtk-add</property>
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
@@ -704,7 +723,7 @@ active document</property>
                                   </packing>
                                 </child>
                                 <child>
-                                  <object class="GtkButton" id="button4">
+                                  <object class="GtkButton" id="bibdel">
                                     <property name="label">gtk-remove</property>
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
@@ -719,7 +738,7 @@ active document</property>
                                   </packing>
                                 </child>
                                 <child>
-                                  <object class="GtkButton" id="button6">
+                                  <object class="GtkButton" id="bibapply">
                                     <property name="label">gtk-apply</property>
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
@@ -736,7 +755,16 @@ active document</property>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
-                                <property name="position">1</property>
+                                <property name="position">2</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkHSeparator" id="hseparator2">
+                                <property name="visible">True</property>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="position">3</property>
                               </packing>
                             </child>
                             <child>
@@ -746,7 +774,7 @@ active document</property>
                                 <property name="editable">False</property>
                               </object>
                               <packing>
-                                <property name="position">2</property>
+                                <property name="position">4</property>
                               </packing>
                             </child>
                           </object>
@@ -914,8 +942,8 @@ active document</property>
                 <property name="has_focus">True</property>
                 <property name="invisible_char">&#x2022;</property>
                 <property name="primary_icon_stock">gtk-find</property>
-                <accelerator key="Return" signal="activate"/>
                 <accelerator key="Escape" signal="activate" modifiers="GDK_SHIFT_MASK"/>
+                <accelerator key="Return" signal="activate"/>
                 <signal name="activate" handler="on_button_searchwindow_find_clicked"/>
               </object>
               <packing>
@@ -1263,5 +1291,9 @@ active document</property>
         </child>
       </object>
     </child>
+  </object>
+  <object class="GtkImage" id="image3">
+    <property name="visible">True</property>
+    <property name="icon_name">accessories-dictionary</property>
   </object>
 </interface>

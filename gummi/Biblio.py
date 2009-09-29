@@ -23,6 +23,7 @@ class Biblio:
 		self.mainwindow = builder.get_object("mainwindow")
 		self.treeview = builder.get_object("bib_treeview")
 		self.treelist = builder.get_object("bib_treelist")
+		self.biboutput = builder.get_object("bibtex_output")
 
 		textrenderer = gtk.CellRendererText()
 		column = gtk.TreeViewColumn("Name", textrenderer, text=1)
@@ -84,7 +85,25 @@ class Biblio:
 		bibfile = self.select_listdata(1)
 		tempdir = os.environ.get("TMPDIR", "/tmp")
 		bibname = os.path.basename(bibfile)[:-4]
-		print bibfile, tempdir, bibname
+
+		self.editorpane.insert_bib(bibname)
+
+		self.motion.update_workfile()
+		workfile = self.motion.workfile[:-4]
+		self.motion.update_auxfile()
+		shutil.copy2(bibfile, tempdir + "/" + bibname + ".bib")
+		cwd = os.getcwd()
+		os.chdir(tempdir)
+		bibcompile = subprocess.Popen('bibtex "%s"' % (workfile), shell=True, stdin=None, stdout=subprocess.PIPE, stderr=None)
+		bibcompile.wait()
+		os.chdir(cwd)
+		output = bibcompile.communicate()[0]
+		self.editorpane.text_changed()
+		self.biboutput.set_text("hi")
+
+
+
+		
 
 
 
