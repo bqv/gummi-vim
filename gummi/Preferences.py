@@ -29,6 +29,7 @@ TEX_LINENUMBERS = True
 TEX_TEXTWRAPPING = True
 TEX_WORDWRAPPING = True
 RECENT_FILES = []
+BIB_FILES = []
 
 
 class Preferences:
@@ -46,6 +47,7 @@ class Preferences:
 		elif key is "tex_wordwrapping": return TEX_WORDWRAPPING
 		elif key is "tex_defaulttext": return DEFAULT_TEXT
 		elif key is "recent_files": return RECENT_FILES
+		elif key is "bib_files": return BIB_FILES
 		else: return 1
 	
 	def get_bool(self,key):
@@ -85,7 +87,18 @@ class Preferences:
 	def set_list(self, key, value):
 		self.gconf_client.set_list(GCONFPATH + key, gconf.VALUE_STRING, value)
 
+	
+	def append_to_list(self, key, value):
+		list = self.get_list(key)
+		list.append(value)
+		self.gconf_client.set_list(GCONFPATH + key, gconf.VALUE_STRING, list)
 
+	def remove_from_list(self, key, value):
+		list = self.get_list(key)
+		del list[value]
+		self.gconf_client.set_list(GCONFPATH + key, gconf.VALUE_STRING, list)
+
+	
 	def display_preferences(self):
 		builder = gtk.Builder()	
 		builder.add_from_file(self.parent.CWD + "/gui/prefs.xml")

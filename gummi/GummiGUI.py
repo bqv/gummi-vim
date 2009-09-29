@@ -20,6 +20,7 @@ import TexPane
 import PdfPane
 import Importer
 import Motion
+import Biblio
 import Preferences
 import UpdateCheck
 
@@ -35,6 +36,7 @@ class GummiGUI:
 		builder = gtk.Builder()
 		builder.add_from_file(CWD + "/gui/gummi.xml")
 		builder.connect_signals(self)
+		self.builder = builder
 
 		self.mainwindow = builder.get_object("mainwindow")
 		self.editorscroll = builder.get_object("editor_scroll")
@@ -72,6 +74,7 @@ class GummiGUI:
 		self.previewpane = PdfPane.PdfPane(self.drawarea)
 		self.motion = Motion.Motion(self.editorpane, self.previewpane, self.errorfield, self.statuslight, self.tempdir)
 		self.editorscroll.add(self.editorpane.editorviewer)
+		self.biblio = Biblio.Biblio(self.config, self.editorpane, self.motion, builder)
 
 		self.create_initial_document()
 		self.mainwindow.show_all()
@@ -313,6 +316,16 @@ class GummiGUI:
 	
 	def on_button_zoomnormal_clicked(self, button, data=None):
 		self.previewpane.zoom_normal_pane()
+
+	def on_button_bibadd_clicked(self, button, data=None):
+		self.biblio.add_bibliography()
+
+	def on_button_bibdel_clicked(self, button, data=None):
+		self.biblio.del_bibliography()
+
+	def on_button_bibapply_clicked(self, button, data=None):
+		self.biblio.compile_bibliography()
+	
 
 	def set_status(self, message):
 		self.statusbar.push(self.statusbar_cid, message)
