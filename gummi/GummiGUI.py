@@ -53,23 +53,17 @@ class GummiGUI:
 		self.recent1 = builder.get_object("menu_recent1")		
 		self.recent2 = builder.get_object("menu_recent2")
 		self.recent3 = builder.get_object("menu_recent3")
-
-		self.import_tabs = builder.get_object("import_tabs")
+		self.box_image = self.builder.get_object("box_image")
+		self.box_table = self.builder.get_object("box_table")
 		self.image_pane = builder.get_object("image_pane")
-		self.image_file = builder.get_object("image_file")
-		self.image_caption = builder.get_object("image_caption")
-		self.image_label = builder.get_object("image_label")
-		self.image_scale = builder.get_object("image_scale")
-		self.scaler = builder.get_object("scaler")
 		self.table_pane = builder.get_object("table_pane")
-		self.table_rows = builder.get_object("table_rows")
-		self.table_cols = builder.get_object("table_cols")
 
 		self.tempdir = os.environ.get("TMPDIR", "/tmp")
 
 		self.config = Preferences.Preferences(self)
 		self.editorpane = TexPane.TexPane(self.config)
 		self.previewpane = PdfPane.PdfPane(self.drawarea)
+		self.importer = Importer.Importer(self.editorpane, builder)
 		self.motion = Motion.Motion(self.editorpane, self.previewpane, self.errorfield, self.statuslight, self.tempdir)
 		self.editorscroll.add(self.editorpane.editorviewer)
 		self.biblio = Biblio.Biblio(self.config, self.editorpane, self.motion, builder)
@@ -185,65 +179,7 @@ class GummiGUI:
 	def on_button_searchwindow_find_clicked(self, button, data=None):
 		term = self.searchentry.get_text()
 		flags = self.get_search_flags()
-		self.editorpane.search_buffer(term, flags)
-
-	def on_import_tabs_switch_page(self, notebook, page, page_num):
-		newactive = notebook.get_nth_page(page_num).get_name()
-		self.box_image = self.builder.get_object("box_image")
-		self.box_table = self.builder.get_object("box_table")
-		self.box_image.foreach(lambda x:self.box_image.remove(x))
-		self.box_table.foreach(lambda x:self.box_table.remove(x))
-		if newactive == "box_image": 
-			self.box_image.add(self.image_pane)
-		if newactive == "box_table": 
-			self.box_table.add(self.table_pane)
-			self.table_cols.set_value(3)
-			self.table_rows.set_value(3)
-
-	def on_image_file_activate(self, button, event, data=None):
-		imagefile = None
-		chooser = gtk.FileChooserDialog("Open File...", self.mainwindow,
-								gtk.FILE_CHOOSER_ACTION_OPEN,
-								(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
-								gtk.STOCK_OPEN, gtk.RESPONSE_OK))
-		imagefilter = gtk.FileFilter()
-		imagefilter.set_name('Image files')
-		imagefilter.add_mime_type("image/*")
-		chooser.add_filter(imagefilter)
-
-		response = chooser.run()
-		if response == gtk.RESPONSE_OK: imagefile = chooser.get_filename()
-		chooser.destroy()
-		self.image_label.set_sensitive(True)
-		self.image_scale.set_sensitive(True)
-		self.image_caption.set_sensitive(True)
-		self.scaler.set_value(1.00)
-		self.image_file.set_text(imagefile)
-		return imagefile
-
-	def on_button_tablepane_apply_clicked(self, button, data=None):
-		iter = self.editorpane.get_current_position()				
-		t = Importer.Importer()
-		code = t.generate_table(self.table_rows.get_value(), self.table_cols.get_value())	
-		iter = self.editorpane.get_current_position()			
-		self.editorpane.editorbuffer.insert(iter, code)
-		self.editorpane.text_changed()
-		self.import_tabs.set_current_page(0)
-
-	def on_button_imagepane_apply_clicked(self, button, data=None):
-		if self.image_file.get_text() is not "":
-			iter = self.editorpane.get_current_position()		
-			self.editorpane.insert_package("graphicx", iter)		
-			i = Importer.Importer()
-			f = self.image_file.get_text()			
-			s = self.scaler.get_value()
-			c = self.image_caption.get_text()
-			l = self.image_label.get_text()
-			code = i.generate_image(f, s, c, l)	
-			iter = self.editorpane.get_current_position()			
-			self.editorpane.editorbuffer.insert(iter, code)
-			self.editorpane.text_changed()
-		self.import_tabs.set_current_page(0)		
+		self.editorpane.search_buffer(term, flags)	
 
 	def get_search_flags(self):
 		flags = [False, 0]
@@ -252,6 +188,24 @@ class GummiGUI:
 		if self.matchcase.get_active() is True: flags[1] = 0
 		else: flags[1] = (gtksourceview2.SEARCH_CASE_INSENSITIVE)
 		return flags
+
+	def on_import_tabs_switch_page(self, notebook, page, page_num):
+		newactive = notebook.get_nth_page(page_num).get_name()
+		self.box_image.foreach(lambda x:self.box_image.remove(x))
+		self.box_table.foreach(lambda x:self.box_table.remove(x))
+		if newactive == "box_image": 
+			self.box_image.add(self.image_pane)
+		if newactive == "box_table": 
+			self.box_table.add(self.table_pane)
+
+	def on_button_imagepane_apply_clicked(self, button, data=None):
+		self.importer.insert_image()
+
+	def on_button_tablepane_apply_clicked(self, button, data=None):
+		self.importer.insert_table()
+
+	def on_image_file_activate(self, button, event, data=None):
+		self.importer.prepare_image()
 
 	def on_menu_preferences_activate(self, menuitem, data=None):
 		self.config.display_preferences()
