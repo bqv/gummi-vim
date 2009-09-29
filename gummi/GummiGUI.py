@@ -208,6 +208,9 @@ class GummiGUI:
 	def on_image_file_activate(self, button, event, data=None):
 		self.importer.prepare_image()
 
+	def on_menu_bibupdate_activate(self, menuitem, data=None):
+		self.biblio.refresh_bibliography()
+
 	def on_menu_preferences_activate(self, menuitem, data=None):
 		self.config.display_preferences()
 
@@ -280,10 +283,8 @@ class GummiGUI:
 		self.biblio.del_bibliography()
 
 	def on_button_bibapply_clicked(self, button, data=None):
-		try: self.biblio.compile_bibliography()
-		except: pass 
-		if button.get_name() == "bibapply":
-			self.mainnotebook.set_current_page(0)
+		self.biblio.setup_bibliography()
+		self.mainnotebook.set_current_page(0)		
 
 	def set_status(self, message):
 		self.statusbar.push(self.statusbar_cid, message)

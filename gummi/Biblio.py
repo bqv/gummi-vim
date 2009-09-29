@@ -80,18 +80,20 @@ class Biblio:
 		self.refresh_listdata()
 
 
-	def compile_bibliography(self):
+	def setup_bibliography(self):
 		self.editorpane.insert_package("cite")
 		bibfile = self.select_listdata(1)
 		tempdir = os.environ.get("TMPDIR", "/tmp")
 		bibname = os.path.basename(bibfile)[:-4]
-
+		shutil.copy2(bibfile, tempdir + "/" + bibname + ".bib")
 		self.editorpane.insert_bib(bibname)
+		self.compile_bibliography()
 
+	def compile_bibliography(self):
 		self.motion.update_workfile()
 		workfile = self.motion.workfile[:-4]
 		self.motion.update_auxfile()
-		shutil.copy2(bibfile, tempdir + "/" + bibname + ".bib")
+		tempdir = os.environ.get("TMPDIR", "/tmp")
 		cwd = os.getcwd()
 		os.chdir(tempdir)
 		bibcompile = subprocess.Popen('bibtex "%s"' % (workfile), shell=True, stdin=None, stdout=subprocess.PIPE, stderr=None)
@@ -99,7 +101,7 @@ class Biblio:
 		os.chdir(cwd)
 		output = bibcompile.communicate()[0]
 		self.editorpane.text_changed()
-		self.biboutput.set_text("hi")
+
 
 
 
