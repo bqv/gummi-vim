@@ -16,9 +16,9 @@ import Preferences
 
 class Biblio:
 
-	def __init__(self, config, texpane, motion, builder):
+	def __init__(self, config, editorpane, motion, builder):
 		self.config = config
-		self.texpane = texpane		
+		self.editorpane = editorpane		
 		self.motion = motion
 		self.mainwindow = builder.get_object("mainwindow")
 		self.treeview = builder.get_object("bib_treeview")
@@ -27,10 +27,8 @@ class Biblio:
 		textrenderer = gtk.CellRendererText()
 		column = gtk.TreeViewColumn("Name", textrenderer, text=1)
 		self.treeview.append_column(column)
-
-		#self.biblist = self.config.get_list("bib_files")
-
 		self.parse_listdata()
+
 
 	def parse_listdata(self):
 		self.biblist = self.config.get_list("bib_files")
@@ -54,6 +52,7 @@ class Biblio:
 
 
 	def add_bibliography(self):
+		self.biblist = self.config.get_list("bib_files")
 		bibfile = None
 		chooser = gtk.FileChooserDialog("Open File...", self.mainwindow,
 								gtk.FILE_CHOOSER_ACTION_OPEN,
@@ -68,19 +67,20 @@ class Biblio:
 		if response == gtk.RESPONSE_CANCEL: return
 		if response == gtk.RESPONSE_OK: 
 			bibfile = chooser.get_filename()
-			self.config.append_to_list("bib_files", bibfile)		
-			self.refresh_listdata()		
+			if bibfile not in self.biblist:
+				self.config.append_to_list("bib_files", bibfile)		
+				self.refresh_listdata()
 		chooser.destroy()
 	
 
 	def del_bibliography(self):
-		value = self.select_listdata(1)
+		value = self.select_listdata(0)
 		self.config.remove_from_list("bib_files", int(value))
 		self.refresh_listdata()
 
 
 	def compile_bibliography(self):
-		return
+		pass
 
 
 
