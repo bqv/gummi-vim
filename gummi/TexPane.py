@@ -59,7 +59,7 @@ class TexPane:
 		buff.set_modified(False)
 		return content
 
-	def insert_package(self, package, current_iter):
+	def insert_package(self, package):
 		pkgspace = "\\begin{document}"		
 		start_iter = self.editorbuffer.get_start_iter()
 		begin_iter, end = gtksourceview2.iter_forward_search(start_iter, pkgspace, flags=0, limit=None)
@@ -67,7 +67,9 @@ class TexPane:
 		if gtksourceview2.iter_forward_search(start_iter, pkgsearchstr, flags=0, limit=begin_iter):
 			return
 		else:
+			self.editorbuffer.begin_not_undoable_action()
 			self.editorbuffer.insert(begin_iter, "\\usepackage{" + package + "}\n")
+			self.editorbuffer.end_not_undoable_action()
 		self.text_changed()
 
 	def insert_bib(self, package, current_iter):

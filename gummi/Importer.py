@@ -57,9 +57,8 @@ class Importer: # needs cleanup
 		return imagefile
 
 	def insert_image(self):
-		if self.image_file.get_text() is not "":
-			iter = self.editorpane.get_current_position()		
-			self.editorpane.insert_package("graphicx", iter)		
+		if self.image_file.get_text() is not "":	
+			self.editorpane.insert_package("graphicx")		
 			f = self.image_file.get_text()			
 			s = self.scaler.get_value()
 			c = self.image_caption.get_text()
