@@ -65,8 +65,6 @@ class GummiGUI:
 		self.table_rows = builder.get_object("table_rows")
 		self.table_cols = builder.get_object("table_cols")
 
-		self.import_box = builder.get_object("import_box")
-
 		self.tempdir = os.environ.get("TMPDIR", "/tmp")
 
 		self.config = Preferences.Preferences(self)
@@ -191,11 +189,14 @@ class GummiGUI:
 
 	def on_import_tabs_switch_page(self, notebook, page, page_num):
 		newactive = notebook.get_nth_page(page_num).get_name()
-		self.import_box.foreach(lambda x:self.import_box.remove(x))
+		self.box_image = self.builder.get_object("box_image")
+		self.box_table = self.builder.get_object("box_table")
+		self.box_image.foreach(lambda x:self.box_image.remove(x))
+		self.box_table.foreach(lambda x:self.box_table.remove(x))
 		if newactive == "box_image": 
-			self.import_box.add(self.image_pane)
+			self.box_image.add(self.image_pane)
 		if newactive == "box_table": 
-			self.import_box.add(self.table_pane)
+			self.box_table.add(self.table_pane)
 			self.table_cols.set_value(3)
 			self.table_rows.set_value(3)
 

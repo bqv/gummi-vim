@@ -508,24 +508,12 @@ active document</property>
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkHBox" id="import_box">
-                    <property name="visible">True</property>
-                    <child>
-                      <placeholder/>
-                    </child>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="position">1</property>
-                  </packing>
-                </child>
-                <child>
                   <object class="GtkNotebook" id="import_tabs">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
                     <property name="tab_pos">bottom</property>
                     <property name="tab_border">0</property>
                     <property name="tab_hborder">5</property>
+                    <property name="tab_vborder">0</property>
                     <property name="homogeneous">True</property>
                     <signal name="switch_page" handler="on_import_tabs_switch_page"/>
                     <child>
@@ -590,7 +578,7 @@ active document</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
-                    <property name="position">2</property>
+                    <property name="position">1</property>
                   </packing>
                 </child>
               </object>
@@ -925,8 +913,8 @@ active document</property>
                 <property name="has_focus">True</property>
                 <property name="invisible_char">&#x2022;</property>
                 <property name="primary_icon_stock">gtk-find</property>
-                <accelerator key="Return" signal="activate"/>
                 <accelerator key="Escape" signal="activate" modifiers="GDK_SHIFT_MASK"/>
+                <accelerator key="Return" signal="activate"/>
                 <signal name="activate" handler="on_button_searchwindow_find_clicked"/>
               </object>
               <packing>
