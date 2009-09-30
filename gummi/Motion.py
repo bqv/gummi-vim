@@ -22,7 +22,8 @@ import Preferences
 
 class Motion:
 	
-	def __init__(self, tex, pdf, error, light, tempdir):
+	def __init__(self, config, tex, pdf, error, light, tempdir):
+		self.config = config
 		self.editorpane = tex
 		self.previewpane = pdf
 		self.statuslight = light
@@ -32,6 +33,9 @@ class Motion:
 		self.tmpfile = None
 		self.pdffile = None
 		self.status = 1
+
+		try: self.texcmd = self.config.get_string("tex_cmd")
+		except: self.texcmd = Preferences.TYPESETTER
 
 		self.editorviewer = self.editorpane.editorviewer
 		self.editorbuffer = self.editorpane.editorbuffer
@@ -90,14 +94,14 @@ class Motion:
 			print traceback.print_exc()
 
 	def update_auxfile(self):
-		auxupdate = subprocess.Popen('pdflatex --draftmode -interaction=nonstopmode --output-directory="%s" "%s"' % (self.tempdir, self.workfile), shell=True, stdin=None, stdout=subprocess.PIPE, stderr=None)
+		auxupdate = subprocess.Popen(self.texcmd + ' --draftmode -interaction=nonstopmode --output-directory="%s" "%s"' % (self.tempdir, self.workfile), shell=True, stdin=None, stdout=subprocess.PIPE, stderr=None)
 		output = auxupdate.communicate()[0]
 		auxupdate.wait()
 
 
 	def update_pdffile(self):	
 		#os.chdir(self.texpath)
-		pdfmaker = subprocess.Popen('pdflatex -interaction=nonstopmode --output-directory="%s" "%s"' % (self.tempdir, self.workfile), shell=True, stdin=None, stdout = subprocess.PIPE, stderr=None)
+		pdfmaker = subprocess.Popen(self.texcmd + ' -interaction=nonstopmode --output-directory="%s" "%s"' % (self.tempdir, self.workfile), shell=True, stdin=None, stdout = subprocess.PIPE, stderr=None)
 		output = pdfmaker.communicate()[0]
 		pdfmaker.wait()
 		try: os.close(3)

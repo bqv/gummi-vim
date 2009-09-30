@@ -9,6 +9,7 @@
 import gtk
 import gconf
 import pango
+import gobject
 
 VERSION = "svn"
 GCONFPATH = "/apps/gummi/"
@@ -28,6 +29,7 @@ TEX_HIGHLIGHTING = True
 TEX_LINENUMBERS = True
 TEX_TEXTWRAPPING = True
 TEX_WORDWRAPPING = True
+TYPESETTER = "pdflatex"
 RECENT_FILES = []
 BIB_FILES = []
 
@@ -48,6 +50,7 @@ class Preferences:
 		elif key is "tex_defaulttext": return DEFAULT_TEXT
 		elif key is "recent_files": return RECENT_FILES
 		elif key is "bib_files": return BIB_FILES
+		elif key is "tex_cmd": return TYPESETTER
 		else: return 1
 	
 	def get_bool(self,key):
@@ -114,6 +117,18 @@ class Preferences:
 		self.button_linenumbers = builder.get_object("button_linenumbers")
 		self.button_highlighting = builder.get_object("button_highlighting")
 		self.default_textfield = builder.get_object("default_textfield")
+		self.typesetter = builder.get_object("combo_typesetter")
+		self.restartlabel = builder.get_object("restartlabel")
+
+		typesetterstore = gtk.ListStore(gobject.TYPE_STRING)
+		typesetterstore.append (["pdflatex"])
+		typesetterstore.append (["xelatex"])
+		cell = gtk.CellRendererText()
+		self.typesetter.pack_start(cell, True)
+		self.typesetter.add_attribute(cell, 'text',0)
+		self.typesetter.set_model(typesetterstore)
+		if self.get_string("tex_cmd") == "xelatex": self.typesetter.set_active(1)
+		else: self.typesetter.set_active(0)
 
 		self.default_textfield.modify_font(pango.FontDescription("monospace 10"))
 		self.default_buffer = self.default_textfield.get_buffer()
@@ -171,6 +186,11 @@ class Preferences:
 			else:
 				self.parent.editorpane.editorviewer.set_highlight_current_line(True)
 
+	def on_combo_typesetter_changed(self, item, data=None):
+		if item.get_active_text() == "xelatex": self.set_string("tex_cmd", "xelatex")
+		elif item.get_active_text() == "pdflatex": self.set_string("tex_cmd", "pdflatex")
+		self.restartlabel.set_text("Changes will become active on next start")
+
 
 	def on_prefs_close_clicked(self, widget, data=None):
 		if self.notebook.get_current_page() is 2:
@@ -193,5 +213,8 @@ class Preferences:
 		elif self.notebook.get_current_page() is 2:
 			self.set_string("tex_defaulttext", DEFAULT_TEXT)
 			self.default_buffer.set_text(self.get_string("tex_defaulttext"))
+		elif self.notebook.get_current_page() is 3:
+			self.typesetter.set_active(0)
+
 
 
