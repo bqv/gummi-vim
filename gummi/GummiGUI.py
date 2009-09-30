@@ -54,10 +54,12 @@ class GummiGUI:
 		self.recent1 = builder.get_object("menu_recent1")		
 		self.recent2 = builder.get_object("menu_recent2")
 		self.recent3 = builder.get_object("menu_recent3")
-		self.box_image = self.builder.get_object("box_image")
-		self.box_table = self.builder.get_object("box_table")
+		self.box_image = builder.get_object("box_image")
+		self.box_table = builder.get_object("box_table")
+		self.box_matrix = builder.get_object("box_matrix")
 		self.image_pane = builder.get_object("image_pane")
 		self.table_pane = builder.get_object("table_pane")
+		self.matrix_pane = builder.get_object("matrix_pane")
 
 		self.tempdir = os.environ.get("TMPDIR", "/tmp")
 
@@ -194,16 +196,22 @@ class GummiGUI:
 		newactive = notebook.get_nth_page(page_num).get_name()
 		self.box_image.foreach(lambda x:self.box_image.remove(x))
 		self.box_table.foreach(lambda x:self.box_table.remove(x))
+		self.box_matrix.foreach(lambda x:self.box_matrix.remove(x))
 		if newactive == "box_image": 
 			self.box_image.add(self.image_pane)
-		if newactive == "box_table": 
+		elif newactive == "box_table": 
 			self.box_table.add(self.table_pane)
+		elif newactive == "box_matrix": 
+			self.box_matrix.add(self.matrix_pane)
 
 	def on_button_imagepane_apply_clicked(self, button, data=None):
 		self.importer.insert_image()
 
 	def on_button_tablepane_apply_clicked(self, button, data=None):
 		self.importer.insert_table()
+
+	def on_button_matrixpane_apply_clicked(self, button, data=None):
+		self.importer.insert_matrix()
 
 	def on_image_file_activate(self, button, event, data=None):
 		self.importer.prepare_image()

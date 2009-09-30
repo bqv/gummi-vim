@@ -7,6 +7,7 @@
 # --------------------------------------------------------------------------------
 
 import gtk
+import gobject
 
 
 class Importer: # needs cleanup
@@ -26,9 +27,33 @@ class Importer: # needs cleanup
 		self.table_pane = builder.get_object("table_pane")
 		self.table_rows = builder.get_object("table_rows")
 		self.table_cols = builder.get_object("table_cols")
+		self.matrix_rows = builder.get_object("matrix_rows")
+		self.matrix_cols = builder.get_object("matrix_cols")
+		self.matrix_combo = builder.get_object("matrix_combo")
 
 		self.table_cols.set_value(3)
 		self.table_rows.set_value(3)
+		self.matrix_cols.set_value(3)
+		self.matrix_rows.set_value(3)
+
+		matrixstore = gtk.ListStore(gobject.TYPE_STRING)
+		matrixstore.append (["Unbracketed"])
+		matrixstore.append (["Parentheses"])
+		matrixstore.append (["Brackets"])
+		matrixstore.append (["Braces"])
+		matrixstore.append (["Single line"])
+		matrixstore.append (["Double line"])
+		cell = gtk.CellRendererText()
+		self.matrix_combo.pack_start(cell, True)
+		self.matrix_combo.add_attribute(cell, 'text',0)
+		self.matrix_combo.set_model(matrixstore)
+		self.matrix_combo.set_active(0)
+
+		#* matrix: unbracketed matrix
+		#* pmatrix: matrix surrounded by parentheses
+		#* bmatrix: matrix surrounded by square brackets
+		#* vmatrix: matrix surrounded by single vertical lines
+		#* Vmatrix: matrix surrounded by double vertical lines
 
 		self.bcenter = "\n\\begin{center}\n"
 		self.ecenter = "\\end{center}\n"
@@ -77,6 +102,16 @@ class Importer: # needs cleanup
 		self.editorpane.text_changed()
 		self.import_tabs.set_current_page(0)
 
+	def insert_matrix(self):
+		self.editorpane.insert_package("amsmath")
+		iter = self.editorpane.get_current_position()
+		bracket = self.matrix_combo.get_active_text()	
+		code = self.generate_matrix(bracket, self.matrix_rows.get_value(), self.matrix_cols.get_value())	
+		iter = self.editorpane.get_current_position()			
+		self.editorpane.editorbuffer.insert(iter, code)
+		self.editorpane.text_changed()
+		self.import_tabs.set_current_page(0)
+
 	def generate_table(self, rows, columns):
 		allign = ""
 		table = ""
@@ -104,7 +139,25 @@ class Importer: # needs cleanup
 		return self.bcenter + include + scale + file + caption + label + end
 
 
-
+	def generate_matrix(self, bracket, rows, columns):
+		if bracket == "Unbracketed": mode = "matrix"			
+		elif bracket == "Parentheses": mode = "pmatrix"
+		elif bracket == "Brackets": mode = "bmatrix"
+		elif bracket == "Braces": mode = "Bmatrix"
+		elif bracket == "Single line": mode = "vmatrix"
+		elif bracket == "Double line": mode = "Vmatrix"
+		matrix = ""
+		rows = int(rows) + 1
+		columns = int(columns) + 1
+		begin_matrix = "\\begin{" + mode + "}\n"
+		end_matrix = "\\end{" + mode +"}\n"
+		for k in range(1, rows):		
+			for i in range(1,columns):
+				if i == (columns-1): new = str(k) + str(i) + "\\\\ \n"
+				elif i == 1: new = "\t" + str(k) + str(i) + " & " 
+				else: new = str(k) + str(i) + " & " 
+				matrix = matrix + new
+		return begin_matrix + matrix + end_matrix
 
 
 

@@ -100,11 +100,13 @@ class Preferences:
 
 	
 	def display_preferences(self):
+		
 		builder = gtk.Builder()	
 		builder.add_from_file(self.parent.CWD + "/gui/prefs.xml")
 		builder.connect_signals(self)
 
 		self.prefwindow = builder.get_object("prefwindow")
+		self.prefwindow.set_transient_for(self.parent.mainwindow)
 		self.notebook = builder.get_object("notebook1")
 
 		self.button_textwrap = builder.get_object("button_textwrap")
@@ -127,7 +129,7 @@ class Preferences:
 		self.button_linenumbers.connect("toggled", self.toggle_button, "tex_linenumbers")
 		self.button_highlighting.connect("toggled", self.toggle_button, "tex_highlighting")
 
-		self.prefwindow.set_transient_for(self.parent.mainwindow)
+		
 		self.prefwindow.show_all()
 
 	def check_current_setting(self, button, item):
