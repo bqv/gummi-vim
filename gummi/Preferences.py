@@ -134,10 +134,8 @@ class Preferences:
 
 	def check_current_setting(self, button, item):
 		check = self.get_bool(item)
-		if check is True:
-			button.set_active(True)
-		if check is False:
-			button.set_active(False)
+		if check is True: button.set_active(True)
+		elif check is False: button.set_active(False)
 
 	def toggle_button(self, widget, data=None):
 		if widget.get_active() == False:
@@ -157,17 +155,17 @@ class Preferences:
 				self.parent.editorpane.editorviewer.set_wrap_mode(gtk.WRAP_NONE)
 			else:
 				self.parent.editorpane.editorviewer.set_wrap_mode(gtk.WRAP_CHAR)
-		if data is "tex_wordwrapping":
+		elif data is "tex_wordwrapping":
 			if widget.get_active() == False:
 				self.parent.editorpane.editorviewer.set_wrap_mode(gtk.WRAP_CHAR)
 			else:
 				self.parent.editorpane.editorviewer.set_wrap_mode(gtk.WRAP_WORD)
-		if data is "tex_linenumbers":
+		elif data is "tex_linenumbers":
 			if widget.get_active() == False:
 				self.parent.editorpane.editorviewer.set_show_line_numbers(False)
 			else:
 				self.parent.editorpane.editorviewer.set_show_line_numbers(True)
-		if data is "tex_highlighting":
+		elif data is "tex_highlighting":
 			if widget.get_active() == False:
 				self.parent.editorpane.editorviewer.set_highlight_current_line(False)
 			else:
@@ -190,9 +188,9 @@ class Preferences:
 			self.check_current_setting(self.button_wordwrap, "tex_wordwrapping")
 			self.check_current_setting(self.button_linenumbers, "tex_linenumbers")
 			self.check_current_setting(self.button_highlighting, "tex_highlighting")		
-		if self.notebook.get_current_page() is 1:
+		elif self.notebook.get_current_page() is 1:
 			return
-		if self.notebook.get_current_page() is 2:
+		elif self.notebook.get_current_page() is 2:
 			self.set_string("tex_defaulttext", DEFAULT_TEXT)
 			self.default_buffer.set_text(self.get_string("tex_defaulttext"))
 
