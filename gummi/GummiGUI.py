@@ -54,6 +54,12 @@ class GummiGUI:
 		self.recent1 = builder.get_object("menu_recent1")		
 		self.recent2 = builder.get_object("menu_recent2")
 		self.recent3 = builder.get_object("menu_recent3")
+
+		self.menu_statusbar = builder.get_object("menu_statusbar")
+		self.menu_toolbar = builder.get_object("menu_toolbar")
+		self.menu_hlayout = builder.get_object("menu_hlayout")
+		self.menu_vlayout = builder.get_object("menu_vlayout")
+
 		self.box_image = builder.get_object("box_image")
 		self.box_table = builder.get_object("box_table")
 		self.box_matrix = builder.get_object("box_matrix")
