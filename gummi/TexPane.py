@@ -11,7 +11,6 @@ import pango
 import gtksourceview2
 from datetime import datetime
 
-import Preferences
 import Formatting
 
 
@@ -89,7 +88,7 @@ class TexPane:
 
 
 	def set_selection_textstyle(self, widget):
-		insert = Formatting.Formatting(widget, self.editorbuffer)		
+		Formatting.Formatting(widget, self.editorbuffer)		
 		self.text_changed()
 
 	def get_current_position(self):

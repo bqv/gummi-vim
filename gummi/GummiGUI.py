@@ -103,7 +103,7 @@ class GummiGUI:
 		except (UnicodeError, TypeError):
 			try: encoded_content = text.encode("iso-8859-1", 'replace')
 			except (UnicodeError, TypeError):
-				encoded_content = content.encode("ascii", 'replace')
+				encoded_content = text.encode("ascii", 'replace')
 		return encoded_content
 
 	def update_statusbar(self, message):
@@ -223,7 +223,7 @@ class GummiGUI:
 		self.config.display_preferences()
 
 	def on_menu_update_activate(self, menuitem, data=None):
-		checkforupdates = UpdateCheck.UpdateCheck()
+		UpdateCheck.UpdateCheck()
 
 	def on_menu_about_activate(self, menuitem, data=None):		
 		authors = ["Alexander van der Mey\n<alexvandermey@gmail.com>"]
@@ -309,7 +309,6 @@ class GummiGUI:
 	def check_recentfile(self, i, widget):
 		recents = self.config.get_list("recent_files")
 		try:
-			recents[i]
 			entry = os.path.basename(recents[i])
 			widget.get_children()[0].set_label(str(i+1) + ". " + entry)
 			widget.show()
@@ -438,6 +437,7 @@ else:
 	path = __file__
 CWD = os.path.abspath(os.path.dirname(path))
 try: 
+	pass
 	instance = GummiGUI()
 	instance.mainwindow.show()
 	gtk.main()

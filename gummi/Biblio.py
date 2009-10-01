@@ -11,8 +11,6 @@ import os
 import subprocess
 import shutil
 
-import Preferences
-
 
 class Biblio:
 
@@ -35,8 +33,7 @@ class Biblio:
 		self.biblist = self.config.get_list("bib_files")
 		i = 0
 		for row in self.biblist: #int id, name displayed
-			input = self.biblist[i]
-   			itt = self.treelist.append([i, input])
+   			self.treelist.append([i, row])
 			i = i + 1
 
 
@@ -99,7 +96,7 @@ class Biblio:
 		bibcompile = subprocess.Popen('bibtex "%s"' % (workfile), shell=True, stdin=None, stdout=subprocess.PIPE, stderr=None)
 		bibcompile.wait()
 		os.chdir(cwd)
-		output = bibcompile.communicate()[0]
+		#output = bibcompile.communicate()[0]
 		self.editorpane.text_changed()
 
 

@@ -43,14 +43,14 @@ class Preferences:
 		self.gconf_client = gconf.client_get_default()
 
 	def get_default(self, key):
-		if key is "tex_highlighting": return TEX_HIGHLIGHTING
-		elif key is "tex_linenumbers": return TEX_LINENUMBERS
-		elif key is "tex_textwrapping": return TEX_TEXTWRAPPING
-		elif key is "tex_wordwrapping": return TEX_WORDWRAPPING
-		elif key is "tex_defaulttext": return DEFAULT_TEXT
-		elif key is "recent_files": return RECENT_FILES
-		elif key is "bib_files": return BIB_FILES
-		elif key is "tex_cmd": return TYPESETTER
+		if key == "tex_highlighting": return TEX_HIGHLIGHTING
+		elif key == "tex_linenumbers": return TEX_LINENUMBERS
+		elif key == "tex_textwrapping": return TEX_TEXTWRAPPING
+		elif key == "tex_wordwrapping": return TEX_WORDWRAPPING
+		elif key == "tex_defaulttext": return DEFAULT_TEXT
+		elif key == "recent_files": return RECENT_FILES
+		elif key == "bib_files": return BIB_FILES
+		elif key == "tex_cmd": return TYPESETTER
 		else: return 1
 	
 	def get_bool(self,key):
@@ -92,14 +92,14 @@ class Preferences:
 
 	
 	def append_to_list(self, key, value):
-		list = self.get_list(key)
-		list.append(value)
-		self.gconf_client.set_list(GCONFPATH + key, gconf.VALUE_STRING, list)
+		result = self.get_list(key)
+		result.append(value)
+		self.gconf_client.set_list(GCONFPATH + key, gconf.VALUE_STRING, result)
 
 	def remove_from_list(self, key, value):
-		list = self.get_list(key)
-		del list[value]
-		self.gconf_client.set_list(GCONFPATH + key, gconf.VALUE_STRING, list)
+		result = self.get_list(key)
+		del result[value]
+		self.gconf_client.set_list(GCONFPATH + key, gconf.VALUE_STRING, result)
 
 	
 	def display_preferences(self):
@@ -153,10 +153,8 @@ class Preferences:
 		elif check is False: button.set_active(False)
 
 	def toggle_button(self, widget, data=None):
-		if widget.get_active() == False:
-			self.set_bool(data, False)
-		else:
-			self.set_bool(data, True)
+		if widget.get_active(): self.set_bool(data, True)
+		else: self.set_bool(data, False)			
 		if self.button_textwrap.get_active() is False:
 			self.button_wordwrap.set_active(False)
 			self.button_wordwrap.set_sensitive(False)
@@ -165,26 +163,26 @@ class Preferences:
 		self.engage(widget, data)
 
 	def engage(self, widget, data):
-		if data is "tex_textwrapping":
-			if widget.get_active() == False:
+		if data == "tex_textwrapping":
+			if widget.get_active():
+				self.parent.editorpane.editorviewer.set_wrap_mode(gtk.WRAP_CHAR)
+			else:
 				self.parent.editorpane.editorviewer.set_wrap_mode(gtk.WRAP_NONE)
-			else:
-				self.parent.editorpane.editorviewer.set_wrap_mode(gtk.WRAP_CHAR)
-		elif data is "tex_wordwrapping":
-			if widget.get_active() == False:
-				self.parent.editorpane.editorviewer.set_wrap_mode(gtk.WRAP_CHAR)
-			else:
+		elif data == "tex_wordwrapping":
+			if widget.get_active():
 				self.parent.editorpane.editorviewer.set_wrap_mode(gtk.WRAP_WORD)
-		elif data is "tex_linenumbers":
-			if widget.get_active() == False:
-				self.parent.editorpane.editorviewer.set_show_line_numbers(False)
 			else:
+				self.parent.editorpane.editorviewer.set_wrap_mode(gtk.WRAP_CHAR)
+		elif data == "tex_linenumbers":
+			if widget.get_active():
 				self.parent.editorpane.editorviewer.set_show_line_numbers(True)
-		elif data is "tex_highlighting":
-			if widget.get_active() == False:
-				self.parent.editorpane.editorviewer.set_highlight_current_line(False)
 			else:
+				self.parent.editorpane.editorviewer.set_show_line_numbers(False)
+		elif data == "tex_highlighting":
+			if widget.get_active():
 				self.parent.editorpane.editorviewer.set_highlight_current_line(True)
+			else:
+				self.parent.editorpane.editorviewer.set_highlight_current_line(False)
 
 	def on_combo_typesetter_changed(self, item, data=None):
 		if item.get_active_text() == "xelatex": self.set_string("tex_cmd", "xelatex")
@@ -193,13 +191,13 @@ class Preferences:
 
 
 	def on_prefs_close_clicked(self, widget, data=None):
-		if self.notebook.get_current_page() is 2:
+		if self.notebook.get_current_page() == 2:
 			newtext = self.default_buffer.get_text(self.default_buffer.get_start_iter(), self.default_buffer.get_end_iter())
 			self.set_string("tex_defaulttext", newtext)	
 		self.prefwindow.destroy()
 
 	def on_prefs_reset_clicked(self, widget, data=None):
-		if self.notebook.get_current_page() is 0:
+		if self.notebook.get_current_page() == 0:
 			self.set_bool("tex_linenumbers", self.get_default("tex_linenumbers"))
 			self.set_bool("tex_highlighting", self.get_default("tex_highlighting"))
 			self.set_bool("tex_textwrapping", self.get_default("tex_textwrapping"))
@@ -208,12 +206,12 @@ class Preferences:
 			self.check_current_setting(self.button_wordwrap, "tex_wordwrapping")
 			self.check_current_setting(self.button_linenumbers, "tex_linenumbers")
 			self.check_current_setting(self.button_highlighting, "tex_highlighting")		
-		elif self.notebook.get_current_page() is 1:
+		elif self.notebook.get_current_page() == 1:
 			return
-		elif self.notebook.get_current_page() is 2:
+		elif self.notebook.get_current_page() == 2:
 			self.set_string("tex_defaulttext", DEFAULT_TEXT)
 			self.default_buffer.set_text(self.get_string("tex_defaulttext"))
-		elif self.notebook.get_current_page() is 3:
+		elif self.notebook.get_current_page() == 3:
 			self.typesetter.set_active(0)
 
 

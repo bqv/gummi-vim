@@ -6,6 +6,7 @@
 # this stuff is worth it, you can buy me a beer in return -Alexander van der Mey
 # --------------------------------------------------------------------------------
 
+import os
 import gtk
 import gobject
 
@@ -82,42 +83,41 @@ class Importer: # needs cleanup
 		return imagefile
 
 	def insert_image(self):
-		if self.image_file.get_text() is not "":	
+		if os.path.exists(self.image_file.get_text()):	
 			self.editorpane.insert_package("graphicx")		
 			f = self.image_file.get_text()			
 			s = self.scaler.get_value()
 			c = self.image_caption.get_text()
 			l = self.image_label.get_text()
 			code = self.generate_image(f, s, c, l)	
-			iter = self.editorpane.get_current_position()			
-			self.editorpane.editorbuffer.insert(iter, code)
+			position = self.editorpane.get_current_position()			
+			self.editorpane.editorbuffer.insert(position, code)
 			self.editorpane.text_changed()
 		self.import_tabs.set_current_page(0)
 
 	def insert_table(self):
-		iter = self.editorpane.get_current_position()				
+		position = self.editorpane.get_current_position()				
 		code = self.generate_table(self.table_rows.get_value(), self.table_cols.get_value())	
-		iter = self.editorpane.get_current_position()			
-		self.editorpane.editorbuffer.insert(iter, code)
+		position = self.editorpane.get_current_position()			
+		self.editorpane.editorbuffer.insert(position, code)
 		self.editorpane.text_changed()
 		self.import_tabs.set_current_page(0)
 
 	def insert_matrix(self):
 		self.editorpane.insert_package("amsmath")
-		iter = self.editorpane.get_current_position()
+		position = self.editorpane.get_current_position()
 		bracket = self.matrix_combo.get_active_text()	
 		code = self.generate_matrix(bracket, self.matrix_rows.get_value(), self.matrix_cols.get_value())	
-		iter = self.editorpane.get_current_position()			
-		self.editorpane.editorbuffer.insert(iter, code)
+		position = self.editorpane.get_current_position()			
+		self.editorpane.editorbuffer.insert(position, code)
 		self.editorpane.text_changed()
 		self.import_tabs.set_current_page(0)
 
 	def generate_table(self, rows, columns):
-		allign = ""
 		table = ""
 		rows = int(rows) + 1
 		columns = int(columns) + 1
-		for l in range(1,columns): allign = allign + "l"
+		for f in range(1,columns): allign = f * "l"
 		begin_tabular = 	"\\begin{tabular}{" + allign + "}\n"
 		end_tabular = "\\end{tabular}\n"
 		for k in range(1, rows):		
@@ -132,11 +132,11 @@ class Importer: # needs cleanup
 	def generate_image(self, imagefile,  scale, caption, label):
 		include = "\t\\includegraphics"
 		scale = "[scale=" + str(scale) + "]"
-		file = "{" + imagefile + "}\n"
+		filename = "{" + imagefile + "}\n"
 		caption = "\t\\captionof{" + caption + "}\n"
 		label = "\t\\label{" + label + "}\n"
 		end = "\\end{center}\n"
-		return self.bcenter + include + scale + file + caption + label + end
+		return self.bcenter + include + scale + filename + caption + label + end
 
 
 	def generate_matrix(self, bracket, rows, columns):

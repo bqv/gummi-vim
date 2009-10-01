@@ -37,10 +37,10 @@ class PdfPane:
 		self.drawarea.set_size_request(int(self.width), int(self.height))
 		self.drawarea.modify_bg(gtk.STATE_NORMAL, gtk.gdk.Color(6400, 6400, 6440))
 		self.drawarea.connect("expose-event", self.on_expose)
-		self.previewactive = 1
+		self.previewactive = True
 
 	def refresh_preview(self):
-		if self.previewactive is 0: self.create_preview(self.pdffile)
+		if not self.previewactive: self.create_preview(self.pdffile)
 		try:
 			if os.path.exists(self.pdffile): # only attempt refresh if file exists
 				self.drawarea.show()
