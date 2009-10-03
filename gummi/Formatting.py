@@ -16,15 +16,27 @@ class Formatting:
 		try:		
 			self.buffer = editorbuffer
 			self.buffer.begin_user_action()
-			ins = self.buffer.get_selection_bounds()[0]
+			ins, end = self.buffer.get_selection_bounds()
 			begintag, endtag = self.get_style_commands(widget)
-			#write function to check for conflicting tags				
-			self.buffer.insert(ins, begintag)
-			end = self.buffer.get_selection_bounds()[1]
-			self.buffer.insert(end, endtag)
-			self.buffer.end_user_action()
+			if self.check_duplicate_tags(ins, end, begintag):
+				self.buffer.end_user_action()
+			else:
+				self.buffer.insert(ins, begintag)
+				end = self.buffer.get_selection_bounds()[1]
+				self.buffer.insert(end, endtag)
+				ins = self.buffer.get_selection_bounds()[0]
+				ins.backward_chars(len(begintag))
+				self.buffer.select_range(ins, end)
+				self.buffer.end_user_action()
 		except IndexError: 
-			return # will silenty pass if no text selected
+			return 	# will silenty pass if no text selected
+					# may replace this with get_selection_bound check
+
+
+	def check_duplicate_tags(self, ins, end, tag):
+		if tag in self.buffer.get_slice(ins, end):
+			return True
+		else: return False
 
 	def get_style_commands(self, widget):
 		caller = widget.get_name()

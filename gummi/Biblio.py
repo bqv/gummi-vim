@@ -13,6 +13,7 @@ import shutil
 
 
 class Biblio:
+	"""Handles the inclusion of .bib files and the GUI elements involved"""
 
 	def __init__(self, config, editorpane, motion, builder):
 		self.config = config
