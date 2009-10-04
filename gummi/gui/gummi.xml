@@ -788,6 +788,8 @@ active document</property>
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
                                     <property name="receives_default">True</property>
+                                    <property name="tooltip_text" translatable="yes">Add bibliography
+to selection list</property>
                                     <property name="use_stock">True</property>
                                     <signal name="clicked" handler="on_button_bibadd_clicked"/>
                                   </object>
@@ -803,6 +805,8 @@ active document</property>
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
                                     <property name="receives_default">True</property>
+                                    <property name="tooltip_text" translatable="yes">Remove bibliography
+from selection list</property>
                                     <property name="use_stock">True</property>
                                     <signal name="clicked" handler="on_button_bibdel_clicked"/>
                                   </object>
@@ -818,6 +822,8 @@ active document</property>
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
                                     <property name="receives_default">True</property>
+                                    <property name="tooltip_text" translatable="yes">Import selected bibliography
+into current tex document</property>
                                     <property name="use_stock">True</property>
                                     <signal name="clicked" handler="on_button_bibapply_clicked"/>
                                   </object>
@@ -843,10 +849,17 @@ active document</property>
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkTextView" id="bibtex_output">
+                              <object class="GtkScrolledWindow" id="scrolledwindow1">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
-                                <property name="editable">False</property>
+                                <property name="hscrollbar_policy">automatic</property>
+                                <property name="vscrollbar_policy">automatic</property>
+                                <child>
+                                  <object class="GtkTextView" id="bibtex_output">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                  </object>
+                                </child>
                               </object>
                               <packing>
                                 <property name="position">4</property>
@@ -1013,8 +1026,8 @@ active document</property>
                 <property name="has_focus">True</property>
                 <property name="invisible_char">&#x2022;</property>
                 <property name="primary_icon_stock">gtk-find</property>
-                <accelerator key="Return" signal="activate"/>
                 <accelerator key="Escape" signal="activate" modifiers="GDK_SHIFT_MASK"/>
+                <accelerator key="Return" signal="activate"/>
                 <signal name="activate" handler="on_button_searchwindow_find_clicked"/>
               </object>
               <packing>

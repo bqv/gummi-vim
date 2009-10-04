@@ -23,6 +23,7 @@ import gtk
 import os
 import subprocess
 import shutil
+import pango
 
 
 class Biblio:
@@ -36,6 +37,7 @@ class Biblio:
 		self.treeview = builder.get_object("bib_treeview")
 		self.treelist = builder.get_object("bib_treelist")
 		self.biboutput = builder.get_object("bibtex_output")
+		self.biboutput.modify_font(pango.FontDescription("monospace 9"))
 
 		textrenderer = gtk.CellRendererText()
 		column = gtk.TreeViewColumn("Name", textrenderer, text=1)
@@ -110,8 +112,11 @@ class Biblio:
 		bibcompile = subprocess.Popen('bibtex "%s"' % (workfile), shell=True, stdin=None, stdout=subprocess.PIPE, stderr=None)
 		bibcompile.wait()
 		os.chdir(cwd)
-		#output = bibcompile.communicate()[0]
+		output = bibcompile.communicate()[0]
+		self.biboutput.get_buffer().set_text(output)
 		self.editorpane.text_changed()
+
+
 
 
 

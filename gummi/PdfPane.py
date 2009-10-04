@@ -36,7 +36,7 @@ class PdfPane:
 		self.button_bestfit = builder.get_object("button_bestfit")
 
 		self.scale = 1
-		self.maxscale = 1.6 
+		self.maxscale = 2.0 
 		self.minscale = 1.0
 		self.page_displayed = 0
 		self.page_total = None
