@@ -25,12 +25,13 @@ import traceback
 import os.path
 
 ORIGINAL_HEIGHT = 841.89 
-ORIGINAL_WIDTH  = 595.276 
+ORIGINAL_WIDTH  = 595.276
 
 
 class PdfPane:
 
-	def __init__(self, drawarea):
+	def __init__(self, config, drawarea):
+		self.config = config
 		self.drawarea = drawarea
 		self.scale = 1
 		self.maxscale = 1.6 
@@ -38,6 +39,7 @@ class PdfPane:
 		self.page_displayed = 0
 		self.page_total = None
 		self.previewactive = 0
+
 
 	def create_preview(self, pdffile):
 		self.pdffile = pdffile	
@@ -47,14 +49,15 @@ class PdfPane:
 		self.current_page = self.document.get_page(0)
 		self.width, self.height = self.current_page.get_size()
 		self.drawarea.set_size_request(int(self.width), int(self.height))
-		self.drawarea.modify_bg(gtk.STATE_NORMAL, gtk.gdk.Color(6400, 6400, 6440))
+		self.drawarea.modify_bg(gtk.STATE_NORMAL,
+								gtk.gdk.Color(6400, 6400, 6440))
 		self.drawarea.connect("expose-event", self.on_expose)
 		self.previewactive = True
 
 	def refresh_preview(self):
 		if not self.previewactive: self.create_preview(self.pdffile)
 		try:
-			if os.path.exists(self.pdffile): # only attempt refresh if file exists
+			if os.path.exists(self.pdffile): # only refresh if file exists
 				self.drawarea.show()
 				self.uri = "file://" + self.pdffile
 				self.document = poppler.document_new_from_file(self.uri, None)
@@ -105,12 +108,15 @@ class PdfPane:
 		self.height = ORIGINAL_HEIGHT
 		self.width = ORIGINAL_WIDTH
 		self.drawarea.set_size_request(int(self.width), int(self.height))
-		self.refresh_preview()
+		self.refresh_preview()	
 
 	def on_expose(self, widget, event):
 		cr = widget.window.cairo_create()
 		cr.set_source_rgb(1, 1, 1)
 		cr.translate(0, 0)
+		if self.config.get_bool("view_autozoom"): # so many gconf calls wise?
+			self.scale = (self.drawarea.get_parent().get_allocation().width-10.0) / self.width
+			self.drawarea.set_size_request(int(self.width*self.scale), int(self.height*self.scale))
 		if self.scale != 1:
 			cr.scale(self.scale, self.scale)
 		cr.rectangle(0, 0, self.width, self.height)

@@ -84,7 +84,7 @@ class GummiGUI:
 
 		self.config = Preferences.Preferences(self)
 		self.editorpane = TexPane.TexPane(self.config)
-		self.previewpane = PdfPane.PdfPane(self.drawarea)
+		self.previewpane = PdfPane.PdfPane(self.config, self.drawarea)
 		self.importer = Importer.Importer(self.editorpane, builder)
 		self.motion = Motion.Motion(self.config, self.editorpane, self.previewpane, self.errorfield, self.statuslight, self.tempdir)
 		self.editorscroll.add(self.editorpane.editorviewer)

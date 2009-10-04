@@ -44,6 +44,7 @@ TEX_HIGHLIGHTING = True
 TEX_LINENUMBERS = True
 TEX_TEXTWRAPPING = True
 TEX_WORDWRAPPING = True
+VIEW_AUTOZOOM = True
 TYPESETTER = "pdflatex"
 RECENT_FILES = []
 BIB_FILES = []
@@ -63,6 +64,7 @@ class Preferences:
 		elif key == "tex_textwrapping": return TEX_TEXTWRAPPING
 		elif key == "tex_wordwrapping": return TEX_WORDWRAPPING
 		elif key == "tex_defaulttext": return DEFAULT_TEXT
+		elif key == "view_autozoom": return VIEW_AUTOZOOM
 		elif key == "recent_files": return RECENT_FILES
 		elif key == "bib_files": return BIB_FILES
 		elif key == "tex_cmd": return TYPESETTER
