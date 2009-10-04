@@ -84,7 +84,7 @@ class GummiGUI:
 
 		self.config = Preferences.Preferences(self)
 		self.editorpane = TexPane.TexPane(self.config)
-		self.previewpane = PdfPane.PdfPane(self.config, self.drawarea)
+		self.previewpane = PdfPane.PdfPane(self.config, builder)
 		self.importer = Importer.Importer(self.editorpane, builder)
 		self.motion = Motion.Motion(self.config, self.editorpane, self.previewpane, self.errorfield, self.statuslight, self.tempdir)
 		self.editorscroll.add(self.editorpane.editorviewer)
@@ -301,8 +301,11 @@ class GummiGUI:
 	def on_button_zoomout_clicked(self, button, data=None):
 		self.previewpane.zoom_out_pane()
 	
-	def on_button_zoomnormal_clicked(self, button, data=None):
-		self.previewpane.zoom_normal_pane()
+	def on_button_bestfit_toggled(self, button, data=None):
+		if button.get_active() == False:
+			self.previewpane.set_bestfitmode(False)
+		else:
+			self.previewpane.set_bestfitmode(True)
 
 	def on_button_bibadd_clicked(self, button, data=None):
 		self.biblio.add_bibliography()

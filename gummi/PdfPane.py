@@ -30,15 +30,18 @@ ORIGINAL_WIDTH  = 595.276
 
 class PdfPane:
 
-	def __init__(self, config, drawarea):
+	def __init__(self, config, builder):
 		self.config = config
-		self.drawarea = drawarea
+		self.drawarea = builder.get_object("preview_drawarea")
+		self.button_bestfit = builder.get_object("button_bestfit")
+
 		self.scale = 1
 		self.maxscale = 1.6 
 		self.minscale = 1.0
 		self.page_displayed = 0
 		self.page_total = None
 		self.previewactive = 0
+		self.bestfit_active = True
 		self.autozoom = self.config.get_bool("view_autoom")
 
 
@@ -94,6 +97,7 @@ class PdfPane:
 			self.scale = self.scale + 0.1
 			self.drawarea.set_size_request(int(self.width*self.scale), int(self.height*self.scale))
 			self.refresh_preview()
+		self.set_bestfitmode(False)
 
 	def zoom_out_pane(self):
 		self.autozoom = False
@@ -101,20 +105,18 @@ class PdfPane:
 			self.scale = self.scale - 0.1
 			self.drawarea.set_size_request(int(self.width*self.scale), int(self.height*self.scale))
 			self.refresh_preview()
-		
+		self.set_bestfitmode(False)
 
-	def zoom_normal_pane(self):
-		self.scale = 1
-		self.height = ORIGINAL_HEIGHT
-		self.width = ORIGINAL_WIDTH
-		self.drawarea.set_size_request(int(self.width), int(self.height))
-		self.refresh_preview()	
+	def set_bestfitmode(self, newstatus):
+		self.bestfit_active = newstatus
+		self.button_bestfit.set_active(newstatus)
+		self.refresh_preview()
 
 	def on_expose(self, widget, event):
 		cr = widget.window.cairo_create()
 		cr.set_source_rgb(1, 1, 1)
 		cr.translate(0, 0)
-		if self.autozoom: # so many gconf calls wise?
+		if self.autozoom and self.bestfit_active: # so many gconf calls wise?
 			self.scale = (self.drawarea.get_parent().get_allocation().width-10.0) / self.width
 			self.drawarea.set_size_request(int(self.width*self.scale), int(self.height*self.scale))
 		if self.scale != 1:

@@ -933,12 +933,13 @@ active document</property>
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkToolButton" id="button_zoomnormal">
+                      <object class="GtkToggleToolButton" id="button_bestfit">
                         <property name="visible">True</property>
-                        <property name="label" translatable="yes">Normal Size</property>
+                        <property name="label" translatable="yes">Best Fit</property>
                         <property name="use_underline">True</property>
-                        <property name="stock_id">gtk-zoom-100</property>
-                        <signal name="clicked" handler="on_button_zoomnormal_clicked"/>
+                        <property name="icon_name">zoom-best-fit</property>
+                        <property name="active">True</property>
+                        <signal name="clicked" handler="on_button_bestfit_toggled"/>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -1012,8 +1013,8 @@ active document</property>
                 <property name="has_focus">True</property>
                 <property name="invisible_char">&#x2022;</property>
                 <property name="primary_icon_stock">gtk-find</property>
-                <accelerator key="Escape" signal="activate" modifiers="GDK_SHIFT_MASK"/>
                 <accelerator key="Return" signal="activate"/>
+                <accelerator key="Escape" signal="activate" modifiers="GDK_SHIFT_MASK"/>
                 <signal name="activate" handler="on_button_searchwindow_find_clicked"/>
               </object>
               <packing>
