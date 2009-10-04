@@ -41,7 +41,7 @@ class Formatting:
 				ins.backward_chars(len(begintag))
 				self.buffer.select_range(ins, end)
 				self.buffer.end_user_action()
-		except IndexError: 
+		except (IndexError, ValueError): 
 			return 	# will silenty pass if no text selected
 					# may replace this with get_selection_bound check
 
