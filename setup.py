@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 from distutils.core import setup
-import sys
 
 _data_files = [
 	('share/applications', ['gummi/misc/gummi.desktop']),
@@ -19,13 +18,13 @@ files = ["gummi.xml",
 
 setup(
 	name = 'gummi',
-	version = '0.1f',
+	version = '0.3.9',
 	summary = 'Simple LaTeX editor',
-	description = 'Simple LaTex editor for GTK users',
+	description = 'Simple LaTeX editor for GTK users',
 	author = 'Alexander van der Mey',
 	author_email = 'alexvandermey@gmail.com',
-	url = 'http://code.google.com/p/gummi/',
-	license = 'MIT/Beerware',
+	url = 'http://gummi.googlecode.com',
+	license = 'MIT',
     	packages = ['gummi'],
 	package_data = {'gummi' : files },
 	scripts = ['gummi/misc/gummi'],
