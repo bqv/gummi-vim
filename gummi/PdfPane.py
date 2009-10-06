@@ -119,12 +119,10 @@ class PdfPane:
 		cr.translate(0, 0)
 		if self.bestfit_active:
 			self.scale = (self.drawarea.get_parent().get_allocation().width-10.0) / self.width
-			self.drawarea.set_size_request(int(self.width*self.scale), int(self.height*self.scale))
+			#self.drawarea.set_size_request(int(self.width*self.scale), int(self.height*self.scale))
 		if self.scale != 1:
 			cr.scale(self.scale, self.scale)
 		cr.rectangle(0, 0, self.width, self.height)
 		cr.fill()
 		self.current_page.render(cr)
 		self.autozoom = True
-
-
