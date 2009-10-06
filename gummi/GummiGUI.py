@@ -26,8 +26,9 @@ import locale
 import gtksourceview2
 import traceback
 import pango
+
 try: import glib
-except: pass
+except ImportError: pass
 
 import TexPane
 import PdfPane
@@ -107,7 +108,7 @@ class GummiGUI:
 	def decode_text(self, filename):
 		loadfile = open(filename, "r")
 		content = loadfile.read()
-		lang, encoding = locale.getdefaultlocale()
+		encoding = locale.getdefaultlocale()[1]
 		try: decoded_content = content.decode(encoding)
 		except (UnicodeError, TypeError):
 			try: decoded_content = content.decode("iso-8859-1", 'replace')
@@ -117,7 +118,7 @@ class GummiGUI:
 		return decoded_content
 
 	def encode_text(self, text):
-		lang, encoding = locale.getdefaultlocale()
+		encoding = locale.getdefaultlocale()[1]
 		try: encoded_content = text.encode(encoding)
 		except (UnicodeError, TypeError):
 			try: encoded_content = text.encode("iso-8859-1", 'replace')
@@ -242,7 +243,7 @@ class GummiGUI:
 		self.config.display_preferences()
 
 	def on_menu_update_activate(self, menuitem, data=None):
-		UpdateCheck.UpdateCheck()
+		update = UpdateCheck.UpdateCheck()
 
 	def on_menu_about_activate(self, menuitem, data=None):		
 		authors = ["Alexander van der Mey\n<alexvandermey@gmail.com>"]
@@ -460,7 +461,6 @@ else:
 	path = __file__
 CWD = os.path.abspath(os.path.dirname(path))
 try: 
-	pass
 	instance = GummiGUI()
 	instance.mainwindow.show()
 	gtk.main()

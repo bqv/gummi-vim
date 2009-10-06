@@ -41,9 +41,13 @@ class Motion:
 		self.statuslight = light
 		self.tempdir = tempdir
 
-		self.texfile = None		
+		self.texfile = None
+		self.texname = None
+		self.texpath = None		
 		self.tmpfile = None
 		self.pdffile = None
+		self.workfile = None
+		
 		self.status = 1
 
 		try: self.texcmd = self.config.get_string("tex_cmd")
@@ -58,7 +62,7 @@ class Motion:
 		self.start_monitoring()
 
 	def start_monitoring(self):
-		self.refresh = thread.start_new_thread(self.update_preview, ())
+		previewthread = thread.start_new_thread(self.update_preview, ())
 
 	def create_environment(self, filename):
 		self.texfile = filename
@@ -67,7 +71,7 @@ class Motion:
 			self.texname = os.path.basename(self.texfile)[:-4] 
 		else:
 			self.texname = os.path.basename(self.texfile)
-		fd, path = tempfile.mkstemp(".tex")
+		fd = tempfile.mkstemp(".tex")[0]
 		self.workfile = os.readlink("/proc/self/fd/%d" % fd)
 		self.pdffile = self.workfile[:-4] + ".pdf"
 		print ("\nEnvironment created for: \nTEX: " + self.texfile + 
@@ -94,9 +98,9 @@ class Motion:
 		try:
 			# these two lines make the program hang in certain situations, no clue why	
 			#self.editorpane.editorview.set_sensitive(False)
-			self.buffer = self.editorpane.editorviewer.get_buffer()
-			start_iter, end_iter = self.buffer.get_start_iter(), self.buffer.get_end_iter()
-			content = self.buffer.get_text(start_iter, end_iter)
+			buff = self.editorpane.editorviewer.get_buffer()
+			start_iter, end_iter = buff.get_start_iter(), buff.get_end_iter()
+			content = buff.get_text(start_iter, end_iter)
 			#self.editorpane.editorview.set_sensitive(True)
 			tmpmake = open(self.workfile, "w")
 			tmpmake.write(content)

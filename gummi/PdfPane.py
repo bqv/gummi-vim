@@ -42,7 +42,8 @@ class PdfPane:
 		self.page_total = None
 		self.previewactive = 0
 		self.bestfit_active = True
-		self.autozoom = self.config.get_bool("view_autoom")
+
+		self.pdffile = None
 
 
 	def create_preview(self, pdffile):
@@ -116,7 +117,7 @@ class PdfPane:
 		cr = widget.window.cairo_create()
 		cr.set_source_rgb(1, 1, 1)
 		cr.translate(0, 0)
-		if self.autozoom and self.bestfit_active: # so many gconf calls wise?
+		if self.bestfit_active:
 			self.scale = (self.drawarea.get_parent().get_allocation().width-10.0) / self.width
 			self.drawarea.set_size_request(int(self.width*self.scale), int(self.height*self.scale))
 		if self.scale != 1:

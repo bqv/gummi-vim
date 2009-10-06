@@ -33,6 +33,8 @@ class Biblio:
 		self.config = config
 		self.editorpane = editorpane		
 		self.motion = motion
+		self.biblist = self.config.get_list("bib_files")
+
 		self.mainwindow = builder.get_object("mainwindow")
 		self.treeview = builder.get_object("bib_treeview")
 		self.treelist = builder.get_object("bib_treelist")
@@ -44,12 +46,10 @@ class Biblio:
 		self.treeview.append_column(column)
 		self.parse_listdata()
 
-
 	def parse_listdata(self):
-		self.biblist = self.config.get_list("bib_files")
 		i = 0
 		for row in self.biblist: #int id, name displayed
-   			self.treelist.append([i, row])
+			self.treelist.append([i, row])
 			i = i + 1
 
 
@@ -60,7 +60,7 @@ class Biblio:
 
 	def select_listdata(self, column):
 		selection = self.treeview.get_selection()
-		(model, myiter) = selection.get_selected()
+		myiter = selection.get_selected()[1]
 		value = self.treelist.get_value(myiter, column)
 		return value
 

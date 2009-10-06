@@ -74,7 +74,7 @@ class TexPane:
 	def insert_package(self, package):
 		pkgspace = "\\begin{document}"		
 		start_iter = self.editorbuffer.get_start_iter()
-		begin_iter, end = gtksourceview2.iter_forward_search(start_iter, pkgspace, flags=0, limit=None)
+		begin_iter = gtksourceview2.iter_forward_search(start_iter, pkgspace, flags=0, limit=None)[0]
 		pkgsearchstr = "{" + package + "}"
 		if gtksourceview2.iter_forward_search(start_iter, pkgsearchstr, flags=0, limit=begin_iter):
 			return
@@ -87,7 +87,7 @@ class TexPane:
 	def insert_bib(self, package):
 		pkgspace = "\\end{document}"	
 		end_iter = self.editorbuffer.get_end_iter()
-		begin_iter, end = gtksourceview2.iter_backward_search(end_iter, pkgspace, flags=0, limit=None)
+		begin_iter = gtksourceview2.iter_backward_search(end_iter, pkgspace, flags=0, limit=None)[0]
 		pkgsearchstr = "\\bibliography{"
 		aa = self.editorbuffer.get_start_iter()
 		bb = self.editorbuffer.get_end_iter()
