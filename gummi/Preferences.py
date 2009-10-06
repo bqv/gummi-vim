@@ -120,7 +120,7 @@ class Preferences:
 	def display_preferences(self):
 		
 		builder = gtk.Builder()	
-		builder.add_from_file(self.parent.CWD + "/gui/prefs.ui")
+		builder.add_from_file(self.parent.CWD + "/gui/prefs.glade")
 		builder.connect_signals(self)
 
 		self.prefwindow = builder.get_object("prefwindow")

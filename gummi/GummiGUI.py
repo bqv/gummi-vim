@@ -48,7 +48,7 @@ class GummiGUI:
 		self.CWD = CWD
 
 		builder = gtk.Builder()
-		builder.add_from_file(CWD + "/gui/gummi.ui")
+		builder.add_from_file(CWD + "/gui/gummi.glade")
 		builder.connect_signals(self)
 		self.builder = builder
 
