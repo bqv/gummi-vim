@@ -68,6 +68,7 @@ class GummiGUI:
 		self.recent1 = builder.get_object("menu_recent1")		
 		self.recent2 = builder.get_object("menu_recent2")
 		self.recent3 = builder.get_object("menu_recent3")
+		self.hpaned = builder.get_object("hpaned")
 
 		self.menu_statusbar = builder.get_object("menu_statusbar")
 		self.menu_toolbar = builder.get_object("menu_toolbar")
@@ -82,6 +83,9 @@ class GummiGUI:
 		self.matrix_pane = builder.get_object("matrix_pane")
 
 		self.tempdir = os.environ.get("TMPDIR", "/tmp")
+
+		mainwidth = self.mainwindow.get_size()[0]
+		self.hpaned.set_position(mainwidth/2)
 
 		self.config = Preferences.Preferences(self)
 		self.editorpane = TexPane.TexPane(self.config)
