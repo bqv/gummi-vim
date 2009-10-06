@@ -378,7 +378,6 @@
             <child>
               <object class="GtkToolbar" id="maintoolbar">
                 <property name="visible">True</property>
-                <property name="toolbar_style">icons</property>
                 <child>
                   <object class="GtkToolButton" id="tool_new">
                     <property name="visible">True</property>
@@ -397,7 +396,8 @@
                   <object class="GtkToolButton" id="tool_load">
                     <property name="visible">True</property>
                     <property name="tooltip_text" translatable="yes">Load a file</property>
-                    <property name="label" translatable="yes">toolbutton2</property>
+                    <property name="is_important">True</property>
+                    <property name="label" translatable="yes">Open</property>
                     <property name="use_underline">True</property>
                     <property name="stock_id">gtk-open</property>
                     <signal name="clicked" handler="on_menu_open_activate"/>
@@ -411,7 +411,8 @@
                   <object class="GtkToolButton" id="tool_save">
                     <property name="visible">True</property>
                     <property name="tooltip_text" translatable="yes">Save the current file</property>
-                    <property name="label" translatable="yes">toolbutton3</property>
+                    <property name="is_important">True</property>
+                    <property name="label" translatable="yes">Save</property>
                     <property name="use_underline">True</property>
                     <property name="stock_id">gtk-save</property>
                     <signal name="clicked" handler="on_menu_save_activate"/>
@@ -567,14 +568,24 @@ active document</property>
                 <property name="visible">True</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkScrolledWindow" id="editor_scroll">
+                  <object class="GtkFrame" id="frame1">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="can_default">True</property>
-                    <property name="has_default">True</property>
-                    <property name="hscrollbar_policy">automatic</property>
-                    <property name="vscrollbar_policy">automatic</property>
+                    <property name="label_xalign">0</property>
+                    <property name="shadow_type">in</property>
                     <child>
+                      <object class="GtkScrolledWindow" id="editor_scroll">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="can_default">True</property>
+                        <property name="has_default">True</property>
+                        <property name="hscrollbar_policy">automatic</property>
+                        <property name="vscrollbar_policy">automatic</property>
+                        <child>
+                          <placeholder/>
+                        </child>
+                      </object>
+                    </child>
+                    <child type="label_item">
                       <placeholder/>
                     </child>
                   </object>
@@ -739,6 +750,7 @@ active document</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="editable">False</property>
+                                <property name="cursor_visible">False</property>
                               </object>
                             </child>
                           </object>
@@ -1039,8 +1051,8 @@ into current tex document</property>
                 <property name="has_focus">True</property>
                 <property name="invisible_char">&#x2022;</property>
                 <property name="primary_icon_stock">gtk-find</property>
-                <accelerator key="Escape" signal="activate" modifiers="GDK_SHIFT_MASK"/>
                 <accelerator key="Return" signal="activate"/>
+                <accelerator key="Escape" signal="activate" modifiers="GDK_SHIFT_MASK"/>
                 <signal name="activate" handler="on_button_searchwindow_find_clicked"/>
               </object>
               <packing>
@@ -1140,6 +1152,7 @@ into current tex document</property>
   <object class="GtkImage" id="image2">
     <property name="visible">True</property>
     <property name="stock">gtk-about</property>
+    <property name="icon-size">1</property>
   </object>
   <object class="GtkAdjustment" id="scaler">
     <property name="value">1</property>
