@@ -1,5 +1,5 @@
 
-LICENSE="""
+LICENSE=""" 
 Copyright (c) 2009 Alexander van der Mey <alexvandermey@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -29,16 +29,20 @@ import gobject
 VERSION = "svn"
 GCONFPATH = "/apps/gummi/"
 UPDATEURL = "http://gummi.googlecode.com/svn/trunk/dev/latest"
-DEFAULT_TEXT = """\\documentclass{article}
+DEFAULT_TEXT = """\documentclass{article}
 \\begin{document}
 
-\\noindent\huge{Welcome to Gummi} \\\\
+\\begin{center}
+\Huge{Welcome to Gummi} \\\\\\
 \\\\
-\\large	{You are using the """ + VERSION + """ version.\\\\
-	I welcome your suggestions at:\\\\
-	http://code.google.com/p/gummi}\\\\
-\\\\
-\\end{document}"""
+\\LARGE{You are using the """ + VERSION + """ version.\\\\
+I welcome your suggestions at\\\\
+http://gummi.googlecode.com}\\\\
+\\end{center}
+
+\\end{document}
+"""
+
 
 TEX_HIGHLIGHTING = True
 TEX_LINENUMBERS = True
@@ -62,7 +66,7 @@ class Preferences:
 		elif key == "tex_linenumbers": return TEX_LINENUMBERS
 		elif key == "tex_textwrapping": return TEX_TEXTWRAPPING
 		elif key == "tex_wordwrapping": return TEX_WORDWRAPPING
-		elif key == "tex_defaulttext": return DEFAULT_TEXT
+		elif key == "tex_defaulttext": print DEFAULT_TEXT; return DEFAULT_TEXT
 		elif key == "recent_files": return RECENT_FILES
 		elif key == "bib_files": return BIB_FILES
 		elif key == "tex_cmd": return TYPESETTER
