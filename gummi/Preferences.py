@@ -43,7 +43,6 @@ http://gummi.googlecode.com}\\\\
 \\end{document}
 """
 
-
 TEX_HIGHLIGHTING = True
 TEX_LINENUMBERS = True
 TEX_TEXTWRAPPING = True
@@ -66,7 +65,7 @@ class Preferences:
 		elif key == "tex_linenumbers": return TEX_LINENUMBERS
 		elif key == "tex_textwrapping": return TEX_TEXTWRAPPING
 		elif key == "tex_wordwrapping": return TEX_WORDWRAPPING
-		elif key == "tex_defaulttext": print DEFAULT_TEXT; return DEFAULT_TEXT
+		elif key == "tex_defaulttext": return DEFAULT_TEXT
 		elif key == "recent_files": return RECENT_FILES
 		elif key == "bib_files": return BIB_FILES
 		elif key == "tex_cmd": return TYPESETTER
