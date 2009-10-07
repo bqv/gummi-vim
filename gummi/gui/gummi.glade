@@ -920,6 +920,7 @@ into current tex document</property>
                     <child>
                       <object class="GtkToolButton" id="button_pageback">
                         <property name="visible">True</property>
+                        <property name="tooltip_text" translatable="yes">Go to the previous page</property>
                         <property name="label" translatable="yes">Back</property>
                         <property name="use_underline">True</property>
                         <property name="stock_id">gtk-go-back</property>
@@ -933,6 +934,7 @@ into current tex document</property>
                     <child>
                       <object class="GtkToolButton" id="button_pageforward">
                         <property name="visible">True</property>
+                        <property name="tooltip_text" translatable="yes">Go to the next page</property>
                         <property name="label" translatable="yes">Forward</property>
                         <property name="use_underline">True</property>
                         <property name="stock_id">gtk-go-forward</property>
@@ -946,6 +948,7 @@ into current tex document</property>
                     <child>
                       <object class="GtkToolButton" id="button_zoomin">
                         <property name="visible">True</property>
+                        <property name="tooltip_text" translatable="yes">Increase zoom level</property>
                         <property name="label" translatable="yes">Zoom In</property>
                         <property name="use_underline">True</property>
                         <property name="stock_id">gtk-zoom-in</property>
@@ -959,6 +962,7 @@ into current tex document</property>
                     <child>
                       <object class="GtkToolButton" id="button_zoomout">
                         <property name="visible">True</property>
+                        <property name="tooltip_text" translatable="yes">Decrease zoom level</property>
                         <property name="label" translatable="yes">Zoom Out</property>
                         <property name="use_underline">True</property>
                         <property name="stock_id">gtk-zoom-out</property>
@@ -972,6 +976,7 @@ into current tex document</property>
                     <child>
                       <object class="GtkToggleToolButton" id="button_bestfit">
                         <property name="visible">True</property>
+                        <property name="tooltip_text" translatable="yes">Adjust zoom level to best fit pane</property>
                         <property name="label" translatable="yes">Best Fit</property>
                         <property name="use_underline">True</property>
                         <property name="icon_name">zoom-best-fit</property>
@@ -1051,8 +1056,8 @@ into current tex document</property>
                 <property name="has_focus">True</property>
                 <property name="invisible_char">&#x2022;</property>
                 <property name="primary_icon_stock">gtk-find</property>
-                <accelerator key="Escape" signal="activate" modifiers="GDK_SHIFT_MASK"/>
                 <accelerator key="Return" signal="activate"/>
+                <accelerator key="Escape" signal="activate" modifiers="GDK_SHIFT_MASK"/>
                 <signal name="activate" handler="on_button_searchwindow_find_clicked"/>
               </object>
               <packing>
