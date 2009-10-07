@@ -364,6 +364,7 @@
                       <object class="GtkImageMenuItem" id="menu_about">
                         <property name="label">gtk-about</property>
                         <property name="visible">True</property>
+                        <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                         <signal name="activate" handler="on_menu_about_activate"/>
                       </object>
@@ -840,13 +841,14 @@ from selection list</property>
                                 </child>
                                 <child>
                                   <object class="GtkButton" id="bibapply">
-                                    <property name="label">gtk-apply</property>
+                                    <property name="label">A_pply</property>
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
                                     <property name="receives_default">True</property>
                                     <property name="tooltip_text" translatable="yes">Import selected bibliography
 into current tex document</property>
-                                    <property name="use_stock">True</property>
+                                    <property name="image">image2</property>
+                                    <property name="use_underline">True</property>
                                     <signal name="clicked" handler="on_button_bibapply_clicked"/>
                                   </object>
                                   <packing>
@@ -1049,8 +1051,8 @@ into current tex document</property>
                 <property name="has_focus">True</property>
                 <property name="invisible_char">&#x2022;</property>
                 <property name="primary_icon_stock">gtk-find</property>
-                <accelerator key="Return" signal="activate"/>
                 <accelerator key="Escape" signal="activate" modifiers="GDK_SHIFT_MASK"/>
+                <accelerator key="Return" signal="activate"/>
                 <signal name="activate" handler="on_button_searchwindow_find_clicked"/>
               </object>
               <packing>
@@ -1526,5 +1528,9 @@ into current tex document</property>
     <property name="visible">True</property>
     <property name="stock">gtk-find</property>
     <property name="icon-size">1</property>
+  </object>
+  <object class="GtkImage" id="image2">
+    <property name="visible">True</property>
+    <property name="stock">gtk-apply</property>
   </object>
 </interface>
