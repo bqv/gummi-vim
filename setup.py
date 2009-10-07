@@ -13,7 +13,11 @@ files = ["gummi.xml",
 	 "docs/INSTALL",
 	 "gui/gummi.xml",
 	 "gui/prefs.xml",
-	 "gui/icon.png"
+	 "gui/icon.png",
+	 "gui/article.png",
+	 "gui/book.png",
+	 "gui/letter.png",
+	 "gui/report.png"
 	]
 
 setup(

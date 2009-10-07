@@ -2,6 +2,10 @@ include gummi
 include gummi/gui/gummi.xml
 include gummi/gui/prefs.xml
 include gummi/gui/icon.png
+include gummi/gui/article.png
+include gummi/gui/book.png
+include gummi/gui/letter.png
+include gummi/gui/report.png
 include gummi/docs/LICENSE
 include gummi/docs/CHANGES
 include gummi/docs/INSTALL
