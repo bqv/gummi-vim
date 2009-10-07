@@ -256,8 +256,8 @@ class GummiGUI:
 	def on_image_file_activate(self, button, event, data=None):
 		self.importer.prepare_image()
 
-	def on_menu_bibupdate_activate(self, menuitem, data=None):
-		self.biblio.refresh_bibliography()
+	def on_menu_bibupdate_activate(self, menuitem, data=None):	
+		self.biblio.compile_bibliography()
 
 	def on_menu_preferences_activate(self, menuitem, data=None):
 		self.config.display_preferences()

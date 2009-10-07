@@ -359,12 +359,12 @@
                     <property name="visible">True</property>
                     <child>
                       <object class="GtkImageMenuItem" id="menu_bibupdate">
-                        <property name="label" translatable="yes">Update _Bibliography</property>
+                        <property name="label" translatable="yes">Update _BibTeX</property>
                         <property name="visible">True</property>
                         <property name="use_underline">True</property>
                         <property name="image">image3</property>
                         <property name="use_stock">False</property>
-                        <signal name="activate" handler="on_button_bibapply_clicked"/>
+                        <signal name="activate" handler="on_menu_bibupdate_activate"/>
                       </object>
                     </child>
                   </object>
@@ -1085,8 +1085,8 @@ into current tex document</property>
                 <property name="has_focus">True</property>
                 <property name="invisible_char">&#x2022;</property>
                 <property name="primary_icon_stock">gtk-find</property>
-                <accelerator key="Escape" signal="activate" modifiers="GDK_SHIFT_MASK"/>
                 <accelerator key="Return" signal="activate"/>
+                <accelerator key="Escape" signal="activate" modifiers="GDK_SHIFT_MASK"/>
                 <signal name="activate" handler="on_button_searchwindow_find_clicked"/>
               </object>
               <packing>
@@ -1153,6 +1153,8 @@ into current tex document</property>
                 <signal name="clicked" handler="on_button_searchwindow_close_clicked"/>
               </object>
               <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
                 <property name="position">0</property>
               </packing>
             </child>
@@ -1168,6 +1170,8 @@ into current tex document</property>
                 <signal name="clicked" handler="on_button_searchwindow_find_clicked"/>
               </object>
               <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
                 <property name="position">1</property>
               </packing>
             </child>
