@@ -42,6 +42,7 @@ class PdfPane:
 		self.page_total = None
 		self.previewactive = 0
 		self.bestfit_active = True
+		self.i = 0
 
 		self.pdffile = None
 
@@ -114,12 +115,14 @@ class PdfPane:
 		self.refresh_preview()
 
 	def on_expose(self, widget, event):
+		self.i += 1
+		print self.i
 		cr = widget.window.cairo_create()
 		cr.set_source_rgb(1, 1, 1)
 		cr.translate(0, 0)
-		if self.bestfit_active:
+		if self.bestfit_active: # I'm not getting loops anymore - lets try this out for a while
 			self.scale = (self.drawarea.get_parent().get_allocation().width-10.0) / self.width
-			#self.drawarea.set_size_request(int(self.width*self.scale), int(self.height*self.scale))
+			self.drawarea.set_size_request(int(self.width*self.scale), int(self.height*self.scale))
 		if self.scale != 1:
 			cr.scale(self.scale, self.scale)
 		cr.rectangle(0, 0, self.width, self.height)
