@@ -33,7 +33,7 @@ class Biblio:
 		self.config = config
 		self.editorpane = editorpane		
 		self.motion = motion
-		self.biblist = self.config.get_list("bib_files")
+		self.biblist = None
 
 		self.mainwindow = builder.get_object("mainwindow")
 		self.treeview = builder.get_object("bib_treeview")
@@ -47,6 +47,7 @@ class Biblio:
 		self.parse_listdata()
 
 	def parse_listdata(self):
+		self.biblist = self.config.get_list("bib_files")
 		i = 0
 		for row in self.biblist: #int id, name displayed
 			self.treelist.append([i, row])
