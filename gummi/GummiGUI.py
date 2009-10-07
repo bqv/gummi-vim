@@ -428,22 +428,22 @@ class GummiGUI:
 			self.editorpane.fill_buffer(decode)
 			self.filename = filename
 			self.motion.create_environment(self.filename)
-			self.set_status("Loading: " + self.filename)
+			self.set_status("Loading file " + self.filename)
 			self.add_recentfile(filename)
 		except:
 			print traceback.print_exc()
 
 	def write_file(self, filename):
 		try:
-			content = self.editorpane.grab_buffer()			
+			content = self.editorpane.grab_buffer()
 			if filename: fout = open(filename, "w")
 			else: fout = open(self.filename, "w")
 			encoded = self.encode_text(content)
 			fout.write(encoded)
 			fout.close()
 			if filename: self.filename = filename   
-			self.set_status("Saving: " + self.filename)
-			self.motion.export_pdffile()	
+			self.set_status("Saving file " + self.filename)
+			self.motion.export_pdffile()
 		except:
 			print traceback.print_exc()
 
