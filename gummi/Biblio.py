@@ -41,16 +41,15 @@ class Biblio:
 		self.biboutput = builder.get_object("bibtex_output")
 		self.biboutput.modify_font(pango.FontDescription("monospace 9"))
 
-		textrenderer = gtk.CellRendererText()
-		column = gtk.TreeViewColumn("Name", textrenderer, text=1)
-		self.treeview.append_column(column)
 		self.parse_listdata()
 
 	def parse_listdata(self):
 		self.biblist = self.config.get_list("bib_files")
 		i = 0
 		for row in self.biblist: #int id, name displayed
-			self.treelist.append([i, row])
+			name = os.path.basename(row)
+			path = os.path.dirname(row)
+			self.treelist.append([i, name, path])		
 			i = i + 1
 
 
@@ -96,10 +95,10 @@ class Biblio:
 
 	def setup_bibliography(self):
 		self.editorpane.insert_package("cite")
-		bibfile = self.select_listdata(1)
+		bibname = self.select_listdata(1)[:-4]
+		bibfullpath = self.select_listdata(2) + "/" + self.select_listdata(1)
 		tempdir = os.environ.get("TMPDIR", "/tmp")
-		bibname = os.path.basename(bibfile)[:-4]
-		shutil.copy2(bibfile, tempdir + "/" + bibname + ".bib")
+		shutil.copy2(bibfullpath, tempdir + "/" + bibname + ".bib")
 		self.editorpane.insert_bib(bibname)
 		self.compile_bibliography()
 

@@ -2,14 +2,6 @@
 <interface>
   <requires lib="gtk+" version="2.16"/>
   <!-- interface-naming-policy project-wide -->
-  <object class="GtkListStore" id="bib_treelist">
-    <columns>
-      <!-- column-name name -->
-      <column type="gchararray"/>
-      <!-- column-name location -->
-      <column type="gchararray"/>
-    </columns>
-  </object>
   <object class="GtkListStore" id="templatemodel">
     <columns>
       <!-- column-name text -->
@@ -35,6 +27,16 @@
         <col id="1">report.png</col>
       </row>
     </data>
+  </object>
+  <object class="GtkListStore" id="bib_treelist">
+    <columns>
+      <!-- column-name id -->
+      <column type="gchararray"/>
+      <!-- column-name name -->
+      <column type="gchararray"/>
+      <!-- column-name location -->
+      <column type="gchararray"/>
+    </columns>
   </object>
   <object class="GtkWindow" id="mainwindow">
     <property name="title" translatable="yes">Gummi - Latex Editor</property>
@@ -813,6 +815,34 @@ active document</property>
                                 <property name="can_focus">True</property>
                                 <property name="model">bib_treelist</property>
                                 <property name="search_column">0</property>
+                                <child>
+                                  <object class="GtkTreeViewColumn" id="column_id">
+                                    <property name="visible">False</property>
+                                    <property name="title">id</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkTreeViewColumn" id="column_name">
+                                    <property name="title">Name</property>
+                                    <child>
+                                      <object class="GtkCellRendererText" id="cellrenderertext1"/>
+                                      <attributes>
+                                        <attribute name="text">1</attribute>
+                                      </attributes>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkTreeViewColumn" id="column_path">
+                                    <property name="title">Location</property>
+                                    <child>
+                                      <object class="GtkCellRendererText" id="cellrenderertext2"/>
+                                      <attributes>
+                                        <attribute name="text">2</attribute>
+                                      </attributes>
+                                    </child>
+                                  </object>
+                                </child>
                               </object>
                               <packing>
                                 <property name="position">0</property>
@@ -1085,8 +1115,8 @@ into current tex document</property>
                 <property name="has_focus">True</property>
                 <property name="invisible_char">&#x2022;</property>
                 <property name="primary_icon_stock">gtk-find</property>
-                <accelerator key="Escape" signal="activate" modifiers="GDK_SHIFT_MASK"/>
                 <accelerator key="Return" signal="activate"/>
+                <accelerator key="Escape" signal="activate" modifiers="GDK_SHIFT_MASK"/>
                 <signal name="activate" handler="on_button_searchwindow_find_clicked"/>
               </object>
               <packing>
