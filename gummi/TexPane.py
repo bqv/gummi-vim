@@ -53,12 +53,13 @@ class TexPane:
 		self.editorviewer.connect("key-press-event", self.set_text_change,)
 		self.editorbuffer.set_modified(False)
 
-	def fill_buffer(self, text):
+	def fill_buffer(self, newcontent):
+		# will output a sourceview warning if (new content = current content)
 		self.editorbuffer.set_text("")
 		self.editorbuffer.begin_not_undoable_action()
 		self.editorviewer.set_sensitive(False)
 		start = self.editorbuffer.get_start_iter()
-		self.editorbuffer.insert(start, text)		
+		self.editorbuffer.insert(start, newcontent)		
 		self.editorbuffer.set_modified(False)		
 		self.editorviewer.set_sensitive(True)
 		self.editorbuffer.end_not_undoable_action()
@@ -82,7 +83,7 @@ class TexPane:
 			self.editorbuffer.begin_not_undoable_action()
 			self.editorbuffer.insert(begin_iter, "\\usepackage{" + package + "}\n")
 			self.editorbuffer.end_not_undoable_action()
-		self.text_changed()
+		self.buffer_modified()
 
 	def insert_bib(self, package):
 		pkgspace = "\\end{document}"	
@@ -139,7 +140,7 @@ class TexPane:
 		else:
 			return gtk.WRAP_CHAR
 
-	def trigger_update(self):
+	def buffer_modified(self):
 		self.textchange = datetime.now()
 
 	def set_text_change(self, widget, event):
@@ -158,11 +159,11 @@ class TexPane:
 	def undo_change(self):
 		if self.editorviewer.get_buffer().can_undo():
 			self.editorviewer.get_buffer().undo()
-			self.trigger_update()
+			self.buffer_modified()
 
 	def redo_change(self):
 		if self.editorviewer.get_buffer().can_redo():
 			self.editorviewer.get_buffer().redo()
-			self.trigger_update()
+			self.buffer_modified()
 
 
