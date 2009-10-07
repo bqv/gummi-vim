@@ -37,6 +37,7 @@ import Motion
 import Biblio
 import Preferences
 import UpdateCheck
+import Template
 
 
 class GummiGUI:
@@ -49,7 +50,7 @@ class GummiGUI:
 
 		builder = gtk.Builder()
 		builder.add_from_file(CWD + "/gui/gummi.glade")
-		builder.connect_signals(self)
+		builder.connect_signals(self) #split signals?
 		self.builder = builder
 
 		self.mainwindow = builder.get_object("mainwindow")
@@ -140,6 +141,9 @@ class GummiGUI:
 		self.filename = None
 		self.motion.create_environment(self.tempdir + "/gummi-new")
 
+	def on_menu_template_activate(self, menuitem, data=None):
+		self.template_doc = Template.Template(self.builder, CWD)		
+
 	def on_menu_open_activate(self, menuitem, data=None):
 		if os.getcwd() == self.tempdir:
 			os.chdir(os.environ['HOME'])	
@@ -199,6 +203,18 @@ class GummiGUI:
 		self.searchentry.set_text("")
 		self.searchwindow.show()
 
+	def on_button_template_ok_clicked(self, button, data=None):
+		template = self.template_doc.get_template()
+		if template is not None:
+			self.editorpane.fill_buffer(template)
+		self.filename = None
+		self.motion.create_environment(self.tempdir + "/gummi-new")	
+		self.template_doc.templatewindow.hide()
+
+	def on_button_template_cancel_clicked(self, button, data=None):
+		self.template_doc.templatewindow.hide()
+		return True
+
 	def on_button_searchwindow_close_clicked(self, button, data=None):
 		self.searchwindow.hide()
 		return True
@@ -251,6 +267,7 @@ class GummiGUI:
 
 	def on_menu_about_activate(self, menuitem, data=None):		
 		authors = ["Alexander van der Mey\n<alexvandermey@gmail.com>"]
+		artwork = ["Template icon set from:\nhttp://www.fatcow.com/free-icons/"]
 		about_dialog = gtk.AboutDialog()
 		about_dialog.set_transient_for(self.mainwindow)
 		about_dialog.set_destroy_with_parent(True)
@@ -260,7 +277,8 @@ class GummiGUI:
 		about_dialog.set_copyright("Copyright \xc2\xa9 2009 Alexander van der Mey")
 		about_dialog.set_website("http://gummi.googlecode.com")
 		about_dialog.set_comments("Simple LaTex Editor for GTK+ users")
-		about_dialog.set_authors            (authors)
+		about_dialog.set_authors(authors)
+		about_dialog.set_artists(artwork)
 		about_dialog.set_logo_icon_name     (gtk.STOCK_EDIT)
 		# callbacks for destroying the dialog
 		def close(dialog, response, editor):
