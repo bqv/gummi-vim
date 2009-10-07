@@ -1085,8 +1085,8 @@ into current tex document</property>
                 <property name="has_focus">True</property>
                 <property name="invisible_char">&#x2022;</property>
                 <property name="primary_icon_stock">gtk-find</property>
-                <accelerator key="Return" signal="activate"/>
                 <accelerator key="Escape" signal="activate" modifiers="GDK_SHIFT_MASK"/>
+                <accelerator key="Return" signal="activate"/>
                 <signal name="activate" handler="on_button_searchwindow_find_clicked"/>
               </object>
               <packing>
@@ -1137,9 +1137,10 @@ into current tex document</property>
           </packing>
         </child>
         <child>
-          <object class="GtkFixed" id="fixed1">
-            <property name="height_request">36</property>
+          <object class="GtkHButtonBox" id="hbuttonbox3">
             <property name="visible">True</property>
+            <property name="spacing">10</property>
+            <property name="layout_style">end</property>
             <child>
               <object class="GtkButton" id="button1">
                 <property name="label">gtk-close</property>
@@ -1152,7 +1153,7 @@ into current tex document</property>
                 <signal name="clicked" handler="on_button_searchwindow_close_clicked"/>
               </object>
               <packing>
-                <property name="x">144</property>
+                <property name="position">0</property>
               </packing>
             </child>
             <child>
@@ -1167,12 +1168,11 @@ into current tex document</property>
                 <signal name="clicked" handler="on_button_searchwindow_find_clicked"/>
               </object>
               <packing>
-                <property name="x">251</property>
+                <property name="position">1</property>
               </packing>
             </child>
           </object>
           <packing>
-            <property name="fill">False</property>
             <property name="position">4</property>
           </packing>
         </child>
