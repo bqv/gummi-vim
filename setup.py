@@ -7,12 +7,11 @@ _data_files = [
 	('share/pixmaps', ['gummi/misc/gummi.png'])	
 	]
 
-files = ["gummi.xml",
+files = ["gui/gummi.glade",
+	 "gui/prefs.glade",
 	 "docs/CHANGES", 
 	 "docs/LICENSE",
 	 "docs/INSTALL",
-	 "gui/gummi.xml",
-	 "gui/prefs.xml",
 	 "gui/icon.png",
 	 "gui/article.png",
 	 "gui/book.png",

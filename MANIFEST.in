@@ -1,6 +1,6 @@
 include gummi
-include gummi/gui/gummi.xml
-include gummi/gui/prefs.xml
+include gummi/gui/gummi.glade
+include gummi/gui/prefs.glade
 include gummi/gui/icon.png
 include gummi/gui/article.png
 include gummi/gui/book.png
