@@ -22,7 +22,7 @@ files = ["gummi.xml",
 
 setup(
 	name = 'gummi',
-	version = '0.3.9',
+	version = 'S.E.D',
 	summary = 'Simple LaTeX editor',
 	description = 'Simple LaTeX editor for GTK users',
 	author = 'Alexander van der Mey',
