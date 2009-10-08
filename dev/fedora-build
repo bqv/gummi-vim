@@ -1,0 +1,22 @@
+#!/bin/sh
+# Gummi build script for Fedora 11
+# Alexander van der Mey - 8 October 2009
+
+svn co -q http://gummi.googlecode.com/svn/trunk/ gummi-read-only
+
+cd gummi-read-only
+
+echo "What's the version number for this release?"
+
+read rlschoice
+
+sed -i s/S.E.D/$rlschoice/ setup.py
+sed -i s/svn/$rlschoice/ gummi/Preferences.py
+
+python setup.py bdist_rpm
+
+cp ./dist/*noarch.rpm ../
+cd ..
+rm -rf gummi-read-only
+
+
