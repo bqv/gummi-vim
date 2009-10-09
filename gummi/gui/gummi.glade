@@ -856,6 +856,7 @@ active document</property>
                                         <property name="invisible_char">&#x25CF;</property>
                                         <property name="width_chars">6</property>
                                         <property name="text" translatable="yes">0</property>
+                                        <property name="xalign">0.5</property>
                                       </object>
                                       <packing>
                                         <property name="position">0</property>
@@ -890,7 +891,7 @@ active document</property>
                                 <property name="visible">True</property>
                                 <child>
                                   <object class="GtkComboBox" id="zoomcombo">
-                                    <property name="width_request">130</property>
+                                    <property name="width_request">120</property>
                                     <property name="visible">True</property>
                                     <property name="model">zoomcombo_model</property>
                                     <property name="active">0</property>
