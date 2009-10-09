@@ -287,6 +287,7 @@
                         <property name="visible">True</property>
                         <property name="label" translatable="yes">_Statusbar</property>
                         <property name="use_underline">True</property>
+                        <signal name="toggled" handler="on_menu_statusbar_toggled"/>
                       </object>
                     </child>
                     <child>
@@ -294,6 +295,7 @@
                         <property name="visible">True</property>
                         <property name="label" translatable="yes">_Toolbar</property>
                         <property name="use_underline">True</property>
+                        <signal name="toggled" handler="on_menu_toolbar_toggled"/>
                       </object>
                     </child>
                     <child>
@@ -419,7 +421,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkHBox" id="hbox3">
+          <object class="GtkHBox" id="toolbar">
             <property name="visible">True</property>
             <child>
               <object class="GtkToolbar" id="maintoolbar">
@@ -1144,8 +1146,8 @@ into current tex document</property>
                 <property name="has_focus">True</property>
                 <property name="invisible_char">&#x2022;</property>
                 <property name="primary_icon_stock">gtk-find</property>
-                <accelerator key="Escape" signal="activate" modifiers="GDK_SHIFT_MASK"/>
                 <accelerator key="Return" signal="activate"/>
+                <accelerator key="Escape" signal="activate" modifiers="GDK_SHIFT_MASK"/>
                 <signal name="activate" handler="on_button_searchwindow_find_clicked"/>
               </object>
               <packing>

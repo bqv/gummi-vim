@@ -54,6 +54,7 @@ class GummiGUI:
 		self.builder = builder
 
 		self.mainwindow = builder.get_object("mainwindow")
+		self.toolbar = builder.get_object("toolbar")
 		self.mainnotebook = builder.get_object("main_notebook")
 		self.editorscroll = builder.get_object("editor_scroll")
 		self.drawarea = builder.get_object("preview_drawarea")
@@ -73,7 +74,9 @@ class GummiGUI:
 		self.hpaned = builder.get_object("hpaned")
 
 		self.menu_statusbar = builder.get_object("menu_statusbar")
+		self.menu_statusbar.set_active(True)
 		self.menu_toolbar = builder.get_object("menu_toolbar")
+		self.menu_toolbar.set_active(True)
 		self.menu_hlayout = builder.get_object("menu_hlayout")
 		self.menu_vlayout = builder.get_object("menu_vlayout")
 
@@ -209,6 +212,19 @@ class GummiGUI:
 			self.mainwindow.fullscreen()
 		else:
 			self.mainwindow.unfullscreen()
+
+	def on_menu_toolbar_toggled(self, menuitem, data=None):
+		if menuitem.get_active():
+			self.toolbar.show()
+		else:
+			self.toolbar.hide()
+		pass
+
+	def on_menu_statusbar_toggled(self, menuitem, data=None):
+		if menuitem.get_active():
+			self.statusbar.show()
+		else:
+			self.statusbar.hide()
 
 	def on_button_template_ok_clicked(self, button, data=None):
 		template = self.template_doc.get_template()
