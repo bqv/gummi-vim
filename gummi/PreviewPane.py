@@ -31,7 +31,9 @@ import poppler
 
 class PreviewPane:
 
-	def __init__(self, drawarea, toolbar, pdffile=None):
+	def __init__(self, builder, drawarea, toolbar, pdffile=None):
+		self.builder = builder
+		# maybe also get drawarea object from builder?		
 		self.drawarea = drawarea
 		self.drawarea.connect("expose-event", self.on_expose)
 		# TODO: get this color from the gtk-theme?
@@ -56,23 +58,8 @@ class PreviewPane:
 		combobox_area = toolbar.get_nth_item(5)
 		# stop the ugliness right here!
 
-		# TODO: Can be done better?
-		self.zoomcombo = gtk.combo_box_new_text()
-		combobox_area.add(self.zoomcombo)
-		self.zoomcombo.append_text('Best Fit')
-		self.zoomcombo.append_text('Fit Page Width')
-		self.zoomcombo.append_text('50%')
-		self.zoomcombo.append_text('70%')
-		self.zoomcombo.append_text('85%')
-		self.zoomcombo.append_text('100%')
-		self.zoomcombo.append_text('125%')
-		self.zoomcombo.append_text('150%')
-		self.zoomcombo.append_text('200%')
-		self.zoomcombo.append_text('300%')
-		self.zoomcombo.append_text('400%')
-		self.zoomcombo.set_active(0)
-		self.zoomcombo.show()
-
+		self.zoomcombo = builder.get_object("zoomcombo")
+		# set_active(choice) has inbuild function
 		self.zoomcombo.connect("changed", self.zoom_combo)
 
 		self.scale = 1.0
