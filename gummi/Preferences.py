@@ -1,5 +1,7 @@
+#!/usr/bin/python
+# -*- encoding: utf-8 -*-
 
-LICENSE=""" 
+LICENSE="""
 Copyright (c) 2009 Alexander van der Mey <alexvandermey@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -70,7 +72,7 @@ class Preferences:
 		elif key == "bib_files": return BIB_FILES
 		elif key == "tex_cmd": return TYPESETTER
 		else: return 1
-	
+
 	def get_bool(self,key):
 		item = self.gconf_client.get(GCONFPATH + key)
 		if item == None:
@@ -82,7 +84,7 @@ class Preferences:
 			return self.gconf_client.get_bool(GCONFPATH + key)
 
 	def set_bool(self, key, value):
-		self.gconf_client.set_bool(GCONFPATH + key, value)	
+		self.gconf_client.set_bool(GCONFPATH + key, value)
 
 	def get_string(self,key):
 		item = self.gconf_client.get(GCONFPATH + key)
@@ -108,7 +110,7 @@ class Preferences:
 	def set_list(self, key, value):
 		self.gconf_client.set_list(GCONFPATH + key, gconf.VALUE_STRING, value)
 
-	
+
 	def append_to_list(self, key, value):
 		result = self.get_list(key)
 		result.append(value)
@@ -119,10 +121,10 @@ class Preferences:
 		del result[value]
 		self.gconf_client.set_list(GCONFPATH + key, gconf.VALUE_STRING, result)
 
-	
+
 	def display_preferences(self):
-		
-		builder = gtk.Builder()	
+
+		builder = gtk.Builder()
 		builder.add_from_file(self.parent.CWD + "/gui/prefs.glade")
 		builder.connect_signals(self)
 
@@ -162,7 +164,7 @@ class Preferences:
 		self.button_linenumbers.connect("toggled", self.toggle_button, "tex_linenumbers")
 		self.button_highlighting.connect("toggled", self.toggle_button, "tex_highlighting")
 
-		
+
 		self.prefwindow.show_all()
 
 	def check_current_setting(self, button, item):
@@ -172,7 +174,7 @@ class Preferences:
 
 	def toggle_button(self, widget, data=None):
 		if widget.get_active(): self.set_bool(data, True)
-		else: self.set_bool(data, False)			
+		else: self.set_bool(data, False)
 		if self.button_textwrap.get_active() is False:
 			self.button_wordwrap.set_active(False)
 			self.button_wordwrap.set_sensitive(False)
@@ -211,7 +213,7 @@ class Preferences:
 	def on_prefs_close_clicked(self, widget, data=None):
 		if self.notebook.get_current_page() == 2:
 			newtext = self.default_buffer.get_text(self.default_buffer.get_start_iter(), self.default_buffer.get_end_iter())
-			self.set_string("tex_defaulttext", newtext)	
+			self.set_string("tex_defaulttext", newtext)
 		self.prefwindow.destroy()
 
 	def on_prefs_reset_clicked(self, widget, data=None):
@@ -219,11 +221,11 @@ class Preferences:
 			self.set_bool("tex_linenumbers", self.get_default("tex_linenumbers"))
 			self.set_bool("tex_highlighting", self.get_default("tex_highlighting"))
 			self.set_bool("tex_textwrapping", self.get_default("tex_textwrapping"))
-			self.set_bool("tex_wordwrapping", self.get_default("tex_wordwrapping"))		
+			self.set_bool("tex_wordwrapping", self.get_default("tex_wordwrapping"))
 			self.check_current_setting(self.button_textwrap, "tex_textwrapping")
 			self.check_current_setting(self.button_wordwrap, "tex_wordwrapping")
 			self.check_current_setting(self.button_linenumbers, "tex_linenumbers")
-			self.check_current_setting(self.button_highlighting, "tex_highlighting")		
+			self.check_current_setting(self.button_highlighting, "tex_highlighting")
 		elif self.notebook.get_current_page() == 1:
 			return
 		elif self.notebook.get_current_page() == 2:

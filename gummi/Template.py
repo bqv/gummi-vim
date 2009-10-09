@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- encoding: utf-8 -*-
 
 # Copyright (c) 2009 Alexander van der Mey <alexvandermey@gmail.com>
 
@@ -49,7 +51,7 @@ BOOK = """
 \\subsection*{\\center \\normalsize ISBN \\dots}
 \\subsection*{\\center \\normalsize Publications}
 
-\\tableofcontents 
+\\tableofcontents
 
 \\mainmatter
 \\chapter{[CHAPTER1-TITLE]}
@@ -57,7 +59,7 @@ BOOK = """
 \\chapter{[CHAPTER2-TITLE]}
 \\dots
 \\backmatter
- 
+
 \\end{document}
 """
 

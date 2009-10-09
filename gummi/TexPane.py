@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- encoding: utf-8 -*-
 
 # Copyright (c) 2009 Alexander van der Mey <alexvandermey@gmail.com>
 
@@ -49,7 +51,7 @@ class TexPane:
 		self.textchange = datetime.now()
 		self.prevchange = datetime.now()
 		self.check_text_change()
-		
+
 		self.editorviewer.connect("key-press-event", self.set_text_change,)
 		self.editorbuffer.set_modified(False)
 
@@ -59,8 +61,8 @@ class TexPane:
 		self.editorbuffer.begin_not_undoable_action()
 		self.editorviewer.set_sensitive(False)
 		start = self.editorbuffer.get_start_iter()
-		self.editorbuffer.insert(start, newcontent)		
-		self.editorbuffer.set_modified(False)		
+		self.editorbuffer.insert(start, newcontent)
+		self.editorbuffer.set_modified(False)
 		self.editorviewer.set_sensitive(True)
 		self.editorbuffer.end_not_undoable_action()
 
@@ -73,7 +75,7 @@ class TexPane:
 		return content
 
 	def insert_package(self, package):
-		pkgspace = "\\begin{document}"		
+		pkgspace = "\\begin{document}"
 		start_iter = self.editorbuffer.get_start_iter()
 		begin_iter = gtksourceview2.iter_forward_search(start_iter, pkgspace, flags=0, limit=None)[0]
 		pkgsearchstr = "{" + package + "}"
@@ -86,7 +88,7 @@ class TexPane:
 		self.buffer_modified()
 
 	def insert_bib(self, package):
-		pkgspace = "\\end{document}"	
+		pkgspace = "\\end{document}"
 		end_iter = self.editorbuffer.get_end_iter()
 		begin_iter = gtksourceview2.iter_backward_search(end_iter, pkgspace, flags=0, limit=None)[0]
 		pkgsearchstr = "\\bibliography{"
@@ -97,12 +99,12 @@ class TexPane:
 		else:
 			self.editorbuffer.begin_not_undoable_action()
 			self.editorbuffer.insert(begin_iter, "\\bibliography{" + package + "}{}\n" + "\\bibliographystyle{plain}\n")
-			self.editorbuffer.end_not_undoable_action()	
+			self.editorbuffer.end_not_undoable_action()
 		self.text_changed()
 
 
 	def set_selection_textstyle(self, widget):
-		Formatting.Formatting(widget, self.editorbuffer)		
+		Formatting.Formatting(widget, self.editorbuffer)
 		self.text_changed()
 
 	def get_current_position(self):
@@ -114,16 +116,16 @@ class TexPane:
 		self.current_iter = self.editorbuffer.get_iter_at_mark(self.editorbuffer.get_insert())
 
 	def search_buffer(self, term, flags):
-		if flags[0] is False: 
+		if flags[0] is False:
 			try:
 				ins, bound = gtksourceview2.iter_forward_search(self.current_iter, term, flags[1], limit=None)
-				self.current_iter = bound			
-			except:			
-				return	
-		else:	
+				self.current_iter = bound
+			except:
+				return
+		else:
 			try:
 				ins, bound = gtksourceview2.iter_backward_search(self.current_iter, term, flags[1], limit=None)
-				self.current_iter = ins			
+				self.current_iter = ins
 			except:
 				return
 		self.editorbuffer.place_cursor(ins)
@@ -149,11 +151,11 @@ class TexPane:
 	def text_changed(self):
 		self.textchange = datetime.now()
 
-	def check_text_change(self):	
+	def check_text_change(self):
 		if self.prevchange != self.textchange:
 			self.prevchange = self.textchange
 			return True
-		else:		
+		else:
 			return False
 
 	def undo_change(self):

@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- encoding: utf-8 -*-
 
 # Copyright (c) 2009 Alexander van der Mey <alexvandermey@gmail.com>
 

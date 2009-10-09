@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- encoding: utf-8 -*-
 
 # Copyright (c) 2009 Alexander van der Mey <alexvandermey@gmail.com>
 
@@ -26,7 +28,7 @@ ALLIGN = ["tool_left", "tool_center", "tool_right"]
 class Formatting:
 
 	def __init__(self, widget, editorbuffer):
-		try:		
+		try:
 			self.buffer = editorbuffer
 			self.buffer.begin_user_action()
 			ins, end = self.buffer.get_selection_bounds()
@@ -41,7 +43,7 @@ class Formatting:
 				ins.backward_chars(len(begintag))
 				self.buffer.select_range(ins, end)
 				self.buffer.end_user_action()
-		except (IndexError, ValueError): 
+		except (IndexError, ValueError):
 			return 	# will silenty pass if no text selected
 					# may replace this with get_selection_bound check
 

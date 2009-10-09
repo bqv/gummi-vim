@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- encoding: utf-8 -*-
 
 # Copyright (c) 2009 Alexander van der Mey <alexvandermey@gmail.com>
 
@@ -96,22 +98,22 @@ class Importer: # needs cleanup
 		return imagefile
 
 	def insert_image(self):
-		if os.path.exists(self.image_file.get_text()):	
-			self.editorpane.insert_package("graphicx")		
-			f = self.image_file.get_text()			
+		if os.path.exists(self.image_file.get_text()):
+			self.editorpane.insert_package("graphicx")
+			f = self.image_file.get_text()
 			s = self.scaler.get_value()
 			c = self.image_caption.get_text()
 			l = self.image_label.get_text()
-			code = self.generate_image(f, s, c, l)	
-			position = self.editorpane.get_current_position()			
+			code = self.generate_image(f, s, c, l)
+			position = self.editorpane.get_current_position()
 			self.editorpane.editorbuffer.insert(position, code)
 			self.editorpane.text_changed()
 		self.import_tabs.set_current_page(0)
 
 	def insert_table(self):
-		position = self.editorpane.get_current_position()				
-		code = self.generate_table(self.table_rows.get_value(), self.table_cols.get_value())	
-		position = self.editorpane.get_current_position()			
+		position = self.editorpane.get_current_position()
+		code = self.generate_table(self.table_rows.get_value(), self.table_cols.get_value())
+		position = self.editorpane.get_current_position()
 		self.editorpane.editorbuffer.insert(position, code)
 		self.editorpane.text_changed()
 		self.import_tabs.set_current_page(0)
@@ -119,9 +121,9 @@ class Importer: # needs cleanup
 	def insert_matrix(self):
 		self.editorpane.insert_package("amsmath")
 		position = self.editorpane.get_current_position()
-		bracket = self.matrix_combo.get_active_text()	
-		code = self.generate_matrix(bracket, self.matrix_rows.get_value(), self.matrix_cols.get_value())	
-		position = self.editorpane.get_current_position()			
+		bracket = self.matrix_combo.get_active_text()
+		code = self.generate_matrix(bracket, self.matrix_rows.get_value(), self.matrix_cols.get_value())
+		position = self.editorpane.get_current_position()
 		self.editorpane.editorbuffer.insert(position, code)
 		self.editorpane.text_changed()
 		self.import_tabs.set_current_page(0)
@@ -133,11 +135,11 @@ class Importer: # needs cleanup
 		for f in range(1,columns): allign = f * "l"
 		begin_tabular = 	"\\begin{tabular}{" + allign + "}\n"
 		end_tabular = "\\end{tabular}\n"
-		for k in range(1, rows):		
+		for k in range(1, rows):
 			for i in range(1,columns):
 				if i == (columns-1): new = str(k) + str(i) + "\\\\ \n"
-				elif i == 1: new = "\t" + str(k) + str(i) + " & " 
-				else: new = str(k) + str(i) + " & " 
+				elif i == 1: new = "\t" + str(k) + str(i) + " & "
+				else: new = str(k) + str(i) + " & "
 				table = table + new
 		return begin_tabular + table + end_tabular
 
@@ -153,7 +155,7 @@ class Importer: # needs cleanup
 
 
 	def generate_matrix(self, bracket, rows, columns):
-		if bracket == "Unbracketed": mode = "matrix"			
+		if bracket == "Unbracketed": mode = "matrix"
 		elif bracket == "Parentheses": mode = "pmatrix"
 		elif bracket == "Brackets": mode = "bmatrix"
 		elif bracket == "Braces": mode = "Bmatrix"
@@ -164,11 +166,11 @@ class Importer: # needs cleanup
 		columns = int(columns) + 1
 		begin_matrix = "\\begin{" + mode + "}\n"
 		end_matrix = "\\end{" + mode +"}\n"
-		for k in range(1, rows):		
+		for k in range(1, rows):
 			for i in range(1,columns):
 				if i == (columns-1): new = str(k) + str(i) + "\\\\ \n"
-				elif i == 1: new = "\t" + str(k) + str(i) + " & " 
-				else: new = str(k) + str(i) + " & " 
+				elif i == 1: new = "\t" + str(k) + str(i) + " & "
+				else: new = str(k) + str(i) + " & "
 				matrix = matrix + new
 		return begin_matrix + matrix + end_matrix
 
