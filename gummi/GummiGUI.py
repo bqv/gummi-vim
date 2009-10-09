@@ -291,7 +291,8 @@ class GummiGUI:
 		update = UpdateCheck.UpdateCheck()
 
 	def on_menu_about_activate(self, menuitem, data=None):
-		authors = ["Alexander van der Mey\n<alexvandermey@gmail.com>"]
+		authors = ["Alexander van der Mey\n<alexvandermey@gmail.com>\n\n"
+					"Thomas van der Burgt\n<thvdburgt@gmail.com>\n"]
 		artwork = ["Template icon set from:\nhttp://www.fatcow.com/free-icons/"]
 		about_dialog = gtk.AboutDialog()
 		about_dialog.set_transient_for(self.mainwindow)
@@ -301,7 +302,7 @@ class GummiGUI:
 		about_dialog.set_version(Preferences.VERSION)
 		about_dialog.set_copyright("Copyright \xc2\xa9 2009 Alexander van der Mey")
 		about_dialog.set_website("http://gummi.googlecode.com")
-		about_dialog.set_comments("Simple LaTex Editor for GTK+ users")
+		about_dialog.set_comments("Simple LaTeX Editor for GTK+ users")
 		about_dialog.set_authors(authors)
 		about_dialog.set_artists(artwork)
 		about_dialog.set_logo_icon_name	 (gtk.STOCK_EDIT)
