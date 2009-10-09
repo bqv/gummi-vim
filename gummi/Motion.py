@@ -33,21 +33,21 @@ import Preferences
 
 
 class Motion:
-	
-	def __init__(self, config, tex, pdf, error, light, tempdir):
+
+	def __init__(self, config, tex, preview, error, light, tempdir):
 		self.config = config
 		self.editorpane = tex
-		self.previewpane = pdf
+		self.previewpane = preview
 		self.statuslight = light
 		self.tempdir = tempdir
 
 		self.texfile = None
 		self.texname = None
-		self.texpath = None		
+		self.texpath = None
 		self.tmpfile = None
 		self.pdffile = None
 		self.workfile = None
-		
+
 		self.status = 1
 
 		try: self.texcmd = self.config.get_string("tex_cmd")
@@ -66,25 +66,26 @@ class Motion:
 
 	def create_environment(self, filename):
 		self.texfile = filename
-		self.texpath = os.path.dirname(self.texfile) + "/"	
+		self.texpath = os.path.dirname(self.texfile) + "/"
 		if ".tex" in self.texfile:
-			self.texname = os.path.basename(self.texfile)[:-4] 
+			self.texname = os.path.basename(self.texfile)[:-4]
 		else:
 			self.texname = os.path.basename(self.texfile)
 		fd = tempfile.mkstemp(".tex")[0]
 		self.workfile = os.readlink("/proc/self/fd/%d" % fd)
 		self.pdffile = self.workfile[:-4] + ".pdf"
-		print ("\nEnvironment created for: \nTEX: " + self.texfile + 
+		print ("\nEnvironment created for: \nTEX: " + self.texfile +
 		       "\nTMP: " + self.workfile + "\nPDF: " + self.pdffile + "\n")
 		self.initial_preview()
 
 	def initial_preview(self):
 		self.update_workfile()
 		self.update_pdffile()
-		try:		
-			self.previewpane.create_preview(self.pdffile)
+		try:
+			self.previewpane.set_pdffile(self.pdffile)
 			self.previewpane.refresh_preview()
-		except:
+		except Exception as e:
+			print 'oeps:', e
 			self.previewpane.drawarea.hide()
 
 	def export_pdffile(self):
@@ -96,7 +97,7 @@ class Motion:
 
 	def update_workfile(self):
 		try:
-			# these two lines make the program hang in certain situations, no clue why	
+			# these two lines make the program hang in certain situations, no clue why
 			#self.editorpane.editorview.set_sensitive(False)
 			buff = self.editorpane.editorviewer.get_buffer()
 			start_iter, end_iter = buff.get_start_iter(), buff.get_end_iter()
@@ -112,17 +113,17 @@ class Motion:
 	def update_auxfile(self):
 		auxupdate = subprocess.Popen(self.texcmd + ' --draftmode -interaction=nonstopmode --output-directory="%s" "%s"' % (self.tempdir, self.workfile), shell=True, stdin=None, stdout=subprocess.PIPE, stderr=None)
 		output = auxupdate.communicate()[0]
-		#output to a textbuffer soon		
+		#output to a textbuffer soon
 		auxupdate.wait()
 
 
-	def update_pdffile(self):	
+	def update_pdffile(self):
 		#os.chdir(self.texpath)
 		pdfmaker = subprocess.Popen(self.texcmd + ' -interaction=nonstopmode --output-directory="%s" "%s"' % (self.tempdir, self.workfile), shell=True, stdin=None, stdout = subprocess.PIPE, stderr=None)
 		output = pdfmaker.communicate()[0]
 		pdfmaker.wait()
 		try: os.close(3)
-		except: pass	
+		except: pass
 		self.errorbuffer.set_text(output)
 		err1 = "Fatal error"
 		err2 = "Emergency stop"
@@ -131,17 +132,17 @@ class Motion:
 			self.statuslight.set_stock_id("gtk-no")
 		else:
 			self.statuslight.set_stock_id("gtk-yes")
-		
+
 
 	def update_preview(self):
 		while True:
 			try:
-				if self.previewpane and self.status == 1 and self.editorpane.check_text_change():
+				if self.previewpane and self.status and self.editorpane.check_text_change():
 					gtk.gdk.threads_enter
 					self.editorpane.check_text_change()
 					self.update_workfile()
 					self.update_pdffile()
-					self.previewpane.refresh_preview()			
+					self.previewpane.refresh_preview()
 					gtk.gdk.threads_leave
 			except:
 				print "something is wrong with the refresh thread"

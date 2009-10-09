@@ -734,24 +734,128 @@ active document</property>
                     <property name="can_focus">True</property>
                     <property name="tab_border">0</property>
                     <child>
-                      <object class="GtkScrolledWindow" id="preview_scroll">
+                      <object class="GtkVBox" id="vbox7">
                         <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="hscrollbar_policy">automatic</property>
-                        <property name="vscrollbar_policy">automatic</property>
-                        <property name="window_placement_set">True</property>
+                        <property name="orientation">vertical</property>
                         <child>
-                          <object class="GtkViewport" id="preview_viewport">
+                          <object class="GtkToolbar" id="preview_toolbar">
                             <property name="visible">True</property>
-                            <property name="border_width">4</property>
-                            <property name="resize_mode">queue</property>
-                            <property name="shadow_type">etched-in</property>
                             <child>
-                              <object class="GtkDrawingArea" id="preview_drawarea">
+                              <object class="GtkToolButton" id="toolbutton1">
                                 <property name="visible">True</property>
+                                <property name="label" translatable="yes">Previous</property>
+                                <property name="use_underline">True</property>
+                                <property name="stock_id">gtk-go-back</property>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="homogeneous">True</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkToolButton" id="toolbutton2">
+                                <property name="visible">True</property>
+                                <property name="label" translatable="yes">Next</property>
+                                <property name="use_underline">True</property>
+                                <property name="stock_id">gtk-go-forward</property>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="homogeneous">True</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkSeparatorToolItem" id="toolbutton3">
+                                <property name="visible">True</property>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkToolItem" id="page_selector">
+                                <property name="visible">True</property>
+                                <child>
+                                  <object class="GtkHBox" id="hbox1">
+                                    <property name="visible">True</property>
+                                    <property name="spacing">6</property>
+                                    <child>
+                                      <object class="GtkEntry" id="page">
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">True</property>
+                                        <property name="invisible_char">&#x25CF;</property>
+                                        <property name="width_chars">6</property>
+                                        <property name="text" translatable="yes">0</property>
+                                      </object>
+                                      <packing>
+                                        <property name="position">0</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <object class="GtkLabel" id="preview">
+                                        <property name="visible">True</property>
+                                        <property name="label" translatable="yes">of 0</property>
+                                      </object>
+                                      <packing>
+                                        <property name="position">1</property>
+                                      </packing>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkSeparatorToolItem" id="seperator">
+                                <property name="visible">True</property>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkToolItem" id="zoom">
+                                <property name="visible">True</property>
+                                <child>
+                                  <placeholder/>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                              </packing>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkScrolledWindow" id="preview_scroll">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="hscrollbar_policy">automatic</property>
+                            <property name="vscrollbar_policy">automatic</property>
+                            <property name="window_placement_set">True</property>
+                            <child>
+                              <object class="GtkViewport" id="preview_viewport">
+                                <property name="visible">True</property>
+                                <property name="border_width">4</property>
+                                <property name="resize_mode">queue</property>
+                                <property name="shadow_type">etched-in</property>
+                                <child>
+                                  <object class="GtkDrawingArea" id="preview_drawarea">
+                                    <property name="visible">True</property>
+                                  </object>
+                                </child>
                               </object>
                             </child>
                           </object>
+                          <packing>
+                            <property name="position">1</property>
+                          </packing>
                         </child>
                       </object>
                     </child>
@@ -971,87 +1075,7 @@ into current tex document</property>
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkToolbar" id="previewbuttonbar">
-                    <property name="visible">True</property>
-                    <property name="toolbar_style">both</property>
-                    <property name="icon_size">4</property>
-                    <property name="icon_size_set">True</property>
-                    <child>
-                      <object class="GtkToolButton" id="button_pageback">
-                        <property name="visible">True</property>
-                        <property name="tooltip_text" translatable="yes">Go to the previous page</property>
-                        <property name="label" translatable="yes">Back</property>
-                        <property name="use_underline">True</property>
-                        <property name="stock_id">gtk-go-back</property>
-                        <signal name="clicked" handler="on_button_pageback_clicked"/>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="homogeneous">True</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkToolButton" id="button_pageforward">
-                        <property name="visible">True</property>
-                        <property name="tooltip_text" translatable="yes">Go to the next page</property>
-                        <property name="label" translatable="yes">Forward</property>
-                        <property name="use_underline">True</property>
-                        <property name="stock_id">gtk-go-forward</property>
-                        <signal name="clicked" handler="on_button_pageforward_clicked"/>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="homogeneous">True</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkToolButton" id="button_zoomin">
-                        <property name="visible">True</property>
-                        <property name="tooltip_text" translatable="yes">Increase zoom level</property>
-                        <property name="label" translatable="yes">Zoom In</property>
-                        <property name="use_underline">True</property>
-                        <property name="stock_id">gtk-zoom-in</property>
-                        <signal name="clicked" handler="on_button_zoomin_clicked"/>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="homogeneous">True</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkToolButton" id="button_zoomout">
-                        <property name="visible">True</property>
-                        <property name="tooltip_text" translatable="yes">Decrease zoom level</property>
-                        <property name="label" translatable="yes">Zoom Out</property>
-                        <property name="use_underline">True</property>
-                        <property name="stock_id">gtk-zoom-out</property>
-                        <signal name="clicked" handler="on_button_zoomout_clicked"/>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="homogeneous">True</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkToggleToolButton" id="button_bestfit">
-                        <property name="visible">True</property>
-                        <property name="tooltip_text" translatable="yes">Adjust zoom level to best fit pane</property>
-                        <property name="label" translatable="yes">Best Fit</property>
-                        <property name="use_underline">True</property>
-                        <property name="icon_name">zoom-best-fit</property>
-                        <property name="active">True</property>
-                        <signal name="clicked" handler="on_button_bestfit_toggled"/>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="homogeneous">True</property>
-                      </packing>
-                    </child>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="position">1</property>
-                  </packing>
+                  <placeholder/>
                 </child>
               </object>
               <packing>

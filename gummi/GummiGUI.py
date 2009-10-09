@@ -31,7 +31,7 @@ try: import glib
 except ImportError: pass
 
 import TexPane
-import PdfPane
+import PreviewPane
 import Importer
 import Motion
 import Biblio
@@ -57,16 +57,17 @@ class GummiGUI:
 		self.mainnotebook = builder.get_object("main_notebook")
 		self.editorscroll = builder.get_object("editor_scroll")
 		self.drawarea = builder.get_object("preview_drawarea")
+		self.preview_toolbar = builder.get_object("preview_toolbar")
 		self.errorfield = builder.get_object("errorfield")
 		self.searchwindow = builder.get_object("searchwindow")
 		self.searchentry = builder.get_object("searchentry")
-		self.backwards = builder.get_object("toggle_backwards")	
+		self.backwards = builder.get_object("toggle_backwards")
 		self.matchcase = builder.get_object("toggle_matchcase")
 		self.statuslight = builder.get_object("tool_statuslight")
 		self.statusbar = builder.get_object("statusbar")
 		self.statusbar_cid = self.statusbar.get_context_id("Gummi")
 		self.errorfield.modify_font(pango.FontDescription("monospace 8"))
-		self.recent1 = builder.get_object("menu_recent1")		
+		self.recent1 = builder.get_object("menu_recent1")
 		self.recent2 = builder.get_object("menu_recent2")
 		self.recent3 = builder.get_object("menu_recent3")
 		self.hpaned = builder.get_object("hpaned")
@@ -90,7 +91,7 @@ class GummiGUI:
 
 		self.config = Preferences.Preferences(self)
 		self.editorpane = TexPane.TexPane(self.config)
-		self.previewpane = PdfPane.PdfPane(self.config, builder)
+		self.previewpane = PreviewPane.PreviewPane(self.drawarea, self.preview_toolbar)
 		self.importer = Importer.Importer(self.editorpane, builder)
 		self.motion = Motion.Motion(self.config, self.editorpane, self.previewpane, self.errorfield, self.statuslight, self.tempdir)
 		self.editorscroll.add(self.editorpane.editorviewer)
@@ -98,12 +99,12 @@ class GummiGUI:
 
 		self.create_initial_document()
 		self.mainwindow.show_all()
-	
+
 	def create_initial_document(self):
-		if len(sys.argv) > 1: 
-			self.filename = sys.argv[1]		
+		if len(sys.argv) > 1:
+			self.filename = sys.argv[1]
 			self.load_file(self.filename)
-		else: 
+		else:
 			self.filename = self.tempdir + "/gummi-default"
 			self.editorpane.fill_buffer(self.config.get_string("tex_defaulttext"))
 			self.motion.create_environment(self.filename)
@@ -142,19 +143,19 @@ class GummiGUI:
 		self.motion.create_environment(self.tempdir + "/gummi-new")
 
 	def on_menu_template_activate(self, menuitem, data=None):
-		self.template_doc = Template.Template(self.builder, CWD)		
+		self.template_doc = Template.Template(self.builder, CWD)
 
 	def on_menu_open_activate(self, menuitem, data=None):
 		if os.getcwd() == self.tempdir:
-			os.chdir(os.environ['HOME'])	
-		if self.check_for_save(): self.on_menu_save_activate(None, None)        
+			os.chdir(os.environ['HOME'])
+		if self.check_for_save(): self.on_menu_save_activate(None, None)
 		filename = self.get_open_filename()
 		if filename: self.load_file(filename)
 
 	def on_menu_save_activate(self, menuitem, data=None):
 		if os.getcwd() == self.tempdir:
-			os.chdir(os.environ['HOME'])	
-		if self.filename is None: 
+			os.chdir(os.environ['HOME'])
+		if self.filename is None:
 			filename = self.get_save_filename()
 			if filename: self.write_file(filename)
 		if os.path.dirname(self.filename) == self.tempdir:
@@ -162,7 +163,7 @@ class GummiGUI:
 			if filename: self.write_file(filename)
 		else: self.write_file(None)
 
-	def on_menu_saveas_activate(self, menuitem, data=None):	
+	def on_menu_saveas_activate(self, menuitem, data=None):
 		if os.getcwd() == self.tempdir:
 			os.chdir(os.environ['HOME'])
 		self.filename = self.get_save_filename()
@@ -198,7 +199,7 @@ class GummiGUI:
 		buff.select_range(buff.get_start_iter(),buff.get_end_iter())
 
 	def on_menu_find_activate(self, menuitem, data=None):
-		self.editorpane.start_searchfunction()	
+		self.editorpane.start_searchfunction()
 		self.searchentry.grab_focus()
 		self.searchentry.set_text("")
 		self.searchwindow.show()
@@ -208,7 +209,7 @@ class GummiGUI:
 		if template is not None:
 			self.editorpane.fill_buffer(template)
 		self.filename = None
-		self.motion.create_environment(self.tempdir + "/gummi-new")	
+		self.motion.create_environment(self.tempdir + "/gummi-new")
 		self.template_doc.templatewindow.hide()
 
 	def on_button_template_cancel_clicked(self, button, data=None):
@@ -222,7 +223,7 @@ class GummiGUI:
 	def on_button_searchwindow_find_clicked(self, button, data=None):
 		term = self.searchentry.get_text()
 		flags = self.get_search_flags()
-		self.editorpane.search_buffer(term, flags)	
+		self.editorpane.search_buffer(term, flags)
 
 	def get_search_flags(self):
 		flags = [False, 0]
@@ -237,11 +238,11 @@ class GummiGUI:
 		self.box_image.foreach(lambda x:self.box_image.remove(x))
 		self.box_table.foreach(lambda x:self.box_table.remove(x))
 		self.box_matrix.foreach(lambda x:self.box_matrix.remove(x))
-		if newactive == "box_image": 
+		if newactive == "box_image":
 			self.box_image.add(self.image_pane)
-		elif newactive == "box_table": 
+		elif newactive == "box_table":
 			self.box_table.add(self.table_pane)
-		elif newactive == "box_matrix": 
+		elif newactive == "box_matrix":
 			self.box_matrix.add(self.matrix_pane)
 
 	def on_button_imagepane_apply_clicked(self, button, data=None):
@@ -256,7 +257,7 @@ class GummiGUI:
 	def on_image_file_activate(self, button, event, data=None):
 		self.importer.prepare_image()
 
-	def on_menu_bibupdate_activate(self, menuitem, data=None):	
+	def on_menu_bibupdate_activate(self, menuitem, data=None):
 		self.biblio.compile_bibliography()
 
 	def on_menu_preferences_activate(self, menuitem, data=None):
@@ -265,7 +266,7 @@ class GummiGUI:
 	def on_menu_update_activate(self, menuitem, data=None):
 		update = UpdateCheck.UpdateCheck()
 
-	def on_menu_about_activate(self, menuitem, data=None):		
+	def on_menu_about_activate(self, menuitem, data=None):
 		authors = ["Alexander van der Mey\n<alexvandermey@gmail.com>"]
 		artwork = ["Template icon set from:\nhttp://www.fatcow.com/free-icons/"]
 		about_dialog = gtk.AboutDialog()
@@ -292,11 +293,11 @@ class GummiGUI:
 		self.about_dialog = about_dialog
 		about_dialog.show()
 
-	
+
 	def on_tool_bold_activate(self, button, data=None):
 		self.editorpane.set_selection_textstyle(button)
 
-	#redundant, but oh well.. 
+	#redundant, but oh well..
 	def on_tool_italic_activate(self, button, data=None):
 		self.editorpane.set_selection_textstyle(button)
 
@@ -323,7 +324,7 @@ class GummiGUI:
 
 	def on_button_zoomout_clicked(self, button, data=None):
 		self.previewpane.zoom_out_pane()
-	
+
 	def on_button_bestfit_toggled(self, button, data=None):
 		if button.get_active() == False:
 			self.previewpane.set_bestfitmode(False)
@@ -338,7 +339,7 @@ class GummiGUI:
 
 	def on_button_bibapply_clicked(self, button, data=None):
 		self.biblio.setup_bibliography()
-		self.mainnotebook.set_current_page(0)		
+		self.mainnotebook.set_current_page(0)
 
 	def set_status(self, message):
 		self.statusbar.push(self.statusbar_cid, message)
@@ -369,7 +370,7 @@ class GummiGUI:
 
 	def add_recentfile(self, filename):
 		recents = self.config.get_list("recent_files")
-		if filename not in recents:			
+		if filename not in recents:
 			recents.insert(0, filename)
 			if len(recents) > 3:
 				del recents[3]
@@ -378,7 +379,7 @@ class GummiGUI:
 
 	def load_recentfile(self, filename):
 		self.check_for_save()
-		self.load_file(filename)		
+		self.load_file(filename)
 
 	def set_file_filters(self, dialog):
 		plainfilter = gtk.FileFilter()
@@ -404,23 +405,23 @@ class GummiGUI:
 		if response == gtk.RESPONSE_OK: filename = chooser.get_filename()
 		chooser.destroy()
 		return filename
-	
+
 	def get_save_filename(self):
 		filename = None
 		chooser = gtk.FileChooserDialog("Save File...", self.mainwindow,
 										gtk.FILE_CHOOSER_ACTION_SAVE,
-										(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, 
+										(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
 										gtk.STOCK_SAVE, gtk.RESPONSE_OK))
 		self.set_file_filters(chooser)
 		response = chooser.run()
 		if response == gtk.RESPONSE_CANCEL:
 			self.exitinterrupt = True
-		if response == gtk.RESPONSE_OK: 
+		if response == gtk.RESPONSE_OK:
 			filename = chooser.get_filename()
 			if not ".tex" in filename[-4:]:
-				filename = filename + ".tex"		
+				filename = filename + ".tex"
 			chooser.destroy()
-			self.motion.create_environment(filename)	
+			self.motion.create_environment(filename)
 		chooser.destroy()
 		return filename
 
@@ -431,12 +432,12 @@ class GummiGUI:
 			message = "Do you want to save the changes you have made?"
 			dialog = gtk.MessageDialog(self.mainwindow,
 							gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
-							gtk.MESSAGE_QUESTION, gtk.BUTTONS_YES_NO, 
+							gtk.MESSAGE_QUESTION, gtk.BUTTONS_YES_NO,
 							message)
 			dialog.set_title("Save?")
 			if dialog.run() == gtk.RESPONSE_NO: ret = False
 			else: ret = True
-			dialog.destroy()        
+			dialog.destroy()
 		return ret
 
 	def load_file(self, filename):
@@ -459,7 +460,7 @@ class GummiGUI:
 			encoded = self.encode_text(content)
 			fout.write(encoded)
 			fout.close()
-			if filename: self.filename = filename   
+			if filename: self.filename = filename
 			self.set_status("Saving file " + self.filename)
 			self.motion.export_pdffile()
 		except:
@@ -467,8 +468,8 @@ class GummiGUI:
 
 
 	def gtk_main_quit(self, menuitem, data=None):
-		if self.check_for_save(): self.on_menu_save_activate(None, None)	
-		if self.exitinterrupt is False:	
+		if self.check_for_save(): self.on_menu_save_activate(None, None)
+		if self.exitinterrupt is False:
 			print "   ___ "
 			print "  {o,o}	  Thanks for using Gummi!"
 			print "  |)__)	  I welcome your feedback at:"
@@ -482,7 +483,7 @@ if __name__ == "__main__":
 else:
 	path = __file__
 CWD = os.path.abspath(os.path.dirname(path))
-try: 
+try:
 	instance = GummiGUI()
 	instance.mainwindow.show()
 	gtk.main()
