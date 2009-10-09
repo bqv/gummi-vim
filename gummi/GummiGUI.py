@@ -204,6 +204,12 @@ class GummiGUI:
 		self.searchentry.set_text("")
 		self.searchwindow.show()
 
+	def on_menu_fullscreen_toggled(self, menuitem, data=None):
+		if menuitem.get_active():
+			self.mainwindow.fullscreen()
+		else:
+			self.mainwindow.unfullscreen()
+
 	def on_button_template_ok_clicked(self, button, data=None):
 		template = self.template_doc.get_template()
 		if template is not None:
@@ -280,7 +286,7 @@ class GummiGUI:
 		about_dialog.set_comments("Simple LaTex Editor for GTK+ users")
 		about_dialog.set_authors(authors)
 		about_dialog.set_artists(artwork)
-		about_dialog.set_logo_icon_name     (gtk.STOCK_EDIT)
+		about_dialog.set_logo_icon_name	 (gtk.STOCK_EDIT)
 		# callbacks for destroying the dialog
 		def close(dialog, response, editor):
 			editor.about_dialog = None
