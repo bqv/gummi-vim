@@ -114,8 +114,11 @@ class PreviewPane:
 										   int(self.page_height * self.scale))
 		elif self.fit_width:
 			if abs(self.page_ratio - view_ratio) > 0.01:
-				self.drawarea.set_size_request(-1,int(self.page_height *
-													  self.scale))
+				self.drawarea.set_size_request(-1, int(self.page_height *
+				                                       self.scale))
+		elif self.best_fit:
+			self.drawarea.set_size_request(-1, int(self.page_height *
+			                                       self.scale)-10)
 
 		cr.scale(self.scale, self.scale)
 
@@ -175,11 +178,10 @@ class PreviewPane:
 		scrollw = self.drawarea.get_parent().get_parent()
 		scrollw.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
 		if zoom < 2:
+			scrollw.set_policy(gtk.POLICY_NEVER, gtk.POLICY_AUTOMATIC)
 			if zoom == 0: # Best Fit
-				scrollw.set_policy(gtk.POLICY_NEVER, gtk.POLICY_NEVER)
 				self.best_fit = True
 			elif zoom == 1: # Fit Page Width
-				scrollw.set_policy(gtk.POLICY_NEVER, gtk.POLICY_AUTOMATIC)
 				self.fit_width = True
 		else:
 			self.scale = zoomlist[zoom-2]
