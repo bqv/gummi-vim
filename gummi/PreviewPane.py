@@ -185,7 +185,8 @@ class PreviewPane:
 		scrollw = self.drawarea.get_parent().get_parent()
 		scrollw.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
 		if zoom < 2:
-			scrollw.set_policy(gtk.POLICY_NEVER, gtk.POLICY_AUTOMATIC)
+			# POLICY_NEVER breaks window size, try best fit, 400% and back to best fit
+			scrollw.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
 			if zoom == 0: # Best Fit
 				self.best_fit = True
 			elif zoom == 1: # Fit Page Width
