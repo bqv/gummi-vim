@@ -142,7 +142,7 @@ class GummiGUI:
 
 	def set_window_title(self, filename):
 		self.mainwindow.set_title \
-					("[" + os.path.basename(filename) + "] - Gummi")
+					(os.path.basename(filename) + " - Gummi")
 
 	def on_menu_new_activate(self, menuitem, data=None):
 		if self.check_for_save(): self.on_menu_save_activate(None, None)
