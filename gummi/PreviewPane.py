@@ -99,7 +99,7 @@ class PreviewPane:
 		if self.page_total - 1 > self.current_page:
 			self.next.set_sensitive(True)
 		elif self.current_page >= self.page_total:
-			self.current_page = self.page_total - 1
+			self.goto_page(self.page_total - 1)
 		self.pagelabel.set_text('of ' + str(self.page_total))
 		self.pageinput.set_text(str(self.current_page + 1))
 		self.page_width, self.page_height = self.get_page().get_size()
