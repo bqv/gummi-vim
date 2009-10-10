@@ -59,12 +59,12 @@ class PreviewPane:
 		# stop the ugliness right here!
 
 		self.zoomcombo = builder.get_object("zoomcombo")
-		# set_active(choice) has inbuild function
 		self.zoomcombo.connect("changed", self.zoom_combo)
+		#self.zoomcombo.set_active(1)
 
 		self.scale = 1.0
-		self.best_fit = True
-		self.fit_width = False
+		self.best_fit = False
+		self.fit_width = True
 
 	def set_pdffile(self, pdffile):
 		if pdffile:

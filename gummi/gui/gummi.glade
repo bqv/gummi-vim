@@ -894,10 +894,10 @@ active document</property>
                                 <property name="visible">True</property>
                                 <child>
                                   <object class="GtkComboBox" id="zoomcombo">
-                                    <property name="width_request">120</property>
+                                    <property name="width_request">125</property>
                                     <property name="visible">True</property>
                                     <property name="model">zoomcombo_model</property>
-                                    <property name="active">0</property>
+                                    <property name="active">1</property>
                                     <child>
                                       <object class="GtkCellRendererText" id="cellrenderertext3"/>
                                       <attributes>
