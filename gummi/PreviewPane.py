@@ -31,40 +31,36 @@ import poppler
 
 class PreviewPane:
 
-	def __init__(self, builder, drawarea, toolbar, pdffile=None):
+	def __init__(self, builder, pdffile=None):
+		
 		self.builder = builder
-		# maybe also get drawarea object from builder?
-		self.drawarea = drawarea
+		self.drawarea = builder.get_object("preview_drawarea")
+		self.toolbar = builder.get_object("preview_toolbar")
+		self.prev = builder.get_object("preview_prev")
+		self.next = builder.get_object("preview_next")
+		self.pageinput = builder.get_object("page_input")
+		self.pagelabel = builder.get_object("page_label")
+		self.zoomcombo = builder.get_object("zoomcombo")
+
 		self.drawarea.connect("expose-event", self.on_expose)
+		self.prev.connect("clicked", self.prev_page)
+		self.next.connect("clicked", self.next_page)
+		self.pageinput.connect("activate", self.page_input)
+		self.zoomcombo.connect("changed", self.zoom_combo)
+
 		# TODO: get this color from the gtk-theme?
 		self.drawarea.modify_bg(gtk.STATE_NORMAL,
 								gtk.gdk.color_parse('#edeceb'))
 
 		self.page_total = 0
 		self.current_page = 0
-
-		self.toolbar = toolbar
-		self.prev = toolbar.get_nth_item(0)
-		self.prev.connect("clicked", self.prev_page)
-		self.prev.set_sensitive(False)
-		self.next = toolbar.get_nth_item(1)
-		self.next.connect("clicked", self.next_page)
-		self.next.set_sensitive(False)
-
-		# TODO: This is ugly!, suggestions?
-		self.pageinput = toolbar.get_nth_item(3).get_child().get_children()[0]
-		self.pageinput.connect("activate", self.page_input)
-		self.pagelabel = toolbar.get_nth_item(3).get_child().get_children()[1]
-		combobox_area = toolbar.get_nth_item(5)
-		# stop the ugliness right here!
-
-		self.zoomcombo = builder.get_object("zoomcombo")
-		self.zoomcombo.connect("changed", self.zoom_combo)
-		#self.zoomcombo.set_active(1)
-
 		self.scale = 1.0
 		self.best_fit = False
 		self.fit_width = True
+
+		self.page_ratio = None # init now so we use them later in on_expose
+		self.page_width = None # to check if have been set (succesful refresh)
+
 
 	def set_pdffile(self, pdffile):
 		if pdffile:

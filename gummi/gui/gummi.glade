@@ -814,8 +814,9 @@ active document</property>
                           <object class="GtkToolbar" id="preview_toolbar">
                             <property name="visible">True</property>
                             <child>
-                              <object class="GtkToolButton" id="toolbutton1">
+                              <object class="GtkToolButton" id="preview_prev">
                                 <property name="visible">True</property>
+                                <property name="sensitive">False</property>
                                 <property name="label" translatable="yes">Previous</property>
                                 <property name="use_underline">True</property>
                                 <property name="stock_id">gtk-go-back</property>
@@ -826,8 +827,9 @@ active document</property>
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkToolButton" id="toolbutton2">
+                              <object class="GtkToolButton" id="preview_next">
                                 <property name="visible">True</property>
+                                <property name="sensitive">False</property>
                                 <property name="label" translatable="yes">Next</property>
                                 <property name="use_underline">True</property>
                                 <property name="stock_id">gtk-go-forward</property>
@@ -853,7 +855,7 @@ active document</property>
                                     <property name="visible">True</property>
                                     <property name="spacing">6</property>
                                     <child>
-                                      <object class="GtkEntry" id="page">
+                                      <object class="GtkEntry" id="page_input">
                                         <property name="visible">True</property>
                                         <property name="can_focus">True</property>
                                         <property name="invisible_char">&#x25CF;</property>
@@ -866,7 +868,7 @@ active document</property>
                                       </packing>
                                     </child>
                                     <child>
-                                      <object class="GtkLabel" id="preview">
+                                      <object class="GtkLabel" id="page_label">
                                         <property name="visible">True</property>
                                         <property name="label" translatable="yes">of 0</property>
                                       </object>
@@ -1198,8 +1200,8 @@ into current tex document</property>
                 <property name="has_focus">True</property>
                 <property name="invisible_char">&#x2022;</property>
                 <property name="primary_icon_stock">gtk-find</property>
-                <accelerator key="Return" signal="activate"/>
                 <accelerator key="Escape" signal="activate" modifiers="GDK_SHIFT_MASK"/>
+                <accelerator key="Return" signal="activate"/>
                 <signal name="activate" handler="on_button_searchwindow_find_clicked"/>
               </object>
               <packing>
