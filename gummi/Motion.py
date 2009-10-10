@@ -120,17 +120,13 @@ class Motion:
 
 
 	def update_pdffile(self):
-		#os.chdir(self.texpath)
-		pdfmaker = subprocess.Popen(self.texcmd + ' -interaction=nonstopmode --output-directory="%s" "%s"' % (self.tempdir, self.workfile), shell=True, stdin=None, stdout = subprocess.PIPE, stderr=None)
+		pdfmaker = subprocess.Popen(self.texcmd + ' -interaction=nonstopmode --output-directory="%s" "%s"' % (self.tempdir, self.workfile), shell=True, stdin=None, stdout = subprocess.PIPE, stderr=None, cwd=self.texpath)
 		output = pdfmaker.communicate()[0]
 		pdfmaker.wait()
 		try: os.close(3) # very important
 		except: pass
 		self.errorbuffer.set_text(output)
-		err1 = "Fatal error"
-		err2 = "Emergency stop"
-		err3 = "LaTeX Error"
-		if err1 in output or err2 in output or err3 in output:
+		if pdfmaker.returncode:
 			self.statuslight.set_stock_id("gtk-no")
 		else:
 			self.statuslight.set_stock_id("gtk-yes")
