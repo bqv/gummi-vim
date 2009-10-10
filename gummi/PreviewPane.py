@@ -33,7 +33,7 @@ class PreviewPane:
 
 	def __init__(self, builder, drawarea, toolbar, pdffile=None):
 		self.builder = builder
-		# maybe also get drawarea object from builder?		
+		# maybe also get drawarea object from builder?
 		self.drawarea = drawarea
 		self.drawarea.connect("expose-event", self.on_expose)
 		# TODO: get this color from the gtk-theme?
@@ -104,28 +104,30 @@ class PreviewPane:
 
 	def on_expose(self, drawarea, data):
 		cr = drawarea.window.cairo_create()
-
-		vp_size = drawarea.get_parent().get_allocation()
+		scrollw = drawarea.get_parent().get_parent()
+		vp_size = scrollw.get_allocation()
 		view_height = vp_size.height
 		view_width = vp_size.width
 		view_ratio = view_width / view_height
 
 		if self.best_fit or self.fit_width:
+			scrollw.set_policy(gtk.POLICY_NEVER, gtk.POLICY_AUTOMATIC)
 			if view_ratio < self.page_ratio or self.fit_width:
 				self.scale = view_width / self.page_width
 			else:
 				self.scale = view_height / self.page_height
 
 		if not (self.best_fit or self.fit_width):
+			scrollw.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
 			self.drawarea.set_size_request(int(self.page_width * self.scale),
-										   int(self.page_height * self.scale))
+			                               int(self.page_height * self.scale))
 		elif self.fit_width:
 			if abs(self.page_ratio - view_ratio) > 0.01:
 				self.drawarea.set_size_request(-1, int(self.page_height *
 				                                       self.scale))
 		elif self.best_fit:
-			self.drawarea.set_size_request(-1, int(self.page_height *
-			                                       self.scale)-10)
+			self.drawarea.set_size_request(-1,
+			                              int(self.page_height*self.scale)-10)
 
 		cr.scale(self.scale, self.scale)
 
@@ -182,11 +184,7 @@ class PreviewPane:
 			return
 
 		self.best_fit = self.fit_width = False
-		scrollw = self.drawarea.get_parent().get_parent()
-		scrollw.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
 		if zoom < 2:
-			# POLICY_NEVER breaks window size, try best fit, 400% and back to best fit
-			scrollw.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
 			if zoom == 0: # Best Fit
 				self.best_fit = True
 			elif zoom == 1: # Fit Page Width
