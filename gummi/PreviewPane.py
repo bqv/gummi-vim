@@ -41,6 +41,7 @@ class PreviewPane:
 		self.pageinput = builder.get_object("page_input")
 		self.pagelabel = builder.get_object("page_label")
 		self.zoomcombo = builder.get_object("zoomcombo")
+		self.scrollw = builder.get_object("preview_scroll")
 
 		self.drawarea.connect("expose-event", self.on_expose)
 		self.prev.connect("clicked", self.prev_page)
@@ -98,22 +99,27 @@ class PreviewPane:
 		self.drawarea.queue_draw()
 
 	def on_expose(self, drawarea, data):
-		cr = drawarea.window.cairo_create()
-		scrollw = drawarea.get_parent().get_parent()
-		vp_size = scrollw.get_allocation()
+		cr = drawarea.window.cairo_create()		
+		vp_size = self.scrollw.get_allocation()
+
 		view_height = vp_size.height
 		view_width = vp_size.width
 		view_ratio = view_width / view_height
 
-		if self.best_fit or self.fit_width:
-			scrollw.set_policy(gtk.POLICY_NEVER, gtk.POLICY_AUTOMATIC)
+		# do not attempt any of the following if these two values have not
+		# been set, because that means set_pdffile and refresh_preview have
+		# not been succesfull so far. 
+		if self.page_ratio is None or self.page_width is None: return
+
+		if (self.best_fit or self.fit_width) and not self.page_ratio is None:
+			self.scrollw.set_policy(gtk.POLICY_NEVER, gtk.POLICY_AUTOMATIC)
 			if view_ratio < self.page_ratio or self.fit_width:
 				self.scale = view_width / self.page_width
 			else:
 				self.scale = view_height / self.page_height
 
 		if not (self.best_fit or self.fit_width):
-			scrollw.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
+			self.scrollw.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
 			self.drawarea.set_size_request(int(self.page_width * self.scale),
 			                               int(self.page_height * self.scale))
 		elif self.fit_width:
