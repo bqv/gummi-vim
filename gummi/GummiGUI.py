@@ -140,6 +140,10 @@ class GummiGUI:
 	def update_statusbar(self, message):
 		self.statusbar.push(self.statusbar_cid, message)
 
+	def set_window_title(self, filename):
+		self.mainwindow.set_title \
+					("[" + os.path.basename(filename) + "] - Gummi")
+
 	def on_menu_new_activate(self, menuitem, data=None):
 		if self.check_for_save(): self.on_menu_save_activate(None, None)
 		self.editorpane.fill_buffer(Preferences.DEFAULT_TEXT)
@@ -474,6 +478,7 @@ class GummiGUI:
 			self.motion.create_environment(self.filename)
 			self.set_status("Loading file " + self.filename)
 			self.add_recentfile(filename)
+			self.set_window_title(self.filename)
 		except:
 			print traceback.print_exc()
 
@@ -488,6 +493,7 @@ class GummiGUI:
 			if filename: self.filename = filename
 			self.set_status("Saving file " + self.filename)
 			self.motion.export_pdffile()
+			self.set_window_title(self.filename)
 		except:
 			print traceback.print_exc()
 
