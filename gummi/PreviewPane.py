@@ -77,15 +77,7 @@ class PreviewPane:
 			# TODO: determine page_width/page_height per page
 			self.page_width, self.page_height = self.get_page().get_size()
 			self.page_ratio = self.page_width / self.page_height
-			# TODO: move current page to a valid page?
-			self.currentpage = 0
-			self.prev.set_sensitive(False)
-
-			if self.page_total <= 1:
-				self.next.set_sensitive(False)
-			else:
-				self.next.set_sensitive(True)
-
+			self.goto_page(0)
 		else:
 			self.pdffile = None
 
@@ -142,24 +134,16 @@ class PreviewPane:
 		self.get_page().render(cr)
 
 	def goto_page(self, page):
-		if page <= 0:
-			self.prev.set_sensitive(False)
-		else:
-			self.prev.set_sensitive(True)
-
-		if page >= self.page_total - 1:
-			self.next.set_sensitive(False)
-		else:
-			self.next.set_sensitive(True)
-
 		if page < 0 or page >= self.page_total:
 			return
 
 		self.current_page = page
 
-		self.page_width, self.page_height = self.get_page().get_size()
+		self.prev.set_sensitive(page > 0)
+		self.next.set_sensitive(page < self.page_total - 1)
 		self.pageinput.set_text(str(self.current_page + 1))
 
+		self.page_width, self.page_height = self.get_page().get_size()
 		self.drawarea.queue_draw()
 
 	def next_page(self, button):
