@@ -2,6 +2,35 @@
 Gummi CHANGELOG
 -----------------------------------------------------------------------------
 
+Gummi 0.4.0 (who knows)
+	(added upto revision 200)
+
+	Bugs fixed:
+	* Relative filepaths for external files now handled correctly
+	* Previewpane will attempt to re-setup if fail on first try
+	* Rewritten and improved preview pane
+	* Fixed cancel buttons in file chooser dialogs
+	* Tempdir is now detected instead of a static value
+	* Quick import minimalizes after succesfull import
+	* Quit proces is now stopped when cancel button on save is pressed
+	* Fixed tooltips for style toolbar
+	* Text style tags can't be nested anymore
+	* Numerous warnings fixed using pylint/pychecker
+	* Replaced a duplicate keyboard shortcut
+	* Added multiple missing tooltips
+	* Buttons in preferences and searchwindow now allign correctly
+	* And numerous other small usability fixes
+
+	Features:
+	* BibTeX files support
+	* XeTeX output support (see advanced options)
+	* Restyled preview toolbar features auto-scaling zoom modes
+	* Four preset templates for new documents
+	* Window title now shows active docment name
+	* Editor/Preview panes can now be scaled using a slider
+	* Added functions for quick importing Matrices
+	* Added indentation style buttons to the toolbar
+
 
 Gummi 0.3b (September 22th, 2009):
 	
@@ -18,6 +47,7 @@ Gummi 0.3b (September 22th, 2009):
 	* Added a toolbar for quick insertion of images and tables
 	* Recent files are saved and displayed in the file-menu
 
+
 Gummi 0.2f (September 15th, 2009):
 	
 	Bugs fixed:
@@ -32,6 +62,7 @@ Gummi 0.2f (September 15th, 2009):
 	* Added a status light to see current error status of document
 	* Added three text style buttons for quick bold/italic/underline
 	* Added mechanism to check whether new gummi version is available
+
 
 Gummi 0.2b (September 8th, 2009):
 	
@@ -50,6 +81,7 @@ Gummi 0.2b (September 8th, 2009):
 	* Added many improvements to the search function
 	* Added file filters to open & save dialogs
 
+
 Gummi 0.1f (August 26th, 2009):
 
 	Bugs fixed:
@@ -64,6 +96,7 @@ Gummi 0.1f (August 26th, 2009):
 	* Added primitive search function (will extend it later)
 	* Added hotkeys and keyboard shortcuts to menu items
 	* Added toolbar to the main window for easy menuitems access
+
 
 Gummi 0.1b (August 7th, 2009):
 
