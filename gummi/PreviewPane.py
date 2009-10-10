@@ -85,6 +85,9 @@ class PreviewPane:
 		return self.document.get_page(self.current_page)
 
 	def refresh_preview(self):
+		if not os.path.exists(self.pdffile):
+			print "can't refresh without a pdf file!"
+			return
 		uri = 'file://' + self.pdffile
 		self.document = poppler.document_new_from_file(uri, None)
 		self.page_total = self.document.get_n_pages()
