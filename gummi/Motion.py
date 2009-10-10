@@ -84,11 +84,12 @@ class Motion:
 
 	def initial_preview(self):
 		self.update_workfile()
+		self.update_pdffile()
 		try:
 			self.previewpane.set_pdffile(self.pdffile)
 			self.previewpane.refresh_preview()
 		except Exception as e:
-			print 'oeps:', e
+			print 'Error:', e
 			self.previewpane.drawarea.hide()
 
 	def export_pdffile(self):
