@@ -236,9 +236,10 @@ class GummiGUI:
 		template = self.template_doc.get_template()
 		if template is not None:
 			self.editorpane.fill_buffer(template)
-		self.filename = None
-		self.motion.create_environment(self.tempdir + "/gummi-new")
-		self.template_doc.templatewindow.hide()
+			self.filename = None
+			self.motion.create_environment(self.tempdir + "/gummi-new")
+			self.template_doc.templatewindow.hide()
+		else: pass
 
 	def on_button_template_cancel_clicked(self, button, data=None):
 		self.template_doc.templatewindow.hide()

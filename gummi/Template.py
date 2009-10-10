@@ -100,15 +100,21 @@ REPORT = """
 
 class Template:
 
+
+	# TODO add template options (multiple columns support etc.)
 	def __init__(self, builder, cwd):
 		self.templatewindow = builder.get_object("templatewindow")
+		self.template_ok = builder.get_object("template_ok")
 
-		#model = builder.get_object("templatemodel")
 		self.iconview = builder.get_object("templateicons")
 		self.iconview.set_text_column(0)
 		self.iconview.set_pixbuf_column(1)
+		self.iconview.connect("selection-changed", self.update_window)
 
 		self.templatewindow.show_all()
+
+	def update_window(self, event):
+		self.template_ok.set_sensitive(1)
 
 	def get_template(self):
 		try:
