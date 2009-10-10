@@ -164,8 +164,8 @@ class Importer: # needs cleanup
 		matrix = ""
 		rows = int(rows) + 1
 		columns = int(columns) + 1
-		begin_matrix = "\\begin{" + mode + "}\n"
-		end_matrix = "\\end{" + mode +"}\n"
+		begin_matrix = "$\\begin{" + mode + "}\n"
+		end_matrix = "\\end{" + mode +"}$\n"
 		for k in range(1, rows):
 			for i in range(1,columns):
 				if i == (columns-1): new = str(k) + str(i) + "\\\\ \n"
