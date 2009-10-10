@@ -25,7 +25,6 @@ import os
 import sys
 import gtk
 import locale
-import gtksourceview2
 import traceback
 import pango
 
@@ -209,7 +208,6 @@ class GummiGUI:
 
 	def on_menu_find_activate(self, menuitem, data=None):
 		self.editorpane.start_searchfunction()
-		self.searchentry.grab_focus()
 		self.searchentry.set_text("")
 		self.searchwindow.show()
 
@@ -251,16 +249,10 @@ class GummiGUI:
 
 	def on_button_searchwindow_find_clicked(self, button, data=None):
 		term = self.searchentry.get_text()
-		flags = self.get_search_flags()
+		backwards = self.backwards.get_active()
+		matchcase = self.matchcase.get_active()
+		flags = self.editorpane.get_search_flags(backwards, matchcase)
 		self.editorpane.search_buffer(term, flags)
-
-	def get_search_flags(self):
-		flags = [False, 0]
-		if self.backwards.get_active() is True: flags[0] = True
-		else: flags[0] = False
-		if self.matchcase.get_active() is True: flags[1] = 0
-		else: flags[1] = (gtksourceview2.SEARCH_CASE_INSENSITIVE)
-		return flags
 
 	def on_import_tabs_switch_page(self, notebook, page, page_num):
 		newactive = notebook.get_nth_page(page_num).get_name()

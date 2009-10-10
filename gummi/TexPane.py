@@ -132,6 +132,18 @@ class TexPane:
 		self.editorbuffer.select_range(ins, bound)
 		self.editorviewer.scroll_to_iter(ins, 0)
 
+	def get_search_flags(self, backwards, matchcase):
+		flags = [False, 0]
+		if backwards: # search backwards in the buffer on/off
+			flags[0] = True
+		else: 
+			flags[0] = False
+		if matchcase: # case sensitive searching on/off
+			flags[1] = 0
+		else: 
+			flags[1] = (gtksourceview2.SEARCH_CASE_INSENSITIVE)
+		return flags
+
 	def grab_wrapmode(self):
 		textwrap = self.config.get_bool("tex_textwrapping")
 		wordwrap = self.config.get_bool("tex_wordwrapping")
