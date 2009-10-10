@@ -78,7 +78,9 @@ class Biblio:
 		chooser.add_filter(bibfilter)
 		
 		response = chooser.run()
-		if response == gtk.RESPONSE_CANCEL: return
+		if response == gtk.RESPONSE_CANCEL: 
+			chooser.destroy()
+			return
 		if response == gtk.RESPONSE_OK: 
 			bibfile = chooser.get_filename()
 			if bibfile not in self.biblist:
