@@ -46,7 +46,7 @@ BOOK = """
 \\section*{\\huge \\center [AUTHOR]}
 \\newpage
 
-\\subsection*{\\center \\normalsize Copyright \\copyright \\year [NAME]}
+\\subsection*{\\center \\normalsize Copyright \\copyright [YEAR] [NAME]}
 \\subsection*{\\center \\normalsize All rights reserved.}
 \\subsection*{\\center \\normalsize ISBN \\dots}
 \\subsection*{\\center \\normalsize Publications}
