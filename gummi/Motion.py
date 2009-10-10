@@ -52,6 +52,8 @@ class Motion:
 
 		self.status = 1
 
+		# get the default typesetter (pdflatex) if the gconf 
+		# value for some reason can't be fetched
 		try: self.texcmd = self.config.get_string("tex_cmd")
 		except: self.texcmd = Preferences.TYPESETTER
 
@@ -64,7 +66,7 @@ class Motion:
 		self.start_monitoring()
 
 	def start_monitoring(self):
-		previewthread = thread.start_new_thread(self.update_preview, ())
+		thread.start_new_thread(self.update_preview, ())
 
 	def create_environment(self, filename):
 		self.texfile = filename
@@ -82,7 +84,6 @@ class Motion:
 
 	def initial_preview(self):
 		self.update_workfile()
-		self.update_pdffile()
 		try:
 			self.previewpane.set_pdffile(self.pdffile)
 			self.previewpane.refresh_preview()
@@ -120,22 +121,29 @@ class Motion:
 
 
 	def update_pdffile(self):
-		pdfmaker = subprocess.Popen(self.texcmd + ' -interaction=nonstopmode --output-directory="%s" "%s"' % (self.tempdir, self.workfile), shell=True, stdin=None, stdout = subprocess.PIPE, stderr=None, cwd=self.texpath)
-		output = pdfmaker.communicate()[0]
-		pdfmaker.wait()
-		try: os.close(3) # very important
-		except: pass
-		self.errorbuffer.set_text(output)
-		if pdfmaker.returncode:
-			self.statuslight.set_stock_id("gtk-no")
-		else:
-			self.statuslight.set_stock_id("gtk-yes")
-
+		#self.status += 1
+		#print self.status
+		try:
+			pdfmaker = subprocess.Popen(self.texcmd + \
+					' -interaction=nonstopmode --output-directory="%s" "%s"' \
+					% (self.tempdir, self.workfile), shell=True, stdin=None, \
+					stdout = subprocess.PIPE, stderr=None, cwd=self.texpath)
+			output = pdfmaker.communicate()[0]
+			pdfmaker.wait()
+			try: os.close(3) # very important
+			except: pass # do not remove
+			self.errorbuffer.set_text(output)
+			if pdfmaker.returncode:
+				self.statuslight.set_stock_id("gtk-no")
+			else:
+				self.statuslight.set_stock_id("gtk-yes")
+		except: print traceback.print_exc()
 
 	def update_preview(self):
 		while True:
 			try:
-				if self.previewpane and self.status and self.editorpane.check_buffer_changed():
+				#if self.previewpane:
+				if self.previewpane and self.editorpane.check_buffer_changed():
 					gtk.gdk.threads_enter
 					self.editorpane.check_buffer_changed()
 					self.update_workfile()
@@ -143,9 +151,9 @@ class Motion:
 					self.previewpane.refresh_preview()
 					gtk.gdk.threads_leave
 			except:
-				print "something is wrong with the refresh thread"
 				print traceback.print_exc()
 			time.sleep(1.0)
+			#time.sleep(0.1)
 
 
 
