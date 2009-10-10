@@ -56,15 +56,16 @@ class TexPane:
 		self.editorbuffer.set_modified(False)
 
 	def fill_buffer(self, newcontent):
-		# will output a sourceview warning if (new content = current content)
-		self.editorbuffer.set_text("")
+		self.editorbuffer.begin_user_action()
+		self.editorbuffer.set_text("")		
 		self.editorbuffer.begin_not_undoable_action()
-		self.editorviewer.set_sensitive(False)
 		start = self.editorbuffer.get_start_iter()
+		self.editorviewer.set_sensitive(False)		
 		self.editorbuffer.insert(start, newcontent)
 		self.editorbuffer.set_modified(False)
 		self.editorviewer.set_sensitive(True)
 		self.editorbuffer.end_not_undoable_action()
+		self.editorbuffer.end_user_action()
 
 	def grab_buffer(self):
 		buff = self.editorviewer.get_buffer()
