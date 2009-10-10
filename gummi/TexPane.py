@@ -50,9 +50,9 @@ class TexPane:
 		self.current_iter = None
 		self.textchange = datetime.now()
 		self.prevchange = datetime.now()
-		self.check_text_change()
+		self.check_buffer_changed()
 
-		self.editorviewer.connect("key-press-event", self.set_text_change,)
+		self.editorviewer.connect("key-press-event", self.set_buffer_changed,)
 		self.editorbuffer.set_modified(False)
 
 	def fill_buffer(self, newcontent):
@@ -85,7 +85,7 @@ class TexPane:
 			self.editorbuffer.begin_not_undoable_action()
 			self.editorbuffer.insert(begin_iter, "\\usepackage{" + package + "}\n")
 			self.editorbuffer.end_not_undoable_action()
-		self.buffer_modified()
+		self.set_buffer_changed()
 
 	def insert_bib(self, package):
 		pkgspace = "\\end{document}"
@@ -100,12 +100,12 @@ class TexPane:
 			self.editorbuffer.begin_not_undoable_action()
 			self.editorbuffer.insert(begin_iter, "\\bibliography{" + package + "}{}\n" + "\\bibliographystyle{plain}\n")
 			self.editorbuffer.end_not_undoable_action()
-		self.text_changed()
+		self.set_buffer_changed()
 
 
 	def set_selection_textstyle(self, widget):
 		Formatting.Formatting(widget, self.editorbuffer)
-		self.text_changed()
+		self.set_buffer_changed()
 
 	def get_current_position(self):
 		return self.editorbuffer.get_iter_at_mark(self.editorbuffer.get_insert())
@@ -142,16 +142,10 @@ class TexPane:
 		else:
 			return gtk.WRAP_CHAR
 
-	def buffer_modified(self):
+	def set_buffer_changed(self, *args):
 		self.textchange = datetime.now()
 
-	def set_text_change(self, widget, event):
-		self.textchange = datetime.now()
-
-	def text_changed(self):
-		self.textchange = datetime.now()
-
-	def check_text_change(self):
+	def check_buffer_changed(self):
 		if self.prevchange != self.textchange:
 			self.prevchange = self.textchange
 			return True
@@ -161,11 +155,11 @@ class TexPane:
 	def undo_change(self):
 		if self.editorviewer.get_buffer().can_undo():
 			self.editorviewer.get_buffer().undo()
-			self.buffer_modified()
+			self.set_buffer_changed()
 
 	def redo_change(self):
 		if self.editorviewer.get_buffer().can_redo():
 			self.editorviewer.get_buffer().redo()
-			self.buffer_modified()
+			self.set_buffer_changed()
 
 

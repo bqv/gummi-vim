@@ -107,7 +107,7 @@ class Importer: # needs cleanup
 			code = self.generate_image(f, s, c, l)
 			position = self.editorpane.get_current_position()
 			self.editorpane.editorbuffer.insert(position, code)
-			self.editorpane.text_changed()
+			self.editorpane.set_buffer_changed()
 		self.import_tabs.set_current_page(0)
 
 	def insert_table(self):
@@ -115,7 +115,7 @@ class Importer: # needs cleanup
 		code = self.generate_table(self.table_rows.get_value(), self.table_cols.get_value())
 		position = self.editorpane.get_current_position()
 		self.editorpane.editorbuffer.insert(position, code)
-		self.editorpane.text_changed()
+		self.editorpane.set_buffer_changed()
 		self.import_tabs.set_current_page(0)
 
 	def insert_matrix(self):
@@ -125,7 +125,7 @@ class Importer: # needs cleanup
 		code = self.generate_matrix(bracket, self.matrix_rows.get_value(), self.matrix_cols.get_value())
 		position = self.editorpane.get_current_position()
 		self.editorpane.editorbuffer.insert(position, code)
-		self.editorpane.text_changed()
+		self.editorpane.set_buffer_changed()
 		self.import_tabs.set_current_page(0)
 
 	def generate_table(self, rows, columns):

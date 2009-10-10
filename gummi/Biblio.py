@@ -114,7 +114,7 @@ class Biblio:
 		os.chdir(cwd)
 		output = bibcompile.communicate()[0]
 		self.biboutput.get_buffer().set_text(output)
-		self.editorpane.text_changed()
+		self.editorpane.set_buffer_changed()
 
 
 

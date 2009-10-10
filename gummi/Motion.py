@@ -124,7 +124,7 @@ class Motion:
 		pdfmaker = subprocess.Popen(self.texcmd + ' -interaction=nonstopmode --output-directory="%s" "%s"' % (self.tempdir, self.workfile), shell=True, stdin=None, stdout = subprocess.PIPE, stderr=None)
 		output = pdfmaker.communicate()[0]
 		pdfmaker.wait()
-		try: os.close(3)
+		try: os.close(3) # very important
 		except: pass
 		self.errorbuffer.set_text(output)
 		err1 = "Fatal error"
@@ -139,9 +139,9 @@ class Motion:
 	def update_preview(self):
 		while True:
 			try:
-				if self.previewpane and self.status and self.editorpane.check_text_change():
+				if self.previewpane and self.status and self.editorpane.check_buffer_changed():
 					gtk.gdk.threads_enter
-					self.editorpane.check_text_change()
+					self.editorpane.check_buffer_changed()
 					self.update_workfile()
 					self.update_pdffile()
 					self.previewpane.refresh_preview()

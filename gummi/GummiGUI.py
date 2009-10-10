@@ -184,7 +184,7 @@ class GummiGUI:
 	def on_menu_cut_activate(self, menuitem, data=None):
 		buff = self.editorpane.editorviewer.get_buffer()
 		buff.cut_clipboard (gtk.clipboard_get(), True)
-		self.editorpane.buffer_modified()
+		self.editorpane.set_buffer_changed()
 
 	def on_menu_copy_activate(self, menuitem, data=None):
 		buff = self.editorpane.editorviewer.get_buffer()
@@ -193,7 +193,7 @@ class GummiGUI:
 	def on_menu_paste_activate(self, menuitem, data=None):
 		buff = self.editorpane.editorviewer.get_buffer()
 		buff.paste_clipboard (gtk.clipboard_get(), None, True)
-		self.editorpane.buffer_modified()
+		self.editorpane.set_buffer_changed()
 
 	def on_menu_delete_activate(self, menuitem, data=None):
 		buff = self.editorpane.editorviewer.get_buffer()
