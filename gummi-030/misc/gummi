@@ -1,0 +1,17 @@
+#!/usr/bin/python
+
+# --------------------------------------------------------------------------------
+# "THE BEER-WARE LICENSE" (Revision 42):
+# <alexvandermey@gmail.com> wrote this file. As long as you retain this notice you
+# can do whatever you want with this stuff. If we meet some day, and you think
+# this stuff is worth it, you can buy me a beer in return -Alexander van der Mey
+# --------------------------------------------------------------------------------
+
+import os, sys, gtk
+
+from gummi import GummiGUI
+
+instance = GummiGUI.GummiGUI()
+instance.mainwindow.show()
+gtk.main()
+
