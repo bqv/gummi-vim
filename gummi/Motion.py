@@ -88,9 +88,7 @@ class Motion:
 		try:
 			self.previewpane.set_pdffile(self.pdffile)
 			self.previewpane.refresh_preview()
-		except Exception as e:
-			print 'Error:', e
-			self.previewpane.drawarea.hide()
+		except: self.previewpane.drawarea.hide(); return
 
 	def export_pdffile(self):
 		try: # export the pdf file if one exists
