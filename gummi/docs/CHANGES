@@ -2,8 +2,7 @@
 Gummi CHANGELOG
 -----------------------------------------------------------------------------
 
-Gummi 0.4.0 (who knows)
-	(added upto revision 200)
+Gummi 0.4.0 (October 12th, 2009):
 
 	Bugs fixed:
 	* Relative filepaths for external files now handled correctly
@@ -14,6 +13,7 @@ Gummi 0.4.0 (who knows)
 	* Quick import minimalizes after succesfull import
 	* Quit proces is now stopped when cancel button on save is pressed
 	* Fixed tooltips for style toolbar
+	* Fixed a gtksourceview warning on text insertion
 	* Text style tags can't be nested anymore
 	* Numerous warnings fixed using pylint/pychecker
 	* Replaced a duplicate keyboard shortcut
@@ -30,6 +30,7 @@ Gummi 0.4.0 (who knows)
 	* Editor/Preview panes can now be scaled using a slider
 	* Added functions for quick importing Matrices
 	* Added indentation style buttons to the toolbar
+	* Gummi can now be used in fullscreen mode 
 
 
 Gummi 0.3b (September 22th, 2009):
