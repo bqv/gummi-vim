@@ -22,7 +22,6 @@ files = ["gui/gummi.glade",
 setup(
 	name = 'gummi',
 	version = 'S.E.D',
-	summary = 'Simple LaTeX editor',
 	description = 'Simple LaTeX editor for GTK users',
 	author = 'Alexander van der Mey',
 	author_email = 'alexvandermey@gmail.com',
