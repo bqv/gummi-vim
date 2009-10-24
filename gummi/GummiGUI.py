@@ -289,7 +289,9 @@ class GummiGUI:
 
 	def on_menu_about_activate(self, menuitem, data=None):
 		authors = ["Alexander van der Mey\n<alexvandermey@gmail.com>\n\n"
-		           "Thomas van der Burgt\n<thomas@thvdburgt.nl>\n"]
+					"Contributors:\n"
+					"Thomas van der Burgt <thomas@thvdburgt.nl>\n"
+					"Cameron Grout <camerongrout@gmail.com>\n"]				
 		artwork = ["Template icon set from:\nhttp://www.fatcow.com/free-icons/"]
 		about_dialog = gtk.AboutDialog()
 		about_dialog.set_transient_for(self.mainwindow)
