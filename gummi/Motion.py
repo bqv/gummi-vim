@@ -22,14 +22,12 @@
 # THE SOFTWARE.
 
 import os
-import gtk
-import thread
+import glib
 import shutil
 import subprocess
 import traceback
 import tempfile
-import gobject
-import time
+
 
 import Preferences
 
@@ -49,7 +47,6 @@ class Motion:
 		self.tmpfile = None
 		self.pdffile = None
 		self.workfile = None
-
 		self.status = 1
 
 		# get the default typesetter (pdflatex) if the gconf 
@@ -60,13 +57,10 @@ class Motion:
 		self.editorviewer = self.editorpane.editorviewer
 		self.editorbuffer = self.editorpane.editorbuffer
 		self.errorbuffer = error.get_buffer()
-
-		gobject.threads_init()
-		gtk.gdk.threads_init()
 		self.start_monitoring()
 
 	def start_monitoring(self):
-		thread.start_new_thread(self.update_preview, ())
+		glib.timeout_add(1000, self.update_preview)
 
 	def create_environment(self, filename):
 		self.texfile = filename
@@ -99,7 +93,7 @@ class Motion:
 
 	def update_workfile(self):
 		try:
-			# these two lines make the program hang in certain situations, no clue why
+			# these two lines make the program hang in certain situations
 			#self.editorpane.editorview.set_sensitive(False)
 			buff = self.editorpane.editorviewer.get_buffer()
 			start_iter, end_iter = buff.get_start_iter(), buff.get_end_iter()
@@ -124,9 +118,11 @@ class Motion:
 		#print self.status
 		try:
 			pdfmaker = subprocess.Popen(self.texcmd + \
-					' -interaction=nonstopmode --output-directory="%s" "%s"' \
-					% (self.tempdir, self.workfile), shell=True, stdin=None, \
-					stdout = subprocess.PIPE, stderr=None, cwd=self.texpath)
+					' -interaction=nonstopmode \
+					--output-directory="%s" "%s"' \
+					% (self.tempdir, self.workfile), 
+					shell=True, cwd=self.texpath, close_fds=True, \
+					stdin=None, stdout = subprocess.PIPE, stderr=None )
 			output = pdfmaker.communicate()[0]
 			pdfmaker.wait()
 			try: os.close(3) # very important
@@ -139,20 +135,16 @@ class Motion:
 		except: print traceback.print_exc()
 
 	def update_preview(self):
-		while True:
 			try:
-				#if self.previewpane:
 				if self.previewpane and self.editorpane.check_buffer_changed():
-					gtk.gdk.threads_enter
 					self.editorpane.check_buffer_changed()
 					self.update_workfile()
 					self.update_pdffile()
 					self.previewpane.refresh_preview()
-					gtk.gdk.threads_leave
 			except:
 				print traceback.print_exc()
-			time.sleep(1.0)
-			#time.sleep(0.1)
+			return True 
+
 
 
 
