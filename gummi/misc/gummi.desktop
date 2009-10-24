@@ -1,8 +1,8 @@
 [Desktop Entry]
-Version=0.1f
+Version=0.4.0
 Name=Gummi
-GenericName=LaTex editor
-Comment=Simple LaTex editor
+GenericName=LaTeX Editor
+Comment=Simple LaTeX Editor
 Exec=gummi
 Icon=gummi
 Terminal=false
