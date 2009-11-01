@@ -30,7 +30,7 @@ the package that will make things easier. The following code shows the three ste
 
 1) retrieving the tarball:
 
-wget http://gummi.googlecode.com/files/gummi-0.2f.tar.gz
+Please visit the website (gummi.midnightcoding.org) to retrieve lastest tarball
 
 2) unpacking the archive:
 

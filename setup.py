@@ -25,7 +25,7 @@ setup(
 	description = 'Simple LaTeX editor for GTK users',
 	author = 'Alexander van der Mey',
 	author_email = 'alexvandermey@gmail.com',
-	url = 'http://gummi.googlecode.com',
+	url = 'http://gummi.midnightcoding.org',
 	license = 'MIT',
     	packages = ['gummi'],
 	package_data = {'gummi' : files },

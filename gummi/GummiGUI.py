@@ -300,7 +300,7 @@ class GummiGUI:
 		about_dialog.set_license(Preferences.LICENSE)
 		about_dialog.set_version(Preferences.VERSION)
 		about_dialog.set_copyright("Copyright \xc2\xa9 2009 Alexander van der Mey")
-		about_dialog.set_website("http://gummi.googlecode.com")
+		about_dialog.set_website("http://gummi.midnightcoding.org")
 		about_dialog.set_comments("Simple LaTeX Editor for GTK+ users")
 		about_dialog.set_authors(authors)
 		about_dialog.set_artists(artwork)
