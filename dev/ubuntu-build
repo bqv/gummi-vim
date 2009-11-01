@@ -7,7 +7,7 @@
 # with your setup or directory paths, so leave the packaging to me ;)
 
 echo "fetching the sourcecode.."
-svn co -q http://gummi.googlecode.com/svn/trunk/ gummi-read-only
+svn co http://midnightcoding.org/svn/gummi/trunk/ gummi-read-only
 
 cd gummi-read-only
 
@@ -71,7 +71,6 @@ sed -i s/gummi@unknown/alexvandermey@gmail.com/ copyright
 sed -i s@url://example.com@http://gummi.googlecode.com/@ copyright
 sed -i s/"put author's name and email here"/"Alexander van der Mey <alexvandermey@gmail.com>"/ copyright
 sed -i s/"Copyright (C) YYYY Name OfAuthor"/"Alexander van der Mey <alexvandermey@gmail.com>"/ copyright
-sed -i s/"likewise for another author"/"Thomas van der Burgt <thvdburgt@gmail.com>"/ copyright
 sed -i '16,24d' copyright
 echo $MIT >> copyright
 
