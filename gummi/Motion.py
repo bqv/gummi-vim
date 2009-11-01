@@ -48,6 +48,7 @@ class Motion:
 		self.pdffile = None
 		self.workfile = None
 		self.status = 1
+		self.laststate = None
 
 		# get the default typesetter (pdflatex) if the gconf 
 		# value for some reason can't be fetched
@@ -112,7 +113,6 @@ class Motion:
 		#output to a textbuffer soon
 		auxupdate.wait()
 
-
 	def update_pdffile(self):
 		#self.status += 1
 		#print self.status
@@ -134,13 +134,25 @@ class Motion:
 			else:
 				self.statuslight.set_stock_id("gtk-yes")
 		except: print traceback.print_exc()
+		return pdfmaker.returncode
+
+	def update_errortags(self, errorstate):
+		if errorstate is 1:
+			x = self.output[self.output.rfind('tex:'):self.output.rindex \
+												(':  ==> Fatal error')]
+			self.editorpane.apply_errortags(int(x[4:]))
+		elif errorstate is 0 and errorstate < self.laststate:
+			self.editorpane.apply_errortags(None)
+		else: pass
+		self.laststate = errorstate
 
 	def update_preview(self):
 			try:
 				if self.previewpane and self.editorpane.check_buffer_changed():
 					self.editorpane.check_buffer_changed()
 					self.update_workfile()
-					self.update_pdffile()
+					retcode = self.update_pdffile()
+					self.update_errortags(retcode)
 					self.previewpane.refresh_preview()
 			except:
 				print traceback.print_exc()

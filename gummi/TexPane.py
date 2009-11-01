@@ -34,6 +34,7 @@ class TexPane:
 	def __init__(self, config):
 		self.config = config
 		self.editorbuffer = gtksourceview2.Buffer()
+		self.editortags = self.editorbuffer.get_tag_table()
 		self.manager = gtksourceview2.LanguageManager()
 		self.language = self.manager.get_language("latex")
 		self.editorbuffer.set_language(self.language)
@@ -51,6 +52,10 @@ class TexPane:
 		self.textchange = datetime.now()
 		self.prevchange = datetime.now()
 		self.check_buffer_changed()
+
+		self.errortag = gtk.TextTag()
+		self.errortag.set_property('background', 'red')
+		self.errortag.set_property('foreground', 'white')
 
 		self.editorviewer.connect("key-press-event", self.set_buffer_changed,)
 		self.editorbuffer.set_modified(False)
@@ -103,7 +108,6 @@ class TexPane:
 			self.editorbuffer.end_not_undoable_action()
 		self.set_buffer_changed()
 
-
 	def set_selection_textstyle(self, widget):
 		Formatting.Formatting(widget, self.editorbuffer)
 		self.set_buffer_changed()
@@ -111,6 +115,15 @@ class TexPane:
 	def get_current_position(self):
 		return self.editorbuffer.get_iter_at_mark(self.editorbuffer.get_insert())
 
+	def apply_errortags(self, errorline):
+		try: #remove the tag from the table if it is in there
+			self.editortags.remove(self.errortag)
+		except ValueError: pass
+		if errorline is not None: #re-add the tag if an error was found
+			self.editortags.add(self.errortag)
+			start = self.editorbuffer.get_iter_at_line(errorline-1)
+			end = self.editorbuffer.get_iter_at_line(errorline)
+			self.editorbuffer.apply_tag(self.errortag, start, end)
 
 	def start_searchfunction(self):
 		self.start_iter = self.editorbuffer.get_start_iter()
