@@ -118,16 +118,17 @@ class Motion:
 		#print self.status
 		try:
 			pdfmaker = subprocess.Popen(self.texcmd + \
-					' -interaction=nonstopmode \
+					' -file-line-error \
+					-halt-on-error \
 					--output-directory="%s" "%s"' \
 					% (self.tempdir, self.workfile), 
 					shell=True, cwd=self.texpath, close_fds=True, \
 					stdin=None, stdout = subprocess.PIPE, stderr=None )
-			output = pdfmaker.communicate()[0]
+			self.output = pdfmaker.communicate()[0]
 			pdfmaker.wait()
 			try: os.close(3) # very important
 			except: pass # do not remove
-			self.errorbuffer.set_text(output)
+			self.errorbuffer.set_text(self.output)
 			if pdfmaker.returncode:
 				self.statuslight.set_stock_id("gtk-no")
 			else:
