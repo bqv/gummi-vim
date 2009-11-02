@@ -145,7 +145,7 @@ class GummiGUI:
 
 	def on_menu_new_activate(self, menuitem, data=None):
 		if self.check_for_save(): self.on_menu_save_activate(None, None)
-		self.editorpane.fill_buffer(Preferences.DEFAULT_TEXT)
+		self.editorpane.fill_buffer(self.config.get_string("tex_defaulttext"))
 		self.editorpane.editorbuffer.set_modified(False)
 		self.filename = None
 		self.motion.create_environment(self.tempdir + "/gummi-new")
