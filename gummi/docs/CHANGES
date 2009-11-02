@@ -2,6 +2,20 @@
 Gummi CHANGELOG
 -----------------------------------------------------------------------------
 
+Gummi 0.4.2 (November 2th, 2009):
+	
+	Bugs fixed:
+	* Changed website address to new homepage in all instances of the code
+
+	Features added:
+	* Improved error-checking mode, with automatic error highlighting
+
+Gummi 0.4.1 (October 27th, 2009):
+	
+	Bugs fixed:
+	* Replaced thread update model with glib interval event
+	* Python >2.6.3 compatible
+
 Gummi 0.4.0 (October 12th, 2009):
 
 	Bugs fixed:
