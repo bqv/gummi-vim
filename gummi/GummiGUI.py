@@ -499,7 +499,7 @@ class GummiGUI:
 			print "   ___ "
 			print "  {o,o}	  Thanks for using Gummi!"
 			print "  |)__)	  I welcome your feedback at:"
-			print '  -"-"-	  http://gummi.googlecode.com\n'
+			print '  -"-"-	  http://gummi.midnightcoding.org\n'
 			quit()
 		else: self.exitinterrupt = False; return True
 

@@ -39,7 +39,7 @@ DEFAULT_TEXT = """\documentclass{article}
 \\\\
 \\LARGE{You are using the """ + VERSION + """ version.\\\\
 I welcome your suggestions at\\\\
-http://gummi.googlecode.com}\\\\
+http://gummi.midnightcoding.org}\\\\
 \\end{center}
 
 \\end{document}
