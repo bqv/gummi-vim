@@ -25,6 +25,8 @@ import os
 import gtk
 import gobject
 
+CURRENT = "CURRENT"
+
 
 class Importer: # needs cleanup
 
@@ -105,25 +107,25 @@ class Importer: # needs cleanup
 			c = self.image_caption.get_text()
 			l = self.image_label.get_text()
 			code = self.generate_image(f, s, c, l)
-			position = self.editorpane.get_current_position()
+			position = self.editorpane.get_iterator(CURRENT)
 			self.editorpane.editorbuffer.insert(position, code)
 			self.editorpane.set_buffer_changed()
 		self.import_tabs.set_current_page(0)
 
 	def insert_table(self):
-		position = self.editorpane.get_current_position()
+		position = self.editorpane.get_iterator(CURRENT)
 		code = self.generate_table(self.table_rows.get_value(), self.table_cols.get_value())
-		position = self.editorpane.get_current_position()
+		position = self.editorpane.get_iterator(CURRENT)
 		self.editorpane.editorbuffer.insert(position, code)
 		self.editorpane.set_buffer_changed()
 		self.import_tabs.set_current_page(0)
 
 	def insert_matrix(self):
 		self.editorpane.insert_package("amsmath")
-		position = self.editorpane.get_current_position()
+		position = self.editorpane.get_iterator(CURRENT)
 		bracket = self.matrix_combo.get_active_text()
 		code = self.generate_matrix(bracket, self.matrix_rows.get_value(), self.matrix_cols.get_value())
-		position = self.editorpane.get_current_position()
+		position = self.editorpane.get_iterator(CURRENT)
 		self.editorpane.editorbuffer.insert(position, code)
 		self.editorpane.set_buffer_changed()
 		self.import_tabs.set_current_page(0)

@@ -28,24 +28,20 @@ from datetime import datetime
 
 import Formatting
 
+START = "START"
+END = "END"
+CURRENT = "CURRENT"
+BEGIN = "\\begin{document}"
+PACKAGES = "\\usepackage{"
 
 class TexPane:
 
 	def __init__(self, config):
-		self.config = config
 		self.editorbuffer = gtksourceview2.Buffer()
 		self.editortags = self.editorbuffer.get_tag_table()
 		self.manager = gtksourceview2.LanguageManager()
-		self.language = self.manager.get_language("latex")
-		self.editorbuffer.set_language(self.language)
-		self.editorbuffer.set_highlight_matching_brackets(True)
-		self.editorbuffer.set_highlight_syntax(True)
-		self.editorviewer = gtksourceview2.View(self.editorbuffer)
-		self.editorviewer.modify_font(pango.FontDescription("monospace 10"))
-
-		self.editorviewer.set_show_line_numbers(config.get_bool("tex_linenumbers"))
-		self.editorviewer.set_highlight_current_line(config.get_bool("tex_highlighting"))
-		self.editorviewer.set_wrap_mode(self.grab_wrapmode())
+		self.errortag = gtk.TextTag()
+		self.configure_texpane(config)
 
 		self.start_iter = None
 		self.current_iter = None
@@ -53,14 +49,29 @@ class TexPane:
 		self.prevchange = datetime.now()
 		self.check_buffer_changed()
 
-		self.errortag = gtk.TextTag()
-		self.errortag.set_property('background', 'red')
-		self.errortag.set_property('foreground', 'white')
-
 		self.editorviewer.connect("key-press-event", self.set_buffer_changed,)
 		self.editorbuffer.set_modified(False)
 
+
+	def configure_texpane(self, config):
+		"""Configures the gtksourceview (editor) widget"""
+		self.language = self.manager.get_language("latex")
+		self.editorbuffer.set_language(self.language)
+		self.editorbuffer.set_highlight_matching_brackets(True)
+		self.editorbuffer.set_highlight_syntax(True)
+		self.editorviewer = gtksourceview2.View(self.editorbuffer)
+		self.editorviewer.modify_font(pango.FontDescription("monospace 10"))
+		self.editorviewer.set_show_line_numbers(config.get_bool("tex_linenumbers"))
+		self.editorviewer.set_highlight_current_line(config.get_bool("tex_highlighting"))
+		textwrap = config.get_bool("tex_textwrapping")
+		wordwrap = config.get_bool("tex_wordwrapping")
+		self.editorviewer.set_wrap_mode(self.grab_wrapmode(textwrap, wordwrap))
+		self.errortag.set_property('background', 'red')
+		self.errortag.set_property('foreground', 'white')
+
+
 	def fill_buffer(self, newcontent):
+		"""Clears the buffer and writes new not-undoable data into it"""
 		self.editorbuffer.begin_user_action()
 		self.editorbuffer.set_text("")		
 		self.editorbuffer.begin_not_undoable_action()
@@ -73,47 +84,68 @@ class TexPane:
 		self.editorbuffer.end_user_action()
 
 	def grab_buffer(self):
+		"""Grabs content of the buffer and returns it for writing to file."""
 		buff = self.editorviewer.get_buffer()
 		self.editorviewer.set_sensitive(False)
-		content = buff.get_text(buff.get_start_iter(), buff.get_end_iter())
+		start = self.get_iterator(START)
+		end = self.get_iterator(END)
+		content = buff.get_text(start, end)
 		self.editorviewer.set_sensitive(True)
 		buff.set_modified(False)
 		return content
 
+	def get_iterator(self, tag, search=1):
+		"""Returns a buffer iterator object for a known position in the buffer
+			or a custom searchstring. The optional argument search determines
+			whether iter is placed in front or after the find result"""	
+		if tag == "START":
+			bufferiter = self.editorbuffer.get_start_iter()
+		elif tag == "END":
+			bufferiter = self.editorbuffer.get_end_iter()
+		elif tag == "CURRENT":
+			bufferiter = self.editorbuffer.get_iter_at_mark(self.editorbuffer.get_insert())
+		else:
+			if search == 0:
+				enditer = self.editorbuffer.get_end_iter()
+				bufferiter = gtksourceview2.iter_backward_search \
+							(enditer, tag, flags=0, limit=None)[0]
+			else:
+				startiter = self.editorbuffer.get_start_iter()
+				bufferiter = gtksourceview2.iter_forward_search \
+						(startiter, tag, flags=0, limit=None)[0]
+		return bufferiter
+
 	def insert_package(self, package):
-		pkgspace = "\\begin{document}"
-		start_iter = self.editorbuffer.get_start_iter()
-		begin_iter = gtksourceview2.iter_forward_search(start_iter, pkgspace, flags=0, limit=None)[0]
+		start_iter = self.get_iterator(START)
+		end_iter = self.get_iterator(PACKAGES, 1)
 		pkgsearchstr = "{" + package + "}"
-		if gtksourceview2.iter_forward_search(start_iter, pkgsearchstr, flags=0, limit=begin_iter):
+		pkginsertstr = "\\usepackage{" + package + "}\n"
+		if gtksourceview2.iter_forward_search \
+		(start_iter, pkgsearchstr, flags=0, limit=end_iter):
 			return
 		else:
 			self.editorbuffer.begin_not_undoable_action()
-			self.editorbuffer.insert(begin_iter, "\\usepackage{" + package + "}\n")
+			self.editorbuffer.insert(end_iter, pkginsertstr)
 			self.editorbuffer.end_not_undoable_action()
 		self.set_buffer_changed()
 
 	def insert_bib(self, package):
-		pkgspace = "\\end{document}"
-		end_iter = self.editorbuffer.get_end_iter()
-		begin_iter = gtksourceview2.iter_backward_search(end_iter, pkgspace, flags=0, limit=None)[0]
-		pkgsearchstr = "\\bibliography{"
-		aa = self.editorbuffer.get_start_iter()
-		bb = self.editorbuffer.get_end_iter()
-		if gtksourceview2.iter_forward_search(aa, pkgsearchstr, flags=0, limit=bb):
+		start_iter = self.get_iterator(BEGIN)
+		end_iter = self.get_iterator("\\end{document}", 0)
+		searchstr = "\\bibliography{"
+		insertstr = "\\bibliography{" + package + "}{}\n"
+		stylestr = "\\bibliographystyle{plain}\n"
+		if gtksourceview2.iter_forward_search(start_iter, searchstr, flags=0, limit=end_iter):
 			return
 		else:
 			self.editorbuffer.begin_not_undoable_action()
-			self.editorbuffer.insert(begin_iter, "\\bibliography{" + package + "}{}\n" + "\\bibliographystyle{plain}\n")
+			self.editorbuffer.insert(end_iter, insertstr + stylestr)
 			self.editorbuffer.end_not_undoable_action()
 		self.set_buffer_changed()
 
 	def set_selection_textstyle(self, widget):
 		Formatting.Formatting(widget, self.editorbuffer)
 		self.set_buffer_changed()
-
-	def get_current_position(self):
-		return self.editorbuffer.get_iter_at_mark(self.editorbuffer.get_insert())
 
 	def apply_errortags(self, errorline):
 		try: #remove the tag from the table if it is in there
@@ -126,19 +158,21 @@ class TexPane:
 			self.editorbuffer.apply_tag(self.errortag, start, end)
 
 	def start_searchfunction(self):
-		self.start_iter = self.editorbuffer.get_start_iter()
-		self.current_iter = self.editorbuffer.get_iter_at_mark(self.editorbuffer.get_insert())
+		self.start_iter = self.get_iterator(START)
+		self.current_iter = self.get_iterator(CURRENT)
 
 	def search_buffer(self, term, flags):
 		if flags[0] is False:
 			try:
-				ins, bound = gtksourceview2.iter_forward_search(self.current_iter, term, flags[1], limit=None)
+				ins, bound = gtksourceview2.iter_forward_search \
+							(self.current_iter, term, flags[1], limit=None)
 				self.current_iter = bound
 			except:
 				return
 		else:
 			try:
-				ins, bound = gtksourceview2.iter_backward_search(self.current_iter, term, flags[1], limit=None)
+				ins, bound = gtksourceview2.iter_backward_search \
+							(self.current_iter, term, flags[1], limit=None)
 				self.current_iter = ins
 			except:
 				return
@@ -158,9 +192,7 @@ class TexPane:
 			flags[1] = (gtksourceview2.SEARCH_CASE_INSENSITIVE)
 		return flags
 
-	def grab_wrapmode(self):
-		textwrap = self.config.get_bool("tex_textwrapping")
-		wordwrap = self.config.get_bool("tex_wordwrapping")
+	def grab_wrapmode(self, textwrap, wordwrap):
 		if textwrap is False:
 			return gtk.WRAP_NONE
 		if wordwrap is True:
