@@ -80,7 +80,7 @@
     </data>
   </object>
   <object class="GtkWindow" id="mainwindow">
-    <property name="title" translatable="yes">Gummi - LateX Editor</property>
+    <property name="title" translatable="yes">Gummi - LaTeX Editor</property>
     <property name="window_position">center</property>
     <property name="default_width">792</property>
     <property name="default_height">558</property>
@@ -1183,8 +1183,8 @@ into current tex document</property>
                 <property name="has_focus">True</property>
                 <property name="invisible_char">&#x2022;</property>
                 <property name="primary_icon_stock">gtk-find</property>
-                <accelerator key="Return" signal="activate"/>
                 <accelerator key="Escape" signal="activate" modifiers="GDK_SHIFT_MASK"/>
+                <accelerator key="Return" signal="activate"/>
                 <signal name="activate" handler="on_button_searchwindow_find_clicked"/>
               </object>
               <packing>
