@@ -70,8 +70,7 @@ class Motion:
 			self.texname = os.path.basename(self.texfile)[:-4]
 		else:
 			self.texname = os.path.basename(self.texfile)
-		fd = tempfile.mkstemp(".tex")[0]
-		self.workfile = os.readlink("/proc/self/fd/%d" % fd)
+		self.workfile = tempfile.mkstemp(".tex")[1]
 		self.pdffile = self.workfile[:-4] + ".pdf"
 		print ("\nEnvironment created for: \nTEX: " + self.texfile +
 		       "\nTMP: " + self.workfile + "\nPDF: " + self.pdffile + "\n")
