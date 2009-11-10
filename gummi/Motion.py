@@ -27,6 +27,7 @@ import shutil
 import subprocess
 import traceback
 import tempfile
+import re
 
 
 import Preferences
@@ -49,6 +50,8 @@ class Motion:
 		self.workfile = None
 		self.status = 1
 		self.laststate = None
+		self.errormesg = re.compile(':[\d+]+:([^.]+)\.')
+		self.errorline = re.compile(':([\d+]+):')
 
 		# get the default typesetter (pdflatex) if the gconf 
 		# value for some reason can't be fetched
@@ -136,10 +139,12 @@ class Motion:
 		return pdfmaker.returncode
 
 	def update_errortags(self, errorstate):
-		if errorstate is 1:
-			x = self.output[self.output.rfind('tex:'):self.output.rindex \
-												(':  ==> Fatal error')]
-			self.editorpane.apply_errortags(int(x[4:]))
+		if errorstate is 1 and "Fatal error" in self.output:
+			lineresult = self.errorline.findall(self.output)
+			if lineresult == []: # end tag error
+				lineresult.insert(0, self.editorbuffer.get_line_count())
+			#mesgresult = self.errormesg.findall(self.output)
+			self.editorpane.apply_errortags(int(lineresult[0]))	
 		elif errorstate is 0 and errorstate < self.laststate:
 			self.editorpane.apply_errortags(None)
 		else: pass
