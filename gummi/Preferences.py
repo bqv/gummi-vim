@@ -138,7 +138,6 @@ class Preferences:
 		self.button_highlighting = builder.get_object("button_highlighting")
 		self.default_textfield = builder.get_object("default_textfield")
 		self.typesetter = builder.get_object("combo_typesetter")
-		self.restartlabel = builder.get_object("restartlabel")
 
 		typesetterstore = gtk.ListStore(gobject.TYPE_STRING)
 		typesetterstore.append (["pdflatex"])
@@ -207,8 +206,6 @@ class Preferences:
 	def on_combo_typesetter_changed(self, item, data=None):
 		if item.get_active_text() == "xelatex": self.set_string("tex_cmd", "xelatex")
 		elif item.get_active_text() == "pdflatex": self.set_string("tex_cmd", "pdflatex")
-		self.restartlabel.set_text("Changes will become active on next start")
-
 
 	def on_prefs_close_clicked(self, widget, data=None):
 		if self.notebook.get_current_page() == 2:
