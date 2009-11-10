@@ -251,8 +251,8 @@ class GummiGUI:
 		term = self.searchentry.get_text()
 		backwards = self.backwards.get_active()
 		matchcase = self.matchcase.get_active()
-		flags = self.editorpane.get_search_flags(backwards, matchcase)
-		self.editorpane.search_buffer(term, flags)
+		#flags = self.editorpane.get_search_flags(backwards, matchcase)
+		self.editorpane.search_buffer(term, backwards, matchcase)
 
 	def on_import_tabs_switch_page(self, notebook, page, page_num):
 		newactive = notebook.get_nth_page(page_num).get_name()

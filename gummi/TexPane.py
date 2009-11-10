@@ -161,36 +161,28 @@ class TexPane:
 		self.start_iter = self.get_iterator(START)
 		self.current_iter = self.get_iterator(CURRENT)
 
-	def search_buffer(self, term, flags):
-		if flags[0] is False:
+	def search_buffer(self, term, backwards, matchcase):
+		if matchcase is False: 
+			flag = (gtksourceview2.SEARCH_CASE_INSENSITIVE)
+		else: 
+			flag = 0
+		if backwards is False:
 			try:
 				ins, bound = gtksourceview2.iter_forward_search \
-							(self.current_iter, term, flags[1], limit=None)
+							(self.current_iter, term, flag, limit=None)
 				self.current_iter = bound
-			except:
-				return
+			except TypeError:
+				return # no results
 		else:
 			try:
 				ins, bound = gtksourceview2.iter_backward_search \
-							(self.current_iter, term, flags[1], limit=None)
+							(self.current_iter, term, flag, limit=None)
 				self.current_iter = ins
-			except:
-				return
+			except TypeError:
+				return # no results
 		self.editorbuffer.place_cursor(ins)
 		self.editorbuffer.select_range(ins, bound)
 		self.editorviewer.scroll_to_iter(ins, 0)
-
-	def get_search_flags(self, backwards, matchcase):
-		flags = [False, 0]
-		if backwards: # search backwards in the buffer on/off
-			flags[0] = True
-		else: 
-			flags[0] = False
-		if matchcase: # case sensitive searching on/off
-			flags[1] = 0
-		else: 
-			flags[1] = (gtksourceview2.SEARCH_CASE_INSENSITIVE)
-		return flags
 
 	def grab_wrapmode(self, textwrap, wordwrap):
 		if textwrap is False:
