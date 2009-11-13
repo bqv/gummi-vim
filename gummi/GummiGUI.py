@@ -24,12 +24,8 @@
 import os
 import sys
 import gtk
-import locale
 import traceback
 import pango
-
-try: import glib
-except ImportError: pass
 
 import TexPane
 import PreviewPane
@@ -51,7 +47,6 @@ class GummiGUI:
 
 		builder = gtk.Builder()
 		builder.add_from_file(CWD + "/gui/gummi.glade")
-		builder.connect_signals(self) #split signals?
 		self.builder = builder
 
 		self.mainwindow = builder.get_object("mainwindow")
@@ -60,15 +55,12 @@ class GummiGUI:
 		self.editorscroll = builder.get_object("editor_scroll")
 		self.drawarea = builder.get_object("preview_drawarea")
 		self.preview_toolbar = builder.get_object("preview_toolbar")
-		self.errorfield = builder.get_object("errorfield")
+
 		self.searchwindow = builder.get_object("searchwindow")
 		self.searchentry = builder.get_object("searchentry")
 		self.backwards = builder.get_object("toggle_backwards")
 		self.matchcase = builder.get_object("toggle_matchcase")
-		self.statuslight = builder.get_object("tool_statuslight")
-		self.statusbar = builder.get_object("statusbar")
-		self.statusbar_cid = self.statusbar.get_context_id("Gummi")
-		self.errorfield.modify_font(pango.FontDescription("monospace 8"))
+		
 		self.recent1 = builder.get_object("menu_recent1")
 		self.recent2 = builder.get_object("menu_recent2")
 		self.recent3 = builder.get_object("menu_recent3")
@@ -97,10 +89,11 @@ class GummiGUI:
 		self.editorpane = TexPane.TexPane(self.config)
 		self.previewpane = PreviewPane.PreviewPane(self.builder)
 		self.importer = Importer.Importer(self.editorpane, builder)
-		self.motion = Motion.Motion(self.config, self.editorpane, self.previewpane, self.errorfield, self.statuslight, self.tempdir)
+		self.motion = Motion.Motion(self.config, self.editorpane, self.previewpane, self.builder, self.tempdir)
 		self.editorscroll.add(self.editorpane.editorviewer)
 		self.biblio = Biblio.Biblio(self.config, self.editorpane, self.motion, builder)
 
+		builder.connect_signals(self) #split signals?
 		self.create_initial_document()
 		self.mainwindow.show_all()
 
@@ -109,32 +102,11 @@ class GummiGUI:
 			self.filename = sys.argv[1]
 			self.load_file(self.filename)
 		else:
-			self.filename = self.tempdir + "/gummi-default"
+			self.filename = None
 			self.editorpane.fill_buffer(self.config.get_string("tex_defaulttext"))
 			self.motion.create_environment(self.filename)
 			os.chdir(os.environ['HOME'])
 		self.setup_recentfiles()
-
-	def decode_text(self, filename):
-		loadfile = open(filename, "r")
-		content = loadfile.read()
-		encoding = locale.getdefaultlocale()[1]
-		try: decoded_content = content.decode(encoding)
-		except (UnicodeError, TypeError):
-			try: decoded_content = content.decode("iso-8859-1", 'replace')
-			except (UnicodeError, TypeError):
-				decoded_content = content.decode("ascii", 'replace')
-		loadfile.close()
-		return decoded_content
-
-	def encode_text(self, text):
-		encoding = locale.getdefaultlocale()[1]
-		try: encoded_content = text.encode(encoding)
-		except (UnicodeError, TypeError):
-			try: encoded_content = text.encode("iso-8859-1", 'replace')
-			except (UnicodeError, TypeError):
-				encoded_content = text.encode("ascii", 'replace')
-		return encoded_content
 
 	def update_statusbar(self, message):
 		self.statusbar.push(self.statusbar_cid, message)
@@ -148,7 +120,7 @@ class GummiGUI:
 		self.editorpane.fill_buffer(self.config.get_string("tex_defaulttext"))
 		self.editorpane.editorbuffer.set_modified(False)
 		self.filename = None
-		self.motion.create_environment(self.tempdir + "/gummi-new")
+		self.motion.create_environment(self.filename)
 
 	def on_menu_template_activate(self, menuitem, data=None):
 		self.template_doc = Template.Template(self.builder, CWD)
@@ -226,9 +198,9 @@ class GummiGUI:
 
 	def on_menu_statusbar_toggled(self, menuitem, data=None):
 		if menuitem.get_active():
-			self.statusbar.show()
+			self.motion.statusbar.show()
 		else:
-			self.statusbar.hide()
+			self.motion.statusbar.hide()
 
 	def on_button_template_ok_clicked(self, button, data=None):
 		template = self.template_doc.get_template()
@@ -365,13 +337,6 @@ class GummiGUI:
 		self.biblio.setup_bibliography()
 		self.mainnotebook.set_current_page(0)
 
-	def set_status(self, message):
-		self.statusbar.push(self.statusbar_cid, message)
-		glib.timeout_add(4000, self.remove_status)
-
-	def remove_status(self):
-		self.statusbar.push(self.statusbar_cid, "")
-
 	def setup_recentfiles(self):
 		self.check_recentfile(0, self.recent1)
 		self.check_recentfile(1, self.recent2)
@@ -467,11 +432,11 @@ class GummiGUI:
 	def load_file(self, filename):
 		while gtk.events_pending(): gtk.main_iteration()
 		try:
-			decode = self.decode_text(filename)
+			decode = self.editorpane.decode_text(filename)
 			self.editorpane.fill_buffer(decode)
 			self.filename = filename
 			self.motion.create_environment(self.filename)
-			self.set_status("Loading file " + self.filename)
+			self.motion.set_status("Loading file " + self.filename)
 			self.add_recentfile(filename)
 			self.set_window_title(self.filename)
 		except:
@@ -482,11 +447,11 @@ class GummiGUI:
 			content = self.editorpane.grab_buffer()
 			if filename: fout = open(filename, "w")
 			else: fout = open(self.filename, "w")
-			encoded = self.encode_text(content)
+			encoded = self.editorpane.encode_text(content)
 			fout.write(encoded)
 			fout.close()
 			if filename: self.filename = filename
-			self.set_status("Saving file " + self.filename)
+			self.motion.set_status("Saving file " + self.filename)
 			self.motion.export_pdffile()
 			self.set_window_title(self.filename)
 		except:

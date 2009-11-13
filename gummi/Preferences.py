@@ -49,6 +49,8 @@ TEX_HIGHLIGHTING = True
 TEX_LINENUMBERS = True
 TEX_TEXTWRAPPING = True
 TEX_WORDWRAPPING = True
+AUTOSAVING = False
+AUTOSAVE_TIMER = 600
 TYPESETTER = "pdflatex"
 RECENT_FILES = []
 BIB_FILES = []
@@ -67,6 +69,8 @@ class Preferences:
 		elif key == "tex_linenumbers": return TEX_LINENUMBERS
 		elif key == "tex_textwrapping": return TEX_TEXTWRAPPING
 		elif key == "tex_wordwrapping": return TEX_WORDWRAPPING
+		elif key == "autosaving": return AUTOSAVING
+		elif key == "autosave_timer": return AUTOSAVE_TIMER
 		elif key == "tex_defaulttext": return DEFAULT_TEXT
 		elif key == "recent_files": return RECENT_FILES
 		elif key == "bib_files": return BIB_FILES
@@ -98,6 +102,18 @@ class Preferences:
 	def set_string(self, key, value):
 		self.gconf_client.set_string(GCONFPATH + key, value)
 
+	def get_int(self,key):
+		item = self.gconf_client.get(GCONFPATH + key)
+		if item == None:
+			default = self.get_default(key)
+			self.gconf_client.set_int(GCONFPATH + key, default)
+			return default
+		else:
+			return self.gconf_client.get_int(GCONFPATH + key)
+
+	def set_int(self, key, value):
+		self.gconf_client.set_int(GCONFPATH + key, value)
+
 	def get_list(self,key):
 		item = self.gconf_client.get(GCONFPATH + key)
 		if item == None:
@@ -109,7 +125,6 @@ class Preferences:
 
 	def set_list(self, key, value):
 		self.gconf_client.set_list(GCONFPATH + key, gconf.VALUE_STRING, value)
-
 
 	def append_to_list(self, key, value):
 		result = self.get_list(key)
@@ -123,7 +138,6 @@ class Preferences:
 
 
 	def display_preferences(self):
-
 		builder = gtk.Builder()
 		builder.add_from_file(self.parent.CWD + "/gui/prefs.glade")
 		builder.connect_signals(self)
@@ -136,6 +150,7 @@ class Preferences:
 		self.button_wordwrap = builder.get_object("button_wordwrap")
 		self.button_linenumbers = builder.get_object("button_linenumbers")
 		self.button_highlighting = builder.get_object("button_highlighting")
+		self.check_autosave = builder.get_object("check_autosave")
 		self.default_textfield = builder.get_object("default_textfield")
 		self.typesetter = builder.get_object("combo_typesetter")
 
@@ -148,6 +163,9 @@ class Preferences:
 		self.typesetter.set_model(typesetterstore)
 		if self.get_string("tex_cmd") == "xelatex": self.typesetter.set_active(1)
 		else: self.typesetter.set_active(0)
+		autosave_timer = builder.get_object("autosave_time")
+		autosave_timer.set_value(10)
+
 
 		self.default_textfield.modify_font(pango.FontDescription("monospace 10"))
 		self.default_buffer = self.default_textfield.get_buffer()
@@ -157,12 +175,13 @@ class Preferences:
 		self.check_current_setting(self.button_wordwrap, "tex_wordwrapping")
 		self.check_current_setting(self.button_linenumbers, "tex_linenumbers")
 		self.check_current_setting(self.button_highlighting, "tex_highlighting")
+		self.check_current_setting(self.check_autosave, "check_autosave")
 
 		self.button_textwrap.connect("toggled", self.toggle_button, "tex_textwrapping")
 		self.button_wordwrap.connect("toggled", self.toggle_button, "tex_wordwrapping")
 		self.button_linenumbers.connect("toggled", self.toggle_button, "tex_linenumbers")
 		self.button_highlighting.connect("toggled", self.toggle_button, "tex_highlighting")
-
+		self.check_autosave.connect("toggled", self.toggle_button, "autosaving")
 
 		self.prefwindow.show_all()
 
@@ -180,6 +199,10 @@ class Preferences:
 		if self.button_textwrap.get_active() is True:
 			self.button_wordwrap.set_sensitive(True)
 		self.engage(widget, data)
+
+	def autosave_timer_change(self, event):
+		newvalue = int(event.get_value()) * 60
+		self.set_int("autosave_timer", newvalue)
 
 	def engage(self, widget, data):
 		if data == "tex_textwrapping":
@@ -224,7 +247,9 @@ class Preferences:
 			self.check_current_setting(self.button_linenumbers, "tex_linenumbers")
 			self.check_current_setting(self.button_highlighting, "tex_highlighting")
 		elif self.notebook.get_current_page() == 1:
-			return
+			self.set_bool("autosaving", self.get_default("autosaving"))
+			self.check_current_setting(self.check_autosave, "autosaving")
+			self.set_int("autosave_timer", self.get_default("autosave_timer"))
 		elif self.notebook.get_current_page() == 2:
 			self.set_string("tex_defaulttext", DEFAULT_TEXT)
 			self.default_buffer.set_text(self.get_string("tex_defaulttext"))

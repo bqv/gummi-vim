@@ -23,6 +23,7 @@
 
 import gtk
 import pango
+import locale
 import gtksourceview2
 from datetime import datetime
 
@@ -93,6 +94,27 @@ class TexPane:
 		self.editorviewer.set_sensitive(True)
 		buff.set_modified(False)
 		return content
+
+	def decode_text(self, filename):
+		loadfile = open(filename, "r")
+		content = loadfile.read()
+		encoding = locale.getdefaultlocale()[1]
+		try: decoded_content = content.decode(encoding)
+		except (UnicodeError, TypeError):
+			try: decoded_content = content.decode("iso-8859-1", 'replace')
+			except (UnicodeError, TypeError):
+				decoded_content = content.decode("ascii", 'replace')
+		loadfile.close()
+		return decoded_content
+
+	def encode_text(self, text):
+		encoding = locale.getdefaultlocale()[1]
+		try: encoded_content = text.encode(encoding)
+		except (UnicodeError, TypeError):
+			try: encoded_content = text.encode("iso-8859-1", 'replace')
+			except (UnicodeError, TypeError):
+				encoded_content = text.encode("ascii", 'replace')
+		return encoded_content
 
 	def get_iterator(self, tag, search=1):
 		"""Returns a buffer iterator object for a known position in the buffer

@@ -24,6 +24,7 @@
 import os
 import glib
 import shutil
+import pango
 import subprocess
 import traceback
 import tempfile
@@ -35,17 +36,20 @@ import Preferences
 
 class Motion:
 
-	def __init__(self, config, tex, preview, error, light, tempdir):
+	def __init__(self, config, tex, preview, builder, tempdir):
 		self.config = config
 		self.editorpane = tex
 		self.previewpane = preview
-		self.statuslight = light
+		self.statuslight = builder.get_object("tool_statuslight")
+		self.statusbar = builder.get_object("statusbar")
+		self.statusbar_cid = self.statusbar.get_context_id("Gummi")
+		self.errorfield = builder.get_object("errorfield")
+		self.errorfield.modify_font(pango.FontDescription("monospace 8"))
 		self.tempdir = tempdir
 
 		self.texfile = None
 		self.texname = None
 		self.texpath = None
-		self.tmpfile = None
 		self.pdffile = None
 		self.workfile = None
 		self.status = 1
@@ -60,24 +64,56 @@ class Motion:
 
 		self.editorviewer = self.editorpane.editorviewer
 		self.editorbuffer = self.editorpane.editorbuffer
-		self.errorbuffer = error.get_buffer()
-		self.start_monitoring()
+		self.errorbuffer = self.errorfield.get_buffer()
+		self.start_updatepreview()
 
-	def start_monitoring(self):
+	def start_updatepreview(self):
 		glib.timeout_add(1000, self.update_preview)
 
+	def start_autosave(self, time):
+		self.autosave = glib.timeout_add_seconds(time, self.autosave_document)
+
+	def stop_autosave(self):
+		try:
+			glib.source_remove(self.autosave)
+		except AttributeError: pass 
+
+	def reset_autosave(self):
+		self.stop_autosave()
+		self.start_autosave(self.config.get_int("autosave_timer"))
+
+	def autosave_document(self):
+		if self.texfile is not None:
+			content = self.editorpane.grab_buffer()
+			encoded = self.editorpane.encode_text(content)
+			fout = open(self.texfile, "w")
+			fout.write(encoded)
+			fout.close()
+			self.set_status("Autosaving file " + self.texfile)
+		return True
+
 	def create_environment(self, filename):
-		self.texfile = filename
-		self.texpath = os.path.dirname(self.texfile) + "/"
-		if ".tex" in self.texfile:
-			self.texname = os.path.basename(self.texfile)[:-4]
-		else:
-			self.texname = os.path.basename(self.texfile)
+		if filename is not None:
+			self.texfile = filename
+			self.texpath = os.path.dirname(self.texfile) + "/"
+			if ".tex" in self.texfile:
+				self.texname = os.path.basename(self.texfile)[:-4]
+			else:
+				self.texname = os.path.basename(self.texfile)
 		self.workfile = tempfile.mkstemp(".tex")[1]
 		self.pdffile = self.workfile[:-4] + ".pdf"
-		print ("\nEnvironment created for: \nTEX: " + self.texfile +
+		print ("\nEnvironment created for: \nTEX: " + str(self.texfile) +
 		       "\nTMP: " + self.workfile + "\nPDF: " + self.pdffile + "\n")
+		if self.config.get_bool("autosaving"):		
+			self.reset_autosave()
 		self.initial_preview()
+
+	def set_status(self, message):
+		self.statusbar.push(self.statusbar_cid, message)
+		glib.timeout_add(4000, self.remove_status)
+
+	def remove_status(self):
+		self.statusbar.push(self.statusbar_cid, "")
 
 	def initial_preview(self):
 		self.update_workfile()
@@ -85,7 +121,7 @@ class Motion:
 		try:
 			self.previewpane.set_pdffile(self.pdffile)
 			self.previewpane.refresh_preview()
-		except: self.previewpane.drawarea.hide(); return
+		except: self.previewpane.drawarea.hide(); return	
 
 	def export_pdffile(self):
 		try: # export the pdf file if one exists
