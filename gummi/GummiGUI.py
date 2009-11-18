@@ -25,7 +25,6 @@ import os
 import sys
 import gtk
 import traceback
-import pango
 
 import TexPane
 import PreviewPane
@@ -107,9 +106,6 @@ class GummiGUI:
 			self.motion.create_environment(self.filename)
 			os.chdir(os.environ['HOME'])
 		self.setup_recentfiles()
-
-	def update_statusbar(self, message):
-		self.statusbar.push(self.statusbar_cid, message)
 
 	def set_window_title(self, filename):
 		self.mainwindow.set_title \
