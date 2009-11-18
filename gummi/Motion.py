@@ -68,7 +68,7 @@ class Motion:
 		self.start_updatepreview()
 
 	def start_updatepreview(self):
-		glib.timeout_add(1000, self.update_preview)
+		glib.timeout_add_seconds(1, self.update_preview)
 
 	def start_autosave(self, time):
 		self.autosave = glib.timeout_add_seconds(time, self.autosave_document)
