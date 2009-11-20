@@ -38,14 +38,16 @@ import Template
 
 class GummiGUI:
 
-	def __init__(self):
+	def __init__(self, config, path):
+		
+		self.config = config
 
 		self.filename = None
 		self.exitinterrupt = False
-		self.CWD = CWD
+		self.path = path
 
 		builder = gtk.Builder()
-		builder.add_from_file(CWD + "/gui/gummi.glade")
+		builder.add_from_file(self.path + "/gui/gummi.glade")
 		self.builder = builder
 
 		self.mainwindow = builder.get_object("mainwindow")
@@ -84,7 +86,6 @@ class GummiGUI:
 		mainwidth = self.mainwindow.get_size()[0]
 		self.hpaned.set_position(mainwidth/2)
 
-		self.config = Preferences.Preferences(self)
 		self.editorpane = TexPane.TexPane(self.config)
 		self.previewpane = PreviewPane.PreviewPane(self.builder)
 		self.importer = Importer.Importer(self.editorpane, builder)
@@ -95,6 +96,7 @@ class GummiGUI:
 		builder.connect_signals(self) #split signals?
 		self.create_initial_document()
 		self.mainwindow.show_all()
+		gtk.main()
 
 	def create_initial_document(self):
 		if len(sys.argv) > 1:
@@ -119,7 +121,7 @@ class GummiGUI:
 		self.motion.create_environment(self.filename)
 
 	def on_menu_template_activate(self, menuitem, data=None):
-		self.template_doc = Template.Template(self.builder, CWD)
+		self.template_doc = Template.Template(self.builder, self.path)
 
 	def on_menu_open_activate(self, menuitem, data=None):
 		if os.getcwd() == self.tempdir:
@@ -465,14 +467,3 @@ class GummiGUI:
 		else: self.exitinterrupt = False; return True
 
 
-if __name__ == "__main__":
-	path = sys.argv[0]
-else:
-	path = __file__
-CWD = os.path.abspath(os.path.dirname(path))
-try:
-	instance = GummiGUI()
-	instance.mainwindow.show()
-	gtk.main()
-except:
-	print traceback.print_exc()

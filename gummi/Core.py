@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# -*- encoding: utf-8 -*-
 
 # Copyright (c) 2009 Alexander van der Mey <alexvandermey@gmail.com>
 
@@ -20,10 +21,34 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
+import os
+import sys
+import traceback
+
+import GummiGUI
+import Preferences
+
+
+class Core:
+	
+	def __init__(self):
+
+		# environment: 
+		tempdir = os.environ.get("TMPDIR", "/tmp")
+
+		# class instances:
+		config = Preferences.Preferences(self)
+		gui = GummiGUI.GummiGUI(config, path)
+
+
+
+
+
+if __name__ == "__main__":
+	path = sys.path[0]
+else: 
+	path = os.path.dirname(__file__)
 try:
-    from gummi import Core
-except ImportError:
-    import Core
-
-Core.main()
-
+	instance = Core()
+except:
+	print traceback.print_exc()
