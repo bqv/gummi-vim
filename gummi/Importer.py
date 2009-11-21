@@ -41,7 +41,7 @@ class Importer:
 		self.image_caption = builder.get_object("image_caption")
 		self.image_label = builder.get_object("image_label")
 		self.image_scale = builder.get_object("image_scale")
-		self.scaler = builder.get_object("scaler")
+		self.scaler = builder.get_object("image_scaler")
 
 		self.table_pane = builder.get_object("table_pane")
 		self.table_comboallign = builder.get_object("table_comboallign")
@@ -91,6 +91,7 @@ class Importer:
 			position = self.editorpane.get_iterator(CURRENT)
 			self.editorpane.editorbuffer.insert(position, code)
 			self.editorpane.set_buffer_changed()
+			self.image_file.set_text("")
 		self.import_tabs.set_current_page(0)
 
 	def insert_table(self):
@@ -141,11 +142,11 @@ class Importer:
 		return begin_tabular + table + end_tabular
 
 	def generate_image(self, imagefile,  scale, caption, label):
-		include = "\t\\includegraphics"
+		include = "\\includegraphics"
 		scale = "[scale=" + str(scale) + "]"
 		filename = "{" + imagefile + "}\n"
-		caption = "\t\\captionof{" + caption + "}\n"
-		label = "\t\\label{" + label + "}\n"
+		caption = "\\captionof{" + caption + "}\n"
+		label = "\\label{" + label + "}\n"
 		return include + scale + filename + caption + label
 
 	def generate_matrix(self, rows, columns):
