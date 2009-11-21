@@ -29,6 +29,7 @@ import traceback
 import Importer
 import UpdateCheck
 import Template
+import Preferences
 
 
 class GummiGUI:
@@ -265,24 +266,7 @@ class GummiGUI:
 		self.about_dialog = about_dialog
 		about_dialog.show()
 
-
-	def on_tool_bold_activate(self, button, data=None):
-		self.editorpane.set_selection_textstyle(button)
-
-	#redundant, but oh well..
-	def on_tool_italic_activate(self, button, data=None):
-		self.editorpane.set_selection_textstyle(button)
-
-	def on_tool_unline_activate(self, button, data=None):
-		self.editorpane.set_selection_textstyle(button)
-
-	def on_tool_left_activate(self, button, data=None):
-		self.editorpane.set_selection_textstyle(button)
-
-	def on_tool_center_activate(self, button, data=None):
-		self.editorpane.set_selection_textstyle(button)
-
-	def on_tool_right_activate(self, button, data=None):
+	def on_tool_textstyle_activate(self, button, data=None):
 		self.editorpane.set_selection_textstyle(button)
 
 	def on_button_pageback_clicked(self, button, data=None):
