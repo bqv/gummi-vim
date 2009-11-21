@@ -26,26 +26,21 @@ import sys
 import gtk
 import traceback
 
-import TexPane
-import PreviewPane
 import Importer
-import Motion
-import Biblio
-import Preferences
 import UpdateCheck
 import Template
 
 
 class GummiGUI:
 
-	def __init__(self, parent, config, iofunc, biblio):
+	def __init__(self, parent, config, iofunc):
 		
 		self.core = parent
 		self.config = config
 		self.editorpane = self.core.editorpane
 		self.previewpane = self.core.previewpane
+		self.biblio = self.core.biblio
 		self.iofunc = iofunc
-		self.biblio = biblio
 
 		self.path = self.core.path
 		self.tempdir = self.core.tempdir
@@ -55,6 +50,7 @@ class GummiGUI:
 		
 		self.mainwindow = self.builder.get_object("mainwindow")
 		self.toolbar = self.builder.get_object("toolbar")
+
 		self.mainnotebook = self.builder.get_object("main_notebook")
 		self.editorscroll = self.builder.get_object("editor_scroll")
 		self.drawarea = self.builder.get_object("preview_drawarea")
@@ -65,9 +61,6 @@ class GummiGUI:
 		self.backwards = self.builder.get_object("toggle_backwards")
 		self.matchcase = self.builder.get_object("toggle_matchcase")
 		
-		self.recent1 = self.builder.get_object("menu_recent1")
-		self.recent2 = self.builder.get_object("menu_recent2")
-		self.recent3 = self.builder.get_object("menu_recent3")
 		self.hpaned = self.builder.get_object("hpaned")
 
 		self.menu_toolbar = self.builder.get_object("menu_toolbar")
@@ -75,20 +68,11 @@ class GummiGUI:
 		self.menu_hlayout = self.builder.get_object("menu_hlayout")
 		self.menu_vlayout = self.builder.get_object("menu_vlayout")
 
-		self.box_image = self.builder.get_object("box_image")
-		self.box_table = self.builder.get_object("box_table")
-		self.box_matrix = self.builder.get_object("box_matrix")
-		self.image_pane = self.builder.get_object("image_pane")
-		self.table_pane = self.builder.get_object("table_pane")
-		self.matrix_pane = self.builder.get_object("matrix_pane")
-
 		mainwidth = self.mainwindow.get_size()[0]
 		self.hpaned.set_position(mainwidth/2)
 
-		self.importer = Importer.Importer(self.editorpane, self.builder)
-
 		self.editorscroll.add(self.editorpane.editorviewer)
-
+		self.setup_importpanes()
 		self.setup_recentfiles()
 		self.builder.connect_signals(self) #split signals?
 
@@ -96,6 +80,15 @@ class GummiGUI:
 	def main(self):
 		self.mainwindow.show_all()
 		gtk.main()
+
+	def setup_importpanes(self):
+		self.box_image = self.builder.get_object("box_image")
+		self.box_table = self.builder.get_object("box_table")
+		self.box_matrix = self.builder.get_object("box_matrix")
+		self.image_pane = self.builder.get_object("image_pane")
+		self.table_pane = self.builder.get_object("table_pane")
+		self.matrix_pane = self.builder.get_object("matrix_pane")
+		self.importer = Importer.Importer(self.editorpane, self.builder)
 
 	def set_window_title(self, filename):
 		self.mainwindow.set_title \
@@ -179,7 +172,6 @@ class GummiGUI:
 			self.toolbar.show()
 		else:
 			self.toolbar.hide()
-		pass
 
 	def on_menu_statusbar_toggled(self, menuitem, data=None):
 		if menuitem.get_active():
@@ -322,6 +314,9 @@ class GummiGUI:
 		self.mainnotebook.set_current_page(0)
 
 	def setup_recentfiles(self):
+		self.recent1 = self.builder.get_object("menu_recent1")
+		self.recent2 = self.builder.get_object("menu_recent2")
+		self.recent3 = self.builder.get_object("menu_recent3")
 		self.check_recentfile(0, self.recent1)
 		self.check_recentfile(1, self.recent2)
 		self.check_recentfile(2, self.recent3)
