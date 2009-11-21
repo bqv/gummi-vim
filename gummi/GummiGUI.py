@@ -88,6 +88,8 @@ class GummiGUI:
 		self.importer = Importer.Importer(self.editorpane, self.builder)
 
 		self.editorscroll.add(self.editorpane.editorviewer)
+
+		self.setup_recentfiles()
 		self.builder.connect_signals(self) #split signals?
 
 
