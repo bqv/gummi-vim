@@ -1199,8 +1199,8 @@ into current tex document</property>
                 <property name="has_focus">True</property>
                 <property name="invisible_char">&#x2022;</property>
                 <property name="primary_icon_stock">gtk-find</property>
-                <accelerator key="Escape" signal="activate" modifiers="GDK_SHIFT_MASK"/>
                 <accelerator key="Return" signal="activate"/>
+                <accelerator key="Escape" signal="activate" modifiers="GDK_SHIFT_MASK"/>
                 <signal name="activate" handler="on_button_searchwindow_find_clicked"/>
               </object>
               <packing>
@@ -1342,7 +1342,7 @@ into current tex document</property>
             <property name="receives_default">True</property>
             <property name="border_width">3</property>
             <property name="use_stock">True</property>
-            <signal name="clicked" handler="on_button_tablepane_apply_clicked"/>
+            <signal name="clicked" handler="on_button_import_apply_clicked"/>
           </object>
           <packing>
             <property name="left_attach">2</property>
@@ -1424,7 +1424,7 @@ into current tex document</property>
             <property name="receives_default">True</property>
             <property name="border_width">3</property>
             <property name="use_stock">True</property>
-            <signal name="clicked" handler="on_button_imagepane_apply_clicked"/>
+            <signal name="clicked" handler="on_button_import_apply_clicked"/>
           </object>
           <packing>
             <property name="left_attach">2</property>
@@ -1579,7 +1579,7 @@ into current tex document</property>
             <property name="receives_default">True</property>
             <property name="border_width">3</property>
             <property name="use_stock">True</property>
-            <signal name="clicked" handler="on_button_matrixpane_apply_clicked"/>
+            <signal name="clicked" handler="on_button_import_apply_clicked"/>
           </object>
           <packing>
             <property name="left_attach">3</property>

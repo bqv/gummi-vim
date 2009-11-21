@@ -32,10 +32,9 @@ import Template
 import Preferences
 
 
-class GummiGUI:
+class MainGUI:
 
 	def __init__(self, parent, config, iofunc):
-		
 		self.core = parent
 		self.config = config
 		self.editorpane = self.core.editorpane
@@ -46,50 +45,30 @@ class GummiGUI:
 		self.path = self.core.path
 		self.tempdir = self.core.tempdir
 		self.builder = self.core.builder
-
 		self.exitinterrupt = False
 		
 		self.mainwindow = self.builder.get_object("mainwindow")
 		self.toolbar = self.builder.get_object("toolbar")
-
 		self.mainnotebook = self.builder.get_object("main_notebook")
 		self.editorscroll = self.builder.get_object("editor_scroll")
 		self.drawarea = self.builder.get_object("preview_drawarea")
 		self.preview_toolbar = self.builder.get_object("preview_toolbar")
-
-		self.searchwindow = self.builder.get_object("searchwindow")
-		self.searchentry = self.builder.get_object("searchentry")
-		self.backwards = self.builder.get_object("toggle_backwards")
-		self.matchcase = self.builder.get_object("toggle_matchcase")
 		
 		self.hpaned = self.builder.get_object("hpaned")
-
-		self.menu_toolbar = self.builder.get_object("menu_toolbar")
-		self.menu_toolbar.set_active(True)
-		self.menu_hlayout = self.builder.get_object("menu_hlayout")
-		self.menu_vlayout = self.builder.get_object("menu_vlayout")
-
 		mainwidth = self.mainwindow.get_size()[0]
 		self.hpaned.set_position(mainwidth/2)
 
 		self.editorscroll.add(self.editorpane.editorviewer)
-		self.setup_importpanes()
-		self.setup_recentfiles()
+		self.importgui = ImportGUI(self.builder, self.editorpane)
+		self.recentgui = RecentGUI(self.builder, self.config, self)
+		self.searchgui = SearchGUI(self.builder, self.editorpane)
+	
 		self.builder.connect_signals(self) #split signals?
 
 
 	def main(self):
 		self.mainwindow.show_all()
 		gtk.main()
-
-	def setup_importpanes(self):
-		self.box_image = self.builder.get_object("box_image")
-		self.box_table = self.builder.get_object("box_table")
-		self.box_matrix = self.builder.get_object("box_matrix")
-		self.image_pane = self.builder.get_object("image_pane")
-		self.table_pane = self.builder.get_object("table_pane")
-		self.matrix_pane = self.builder.get_object("matrix_pane")
-		self.importer = Importer.Importer(self.editorpane, self.builder)
 
 	def set_window_title(self, filename):
 		self.mainwindow.set_title \
@@ -129,6 +108,9 @@ class GummiGUI:
 		self.filename = self.get_save_filename()
 		if self.filename: self.save_document(self.filename)
 
+	def on_menu_recent_activate(self, widget, data=None):
+		self.recentgui.activate_recentfile(widget)
+
 	def on_menu_undo_activate(self, menuitem, data=None):
 		self.editorpane.undo_change()
 
@@ -159,8 +141,7 @@ class GummiGUI:
 
 	def on_menu_find_activate(self, menuitem, data=None):
 		self.editorpane.start_searchfunction()
-		self.searchentry.set_text("")
-		self.searchwindow.show()
+		self.searchgui.show_searchwindow()		
 
 	def on_menu_fullscreen_toggled(self, menuitem, data=None):
 		if menuitem.get_active():
@@ -180,6 +161,15 @@ class GummiGUI:
 		else:
 			self.iofunc.statusbar.hide()
 
+	def on_button_searchwindow_close_clicked(self, button, data=None):
+		self.searchgui.close_searchwindow()
+
+	def on_button_searchwindow_find_clicked(self, button, data=None):
+		self.searchgui.start_search()
+
+	def on_import_tabs_switch_page(self, notebook, page, page_num):
+		self.importgui.show_importpane(notebook, page_num)
+
 	def on_button_template_ok_clicked(self, button, data=None):
 		template = self.template_doc.get_template()
 		if template is not None:
@@ -192,40 +182,6 @@ class GummiGUI:
 	def on_button_template_cancel_clicked(self, button, data=None):
 		self.template_doc.templatewindow.hide()
 		return True
-
-	def on_button_searchwindow_close_clicked(self, button, data=None):
-		self.searchwindow.hide()
-		return True
-
-	def on_button_searchwindow_find_clicked(self, button, data=None):
-		term = self.searchentry.get_text()
-		backwards = self.backwards.get_active()
-		matchcase = self.matchcase.get_active()
-		self.editorpane.search_buffer(term, backwards, matchcase)
-
-	def on_import_tabs_switch_page(self, notebook, page, page_num):
-		newactive = notebook.get_nth_page(page_num).get_name()
-		self.box_image.foreach(lambda x:self.box_image.remove(x))
-		self.box_table.foreach(lambda x:self.box_table.remove(x))
-		self.box_matrix.foreach(lambda x:self.box_matrix.remove(x))
-		if newactive == "box_image":
-			self.box_image.add(self.image_pane)
-		elif newactive == "box_table":
-			self.box_table.add(self.table_pane)
-		elif newactive == "box_matrix":
-			self.box_matrix.add(self.matrix_pane)
-
-	def on_button_imagepane_apply_clicked(self, button, data=None):
-		self.importer.insert_image()
-
-	def on_button_tablepane_apply_clicked(self, button, data=None):
-		self.importer.insert_table()
-
-	def on_button_matrixpane_apply_clicked(self, button, data=None):
-		self.importer.insert_matrix()
-
-	def on_image_file_activate(self, button, event, data=None):
-		self.importer.prepare_image()
 
 	def on_menu_bibupdate_activate(self, menuitem, data=None):
 		self.biblio.compile_bibliography()
@@ -269,6 +225,12 @@ class GummiGUI:
 	def on_tool_textstyle_activate(self, button, data=None):
 		self.editorpane.set_selection_textstyle(button)
 
+	def on_button_import_apply_clicked(self, button, data=None):
+		self.importgui.insert_object(button)
+
+	def on_image_file_activate(self, button, event, data=None):
+		self.importgui.choose_imagefile()
+
 	def on_button_pageback_clicked(self, button, data=None):
 		self.previewpane.jump_to_prevpage()
 
@@ -296,42 +258,6 @@ class GummiGUI:
 	def on_button_bibapply_clicked(self, button, data=None):
 		self.biblio.setup_bibliography()
 		self.mainnotebook.set_current_page(0)
-
-	def setup_recentfiles(self):
-		self.recent1 = self.builder.get_object("menu_recent1")
-		self.recent2 = self.builder.get_object("menu_recent2")
-		self.recent3 = self.builder.get_object("menu_recent3")
-		self.check_recentfile(0, self.recent1)
-		self.check_recentfile(1, self.recent2)
-		self.check_recentfile(2, self.recent3)
-
-	def check_recentfile(self, i, widget):
-		recents = self.config.get_list("recent_files")
-		try:
-			entry = os.path.basename(recents[i])
-			widget.get_children()[0].set_label(str(i+1) + ". " + entry)
-			widget.show()
-		except IndexError: widget.hide()
-
-	def on_menu_recent_activate(self, widget, data=None):
-		recents = self.config.get_list("recent_files")
-		widget = widget.get_name()
-		if widget == "menu_recent1": self.load_recentfile(recents[0])
-		if widget == "menu_recent2": self.load_recentfile(recents[1])
-		if widget == "menu_recent3": self.load_recentfile(recents[2])
-
-	def add_recentfile(self, filename):
-		recents = self.config.get_list("recent_files")
-		if filename not in recents:
-			recents.insert(0, filename)
-			if len(recents) > 3:
-				del recents[3]
-			self.config.set_list("recent_files", recents)
-			self.setup_recentfiles()
-
-	def load_recentfile(self, filename):
-		self.check_for_save()
-		self.load_document(filename)
 
 	def set_file_filters(self, dialog):
 		plainfilter = gtk.FileFilter()
@@ -398,7 +324,7 @@ class GummiGUI:
 		try:
 			self.iofunc.load_file(filename)
 			self.filename = filename
-			self.add_recentfile(self.filename)
+			self.recentgui.add_recentfile(self.filename)
 			self.set_window_title(self.filename)
 		except:
 			print traceback.print_exc()
@@ -425,4 +351,126 @@ class GummiGUI:
 			quit()
 		else: self.exitinterrupt = False; return True
 
+
+
+
+
+
+class SearchGUI:
+
+	def __init__(self, builder, editorpane):
+		self.builder = builder
+		self.editorpane = editorpane
+		self.setup_searchwindow()
+
+	def setup_searchwindow(self):
+		self.searchwindow = self.builder.get_object("searchwindow")
+		self.searchentry = self.builder.get_object("searchentry")
+		self.backwards = self.builder.get_object("toggle_backwards")
+		self.matchcase = self.builder.get_object("toggle_matchcase")
+
+	def show_searchwindow(self):
+		self.searchentry.set_text("")
+		self.searchwindow.show()
+
+	def close_searchwindow(self):
+		self.searchwindow.hide()
+		return True
+
+	def start_search(self):
+		term = self.searchentry.get_text()
+		backwards = self.backwards.get_active()
+		matchcase = self.matchcase.get_active()
+		self.editorpane.search_buffer(term, backwards, matchcase)
+
+
+
+
+
+class ImportGUI:
+
+	def __init__(self, builder, editorpane):
+		self.builder = builder
+		self.editorpane = editorpane
+		self.setup_importpanes()
+
+	def setup_importpanes(self):
+		self.box_image = self.builder.get_object("box_image")
+		self.box_table = self.builder.get_object("box_table")
+		self.box_matrix = self.builder.get_object("box_matrix")
+		self.image_pane = self.builder.get_object("image_pane")
+		self.table_pane = self.builder.get_object("table_pane")
+		self.matrix_pane = self.builder.get_object("matrix_pane")
+		self.importer = Importer.Importer(self.editorpane, self.builder)
+
+	def show_importpane(self, notebook, page_num):
+		newactive = notebook.get_nth_page(page_num).get_name()
+		self.box_image.foreach(lambda x:self.box_image.remove(x))
+		self.box_table.foreach(lambda x:self.box_table.remove(x))
+		self.box_matrix.foreach(lambda x:self.box_matrix.remove(x))
+		if newactive == "box_image":
+			self.box_image.add(self.image_pane)
+		elif newactive == "box_table":
+			self.box_table.add(self.table_pane)
+		elif newactive == "box_matrix":
+			self.box_matrix.add(self.matrix_pane)
+
+	def insert_object(self, widget):
+		caller = widget.get_name()
+		if caller == "table_apply":
+			self.importer.insert_table()
+		elif caller == "image_apply":
+			self.importer.insert_image()
+		elif caller == "matrix_apply":
+			self.importer.insert_matrix()
+
+	def choose_imagefile(self):
+		self.importer.prepare_image()	
+
+
+
+
+class RecentGUI:
+
+	def __init__(self, builder, config, parent):		
+		self.builder = builder
+		self.config = config
+		self.parent = parent
+		self.setup_recentfiles()
+
+	def setup_recentfiles(self):
+		self.recent1 = self.builder.get_object("menu_recent1")
+		self.recent2 = self.builder.get_object("menu_recent2")
+		self.recent3 = self.builder.get_object("menu_recent3")
+		self.check_recentfile(0, self.recent1)
+		self.check_recentfile(1, self.recent2)
+		self.check_recentfile(2, self.recent3)
+
+	def check_recentfile(self, i, widget):
+		recents = self.config.get_list("recent_files")
+		try:
+			entry = os.path.basename(recents[i])
+			widget.get_children()[0].set_label(str(i+1) + ". " + entry)
+			widget.show()
+		except IndexError: widget.hide()
+
+	def activate_recentfile(self, widget):
+		recents = self.config.get_list("recent_files")
+		widget = widget.get_name()
+		if widget == "menu_recent1": self.load_recentfile(recents[0])
+		if widget == "menu_recent2": self.load_recentfile(recents[1])
+		if widget == "menu_recent3": self.load_recentfile(recents[2])
+
+	def add_recentfile(self, filename):
+		recents = self.config.get_list("recent_files")
+		if filename not in recents:
+			recents.insert(0, filename)
+			if len(recents) > 3:
+				del recents[3]
+			self.config.set_list("recent_files", recents)
+			self.setup_recentfiles()
+
+	def load_recentfile(self, filename):
+		self.parent.check_for_save()
+		self.parent.load_document(filename)
 

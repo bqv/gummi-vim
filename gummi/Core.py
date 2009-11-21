@@ -56,7 +56,7 @@ class Core:
 		self.motion = Motion.Motion(config, self.editorpane, self.previewpane, self.builder)
 		self.iofunc = IOFunctions.IOFunctions(config, statusbar, self.editorpane, self.motion)
 		self.biblio = Biblio.Biblio(config, self.editorpane, self.motion, self.builder)	
-		self.gui = GummiGUI.GummiGUI(self, config, self.iofunc)
+		self.gui = GummiGUI.MainGUI(self, config, self.iofunc)
 
 		# setup document to load:
 		if len(sys.argv) > 1:
