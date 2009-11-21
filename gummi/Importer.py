@@ -92,6 +92,8 @@ class Importer:
 			self.editorpane.editorbuffer.insert(position, code)
 			self.editorpane.set_buffer_changed()
 			self.image_file.set_text("")
+			self.image_caption.set_text("")
+			self.image_label.set_text("")
 		self.import_tabs.set_current_page(0)
 
 	def insert_table(self):
@@ -142,12 +144,18 @@ class Importer:
 		return begin_tabular + table + end_tabular
 
 	def generate_image(self, imagefile,  scale, caption, label):
+		caption = self.image_caption.get_text()
+		label = self.image_label.get_text()
+		begin = "\\begin{figure}[htp]\n\\centering\n"
+		end = "\\end{figure}"
 		include = "\\includegraphics"
 		scale = "[scale=" + str(scale) + "]"
 		filename = "{" + imagefile + "}\n"
-		caption = "\\captionof{" + caption + "}\n"
-		label = "\\label{" + label + "}\n"
-		return include + scale + filename + caption + label
+		if self.image_caption.get_text() is not "":
+			caption = "\\caption{" + caption + "}\n"
+		if self.image_label.get_text() is not "":
+			label = "\\label{" + label + "}\n"	
+		return begin + include + scale + filename + caption + label + end
 
 	def generate_matrix(self, rows, columns):
 		bracket = self.matrix_combobracket.get_active_text()
