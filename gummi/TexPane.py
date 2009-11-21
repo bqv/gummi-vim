@@ -166,7 +166,6 @@ class TexPane:
 		self.set_buffer_changed()
 
 	def set_selection_textstyle(self, widget):
-		print widget
 		Formatting.Formatting(widget, self.editorbuffer)
 		self.set_buffer_changed()
 
