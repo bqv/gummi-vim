@@ -25,5 +25,5 @@ try:
 except ImportError:
     import Core
 
-Core.main()
+
 

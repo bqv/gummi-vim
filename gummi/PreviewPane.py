@@ -33,7 +33,6 @@ class PreviewPane:
 
 	def __init__(self, builder, pdffile=None):
 		
-		self.builder = builder
 		self.drawarea = builder.get_object("preview_drawarea")
 		self.toolbar = builder.get_object("preview_toolbar")
 		self.prev = builder.get_object("preview_prev")

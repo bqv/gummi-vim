@@ -38,76 +38,62 @@ import Template
 
 class GummiGUI:
 
-	def __init__(self, config, path):
+	def __init__(self, parent, config, iofunc, biblio):
 		
+		self.core = parent
 		self.config = config
+		self.editorpane = self.core.editorpane
+		self.previewpane = self.core.previewpane
+		self.iofunc = iofunc
+		self.biblio = biblio
 
-		self.filename = None
+		self.path = self.core.path
+		self.tempdir = self.core.tempdir
+		self.builder = self.core.builder
+
 		self.exitinterrupt = False
-		self.path = path
-
-		builder = gtk.Builder()
-		builder.add_from_file(self.path + "/gui/gummi.glade")
-		self.builder = builder
-
-		self.mainwindow = builder.get_object("mainwindow")
-		self.toolbar = builder.get_object("toolbar")
-		self.mainnotebook = builder.get_object("main_notebook")
-		self.editorscroll = builder.get_object("editor_scroll")
-		self.drawarea = builder.get_object("preview_drawarea")
-		self.preview_toolbar = builder.get_object("preview_toolbar")
-
-		self.searchwindow = builder.get_object("searchwindow")
-		self.searchentry = builder.get_object("searchentry")
-		self.backwards = builder.get_object("toggle_backwards")
-		self.matchcase = builder.get_object("toggle_matchcase")
 		
-		self.recent1 = builder.get_object("menu_recent1")
-		self.recent2 = builder.get_object("menu_recent2")
-		self.recent3 = builder.get_object("menu_recent3")
-		self.hpaned = builder.get_object("hpaned")
+		self.mainwindow = self.builder.get_object("mainwindow")
+		self.toolbar = self.builder.get_object("toolbar")
+		self.mainnotebook = self.builder.get_object("main_notebook")
+		self.editorscroll = self.builder.get_object("editor_scroll")
+		self.drawarea = self.builder.get_object("preview_drawarea")
+		self.preview_toolbar = self.builder.get_object("preview_toolbar")
 
-		self.menu_statusbar = builder.get_object("menu_statusbar")
-		self.menu_statusbar.set_active(True)
-		self.menu_toolbar = builder.get_object("menu_toolbar")
+		self.searchwindow = self.builder.get_object("searchwindow")
+		self.searchentry = self.builder.get_object("searchentry")
+		self.backwards = self.builder.get_object("toggle_backwards")
+		self.matchcase = self.builder.get_object("toggle_matchcase")
+		
+		self.recent1 = self.builder.get_object("menu_recent1")
+		self.recent2 = self.builder.get_object("menu_recent2")
+		self.recent3 = self.builder.get_object("menu_recent3")
+		self.hpaned = self.builder.get_object("hpaned")
+
+		self.menu_toolbar = self.builder.get_object("menu_toolbar")
 		self.menu_toolbar.set_active(True)
-		self.menu_hlayout = builder.get_object("menu_hlayout")
-		self.menu_vlayout = builder.get_object("menu_vlayout")
+		self.menu_hlayout = self.builder.get_object("menu_hlayout")
+		self.menu_vlayout = self.builder.get_object("menu_vlayout")
 
-		self.box_image = builder.get_object("box_image")
-		self.box_table = builder.get_object("box_table")
-		self.box_matrix = builder.get_object("box_matrix")
-		self.image_pane = builder.get_object("image_pane")
-		self.table_pane = builder.get_object("table_pane")
-		self.matrix_pane = builder.get_object("matrix_pane")
-
-		self.tempdir = os.environ.get("TMPDIR", "/tmp")
+		self.box_image = self.builder.get_object("box_image")
+		self.box_table = self.builder.get_object("box_table")
+		self.box_matrix = self.builder.get_object("box_matrix")
+		self.image_pane = self.builder.get_object("image_pane")
+		self.table_pane = self.builder.get_object("table_pane")
+		self.matrix_pane = self.builder.get_object("matrix_pane")
 
 		mainwidth = self.mainwindow.get_size()[0]
 		self.hpaned.set_position(mainwidth/2)
 
-		self.editorpane = TexPane.TexPane(self.config)
-		self.previewpane = PreviewPane.PreviewPane(self.builder)
-		self.importer = Importer.Importer(self.editorpane, builder)
-		self.motion = Motion.Motion(self.config, self.editorpane, self.previewpane, self.builder, self.tempdir)
-		self.editorscroll.add(self.editorpane.editorviewer)
-		self.biblio = Biblio.Biblio(self.config, self.editorpane, self.motion, builder)
+		self.importer = Importer.Importer(self.editorpane, self.builder)
 
-		builder.connect_signals(self) #split signals?
-		self.create_initial_document()
+		self.editorscroll.add(self.editorpane.editorviewer)
+		self.builder.connect_signals(self) #split signals?
+
+
+	def main(self):
 		self.mainwindow.show_all()
 		gtk.main()
-
-	def create_initial_document(self):
-		if len(sys.argv) > 1:
-			self.filename = sys.argv[1]
-			self.load_file(self.filename)
-		else:
-			self.filename = None
-			self.editorpane.fill_buffer(self.config.get_string("tex_defaulttext"))
-			self.motion.create_environment(self.filename)
-			os.chdir(os.environ['HOME'])
-		self.setup_recentfiles()
 
 	def set_window_title(self, filename):
 		self.mainwindow.set_title \
@@ -118,7 +104,7 @@ class GummiGUI:
 		self.editorpane.fill_buffer(self.config.get_string("tex_defaulttext"))
 		self.editorpane.editorbuffer.set_modified(False)
 		self.filename = None
-		self.motion.create_environment(self.filename)
+		self.iofunc.make_environment(self.filename)
 
 	def on_menu_template_activate(self, menuitem, data=None):
 		self.template_doc = Template.Template(self.builder, self.path)
@@ -128,25 +114,24 @@ class GummiGUI:
 			os.chdir(os.environ['HOME'])
 		if self.check_for_save(): self.on_menu_save_activate(None, None)
 		filename = self.get_open_filename()
-		if filename: self.load_file(filename)
+		if filename: self.load_document(filename)
 
 	def on_menu_save_activate(self, menuitem, data=None):
 		if os.getcwd() == self.tempdir:
 			os.chdir(os.environ['HOME'])
-		if self.filename is None:
+		if self.iofunc.filename is None:
 			filename = self.get_save_filename()
-			if filename: self.write_file(filename)
+			if filename: self.save_document(filename)
 		if os.path.dirname(self.filename) == self.tempdir:
 			filename = self.get_save_filename()
-			if filename: self.write_file(filename)
-		else: self.write_file(None)
+			if filename: self.save_document(filename)
+		else: self.save_document(None)
 
 	def on_menu_saveas_activate(self, menuitem, data=None):
 		if os.getcwd() == self.tempdir:
 			os.chdir(os.environ['HOME'])
 		self.filename = self.get_save_filename()
-		if self.filename: self.write_file(self.filename)
-		#self.motion.create_environment(self.filename)
+		if self.filename: self.save_document(self.filename)
 
 	def on_menu_undo_activate(self, menuitem, data=None):
 		self.editorpane.undo_change()
@@ -196,16 +181,16 @@ class GummiGUI:
 
 	def on_menu_statusbar_toggled(self, menuitem, data=None):
 		if menuitem.get_active():
-			self.motion.statusbar.show()
+			self.iofunc.statusbar.show()
 		else:
-			self.motion.statusbar.hide()
+			self.iofunc.statusbar.hide()
 
 	def on_button_template_ok_clicked(self, button, data=None):
 		template = self.template_doc.get_template()
 		if template is not None:
 			self.editorpane.fill_buffer(template)
 			self.filename = None
-			self.motion.create_environment(self.tempdir + "/gummi-new")
+			self.iofunc.make_environment(self.tempdir + "/gummi-new")
 			self.template_doc.templatewindow.hide()
 		else: pass
 
@@ -221,7 +206,6 @@ class GummiGUI:
 		term = self.searchentry.get_text()
 		backwards = self.backwards.get_active()
 		matchcase = self.matchcase.get_active()
-		#flags = self.editorpane.get_search_flags(backwards, matchcase)
 		self.editorpane.search_buffer(term, backwards, matchcase)
 
 	def on_import_tabs_switch_page(self, notebook, page, page_num):
@@ -366,7 +350,7 @@ class GummiGUI:
 
 	def load_recentfile(self, filename):
 		self.check_for_save()
-		self.load_file(filename)
+		self.load_document(filename)
 
 	def set_file_filters(self, dialog):
 		plainfilter = gtk.FileFilter()
@@ -408,7 +392,7 @@ class GummiGUI:
 			if not ".tex" in filename[-4:]:
 				filename = filename + ".tex"
 			chooser.destroy()
-			self.motion.create_environment(filename)
+			self.iofunc.make_environment(filename)
 		chooser.destroy()
 		return filename
 
@@ -427,30 +411,24 @@ class GummiGUI:
 			dialog.destroy()
 		return ret
 
-	def load_file(self, filename):
+
+	def load_document(self, filename):
 		while gtk.events_pending(): gtk.main_iteration()
 		try:
-			decode = self.editorpane.decode_text(filename)
-			self.editorpane.fill_buffer(decode)
+			self.iofunc.load_file(filename)
 			self.filename = filename
-			self.motion.create_environment(self.filename)
-			self.motion.set_status("Loading file " + self.filename)
-			self.add_recentfile(filename)
+			self.add_recentfile(self.filename)
 			self.set_window_title(self.filename)
 		except:
 			print traceback.print_exc()
 
-	def write_file(self, filename):
+
+	def save_document(self, filename):
 		try:
-			content = self.editorpane.grab_buffer()
-			if filename: fout = open(filename, "w")
-			else: fout = open(self.filename, "w")
-			encoded = self.editorpane.encode_text(content)
-			fout.write(encoded)
-			fout.close()
+			self.iofunc.save_file(filename)
 			if filename: self.filename = filename
-			self.motion.set_status("Saving file " + self.filename)
-			self.motion.export_pdffile()
+			self.iofunc.set_status("Saving file " + self.filename)
+			self.iofunc.export_pdffile()
 			self.set_window_title(self.filename)
 		except:
 			print traceback.print_exc()

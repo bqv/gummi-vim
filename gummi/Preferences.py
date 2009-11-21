@@ -60,8 +60,9 @@ class Preferences:
 
 	# TODO: Rewrite everything in this class
 
-	def __init__(self, parent):
-		self.parent = parent
+	def __init__(self, parent, path):
+		self.core = parent
+		self.path = path
 		self.gconf_client = gconf.client_get_default()
 
 	def get_default(self, key):
@@ -139,11 +140,12 @@ class Preferences:
 
 	def display_preferences(self):
 		builder = gtk.Builder()
-		builder.add_from_file(self.parent.CWD + "/gui/prefs.glade")
+		builder.add_from_file(self.path + "/gui/prefs.glade")
 		builder.connect_signals(self)
 
+		self.editorpane = self.core.editorpane
 		self.prefwindow = builder.get_object("prefwindow")
-		self.prefwindow.set_transient_for(self.parent.mainwindow)
+		self.prefwindow.set_transient_for(self.core.gui.mainwindow)
 		self.notebook = builder.get_object("notebook1")
 
 		self.button_textwrap = builder.get_object("button_textwrap")
@@ -207,24 +209,24 @@ class Preferences:
 	def engage(self, widget, data):
 		if data == "tex_textwrapping":
 			if widget.get_active():
-				self.parent.editorpane.editorviewer.set_wrap_mode(gtk.WRAP_CHAR)
+				self.core.editorpane.editorviewer.set_wrap_mode(gtk.WRAP_CHAR)
 			else:
-				self.parent.editorpane.editorviewer.set_wrap_mode(gtk.WRAP_NONE)
+				self.core.editorpane.editorviewer.set_wrap_mode(gtk.WRAP_NONE)
 		elif data == "tex_wordwrapping":
 			if widget.get_active():
-				self.parent.editorpane.editorviewer.set_wrap_mode(gtk.WRAP_WORD)
+				self.core.editorpane.editorviewer.set_wrap_mode(gtk.WRAP_WORD)
 			else:
-				self.parent.editorpane.editorviewer.set_wrap_mode(gtk.WRAP_CHAR)
+				self.core.editorpane.editorviewer.set_wrap_mode(gtk.WRAP_CHAR)
 		elif data == "tex_linenumbers":
 			if widget.get_active():
-				self.parent.editorpane.editorviewer.set_show_line_numbers(True)
+				self.core.editorpane.editorviewer.set_show_line_numbers(True)
 			else:
-				self.parent.editorpane.editorviewer.set_show_line_numbers(False)
+				self.core.editorpane.editorviewer.set_show_line_numbers(False)
 		elif data == "tex_highlighting":
 			if widget.get_active():
-				self.parent.editorpane.editorviewer.set_highlight_current_line(True)
+				self.core.editorpane.editorviewer.set_highlight_current_line(True)
 			else:
-				self.parent.editorpane.editorviewer.set_highlight_current_line(False)
+				self.core.editorpane.editorviewer.set_highlight_current_line(False)
 
 	def on_combo_typesetter_changed(self, item, data=None):
 		if item.get_active_text() == "xelatex": self.set_string("tex_cmd", "xelatex")

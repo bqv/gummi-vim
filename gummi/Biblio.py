@@ -40,7 +40,6 @@ class Biblio:
 		self.treelist = builder.get_object("bib_treelist")
 		self.biboutput = builder.get_object("bibtex_output")
 		self.biboutput.modify_font(pango.FontDescription("monospace 9"))
-
 		self.parse_listdata()
 
 	def parse_listdata(self):
@@ -57,13 +56,11 @@ class Biblio:
 		self.treelist.clear() #remove all rows
 		self.parse_listdata()
 
-
 	def select_listdata(self, column):
 		selection = self.treeview.get_selection()
 		myiter = selection.get_selected()[1]
 		value = self.treelist.get_value(myiter, column)
 		return value
-
 
 	def add_bibliography(self):
 		self.biblist = self.config.get_list("bib_files")
@@ -88,12 +85,10 @@ class Biblio:
 				self.refresh_listdata()
 		chooser.destroy()
 	
-
 	def del_bibliography(self):
 		value = self.select_listdata(0)
 		self.config.remove_from_list("bib_files", int(value))
 		self.refresh_listdata()
-
 
 	def setup_bibliography(self):
 		self.editorpane.insert_package("cite")

@@ -77,7 +77,6 @@ class Importer: # needs cleanup
 		self.ecenter = "\\end{center}\n"
 
 
-
 	def prepare_image(self):
 		imagefile = None
 		chooser = gtk.FileChooserDialog("Open File...", self.mainwindow,

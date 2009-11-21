@@ -30,90 +30,45 @@ import traceback
 import tempfile
 import re
 
-
 import Preferences
-
 
 class Motion:
 
-	def __init__(self, config, tex, preview, builder, tempdir):
+	def __init__(self, config, editor, preview, builder):
+
 		self.config = config
-		self.editorpane = tex
+		self.editorpane = editor
 		self.previewpane = preview
+
+		self.status = 1
+		self.laststate = None
+
+		try: self.texcmd = self.config.get_string("tex_cmd")
+		except: self.texcmd = Preferences.TYPESETTER
+
+		self.errormesg = re.compile(':[\d+]+:([^.]+)\.')
+		self.errorline = re.compile(':([\d+]+):')
+
 		self.statuslight = builder.get_object("tool_statuslight")
 		self.statusbar = builder.get_object("statusbar")
 		self.statusbar_cid = self.statusbar.get_context_id("Gummi")
 		self.errorfield = builder.get_object("errorfield")
 		self.errorfield.modify_font(pango.FontDescription("monospace 8"))
-		self.tempdir = tempdir
-
-		self.texfile = None
-		self.texname = None
-		self.texpath = None
-		self.pdffile = None
-		self.workfile = None
-		self.status = 1
-		self.laststate = None
-		self.errormesg = re.compile(':[\d+]+:([^.]+)\.')
-		self.errorline = re.compile(':([\d+]+):')
-
-		# get the default typesetter (pdflatex) if the gconf 
-		# value for some reason can't be fetched
-		try: self.texcmd = self.config.get_string("tex_cmd")
-		except: self.texcmd = Preferences.TYPESETTER
+		self.errorbuffer = self.errorfield.get_buffer()
 
 		self.editorviewer = self.editorpane.editorviewer
 		self.editorbuffer = self.editorpane.editorbuffer
-		self.errorbuffer = self.errorfield.get_buffer()
-		self.start_updatepreview()
+		#self.start_updatepreview()
 
 	def start_updatepreview(self):
 		glib.timeout_add_seconds(1, self.update_preview)
 
-	def start_autosave(self, time):
-		self.autosave = glib.timeout_add_seconds(time, self.autosave_document)
-
-	def stop_autosave(self):
-		try:
-			glib.source_remove(self.autosave)
-		except AttributeError: pass 
-
-	def reset_autosave(self):
-		self.stop_autosave()
-		self.start_autosave(self.config.get_int("autosave_timer"))
-
-	def autosave_document(self):
-		if self.texfile is not None:
-			content = self.editorpane.grab_buffer()
-			encoded = self.editorpane.encode_text(content)
-			fout = open(self.texfile, "w")
-			fout.write(encoded)
-			fout.close()
-			self.set_status("Autosaving file " + self.texfile)
-		return True
-
-	def create_environment(self, filename):
-		if filename is not None:
-			self.texfile = filename
-			self.texpath = os.path.dirname(self.texfile) + "/"
-			if ".tex" in self.texfile:
-				self.texname = os.path.basename(self.texfile)[:-4]
-			else:
-				self.texname = os.path.basename(self.texfile)
-		self.workfile = tempfile.mkstemp(".tex")[1]
-		self.pdffile = self.workfile[:-4] + ".pdf"
-		print ("\nEnvironment created for: \nTEX: " + str(self.texfile) +
-		       "\nTMP: " + self.workfile + "\nPDF: " + self.pdffile + "\n")
-		if self.config.get_bool("autosaving"):		
-			self.reset_autosave()
-		self.initial_preview()
-
-	def set_status(self, message):
-		self.statusbar.push(self.statusbar_cid, message)
-		glib.timeout_add(4000, self.remove_status)
-
-	def remove_status(self):
-		self.statusbar.push(self.statusbar_cid, "")
+	def update_envfiles(self, envfile):
+		self.tempdir = envfile[0]
+		self.filename = envfile[1]
+		self.texpath = envfile[2]
+		self.workfile = envfile[3]
+		self.pdffile = envfile[4]
 
 	def initial_preview(self):
 		self.update_workfile()
@@ -121,14 +76,8 @@ class Motion:
 		try:
 			self.previewpane.set_pdffile(self.pdffile)
 			self.previewpane.refresh_preview()
-		except: self.previewpane.drawarea.hide(); return	
-
-	def export_pdffile(self):
-		try: # export the pdf file if one exists
-			export = self.texpath + self.texname + ".pdf"
-			shutil.copy2(self.pdffile, export)
-			os.chdir(self.texpath)
-		except IOError: pass
+			self.start_updatepreview()
+		except: self.previewpane.drawarea.hide(); return
 
 	def update_workfile(self):
 		try:
@@ -152,8 +101,6 @@ class Motion:
 		auxupdate.wait()
 
 	def update_pdffile(self):
-		#self.status += 1
-		#print self.status
 		try:
 			pdfmaker = subprocess.Popen(self.texcmd + \
 					' -file-line-error \
@@ -179,7 +126,7 @@ class Motion:
 			lineresult = self.errorline.findall(self.output)
 			if lineresult == []: # end tag error
 				lineresult.insert(0, self.editorbuffer.get_line_count())
-			#mesgresult = self.errormesg.findall(self.output)
+			mesgresult = self.errormesg.findall(self.output)
 			self.editorpane.apply_errortags(int(lineresult[0]))	
 		elif errorstate is 0 and errorstate < self.laststate:
 			self.editorpane.apply_errortags(None)
@@ -187,16 +134,16 @@ class Motion:
 		self.laststate = errorstate
 
 	def update_preview(self):
-			try:
-				if self.previewpane and self.editorpane.check_buffer_changed():
-					self.editorpane.check_buffer_changed()
-					self.update_workfile()
-					retcode = self.update_pdffile()
-					self.update_errortags(retcode)
-					self.previewpane.refresh_preview()
-			except:
-				print traceback.print_exc()
-			return True 
+		try:
+			if self.previewpane and self.editorpane.check_buffer_changed():
+				self.editorpane.check_buffer_changed()
+				self.update_workfile()
+				retcode = self.update_pdffile()
+				self.update_errortags(retcode)
+				self.previewpane.refresh_preview()
+		except:
+			print traceback.print_exc()
+		return True 
 
 
 

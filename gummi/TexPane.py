@@ -139,7 +139,7 @@ class TexPane:
 
 	def insert_package(self, package):
 		start_iter = self.get_iterator(START)
-		end_iter = self.get_iterator(PACKAGES, 1)
+		end_iter = self.get_iterator(BEGIN, 1)
 		pkgsearchstr = "{" + package + "}"
 		pkginsertstr = "\\usepackage{" + package + "}\n"
 		if gtksourceview2.iter_forward_search \
