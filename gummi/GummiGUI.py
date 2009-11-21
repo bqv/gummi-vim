@@ -97,9 +97,6 @@ class MainGUI:
 		if self.iofunc.filename is None:
 			filename = self.get_save_filename()
 			if filename: self.save_document(filename)
-		if os.path.dirname(self.filename) == self.tempdir:
-			filename = self.get_save_filename()
-			if filename: self.save_document(filename)
 		else: self.save_document(None)
 
 	def on_menu_saveas_activate(self, menuitem, data=None):
@@ -294,6 +291,7 @@ class MainGUI:
 		response = chooser.run()
 		if response == gtk.RESPONSE_CANCEL:
 			self.exitinterrupt = True
+			return 
 		if response == gtk.RESPONSE_OK:
 			filename = chooser.get_filename()
 			if not ".tex" in filename[-4:]:
