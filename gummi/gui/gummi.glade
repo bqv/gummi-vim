@@ -1259,8 +1259,8 @@ into current tex document</property>
                 <property name="has_focus">True</property>
                 <property name="invisible_char">&#x2022;</property>
                 <property name="primary_icon_stock">gtk-find</property>
-                <accelerator key="Escape" signal="activate" modifiers="GDK_SHIFT_MASK"/>
                 <accelerator key="Return" signal="activate"/>
+                <accelerator key="Escape" signal="activate" modifiers="GDK_SHIFT_MASK"/>
                 <signal name="activate" handler="on_button_searchwindow_find_clicked"/>
               </object>
               <packing>
@@ -1420,6 +1420,7 @@ into current tex document</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="invisible_char">&#x2022;</property>
+            <property name="xalign">0.5</property>
             <property name="adjustment">table_rows</property>
           </object>
           <packing>
@@ -1434,6 +1435,7 @@ into current tex document</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="invisible_char">&#x2022;</property>
+            <property name="xalign">0.5</property>
             <property name="adjustment">table_cols</property>
           </object>
           <packing>
@@ -1702,6 +1704,7 @@ cells have line borders. </property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="invisible_char">&#x2022;</property>
+            <property name="xalign">0.5</property>
             <property name="adjustment">matrix_rows</property>
           </object>
           <packing>
@@ -1716,6 +1719,7 @@ cells have line borders. </property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="invisible_char">&#x2022;</property>
+            <property name="xalign">0.5</property>
             <property name="adjustment">matrix_cols</property>
           </object>
           <packing>
@@ -1769,9 +1773,6 @@ cells have line borders. </property>
           </packing>
         </child>
         <child>
-          <placeholder/>
-        </child>
-        <child>
           <object class="GtkLabel" id="label10">
             <property name="visible">True</property>
             <property name="label" translatable="yes">Bracket:</property>
@@ -1780,6 +1781,9 @@ cells have line borders. </property>
             <property name="left_attach">2</property>
             <property name="right_attach">3</property>
           </packing>
+        </child>
+        <child>
+          <placeholder/>
         </child>
       </object>
     </child>
