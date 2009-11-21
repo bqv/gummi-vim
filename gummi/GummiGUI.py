@@ -175,7 +175,7 @@ class MainGUI:
 		if template is not None:
 			self.editorpane.fill_buffer(template)
 			self.filename = None
-			self.iofunc.make_environment(self.tempdir + "/gummi-new")
+			self.iofunc.make_environment(self.filename)
 			self.template_doc.templatewindow.hide()
 		else: pass
 
