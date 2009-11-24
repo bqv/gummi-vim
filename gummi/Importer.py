@@ -44,7 +44,7 @@ class Importer:
 		self.scaler = builder.get_object("image_scaler")
 
 		self.table_pane = builder.get_object("table_pane")
-		self.table_comboallign = builder.get_object("table_comboallign")
+		self.table_comboalign = builder.get_object("table_comboalign")
 		self.table_comboborder = builder.get_object("table_comboborder")
 		self.table_rows = builder.get_object("table_rows")
 		self.table_cols = builder.get_object("table_cols")
@@ -119,17 +119,17 @@ class Importer:
 		columns = int(columns) + 1
 		borders = self.table_comboborder.get_active()
 		# get column with l/c/r directly?
-		allignment = self.table_comboallign.get_active()
-		if allignment is 0: alligntype = "l"
-		elif allignment is 1: alligntype = "c"
-		else: alligntype = "r"
+		alignment = self.table_comboalign.get_active()
+		if alignment is 0: aligntype = "l"
+		elif alignment is 1: aligntype = "c"
+		else: aligntype = "r"
 		if borders is 2:
-				alligntype = alligntype + "|"
+				aligntype = aligntype + "|"
 		for f in range(1,columns):
-				allign = f * alligntype
-		if borders is 1: allign = "|" + allign + "|"
-		elif borders is 2: allign = "|" + allign
-		begin_tabular = "\\begin{tabular}{" + allign + "}\n"
+				align = f * aligntype
+		if borders is 1: align = "|" + align + "|"
+		elif borders is 2: align = "|" + align
+		begin_tabular = "\\begin{tabular}{" + align + "}\n"
 		end_tabular = "\\end{tabular}\n"
 		for k in range(1, rows):
 			for i in range(1,columns):

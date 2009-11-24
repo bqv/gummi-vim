@@ -96,20 +96,20 @@
       </row>
     </data>
   </object>
-  <object class="GtkListStore" id="list_tableallign">
+  <object class="GtkListStore" id="list_tablealign">
     <columns>
       <!-- column-name gchararray1 -->
       <column type="gchararray"/>
     </columns>
     <data>
       <row>
-        <col id="0" translatable="yes">Allign left</col>
+        <col id="0" translatable="yes">Align left</col>
       </row>
       <row>
-        <col id="0" translatable="yes">Allign center</col>
+        <col id="0" translatable="yes">Align center</col>
       </row>
       <row>
-        <col id="0" translatable="yes">Allign right</col>
+        <col id="0" translatable="yes">Align right</col>
       </row>
     </data>
   </object>
@@ -624,7 +624,7 @@
                 <child>
                   <object class="GtkToolButton" id="tool_left">
                     <property name="visible">True</property>
-                    <property name="tooltip_text" translatable="yes">Allign left</property>
+                    <property name="tooltip_text" translatable="yes">Align left</property>
                     <property name="label" translatable="yes">toolbutton1</property>
                     <property name="use_underline">True</property>
                     <property name="icon_name">format-justify-left</property>
@@ -652,7 +652,7 @@
                 <child>
                   <object class="GtkToolButton" id="tool_right">
                     <property name="visible">True</property>
-                    <property name="tooltip_text" translatable="yes">Allign right</property>
+                    <property name="tooltip_text" translatable="yes">Align right</property>
                     <property name="label" translatable="yes">toolbutton3</property>
                     <property name="use_underline">True</property>
                     <property name="icon_name">format-justify-right</property>
@@ -1448,11 +1448,11 @@ into current tex document</property>
           </packing>
         </child>
         <child>
-          <object class="GtkComboBox" id="table_comboallign">
+          <object class="GtkComboBox" id="table_comboalign">
             <property name="visible">True</property>
-            <property name="tooltip_text" translatable="yes">Allignment of the
+            <property name="tooltip_text" translatable="yes">Alignment of the
 cell content.</property>
-            <property name="model">list_tableallign</property>
+            <property name="model">list_tablealign</property>
             <property name="active">0</property>
             <child>
               <object class="GtkCellRendererText" id="cellrenderertext4"/>
