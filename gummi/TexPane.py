@@ -190,6 +190,7 @@ class TexPane:
 			self.editorbuffer.apply_tag(self.searchtag, result[0], result[1])
 
 	def start_search(self, term, backwards, matchcase=0):
+		self.searchresults = []
 		if matchcase is False:
 			matchcase = (gtksourceview2.SEARCH_CASE_INSENSITIVE)
 		if backwards is True:
@@ -197,10 +198,12 @@ class TexPane:
 		else:
 			self.searchresults = self.search_buffer_forward(term, matchcase)
 		self.apply_searchtags(self.searchresults)
-		ins, bound = self.searchresults[0]
-		self.editorbuffer.place_cursor(ins)
-		#self.editorbuffer.select_range(ins, bound)
-		self.editorviewer.scroll_to_iter(ins, 0)
+		try:
+			ins, bound = self.searchresults[0]
+			self.editorbuffer.place_cursor(ins)
+			#self.editorbuffer.select_range(ins, bound)
+			self.editorviewer.scroll_to_iter(ins, 0)
+		except IndexError: pass #no searchresults
 
 	def search_buffer_forward(self, term, matchcase):
 		result_list = []
@@ -223,7 +226,7 @@ class TexPane:
 						(begin, term, matchcase, limit=None)
 			if result:
 				result_list.append((result[0], result[1]))
-				begin = result[1]
+				begin = result[0]
 			else:
 				break
 		return result_list
