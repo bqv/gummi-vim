@@ -41,11 +41,11 @@ class TexPane:
 		self.editorbuffer = gtksourceview2.Buffer()
 		self.editortags = self.editorbuffer.get_tag_table()
 		self.manager = gtksourceview2.LanguageManager()
+		self.searchresults = []
 		self.errortag = gtk.TextTag()
+		self.searchtag = gtk.TextTag()
 		self.configure_texpane(config)
 
-		self.start_iter = None
-		self.current_iter = None
 		self.textchange = datetime.now()
 		self.prevchange = datetime.now()
 		self.check_buffer_changed()
@@ -69,6 +69,7 @@ class TexPane:
 		self.editorviewer.set_wrap_mode(self.grab_wrapmode(textwrap, wordwrap))
 		self.errortag.set_property('background', 'red')
 		self.errortag.set_property('foreground', 'white')
+		self.searchtag.set_property('background', 'yellow')
 
 
 	def fill_buffer(self, newcontent):
@@ -179,32 +180,53 @@ class TexPane:
 			end = self.editorbuffer.get_iter_at_line(errorline)
 			self.editorbuffer.apply_tag(self.errortag, start, end)
 
-	def start_searchfunction(self):
-		self.start_iter = self.get_iterator(START)
-		self.current_iter = self.get_iterator(CURRENT)
+	# TODO merge function with apply_errortags (multiple error results soon)
+	def apply_searchtags(self, searchresults):
+		try:
+			self.editortags.remove(self.searchtag)
+		except ValueError: pass
+		self.editortags.add(self.searchtag)
+		for result in searchresults:
+			self.editorbuffer.apply_tag(self.searchtag, result[0], result[1])
 
-	def search_buffer(self, term, backwards, matchcase):
-		if matchcase is False: 
-			flag = (gtksourceview2.SEARCH_CASE_INSENSITIVE)
-		else: 
-			flag = 0
-		if backwards is False:
-			try:
-				ins, bound = gtksourceview2.iter_forward_search \
-							(self.current_iter, term, flag, limit=None)
-				self.current_iter = bound
-			except TypeError:
-				return # no results
+	def start_search(self, term, backwards, matchcase=0):
+		if matchcase is False:
+			matchcase = (gtksourceview2.SEARCH_CASE_INSENSITIVE)
+		if backwards is True:
+			self.searchresults = self.search_buffer_backward(term, matchcase)
 		else:
-			try:
-				ins, bound = gtksourceview2.iter_backward_search \
-							(self.current_iter, term, flag, limit=None)
-				self.current_iter = ins
-			except TypeError:
-				return # no results
+			self.searchresults = self.search_buffer_forward(term, matchcase)
+		self.apply_searchtags(self.searchresults)
+		ins, bound = self.searchresults[0]
 		self.editorbuffer.place_cursor(ins)
-		self.editorbuffer.select_range(ins, bound)
+		#self.editorbuffer.select_range(ins, bound)
 		self.editorviewer.scroll_to_iter(ins, 0)
+
+	def search_buffer_forward(self, term, matchcase):
+		result_list = []
+		begin = self.get_iterator(CURRENT)
+		while True:
+			result = gtksourceview2.iter_forward_search \
+						(begin, term, matchcase, limit=None)
+			if result:
+				result_list.append((result[0], result[1]))
+				begin = result[1]
+			else:
+				break
+		return result_list
+
+	def search_buffer_backward(self, term, matchcase):
+		result_list = []
+		begin = self.get_iterator(CURRENT)
+		while True:
+			result = gtksourceview2.iter_backward_search \
+						(begin, term, matchcase, limit=None)
+			if result:
+				result_list.append((result[0], result[1]))
+				begin = result[1]
+			else:
+				break
+		return result_list
 
 	def grab_wrapmode(self, textwrap, wordwrap):
 		if textwrap is False:

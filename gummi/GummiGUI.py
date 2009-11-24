@@ -137,7 +137,6 @@ class MainGUI:
 		buff.select_range(buff.get_start_iter(),buff.get_end_iter())
 
 	def on_menu_find_activate(self, menuitem, data=None):
-		self.editorpane.start_searchfunction()
 		self.searchgui.show_searchwindow()		
 
 	def on_menu_fullscreen_toggled(self, menuitem, data=None):
@@ -369,6 +368,7 @@ class SearchGUI:
 
 	def show_searchwindow(self):
 		self.searchentry.set_text("")
+		self.searchentry.grab_focus()
 		self.searchwindow.show()
 
 	def close_searchwindow(self):
@@ -379,9 +379,7 @@ class SearchGUI:
 		term = self.searchentry.get_text()
 		backwards = self.backwards.get_active()
 		matchcase = self.matchcase.get_active()
-		self.editorpane.search_buffer(term, backwards, matchcase)
-
-
+		self.editorpane.start_search(term, backwards, matchcase)
 
 
 
