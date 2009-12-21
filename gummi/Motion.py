@@ -103,7 +103,8 @@ class Motion:
 	def update_pdffile(self):
 		try:
 			pdfmaker = subprocess.Popen(self.texcmd + \
-					' -file-line-error \
+					' -interaction=nonstopmode \
+					-file-line-error \
 					-halt-on-error \
 					--output-directory="%s" "%s"' \
 					% (self.tempdir, self.workfile), 
