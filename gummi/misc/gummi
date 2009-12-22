@@ -22,8 +22,7 @@
 
 try:
     from gummi import Core
-except ImportError:
-    import Core
-
+except ImportError as e:
+    print "A required module could not be found!", e
 
 
