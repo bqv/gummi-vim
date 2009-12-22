@@ -541,25 +541,27 @@ class RecentGUI:
 		self.builder = builder
 		self.config = config
 		self.parent = parent
-	
+		self.iofunc = self.parent.iofunc
+
 		self.recentlist = []
 		self.setup_recentfiles()
+
 		
 	def setup_recentfiles(self):
 		self.recent1 = self.builder.get_object("menu_recent1")
 		self.recent2 = self.builder.get_object("menu_recent2")
 		self.recent3 = self.builder.get_object("menu_recent3")
-		self.check_recentfile(0, self.recent1)
-		self.check_recentfile(1, self.recent2)
-		self.check_recentfile(2, self.recent3)
-
-	def check_recentfile(self, i, widget):
 		recent1 = self.config.get_value("recent_files", "recent1")
 		recent2 = self.config.get_value("recent_files", "recent2")
 		recent3 = self.config.get_value("recent_files", "recent3")
-		self.recentlist.append(recent1)
-		self.recentlist.append(recent2)
-		self.recentlist.append(recent3)		
+		self.recentlist.append(recent1)	
+		self.recentlist.append(recent2)	
+		self.recentlist.append(recent3)
+		self.display_recentfile(0, self.recent1)
+		self.display_recentfile(1, self.recent2)
+		self.display_recentfile(2, self.recent3)
+
+	def display_recentfile(self, i, widget):
 		try:
 			entry = os.path.basename(self.recentlist[i])
 			widget.get_children()[0].set_label(str(i+1) + ". " + entry)
@@ -567,20 +569,37 @@ class RecentGUI:
 		except IndexError: widget.hide()
 
 	def activate_recentfile(self, widget):
-		widget = widget.get_name()
-		if widget == "menu_recent1": self.load_recentfile(self.recentlist[0])
-		if widget == "menu_recent2": self.load_recentfile(self.recentlist[1])
-		if widget == "menu_recent3": self.load_recentfile(self.recentlist[2])
+		indexstr = widget.get_name()[11:] # dirty hack
+		indexnr = int(indexstr)-1 # to get index number
+		if os.path.exists(self.recentlist[indexnr]):
+			self.load_recentfile(self.recentlist[indexnr])
+		else:
+			self.remove_recentfile(indexnr)
 
 	def add_recentfile(self, filename):
-		#recents = self.config.get_value("recent_files", "recent_files")
 		if filename not in self.recentlist:
 			self.recentlist.insert(0, filename)
 			if len(self.recentlist) > 3:
 				del self.recentlist[3]
-			self.config.write_recentfiles \
-				(self.recentlist[0], self.recentlist[1], self.recentlist[2])
-			self.setup_recentfiles()
+			for index,value in enumerate(self.recentlist):
+				position = str(index+1)
+				self.config.set_value \
+					("recent_files", "recent" + position, value)
+		self.display_recentfile(0, self.recent1)
+		self.display_recentfile(1, self.recent2)
+		self.display_recentfile(2, self.recent3)
+
+
+	def remove_recentfile(self, position):
+		self.iofunc.set_status("Error loading recent file: " + str(self.recentlist[position]))
+		self.recentlist.pop(position)
+		for index,value in enumerate(self.recentlist):
+			position = str(index+1)
+			self.config.set_value("recent_files", "recent" + position, value)
+		self.display_recentfile(0, self.recent1)
+		self.display_recentfile(1, self.recent2)
+		self.display_recentfile(2, self.recent3)
+		
 
 	def load_recentfile(self, filename):
 		self.parent.check_for_save()
