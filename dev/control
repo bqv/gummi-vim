@@ -9,6 +9,6 @@ Standards-Version: 3.7.2
 Package: gummi
 Architecture: all
 XB-Python-Version: ${python:Versions}
-Depends: python-gtk2, python-gobject, python-gconf, python-gtksourceview2, texlive-latex-base, texlive-base-bin, texlive-latex-extra, python-poppler, ${python:Depends}, ${misc:Depends}
+Depends: python-gtk2, python-gobject, python-gtksourceview2, texlive-latex-base, texlive-base-bin, texlive-latex-extra, python-poppler, ${python:Depends}, ${misc:Depends}
 Description: Simple LaTeX editor for GTK+ users.
  Gummi is a simple light-weight LaTeX editor for GTK+ users written in Python.

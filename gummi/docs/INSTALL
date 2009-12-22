@@ -10,8 +10,6 @@ tendency of some distributions to rename packages to conform to their naming pol
 Gnome/Python dependencies:
 
     * python-2.4 or higher
-    * python-gnome-2.22 or higher
-    * python-gconf-2.22 or higher
     * gtk+-2.16 or higher
     * pango 
 
