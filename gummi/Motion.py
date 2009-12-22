@@ -35,7 +35,6 @@ import Preferences
 class Motion:
 
 	def __init__(self, config, editor, preview, builder):
-
 		self.config = config
 		self.editorpane = editor
 		self.previewpane = preview
@@ -43,8 +42,10 @@ class Motion:
 		self.status = 1
 		self.laststate = None
 
-		try: self.texcmd = self.config.get_string("tex_cmd")
-		except: self.texcmd = Preferences.TYPESETTER
+		try: 
+			self.texcmd = self.config.get_value("compile", "typesetter")
+		except: 
+			self.texcmd = Preferences.TYPESETTER
 
 		self.errormesg = re.compile(':[\d+]+:([^.]+)\.')
 		self.errorline = re.compile(':([\d+]+):')

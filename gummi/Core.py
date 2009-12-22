@@ -50,7 +50,7 @@ class Core:
 		statusbar = self.builder.get_object("statusbar")
 
 		# class instances:
-		config = Preferences.Preferences(self, path)
+		config = Preferences.Preferences()
 		self.editorpane = TexPane.TexPane(config)
 		self.previewpane = PreviewPane.PreviewPane(self.builder)
 		self.motion = Motion.Motion(config, self.editorpane, self.previewpane, self.builder)

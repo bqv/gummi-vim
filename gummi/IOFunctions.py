@@ -50,8 +50,8 @@ class IOFunctions:
 		env = self.return_envfiles()
 		self.motion.update_envfiles(env)
 		self.motion.initial_preview()
-		if self.config.get_bool("autosaving"):		
-			self.reset_autosave()
+		#if self.config.get_bool("autosaving"):		
+		#	self.reset_autosave()
 
 	def create_envfiles(self, filename):
 		if filename is not None:
@@ -69,7 +69,8 @@ class IOFunctions:
 				"PDF: " + self.pdffile + "\n")
 
 	def load_default_text(self):
-		self.editorpane.fill_buffer(self.config.get_string("tex_defaulttext"))
+		self.editorpane.fill_buffer \
+			(self.config.get_value("default_text", "welcome"))
 		os.chdir(os.environ['HOME'])
 
 	def load_file(self, filename):

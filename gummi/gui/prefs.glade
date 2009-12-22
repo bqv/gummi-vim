@@ -20,7 +20,7 @@
             <property name="border_width">10</property>
             <property name="tab_hborder">3</property>
             <child>
-              <object class="GtkVBox" id="vbox1">
+              <object class="GtkVBox" id="view_box">
                 <property name="visible">True</property>
                 <property name="border_width">5</property>
                 <property name="orientation">vertical</property>
@@ -41,12 +41,13 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkCheckButton" id="button_textwrap">
+                  <object class="GtkCheckButton" id="textwrapping">
                     <property name="label" translatable="yes">Enable text wrapping</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
                     <property name="draw_indicator">True</property>
+                    <signal name="toggled" handler="toggle_textwrapping"/>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -55,12 +56,13 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkCheckButton" id="button_wordwrap">
+                  <object class="GtkCheckButton" id="wordwrapping">
                     <property name="label" translatable="yes">Do not split words over two lines</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
                     <property name="draw_indicator">True</property>
+                    <signal name="toggled" handler="toggle_wordwrapping"/>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -85,12 +87,13 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkCheckButton" id="button_linenumbers">
+                  <object class="GtkCheckButton" id="line_numbers">
                     <property name="label" translatable="yes">Display line numbers</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
                     <property name="draw_indicator">True</property>
+                    <signal name="toggled" handler="toggle_linenumbers"/>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -115,12 +118,13 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkCheckButton" id="button_highlighting">
+                  <object class="GtkCheckButton" id="highlighting">
                     <property name="label" translatable="yes">Highlight current line</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
                     <property name="draw_indicator">True</property>
+                    <signal name="toggled" handler="toggle_highlighting"/>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -140,7 +144,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkVBox" id="vbox3">
+              <object class="GtkVBox" id="editorbox1">
                 <property name="visible">True</property>
                 <property name="border_width">5</property>
                 <property name="orientation">vertical</property>
@@ -162,16 +166,17 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkHBox" id="hbox8">
+                  <object class="GtkHBox" id="editor_box">
                     <property name="visible">True</property>
                     <child>
-                      <object class="GtkCheckButton" id="check_autosave">
+                      <object class="GtkCheckButton" id="autosaving">
                         <property name="label" translatable="yes">_Autosave files every</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
                         <property name="use_underline">True</property>
                         <property name="draw_indicator">True</property>
+                        <signal name="toggled" handler="toggle_autosaving"/>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -180,12 +185,13 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkSpinButton" id="spin_autosave">
+                      <object class="GtkSpinButton" id="autosave_timer">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="invisible_char">&#x2022;</property>
                         <property name="xalign">0.5</property>
                         <property name="adjustment">autosave_time</property>
+                        <signal name="value_changed" handler="on_autosave_value_changed"/>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -301,7 +307,7 @@
                 <property name="hscrollbar_policy">automatic</property>
                 <property name="vscrollbar_policy">automatic</property>
                 <child>
-                  <object class="GtkTextView" id="default_textfield">
+                  <object class="GtkTextView" id="default_text">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                   </object>
@@ -322,7 +328,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkVBox" id="vbox2">
+              <object class="GtkVBox" id="compile1box">
                 <property name="visible">True</property>
                 <property name="border_width">5</property>
                 <property name="orientation">vertical</property>
@@ -344,14 +350,22 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkHBox" id="hbox2">
+                  <object class="GtkHBox" id="compile_box">
                     <property name="visible">True</property>
                     <child>
                       <object class="GtkComboBox" id="combo_typesetter">
                         <property name="width_request">200</property>
                         <property name="height_request">35</property>
                         <property name="visible">True</property>
+                        <property name="model">list_typesetters</property>
+                        <property name="active">0</property>
                         <signal name="changed" handler="on_combo_typesetter_changed"/>
+                        <child>
+                          <object class="GtkCellRendererText" id="cellrenderertext1"/>
+                          <attributes>
+                            <attribute name="text">0</attribute>
+                          </attributes>
+                        </child>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -536,6 +550,19 @@ for the active tab. </property>
     <property name="upper">60</property>
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
-    <signal name="value_changed" handler="autosave_timer_change"/>
+  </object>
+  <object class="GtkListStore" id="list_typesetters">
+    <columns>
+      <!-- column-name typesetters -->
+      <column type="gchararray"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes">pdflatex</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">xelatex</col>
+      </row>
+    </data>
   </object>
 </interface>

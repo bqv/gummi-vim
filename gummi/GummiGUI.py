@@ -24,6 +24,7 @@
 import os
 import sys
 import gtk
+import pango
 import traceback
 
 import Importer
@@ -62,7 +63,6 @@ class MainGUI:
 		self.importgui = ImportGUI(self.builder, self.editorpane)
 		self.recentgui = RecentGUI(self.builder, self.config, self)
 		self.searchgui = SearchGUI(self.builder, self.editorpane)
-	
 		self.builder.connect_signals(self) #split signals?
 
 
@@ -76,7 +76,8 @@ class MainGUI:
 
 	def on_menu_new_activate(self, menuitem, data=None):
 		if self.check_for_save(): self.on_menu_save_activate(None, None)
-		self.editorpane.fill_buffer(self.config.get_string("tex_defaulttext"))
+		self.editorpane.fill_buffer \
+			(self.config.get_value("default_text", "welcome"))
 		self.editorpane.editorbuffer.set_modified(False)
 		self.filename = None
 		self.iofunc.make_environment(self.filename)
@@ -183,7 +184,7 @@ class MainGUI:
 		self.biblio.compile_bibliography()
 
 	def on_menu_preferences_activate(self, menuitem, data=None):
-		self.config.display_preferences()
+		prefsgui = PrefsGUI(self.config, self.editorpane, self.path, self.mainwindow)
 
 	def on_menu_update_activate(self, menuitem, data=None):
 		update = UpdateCheck.UpdateCheck()
@@ -350,6 +351,115 @@ class MainGUI:
 
 
 
+class PrefsGUI:
+
+	def __init__(self, config, editorpane, path, mainwindow):
+		self.config = config
+		self.editorpane = editorpane
+		builder = gtk.Builder()
+		builder.add_from_file(path + "/gui/prefs.glade")
+
+		self.prefwindow = builder.get_object("prefwindow")
+		self.notebook = builder.get_object("notebook1")
+		self.prefwindow.set_transient_for(mainwindow)
+		self.textwrap_button = builder.get_object("textwrapping")
+		self.wordwrap_button = builder.get_object("wordwrapping")
+		self.autosave_timer = builder.get_object("autosave_timer")
+		self.default_text = builder.get_object("default_text")
+		self.default_text.modify_font(pango.FontDescription("monospace 10"))
+		self.default_buffer = self.default_text.get_buffer()
+		self.typesetter = builder.get_object("combo_typesetter")
+
+		self.view_box = builder.get_object("view_box")
+		self.set_checkbox_status(self.view_box, 'view')
+		self.editor_box = builder.get_object("editor_box")		
+		self.set_checkbox_status(self.editor_box, 'editor')
+		self.autosave_timer.set_value \
+			(int(self.config.get_value("editor", "autosave_timer"))/60)
+		self.default_buffer.set_text \
+			(self.config.get_value("default_text", "welcome"))
+
+		builder.connect_signals(self)
+		self.prefwindow.show_all()
+
+
+	def set_checkbox_status(self, box, page):
+		listmy = box.get_children()
+		for item in listmy:
+			if type(item) == gtk.CheckButton:
+				result = self.config.get_value(page, item.get_name())
+				item.set_active(result)
+
+	def toggle_linenumbers(self, widget, data=None):
+		value = widget.get_active()
+		self.config.set_value('view', widget.get_name(), value)
+		self.editorpane.editorviewer.set_show_line_numbers(value)
+
+	def toggle_highlighting(self, widget, data=None):
+		value = widget.get_active()
+		self.config.set_value('view', widget.get_name(), value)
+		self.editorpane.editorviewer.set_highlight_current_line(value)
+
+	def toggle_textwrapping(self, widget, data=None):
+		value = widget.get_active()
+		self.config.set_value('view', widget.get_name(), value)
+		if widget.get_active():
+			self.editorpane.editorviewer.set_wrap_mode(gtk.WRAP_CHAR)
+			self.wordwrap_button.set_sensitive(True)
+		else:
+			self.editorpane.editorviewer.set_wrap_mode(gtk.WRAP_NONE)
+			self.config.set_value("view", "wordwrapping", False)
+			self.wordwrap_button.set_active(False)
+			self.wordwrap_button.set_sensitive(False)
+
+	def toggle_wordwrapping(self, widget, data=None):
+		value = widget.get_active()
+		self.config.set_value('view', widget.get_name(), value)
+		if widget.get_active():
+			self.editorpane.editorviewer.set_wrap_mode(gtk.WRAP_WORD)
+		else:
+			self.editorpane.editorviewer.set_wrap_mode(gtk.WRAP_CHAR)
+
+	def toggle_autosaving(self, widget, data=None):
+		value = widget.get_active()
+		self.config.set_value('editor', widget.get_name(), value)
+		if widget.get_active():
+			self.autosave_timer.set_sensitive(True)
+			self.autosave_timer.set_value(10)
+		else:
+			self.autosave_timer.set_sensitive(False)		
+
+	def on_autosave_value_changed(self, event):
+		newvalue = int(event.get_value()) * 60
+		self.config.set_value('editor', 'autosave_timer', newvalue)
+
+	def on_combo_typesetter_changed(self, widget, data=None):
+		model = widget.get_model()
+		newvalue = model[widget.get_active()][0]
+		self.config.set_value('compile', 'typesetter', newvalue)
+
+	def on_prefs_close_clicked(self, widget, data=None):
+		if self.notebook.get_current_page() == 2:
+			start_iter = self.default_buffer.get_start_iter()
+			end_iter = self.default_buffer.get_end_iter()
+			newvalue = self.default_buffer.get_text(start_iter, end_iter)
+			self.config.set_value("default_text", "welcome", newvalue)
+		self.prefwindow.destroy()
+
+	def on_prefs_reset_clicked(self, widget, data=None):
+		if self.notebook.get_current_page() == 0:
+			self.config.reset_section("view")
+			self.set_checkbox_status(self.view_box, "view")
+		elif self.notebook.get_current_page() == 1:
+			self.config.reset_section("editor")
+			self.set_checkbox_status(self.editor_box, "editor")
+		elif self.notebook.get_current_page() == 2:
+			self.config.reset_section("default_text")
+			self.default_buffer.set_text \
+				(self.config.get_value("default_text", "welcome"))
+		elif self.notebook.get_current_page() == 3:
+			self.config.reset_section("compile")
+			self.typesetter.set_active(0)
 
 
 
@@ -380,7 +490,6 @@ class SearchGUI:
 		backwards = self.backwards.get_active()
 		matchcase = self.matchcase.get_active()
 		self.editorpane.start_search(term, backwards, matchcase)
-
 
 
 class ImportGUI:
@@ -428,12 +537,14 @@ class ImportGUI:
 
 class RecentGUI:
 
-	def __init__(self, builder, config, parent):		
+	def __init__(self, builder, config, parent):	
 		self.builder = builder
 		self.config = config
 		self.parent = parent
+	
+		self.recentlist = []
 		self.setup_recentfiles()
-
+		
 	def setup_recentfiles(self):
 		self.recent1 = self.builder.get_object("menu_recent1")
 		self.recent2 = self.builder.get_object("menu_recent2")
@@ -443,27 +554,32 @@ class RecentGUI:
 		self.check_recentfile(2, self.recent3)
 
 	def check_recentfile(self, i, widget):
-		recents = self.config.get_list("recent_files")
+		recent1 = self.config.get_value("recent_files", "recent1")
+		recent2 = self.config.get_value("recent_files", "recent2")
+		recent3 = self.config.get_value("recent_files", "recent3")
+		self.recentlist.append(recent1)
+		self.recentlist.append(recent2)
+		self.recentlist.append(recent3)		
 		try:
-			entry = os.path.basename(recents[i])
+			entry = os.path.basename(self.recentlist[i])
 			widget.get_children()[0].set_label(str(i+1) + ". " + entry)
 			widget.show()
 		except IndexError: widget.hide()
 
 	def activate_recentfile(self, widget):
-		recents = self.config.get_list("recent_files")
 		widget = widget.get_name()
-		if widget == "menu_recent1": self.load_recentfile(recents[0])
-		if widget == "menu_recent2": self.load_recentfile(recents[1])
-		if widget == "menu_recent3": self.load_recentfile(recents[2])
+		if widget == "menu_recent1": self.load_recentfile(self.recentlist[0])
+		if widget == "menu_recent2": self.load_recentfile(self.recentlist[1])
+		if widget == "menu_recent3": self.load_recentfile(self.recentlist[2])
 
 	def add_recentfile(self, filename):
-		recents = self.config.get_list("recent_files")
-		if filename not in recents:
-			recents.insert(0, filename)
-			if len(recents) > 3:
-				del recents[3]
-			self.config.set_list("recent_files", recents)
+		#recents = self.config.get_value("recent_files", "recent_files")
+		if filename not in self.recentlist:
+			self.recentlist.insert(0, filename)
+			if len(self.recentlist) > 3:
+				del self.recentlist[3]
+			self.config.write_recentfiles \
+				(self.recentlist[0], self.recentlist[1], self.recentlist[2])
 			self.setup_recentfiles()
 
 	def load_recentfile(self, filename):

@@ -62,11 +62,15 @@ class TexPane:
 		self.editorbuffer.set_highlight_syntax(True)
 		self.editorviewer = gtksourceview2.View(self.editorbuffer)
 		self.editorviewer.modify_font(pango.FontDescription("monospace 10"))
-		self.editorviewer.set_show_line_numbers(config.get_bool("tex_linenumbers"))
-		self.editorviewer.set_highlight_current_line(config.get_bool("tex_highlighting"))
-		textwrap = config.get_bool("tex_textwrapping")
-		wordwrap = config.get_bool("tex_wordwrapping")
-		self.editorviewer.set_wrap_mode(self.grab_wrapmode(textwrap, wordwrap))
+
+		self.editorviewer.set_show_line_numbers( \
+						bool(config.get_value("view", "line_numbers")))
+		self.editorviewer.set_highlight_current_line( \
+						bool(config.get_value("view", "highlighting")))
+		textwrap = config.get_value("view", "textwrapping")
+		wordwrap = config.get_value("view", "wordwrapping")
+		mode = self.grab_wrapmode(textwrap, wordwrap)
+		self.editorviewer.set_wrap_mode(mode)
 		self.errortag.set_property('background', 'red')
 		self.errortag.set_property('foreground', 'white')
 		self.searchtag.set_property('background', 'yellow')
@@ -234,7 +238,7 @@ class TexPane:
 	def grab_wrapmode(self, textwrap, wordwrap):
 		if textwrap is False:
 			return gtk.WRAP_NONE
-		if wordwrap is True:
+		elif wordwrap is True:
 			return gtk.WRAP_WORD
 		else:
 			return gtk.WRAP_CHAR

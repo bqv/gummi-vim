@@ -40,7 +40,7 @@ class Biblio:
 		self.treelist = builder.get_object("bib_treelist")
 		self.biboutput = builder.get_object("bibtex_output")
 		self.biboutput.modify_font(pango.FontDescription("monospace 9"))
-		self.parse_listdata()
+		#self.parse_listdata()
 
 	def parse_listdata(self):
 		self.biblist = self.config.get_list("bib_files")
@@ -50,7 +50,6 @@ class Biblio:
 			path = os.path.dirname(row)
 			self.treelist.append([i, name, path])		
 			i = i + 1
-
 
 	def refresh_listdata(self):
 		self.treelist.clear() #remove all rows
