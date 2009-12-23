@@ -138,7 +138,13 @@ class MainGUI:
 		buff.select_range(buff.get_start_iter(),buff.get_end_iter())
 
 	def on_menu_find_activate(self, menuitem, data=None):
-		self.searchgui.show_searchwindow()		
+		self.searchgui.show_searchwindow()
+
+	def on_menu_findnext_activate(self, menuitem, data=None):
+		self.editorpane.jumpto_searchresult(1)
+
+	def on_menu_findprev_activate(self, menuitem, data=None):
+		self.editorpane.jumpto_searchresult(-1)
 
 	def on_menu_fullscreen_toggled(self, menuitem, data=None):
 		if menuitem.get_active():

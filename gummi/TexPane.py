@@ -187,11 +187,23 @@ class TexPane:
 	# TODO merge function with apply_errortags (multiple error results soon)
 	def apply_searchtags(self, searchresults):
 		try:
-			self.editortags.remove(self.searchtag)
+			self.searchresultiters = []
+			self.searchposition = 0
+			self.editortags.remove(self.searchtag)			
 		except ValueError: pass
 		self.editortags.add(self.searchtag)
 		for result in searchresults:
+			self.searchresultiters.append(result)
 			self.editorbuffer.apply_tag(self.searchtag, result[0], result[1])
+
+	def jumpto_searchresult(self, direction):
+		try: 
+			if self.searchposition + direction < 0:
+				return False
+			ins, bnd = self.searchresultiters[self.searchposition + direction]
+			self.editorbuffer.place_cursor(ins)
+			self.searchposition = self.searchposition + direction
+		except IndexError: pass
 
 	def start_search(self, term, backwards, matchcase=0):
 		self.searchresults = []
