@@ -565,9 +565,10 @@ class RecentGUI:
 
 	def display_recentfile(self, i, widget):
 		try:
-			entry = os.path.basename(self.recentlist[i])
-			widget.get_children()[0].set_label(str(i+1) + ". " + entry)
-			widget.show()
+			if not self.recentlist[i] == "":
+				entry = os.path.basename(self.recentlist[i])
+				widget.get_children()[0].set_label(str(i+1) + ". " + entry)
+				widget.show()
 		except IndexError: widget.hide()
 
 	def activate_recentfile(self, widget):
