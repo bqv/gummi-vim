@@ -378,6 +378,8 @@ class PrefsGUI:
 			(int(self.config.get_value("editor", "autosave_timer"))/60)
 		self.default_buffer.set_text \
 			(self.config.get_value("default_text", "welcome"))
+		if self.config.get_value("compile", "typesetter") == "xelatex":
+			self.typesetter.set_active(1)
 
 		builder.connect_signals(self)
 		self.prefwindow.show_all()
