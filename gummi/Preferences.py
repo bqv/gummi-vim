@@ -34,6 +34,7 @@ CFGDEFAULTS = {
 'highlighting': True,
 'textwrapping': True,
 'wordwrapping': True,
+'font': 'Monospace 10',
 'autosaving': False,
 'autosave_timer': 600,
 'typesetter': 'pdflatex',

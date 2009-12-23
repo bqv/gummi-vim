@@ -369,6 +369,7 @@ class PrefsGUI:
 		self.default_text.modify_font(pango.FontDescription("monospace 10"))
 		self.default_buffer = self.default_text.get_buffer()
 		self.typesetter = builder.get_object("combo_typesetter")
+		self.editor_font = builder.get_object("editor_font")
 
 		self.view_box = builder.get_object("view_box")
 		self.set_checkbox_status(self.view_box, 'view')
@@ -376,6 +377,7 @@ class PrefsGUI:
 		self.set_checkbox_status(self.editor_box, 'editor')
 		self.autosave_timer.set_value \
 			(int(self.config.get_value("editor", "autosave_timer"))/60)
+		self.editor_font.set_font_name(self.config.get_value("editor", "font"))
 		self.default_buffer.set_text \
 			(self.config.get_value("default_text", "welcome"))
 		if self.config.get_value("compile", "typesetter") == "xelatex":
@@ -435,6 +437,11 @@ class PrefsGUI:
 		newvalue = int(event.get_value()) * 60
 		self.config.set_value('editor', 'autosave_timer', newvalue)
 
+	def on_editor_font_set(self, widget):
+		selected = widget.get_font_name()
+		self.editorpane.editorviewer.modify_font(pango.FontDescription(selected))
+		self.config.set_value("editor", "font", selected)
+
 	def on_combo_typesetter_changed(self, widget, data=None):
 		model = widget.get_model()
 		newvalue = model[widget.get_active()][0]
@@ -455,6 +462,9 @@ class PrefsGUI:
 		elif self.notebook.get_current_page() == 1:
 			self.config.reset_section("editor")
 			self.set_checkbox_status(self.editor_box, "editor")
+			deffont = self.config.get_value("editor", "font")
+			self.editor_font.set_font_name(deffont)
+			self.editorpane.editorviewer.modify_font(pango.FontDescription(deffont))
 		elif self.notebook.get_current_page() == 2:
 			self.config.reset_section("default_text")
 			self.default_buffer.set_text \

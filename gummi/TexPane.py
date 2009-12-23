@@ -61,8 +61,8 @@ class TexPane:
 		self.editorbuffer.set_highlight_matching_brackets(True)
 		self.editorbuffer.set_highlight_syntax(True)
 		self.editorviewer = gtksourceview2.View(self.editorbuffer)
-		self.editorviewer.modify_font(pango.FontDescription("monospace 10"))
-
+		self.editorviewer.modify_font \
+			(pango.FontDescription(config.get_value("editor", "font")))
 		self.editorviewer.set_show_line_numbers( \
 						bool(config.get_value("view", "line_numbers")))
 		self.editorviewer.set_highlight_current_line( \
