@@ -493,6 +493,7 @@ class SearchGUI:
 		self.searchentry = self.builder.get_object("searchentry")
 		self.backwards = self.builder.get_object("toggle_backwards")
 		self.matchcase = self.builder.get_object("toggle_matchcase")
+		self.wholeword = self.builder.get_object("toggle_wholeword")
 
 	def show_searchwindow(self):
 		self.searchentry.set_text("")
@@ -507,7 +508,8 @@ class SearchGUI:
 		term = self.searchentry.get_text()
 		backwards = self.backwards.get_active()
 		matchcase = self.matchcase.get_active()
-		self.editorpane.start_search(term, backwards, matchcase)
+		wholeword = self.wholeword.get_active()
+		self.editorpane.start_search(term, backwards, wholeword, matchcase)
 
 
 class ImportGUI:

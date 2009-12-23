@@ -1288,7 +1288,6 @@ into current tex document</property>
           <object class="GtkCheckButton" id="toggle_wholeword">
             <property name="label" translatable="yes">Match entire word only</property>
             <property name="visible">True</property>
-            <property name="sensitive">False</property>
             <property name="can_focus">True</property>
             <property name="receives_default">False</property>
             <property name="draw_indicator">True</property>

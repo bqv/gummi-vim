@@ -205,14 +205,14 @@ class TexPane:
 			self.searchposition = self.searchposition + direction
 		except IndexError: pass
 
-	def start_search(self, term, backwards, matchcase=0):
+	def start_search(self, term, backwards, wholeword, matchcase=0):
 		self.searchresults = []
 		if matchcase is False:
 			matchcase = (gtksourceview2.SEARCH_CASE_INSENSITIVE)
 		if backwards is True:
-			self.searchresults = self.search_buffer_backward(term, matchcase)
+			self.searchresults = self.search_buffer_backward(term, wholeword, matchcase)
 		else:
-			self.searchresults = self.search_buffer_forward(term, matchcase)
+			self.searchresults = self.search_buffer_forward(term, wholeword, matchcase)
 		self.apply_searchtags(self.searchresults)
 		try:
 			ins, bound = self.searchresults[0]
@@ -221,28 +221,38 @@ class TexPane:
 			self.editorviewer.scroll_to_iter(ins, 0)
 		except IndexError: pass #no searchresults
 
-	def search_buffer_forward(self, term, matchcase):
+	def search_buffer_forward(self, term, wholeword, matchcase):
 		result_list = []
-		begin = self.get_iterator(CURRENT)
+		position = self.get_iterator(CURRENT)
 		while True:
 			result = gtksourceview2.iter_forward_search \
-						(begin, term, matchcase, limit=None)
+						(position, term, matchcase, limit=None)
 			if result:
-				result_list.append((result[0], result[1]))
-				begin = result[1]
+				ins, bound = result
+				if not wholeword:
+					result_list.append((ins, bound))
+				elif wholeword and ins.starts_word() and bound.ends_word():
+					result_list.append((ins, bound))
+				else: pass
+				position = bound
 			else:
 				break
 		return result_list
 
-	def search_buffer_backward(self, term, matchcase):
+	def search_buffer_backward(self, term, wholeword, matchcase):
 		result_list = []
-		begin = self.get_iterator(CURRENT)
+		position = self.get_iterator(CURRENT)
 		while True:
 			result = gtksourceview2.iter_backward_search \
-						(begin, term, matchcase, limit=None)
+						(position, term, matchcase, limit=None)
 			if result:
-				result_list.append((result[0], result[1]))
-				begin = result[0]
+				ins, bound = result
+				if not wholeword:
+					result_list.append((ins, bound))
+				elif wholeword and ins.starts_word() and bound.ends_word():
+					result_list.append((ins, bound))
+				else: pass
+				position = ins
 			else:
 				break
 		return result_list
