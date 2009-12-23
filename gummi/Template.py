@@ -22,8 +22,7 @@
 # THE SOFTWARE.
 
 
-ARTICLE = """
-\\documentclass{article}
+ARTICLE = """\\documentclass{article}
 \\author{[YOUR NAME]\\\\
 \\texttt{[YOUR EMAIL]}
 }
@@ -35,8 +34,7 @@ ARTICLE = """
 \\end{document}
 """
 
-BOOK = """
-\\documentclass[12pt]{book}
+BOOK = """\\documentclass[12pt]{book}
 
 \\begin{document}
 
@@ -62,8 +60,7 @@ BOOK = """
 \\end{document}
 """
 
-LETTER = """
-\\documentclass{letter}
+LETTER = """\\documentclass{letter}
 
 \\signature{[YOURNAME]}
 \\address{[YOURADDRESS]}
@@ -79,8 +76,7 @@ LETTER = """
 \\end{document}
 """
 
-REPORT = """
-\\documentclass[]{report}
+REPORT = """\\documentclass[]{report}
 \\begin{document}
 
 \\title{[YOUR TITLE]}
