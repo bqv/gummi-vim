@@ -67,6 +67,7 @@ class PreviewPane:
 			self.pdffile = pdffile
 			uri = 'file://' + pdffile
 			self.document = poppler.document_new_from_file(uri, None)
+			self.current_page = 0 #reset to 0 on new pdf load
 			self.page_total = self.document.get_n_pages()
 			self.pagelabel.set_text('of ' + str(self.page_total))
 			self.pageinput.set_text(str(self.current_page + 1))
