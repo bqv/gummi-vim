@@ -34,6 +34,8 @@ CFGDEFAULTS = {
 'highlighting': True,
 'textwrapping': True,
 'wordwrapping': True,
+'toolbar': True,
+'statusbar': True,
 'font': 'Monospace 10',
 'autosaving': False,
 'autosave_timer': 600,

@@ -54,6 +54,16 @@ class MainGUI:
 		self.editorscroll = self.builder.get_object("editor_scroll")
 		self.drawarea = self.builder.get_object("preview_drawarea")
 		self.preview_toolbar = self.builder.get_object("preview_toolbar")
+
+		if self.config.get_value("view", "toolbar"):
+			menu_toolbar = self.builder.get_object("menu_toolbar")
+			menu_toolbar.set_active(True)
+			self.toolbar.show()
+
+		if self.config.get_value("view", "statusbar"):
+			menu_statusbar = self.builder.get_object("menu_statusbar")
+			menu_statusbar.set_active(True)
+			self.iofunc.statusbar.show()
 		
 		self.hpaned = self.builder.get_object("hpaned")
 		mainwidth = self.mainwindow.get_size()[0]
@@ -155,14 +165,18 @@ class MainGUI:
 	def on_menu_toolbar_toggled(self, menuitem, data=None):
 		if menuitem.get_active():
 			self.toolbar.show()
+			self.config.set_value("view", "toolbar", True)
 		else:
 			self.toolbar.hide()
+			self.config.set_value("view", "toolbar", False)
 
 	def on_menu_statusbar_toggled(self, menuitem, data=None):
 		if menuitem.get_active():
 			self.iofunc.statusbar.show()
+			self.config.set_value("view", "statusbar", True)
 		else:
 			self.iofunc.statusbar.hide()
+			self.config.set_value("view", "statusbar", False)
 
 	def on_button_searchwindow_close_clicked(self, button, data=None):
 		self.searchgui.close_searchwindow()
