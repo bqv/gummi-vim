@@ -42,6 +42,7 @@ class TexPane:
 		self.editortags = self.editorbuffer.get_tag_table()
 		self.manager = gtksourceview2.LanguageManager()
 		self.searchresults = []
+		self.searchposition = None
 		self.errortag = gtk.TextTag()
 		self.searchtag = gtk.TextTag()
 		self.configure_texpane(config)
@@ -203,7 +204,7 @@ class TexPane:
 			ins, bnd = self.searchresultiters[self.searchposition + direction]
 			self.editorbuffer.place_cursor(ins)
 			self.searchposition = self.searchposition + direction
-		except IndexError: pass
+		except (IndexError, TypeError): pass
 
 	def start_search(self, term, backwards, wholeword, matchcase=0):
 		self.searchresults = []
