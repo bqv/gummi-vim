@@ -82,7 +82,11 @@ class Biblio:
 		output = bibcompile.communicate()[0]
 		self.editorpane.set_buffer_changed()
 		progressbar.set_tooltip_text(output)
-		return True
+		if not "Database file #1" in output:
+			return False
+		else:
+			return True
+
 
 	def parse_entries(self, biblist):
 		""" my dirty dirty parser"""
@@ -110,7 +114,7 @@ class Biblio:
 			except: year_res = "????"
 
 			author_fmt = re.sub("[{|}|\"|\,]", "", author_res)	
-			title_fmt = re.sub("[{|}|\"|\,]", "", title_res)
+			title_fmt = re.sub("[{|}|\"|\,|\$]", "", title_res)
 			year_fmt = year_res
 
 			biblist.append([ident_res, title_fmt, author_fmt, year_fmt])

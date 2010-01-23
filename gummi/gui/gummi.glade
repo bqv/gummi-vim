@@ -129,6 +129,18 @@
       </row>
     </data>
   </object>
+  <object class="GtkListStore" id="list_biblios">
+    <columns>
+      <!-- column-name ident -->
+      <column type="gchararray"/>
+      <!-- column-name title -->
+      <column type="gchararray"/>
+      <!-- column-name author -->
+      <column type="gchararray"/>
+      <!-- column-name year -->
+      <column type="gchararray"/>
+    </columns>
+  </object>
   <object class="GtkWindow" id="mainwindow">
     <property name="title" translatable="yes">Gummi - LaTeX Editor</property>
     <property name="window_position">center</property>
@@ -1203,7 +1215,7 @@ active document</property>
                                       <object class="GtkTreeViewColumn" id="bibyear_column">
                                         <property name="resizable">True</property>
                                         <property name="sizing">fixed</property>
-                                        <property name="fixed_width">45</property>
+                                        <property name="fixed_width">50</property>
                                         <property name="title">year</property>
                                         <property name="clickable">True</property>
                                         <property name="sort_order">descending</property>
@@ -1342,8 +1354,8 @@ active document</property>
                 <property name="has_focus">True</property>
                 <property name="invisible_char">&#x2022;</property>
                 <property name="primary_icon_stock">gtk-find</property>
-                <accelerator key="Return" signal="activate"/>
                 <accelerator key="Escape" signal="activate" modifiers="GDK_SHIFT_MASK"/>
+                <accelerator key="Return" signal="activate"/>
                 <signal name="activate" handler="on_button_searchwindow_find_clicked"/>
               </object>
               <packing>
@@ -2035,17 +2047,5 @@ cells have line borders. </property>
   <object class="GtkImage" id="image8">
     <property name="visible">True</property>
     <property name="icon_name">accessories-dictionary</property>
-  </object>
-  <object class="GtkListStore" id="list_biblios">
-    <columns>
-      <!-- column-name ident -->
-      <column type="gchararray"/>
-      <!-- column-name title -->
-      <column type="gchararray"/>
-      <!-- column-name author -->
-      <column type="gchararray"/>
-      <!-- column-name year -->
-      <column type="gchararray"/>
-    </columns>
   </object>
 </interface>

@@ -237,9 +237,12 @@ class MainGUI:
 		self.bibprogressval = 0
 		glib.timeout_add(10, self.on_bibprogressbar_update)
 		if self.biblio.compile_bibliography(self.bibprogressbar):
+			self.iofunc.set_status("Compiling bibliography file..")
 			self.bibprogressbar.set_text("bibliography compiled without errors")
 		else:
+			self.iofunc.set_status("Error compiling bibliography file or none detected..")
 			self.bibprogressbar.set_text("error compiling bibliography file")
+
 
 
 	def on_menu_bibload_activate(self, menuitem, data=None):
