@@ -28,16 +28,6 @@
       </row>
     </data>
   </object>
-  <object class="GtkListStore" id="bib_treelist">
-    <columns>
-      <!-- column-name id -->
-      <column type="gchararray"/>
-      <!-- column-name name -->
-      <column type="gchararray"/>
-      <!-- column-name location -->
-      <column type="gchararray"/>
-    </columns>
-  </object>
   <object class="GtkListStore" id="zoomcombo_model">
     <columns>
       <!-- column-name choices -->
@@ -459,13 +449,23 @@
                   <object class="GtkMenu" id="menu4">
                     <property name="visible">True</property>
                     <child>
-                      <object class="GtkImageMenuItem" id="menu_bibupdate">
-                        <property name="label" translatable="yes">Update _BibTeX</property>
+                      <object class="GtkImageMenuItem" id="menu_bibload">
+                        <property name="label" translatable="yes">_Insert Bibliography</property>
+                        <property name="visible">True</property>
+                        <property name="use_underline">True</property>
+                        <property name="image">image8</property>
+                        <property name="use_stock">False</property>
+                        <signal name="activate" handler="on_menu_bibload_activate"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkImageMenuItem" id="menu_bibcompile">
+                        <property name="label" translatable="yes">_Compile Bibliography</property>
                         <property name="visible">True</property>
                         <property name="use_underline">True</property>
                         <property name="image">image3</property>
                         <property name="use_stock">False</property>
-                        <signal name="activate" handler="on_menu_bibupdate_activate"/>
+                        <signal name="activate" handler="on_bibcompile_clicked"/>
                       </object>
                     </child>
                   </object>
@@ -1025,47 +1025,124 @@ active document</property>
                             <property name="visible">True</property>
                             <property name="orientation">vertical</property>
                             <child>
-                              <object class="GtkTreeView" id="bib_treeview">
+                              <object class="GtkHBox" id="hbox5">
                                 <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="model">bib_treelist</property>
-                                <property name="search_column">0</property>
                                 <child>
-                                  <object class="GtkTreeViewColumn" id="column_id">
-                                    <property name="visible">False</property>
-                                    <property name="title">id</property>
-                                  </object>
-                                </child>
-                                <child>
-                                  <object class="GtkTreeViewColumn" id="column_name">
-                                    <property name="title">Name</property>
+                                  <object class="GtkVBox" id="vbox8">
+                                    <property name="visible">True</property>
+                                    <property name="orientation">vertical</property>
                                     <child>
-                                      <object class="GtkCellRendererText" id="cellrenderertext1"/>
-                                      <attributes>
-                                        <attribute name="text">1</attribute>
-                                      </attributes>
+                                      <object class="GtkLabel" id="label12">
+                                        <property name="visible">True</property>
+                                        <property name="label" translatable="yes">Filename:</property>
+                                        <attributes>
+                                          <attribute name="style" value="normal"/>
+                                          <attribute name="weight" value="bold"/>
+                                        </attributes>
+                                      </object>
+                                      <packing>
+                                        <property name="position">0</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <object class="GtkLabel" id="bibfilenm">
+                                        <property name="visible">True</property>
+                                        <property name="label" translatable="yes">none</property>
+                                      </object>
+                                      <packing>
+                                        <property name="position">1</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <object class="GtkLabel" id="label16">
+                                        <property name="visible">True</property>
+                                        <property name="label" translatable="yes">References:</property>
+                                        <attributes>
+                                          <attribute name="weight" value="bold"/>
+                                        </attributes>
+                                      </object>
+                                      <packing>
+                                        <property name="position">2</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <object class="GtkLabel" id="bibrefnr">
+                                        <property name="visible">True</property>
+                                        <property name="label" translatable="yes">N/A</property>
+                                      </object>
+                                      <packing>
+                                        <property name="position">3</property>
+                                      </packing>
                                     </child>
                                   </object>
+                                  <packing>
+                                    <property name="position">0</property>
+                                  </packing>
                                 </child>
                                 <child>
-                                  <object class="GtkTreeViewColumn" id="column_path">
-                                    <property name="title">Location</property>
+                                  <object class="GtkVButtonBox" id="vbuttonbox1">
+                                    <property name="height_request">100</property>
+                                    <property name="visible">True</property>
+                                    <property name="orientation">vertical</property>
+                                    <property name="layout_style">spread</property>
                                     <child>
-                                      <object class="GtkCellRendererText" id="cellrenderertext2"/>
-                                      <attributes>
-                                        <attribute name="text">2</attribute>
-                                      </attributes>
+                                      <object class="GtkButton" id="bibrefresh">
+                                        <property name="label">gtk-refresh</property>
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">False</property>
+                                        <property name="receives_default">False</property>
+                                        <property name="use_stock">True</property>
+                                        <signal name="clicked" handler="on_bibrefresh_clicked"/>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">False</property>
+                                        <property name="position">0</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <object class="GtkButton" id="bibcompile">
+                                        <property name="label" translatable="yes">Compile</property>
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">False</property>
+                                        <property name="receives_default">True</property>
+                                        <property name="image">image2</property>
+                                        <signal name="clicked" handler="on_bibcompile_clicked"/>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">False</property>
+                                        <property name="position">1</property>
+                                      </packing>
                                     </child>
                                   </object>
+                                  <packing>
+                                    <property name="position">1</property>
+                                  </packing>
                                 </child>
                               </object>
                               <packing>
+                                <property name="expand">False</property>
                                 <property name="position">0</property>
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkHSeparator" id="hseparator1">
+                              <object class="GtkHBox" id="hbox6">
                                 <property name="visible">True</property>
+                                <property name="border_width">5</property>
+                                <child>
+                                  <object class="GtkProgressBar" id="bibprogressbar">
+                                    <property name="height_request">20</property>
+                                    <property name="visible">True</property>
+                                    <property name="pulse_step">0.02</property>
+                                    <property name="text" translatable="yes">no bibliography file detected</property>
+                                    <property name="adjustment">bibprogressmon</property>
+                                  </object>
+                                  <packing>
+                                    <property name="padding">5</property>
+                                    <property name="position">0</property>
+                                  </packing>
+                                </child>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -1073,103 +1150,110 @@ active document</property>
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkHButtonBox" id="hbuttonbox1">
-                                <property name="height_request">100</property>
-                                <property name="visible">True</property>
-                                <property name="spacing">10</property>
-                                <property name="homogeneous">True</property>
-                                <property name="layout_style">center</property>
-                                <child>
-                                  <object class="GtkButton" id="bibadd">
-                                    <property name="label">gtk-add</property>
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">True</property>
-                                    <property name="receives_default">True</property>
-                                    <property name="tooltip_text" translatable="yes">Add bibliography
-to selection list</property>
-                                    <property name="use_stock">True</property>
-                                    <signal name="clicked" handler="on_button_bibadd_clicked"/>
-                                  </object>
-                                  <packing>
-                                    <property name="expand">False</property>
-                                    <property name="fill">False</property>
-                                    <property name="position">0</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkButton" id="bibdel">
-                                    <property name="label">gtk-remove</property>
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">True</property>
-                                    <property name="receives_default">True</property>
-                                    <property name="tooltip_text" translatable="yes">Remove bibliography
-from selection list</property>
-                                    <property name="use_stock">True</property>
-                                    <signal name="clicked" handler="on_button_bibdel_clicked"/>
-                                  </object>
-                                  <packing>
-                                    <property name="expand">False</property>
-                                    <property name="fill">False</property>
-                                    <property name="position">1</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkButton" id="bibapply">
-                                    <property name="label">A_pply</property>
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">True</property>
-                                    <property name="receives_default">True</property>
-                                    <property name="tooltip_text" translatable="yes">Import selected bibliography
-into current tex document</property>
-                                    <property name="image">image2</property>
-                                    <property name="use_underline">True</property>
-                                    <signal name="clicked" handler="on_button_bibapply_clicked"/>
-                                  </object>
-                                  <packing>
-                                    <property name="expand">False</property>
-                                    <property name="fill">False</property>
-                                    <property name="position">2</property>
-                                  </packing>
-                                </child>
-                              </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="position">2</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkHSeparator" id="hseparator2">
-                                <property name="visible">True</property>
-                              </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="position">3</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkScrolledWindow" id="scrolledwindow1">
+                              <object class="GtkScrolledWindow" id="bibscrolledwindow">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="hscrollbar_policy">automatic</property>
                                 <property name="vscrollbar_policy">automatic</property>
                                 <child>
-                                  <object class="GtkViewport" id="viewport4">
+                                  <object class="GtkTreeView" id="bibtreeview">
                                     <property name="visible">True</property>
-                                    <property name="border_width">20</property>
-                                    <property name="resize_mode">queue</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="model">list_biblios</property>
+                                    <signal name="row_activated" handler="on_bibreference_clicked"/>
                                     <child>
-                                      <object class="GtkTextView" id="bibtex_output">
-                                        <property name="visible">True</property>
-                                        <property name="can_focus">True</property>
-                                        <property name="tooltip_text" translatable="yes">BibTeX compile output</property>
-                                        <property name="editable">False</property>
+                                      <object class="GtkTreeViewColumn" id="bibtitle_column">
+                                        <property name="resizable">True</property>
+                                        <property name="sizing">fixed</property>
+                                        <property name="fixed_width">200</property>
+                                        <property name="title">title</property>
+                                        <property name="expand">True</property>
+                                        <property name="clickable">True</property>
+                                        <property name="sort_order">descending</property>
+                                        <property name="sort_column_id">1</property>
+                                        <signal name="clicked" handler="on_bibcolumn_clicked"/>
+                                        <child>
+                                          <object class="GtkCellRendererText" id="cellrenderertext1"/>
+                                          <attributes>
+                                            <attribute name="text">1</attribute>
+                                          </attributes>
+                                        </child>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="GtkTreeViewColumn" id="bibauthor_column">
+                                        <property name="resizable">True</property>
+                                        <property name="sizing">fixed</property>
+                                        <property name="fixed_width">100</property>
+                                        <property name="title">author</property>
+                                        <property name="expand">True</property>
+                                        <property name="clickable">True</property>
+                                        <property name="sort_order">descending</property>
+                                        <property name="sort_column_id">2</property>
+                                        <signal name="clicked" handler="on_bibcolumn_clicked"/>
+                                        <child>
+                                          <object class="GtkCellRendererText" id="cellrenderertext2"/>
+                                          <attributes>
+                                            <attribute name="text">2</attribute>
+                                          </attributes>
+                                        </child>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="GtkTreeViewColumn" id="bibyear_column">
+                                        <property name="resizable">True</property>
+                                        <property name="sizing">fixed</property>
+                                        <property name="fixed_width">45</property>
+                                        <property name="title">year</property>
+                                        <property name="clickable">True</property>
+                                        <property name="sort_order">descending</property>
+                                        <property name="sort_column_id">3</property>
+                                        <signal name="clicked" handler="on_bibcolumn_clicked"/>
+                                        <child>
+                                          <object class="GtkCellRendererText" id="cellrenderertext7"/>
+                                          <attributes>
+                                            <attribute name="text">3</attribute>
+                                          </attributes>
+                                        </child>
                                       </object>
                                     </child>
                                   </object>
                                 </child>
                               </object>
                               <packing>
-                                <property name="position">4</property>
+                                <property name="position">2</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkHBox" id="hbox4">
+                                <property name="visible">True</property>
+                                <child>
+                                  <object class="GtkLabel" id="label11">
+                                    <property name="visible">True</property>
+                                    <property name="label" translatable="yes">filter:</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="padding">5</property>
+                                    <property name="position">0</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkEntry" id="entry1">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="invisible_char">&#x2022;</property>
+                                  </object>
+                                  <packing>
+                                    <property name="padding">5</property>
+                                    <property name="position">1</property>
+                                  </packing>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="padding">5</property>
+                                <property name="position">3</property>
                               </packing>
                             </child>
                           </object>
@@ -1672,7 +1756,7 @@ cells have line borders. </property>
   </object>
   <object class="GtkImage" id="image3">
     <property name="visible">True</property>
-    <property name="icon_name">accessories-dictionary</property>
+    <property name="stock">gtk-execute</property>
   </object>
   <object class="GtkViewport" id="matrix_pane">
     <property name="height_request">80</property>
@@ -1933,13 +2017,35 @@ cells have line borders. </property>
     <property name="stock">gtk-find</property>
     <property name="icon-size">1</property>
   </object>
-  <object class="GtkImage" id="image2">
-    <property name="visible">True</property>
-    <property name="stock">gtk-apply</property>
-  </object>
   <object class="GtkImage" id="image7">
     <property name="visible">True</property>
     <property name="stock">gtk-new</property>
     <property name="icon-size">1</property>
+  </object>
+  <object class="GtkImage" id="image2">
+    <property name="visible">True</property>
+    <property name="icon_name">gnome-run</property>
+  </object>
+  <object class="GtkAdjustment" id="bibprogressmon">
+    <property name="upper">60</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+    <property name="page_size">10</property>
+  </object>
+  <object class="GtkImage" id="image8">
+    <property name="visible">True</property>
+    <property name="icon_name">accessories-dictionary</property>
+  </object>
+  <object class="GtkListStore" id="list_biblios">
+    <columns>
+      <!-- column-name ident -->
+      <column type="gchararray"/>
+      <!-- column-name title -->
+      <column type="gchararray"/>
+      <!-- column-name author -->
+      <column type="gchararray"/>
+      <!-- column-name year -->
+      <column type="gchararray"/>
+    </columns>
   </object>
 </interface>

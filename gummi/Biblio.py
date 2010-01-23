@@ -19,105 +19,112 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-import gtk
 import os
-import subprocess
+import re
 import shutil
-import pango
+import subprocess
+import traceback
 
 
 class Biblio:
-	"""Handles the inclusion of .bib files and the GUI elements involved"""
 
-	def __init__(self, config, editorpane, motion, builder):
-		self.config = config
-		self.editorpane = editorpane		
+	def __init__(self, editorpane, motion):
+		self.editorpane = editorpane
 		self.motion = motion
-		self.biblist = None
+		self.compileout = None
 
-		self.mainwindow = builder.get_object("mainwindow")
-		self.treeview = builder.get_object("bib_treeview")
-		self.treelist = builder.get_object("bib_treelist")
-		self.biboutput = builder.get_object("bibtex_output")
-		self.biboutput.modify_font(pango.FontDescription("monospace 9"))
-		#self.parse_listdata()
+	def detect_bibliography(self):
+		content = self.editorpane.grab_buffer()
+		bib = re.compile('\\\\bibliography{([^{}]*})')
+		for elem in bib.findall(content):
+			candidate = elem[:-1]
+			if candidate[-4:] == ".bib":
+				if self.check_valid_file(candidate):
+					return True
+			else:
+				if self.check_valid_file(candidate + ".bib"):
+					return True
+		return False
 
-	def parse_listdata(self):
-		self.biblist = self.config.get_list("bib_files")
-		i = 0
-		for row in self.biblist: #int id, name displayed
-			name = os.path.basename(row)
-			path = os.path.dirname(row)
-			self.treelist.append([i, name, path])		
-			i = i + 1
-
-	def refresh_listdata(self):
-		self.treelist.clear() #remove all rows
-		self.parse_listdata()
-
-	def select_listdata(self, column):
-		selection = self.treeview.get_selection()
-		myiter = selection.get_selected()[1]
-		value = self.treelist.get_value(myiter, column)
-		return value
-
-	def add_bibliography(self):
-		self.biblist = self.config.get_list("bib_files")
-		bibfile = None
-		chooser = gtk.FileChooserDialog("Open File...", self.mainwindow,
-								gtk.FILE_CHOOSER_ACTION_OPEN,
-								(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
-								gtk.STOCK_OPEN, gtk.RESPONSE_OK))
-		bibfilter = gtk.FileFilter()
-		bibfilter.set_name('Bibtex files')
-		bibfilter.add_pattern("*.bib")
-		chooser.add_filter(bibfilter)
+	def check_valid_file(self, bibfile):
+		if os.path.isfile(bibfile):
+			if os.path.isabs(bibfile):
+				self.bibdirname = os.path.dirname(bibfile) + "/"
+				self.bibbasename = os.path.basename(bibfile)
+				return True
+			else:
+				self.bibdirname = os.getcwd() + "/"
+				self.bibbasename = bibfile
+				return True
+		return False
 		
-		response = chooser.run()
-		if response == gtk.RESPONSE_CANCEL: 
-			chooser.destroy()
-			return
-		if response == gtk.RESPONSE_OK: 
-			bibfile = chooser.get_filename()
-			if bibfile not in self.biblist:
-				self.config.append_to_list("bib_files", bibfile)		
-				self.refresh_listdata()
-		chooser.destroy()
-	
-	def del_bibliography(self):
-		value = self.select_listdata(0)
-		self.config.remove_from_list("bib_files", int(value))
-		self.refresh_listdata()
-
 	def setup_bibliography(self):
-		self.editorpane.insert_package("cite")
-		bibname = self.select_listdata(1)[:-4]
-		bibfullpath = self.select_listdata(2) + "/" + self.select_listdata(1)
-		tempdir = os.environ.get("TMPDIR", "/tmp")
-		shutil.copy2(bibfullpath, tempdir + "/" + bibname + ".bib")
-		self.editorpane.insert_bib(bibname)
-		self.compile_bibliography()
+		try:
+			self.editorpane.insert_package("cite")
+			tempdir = os.environ.get("TMPDIR", "/tmp")
+			bibtitle = self.bibbasename[:-4]
+			shutil.copy2(self.bibdirname + self.bibbasename, tempdir + "/" + self.bibbasename)
+			self.editorpane.insert_bib(self.bibdirname + self.bibbasename)
+		except:
+			print traceback.print_exc()
+		return self.bibbasename, "N/A"
 
-	def compile_bibliography(self):
+	def compile_bibliography(self, progressbar):
 		self.motion.update_workfile()
 		workfile = self.motion.workfile[:-4]
 		self.motion.update_auxfile()
 		tempdir = os.environ.get("TMPDIR", "/tmp")
-		cwd = os.getcwd()
-		os.chdir(tempdir)
-		bibcompile = subprocess.Popen('bibtex "%s"' % (workfile), shell=True, stdin=None, stdout=subprocess.PIPE, stderr=None)
+		bibcompile = subprocess.Popen('bibtex "%s"' \
+				 % (workfile), cwd=tempdir, 
+				shell=True, stdin=None, 
+				stdout=subprocess.PIPE, stderr=None)
 		bibcompile.wait()
-		os.chdir(cwd)
 		output = bibcompile.communicate()[0]
-		self.biboutput.get_buffer().set_text(output)
 		self.editorpane.set_buffer_changed()
+		progressbar.set_tooltip_text(output)
+		return True
 
+	def parse_entries(self, biblist):
+		""" my dirty dirty parser"""
+		refnr = 0
+		tempdir = os.environ.get("TMPDIR", "/tmp")
+		bibfile = open(tempdir + "/" + self.bibbasename)
+		bibstr = bibfile.read()
+		entries = re.compile('(@article|@book|@booklet|@conference|@inbook|' \
+			'@incollection|@inproceedings|@manual|@mastersthesis|@misc|' \
+			'@phdthesis|@proceedings|@techreport|@unpublished)([^@]*)' \
+			, re.DOTALL | re.IGNORECASE)
+		for elem in entries.findall(bibstr):
+			entry = elem[1]
+			ident_exp = re.compile('{([^,]*)')		
+			author_exp = re.compile('author\s*=\s*(.*)')
+			title_exp = re.compile('[^book]title\s*=\s*(.*)')
+			year_exp = re.compile('year\s*=\s*{?"?([1|2][0-9][0-9][0-9])}?"?')
 
+			ident_res = ident_exp.findall(entry)[0]
+			try: author_res = author_exp.findall(entry)[0]
+			except: author_res = "????"
+			try: title_res = title_exp.findall(entry)[0]
+			except: title_res = "????"
+			try: year_res = year_exp.findall(entry)[0]
+			except: year_res = "????"
 
+			author_fmt = re.sub("[{|}|\"|\,]", "", author_res)	
+			title_fmt = re.sub("[{|}|\"|\,]", "", title_res)
+			year_fmt = year_res
 
+			biblist.append([ident_res, title_fmt, author_fmt, year_fmt])
+			refnr = refnr + 1
+			
+		return refnr
 
 
 		
 
 
 
+			
+			
+
+			
+		

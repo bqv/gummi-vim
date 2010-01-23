@@ -96,10 +96,19 @@ class Motion:
 			print traceback.print_exc()
 
 	def update_auxfile(self):
-		auxupdate = subprocess.Popen(self.texcmd + ' --draftmode -interaction=nonstopmode --output-directory="%s" "%s"' % (self.tempdir, self.workfile), shell=True, stdin=None, stdout=subprocess.PIPE, stderr=None)
-		output = auxupdate.communicate()[0]
-		#output to a textbuffer soon
-		auxupdate.wait()
+		try:
+			auxupdate = subprocess.Popen(self.texcmd + \
+				' --draftmode \
+				-interaction=nonstopmode \
+				--output-directory="%s" "%s"' \
+				% (self.tempdir, self.workfile), 
+				shell=True, stdin=None, stdout=subprocess.PIPE, stderr=None)
+			output = auxupdate.communicate()[0]
+			auxupdate.wait()
+		except: 
+			print traceback.print_exc()
+
+		
 
 	def update_pdffile(self):
 		try:

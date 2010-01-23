@@ -23,6 +23,7 @@
 
 import os
 import sys
+import glib
 import gtk
 import pango
 import traceback
@@ -35,13 +36,13 @@ import Preferences
 
 class MainGUI:
 
-	def __init__(self, parent, config, iofunc):
+	def __init__(self, parent, config, iofunc, biblio):
 		self.core = parent
 		self.config = config
 		self.editorpane = self.core.editorpane
 		self.previewpane = self.core.previewpane
-		self.biblio = self.core.biblio
 		self.iofunc = iofunc
+		self.biblio = biblio
 
 		self.path = self.core.path
 		self.tempdir = self.core.tempdir
@@ -54,6 +55,10 @@ class MainGUI:
 		self.editorscroll = self.builder.get_object("editor_scroll")
 		self.drawarea = self.builder.get_object("preview_drawarea")
 		self.preview_toolbar = self.builder.get_object("preview_toolbar")
+		self.bibprogressbar = self.builder.get_object("bibprogressbar")
+		self.bibprogressmon = self.builder.get_object("bibprogressmon")
+		self.bibprogressval = 0
+		self.list_biblios = self.builder.get_object("list_biblios")
 
 		if self.config.get_value("view", "toolbar"):
 			menu_toolbar = self.builder.get_object("menu_toolbar")
@@ -202,6 +207,71 @@ class MainGUI:
 
 	def on_menu_bibupdate_activate(self, menuitem, data=None):
 		self.biblio.compile_bibliography()
+
+	def on_bibprogressbar_update(self):
+		self.bibprogressmon.set_value(self.bibprogressval)
+		self.bibprogressval = self.bibprogressval + 1
+		if self.bibprogressval > 60:
+			return False
+		else:
+			return True
+		
+	def on_bibrefresh_clicked(self, button, data=None):
+		self.bibprogressval = 0
+		glib.timeout_add(2, self.on_bibprogressbar_update)
+		self.list_biblios.clear()
+		bibfilenm = self.builder.get_object("bibfilenm")
+		bibrefnr = self.builder.get_object("bibrefnr")
+		if self.biblio.detect_bibliography():
+			filenm, number = self.biblio.setup_bibliography()
+			number = self.biblio.parse_entries(self.list_biblios)
+			bibfilenm.set_text(filenm)
+			bibrefnr.set_text(str(number))
+			self.bibprogressbar.set_text(filenm + " loaded")
+		else:
+			self.bibprogressbar.set_text("no bibliography file detected")
+			bibfilenm.set_text("None")
+			bibrefnr.set_text("N/A")
+
+	def on_bibcompile_clicked(self, button, data=None):
+		self.bibprogressval = 0
+		glib.timeout_add(10, self.on_bibprogressbar_update)
+		if self.biblio.compile_bibliography(self.bibprogressbar):
+			self.bibprogressbar.set_text("bibliography compiled without errors")
+		else:
+			self.bibprogressbar.set_text("error compiling bibliography file")
+
+
+	def on_menu_bibload_activate(self, menuitem, data=None):
+		bibfile = None
+		chooser = gtk.FileChooserDialog("Open File...", self.mainwindow,
+								gtk.FILE_CHOOSER_ACTION_OPEN,
+								(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
+								gtk.STOCK_OPEN, gtk.RESPONSE_OK))
+		bibfilter = gtk.FileFilter()
+		bibfilter.set_name('Bibtex files')
+		bibfilter.add_pattern("*.bib")
+		chooser.add_filter(bibfilter)
+		response = chooser.run()
+		if response == gtk.RESPONSE_CANCEL: return
+		if response == gtk.RESPONSE_OK: 
+			bibfile = chooser.get_filename()
+			if self.biblio.check_valid_file(bibfile):
+				filenm, number = self.biblio.setup_bibliography()
+				bibfilenm = self.builder.get_object("bibfilenm")
+				bibfilenm.set_text(filenm)
+			chooser.destroy()
+
+	def on_bibcolumn_clicked(self, item, data=None):
+		sortid = item.get_sort_column_id()
+		item.set_sort_column_id(sortid)
+
+	def on_bibreference_clicked(self, item, event, data=None):
+		selection = item.get_selection()
+		myiter = selection.get_selected()[1]
+		value = self.list_biblios.get_value(myiter, 0)
+		self.editorpane.editorbuffer.insert_at_cursor("\cite{" + value + "}")
+		self.editorpane.set_buffer_changed()
 
 	def on_menu_preferences_activate(self, menuitem, data=None):
 		prefsgui = PrefsGUI(self.config, self.editorpane, self.path, self.mainwindow)
