@@ -37,7 +37,10 @@ class PreviewPane:
 		try: # part of temp fix for issue 58
 			self.glib = CDLL("libgobject-2.0.so")
 		except:
-			print "Could not call libgobject-2.0.so"
+			try:
+				self.glib = CDLL("libgobject-2.0.so.0")
+			except:
+				print "Could not call libgobject-2.0.so"
 		
 		self.drawarea = builder.get_object("preview_drawarea")
 		self.toolbar = builder.get_object("preview_toolbar")
