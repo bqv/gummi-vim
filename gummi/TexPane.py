@@ -267,8 +267,7 @@ class TexPane:
 			return gtk.WRAP_CHAR
 
 	def set_buffer_changed(self, *args):
-		pass
-		#self.textchange = datetime.now()
+		self.textchange = datetime.now()
 
 	def check_buffer_changed(self):
 		if self.prevchange != self.textchange:

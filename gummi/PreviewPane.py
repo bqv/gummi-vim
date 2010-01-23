@@ -26,21 +26,12 @@ from __future__ import division # needed for proper int devision
 import gtk
 import os
 import poppler
-from ctypes import *
 
 # TODO: Documentation
 
 class PreviewPane:
 
 	def __init__(self, builder, pdffile=None):
-
-		try: # part of temp fix for issue 58
-			self.glib = CDLL("libgobject-2.0.so")
-		except:
-			try:
-				self.glib = CDLL("libgobject-2.0.so.0")
-			except:
-				print "Could not call libgobject-2.0.so"
 		
 		self.drawarea = builder.get_object("preview_drawarea")
 		self.toolbar = builder.get_object("preview_toolbar")
@@ -103,13 +94,7 @@ class PreviewPane:
 			self.goto_page(self.page_total - 1)
 		self.pagelabel.set_text('of ' + str(self.page_total))
 		self.pageinput.set_text(str(self.current_page + 1))
-		popplerpage = self.document.get_page(self.current_page)
-		self.page_width, self.page_height = popplerpage.get_size()
-		try: # part of the temp fix for issue 58
-			self.glib.g_object_unref(hash(self.document))
-			self.glib.g_object_unref(hash(popplerpage))
-		except AttributeError: pass
-
+		self.page_width, self.page_height = self.get_page().get_size()
 		self.page_ratio = self.page_width / self.page_height
 		self.drawarea.queue_draw()
 
@@ -150,16 +135,8 @@ class PreviewPane:
 		cr.set_source_rgb(1, 1, 1)
 		cr.rectangle(0, 0, self.page_width, self.page_height)
 		cr.fill()
-		uri = 'file://' + self.pdffile
-		self.document = poppler.document_new_from_file(uri, None)	
-		popplerpage = self.document.get_page(self.current_page)
-		popplerpage.render(cr)
-		try: # part of the temp fix for issue 58
-			self.glib.g_object_unref(hash(self.document))
-			del self.document
-			self.glib.g_object_unref(hash(popplerpage))
-			del popplerpage	
-		except AttributeError: pass
+
+		self.get_page().render(cr)
 
 	def goto_page(self, page):
 		if page < 0 or page >= self.page_total:
