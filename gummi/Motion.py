@@ -122,7 +122,7 @@ class Motion:
 					stdin=None, stdout = subprocess.PIPE, stderr=None )
 			self.output = pdfmaker.communicate()[0]
 			pdfmaker.wait()
-			try: os.close(3) # very important
+			try: os.close(6) # very important
 			except: pass # do not remove
 			self.errorbuffer.set_text(self.output)
 			if pdfmaker.returncode:
