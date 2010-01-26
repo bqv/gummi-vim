@@ -23,6 +23,7 @@
 
 import os
 import glib
+import sys
 import shutil
 import pango
 import subprocess
@@ -39,6 +40,7 @@ class Motion:
 		self.editorpane = editor
 		self.previewpane = preview
 		self.pdffile = None
+		self.platform = sys.platform
 
 		self.status = 1
 		self.laststate = None
@@ -143,7 +145,7 @@ class Motion:
 		else: pass
 		self.laststate = errorstate
 
-	def cleanup_fd(self, end=15):
+	def cleanup_fd(self, end=15, platform=None):
 		""" Dirty way to clean up the file descriptors from poppler
 			objects that refuse to close. Also, xelatex appears to
 			create many temp files that are deleted but not cleaned
@@ -151,19 +153,22 @@ class Motion:
 			The call to /proc/ was only tested on linux systems. 
 			FreeBSD won't work for lack of a fat linux-like procfs"""
 		popplers = []
-		try:
-			for i in range(6,end):
-				fd = '/proc/self/fd/' + str(i)
-				try:
-					if os.readlink(fd) == self.pdffile:
-						popplers.append(i)
-					elif "(deleted)" in os.readlink(fd):
-						os.close(i)
-				except:
-					break
-			if len(popplers) > 1:
-				os.close(min(popplers))
-		except: pass
+		if "bsd" in platform:
+			try: os.close(6)
+			except OSError: pass
+		else:
+			try:
+				for i in range(6,end):
+					fd = '/proc/self/fd/' + str(i)
+					try:
+						if os.readlink(fd) == self.pdffile:
+							popplers.append(i)
+						elif "(deleted)" in os.readlink(fd):
+							os.close(i)
+					except: break
+				if len(popplers) > 1:
+					os.close(min(popplers))
+			except: pass
 
 
 
@@ -174,7 +179,7 @@ class Motion:
 				self.update_workfile()
 				retcode = self.update_pdffile()
 				self.update_errortags(retcode)
-				self.cleanup_fd()
+				self.cleanup_fd(15, self.platform)
 				self.previewpane.refresh_preview()
 		except:
 			print traceback.print_exc()
