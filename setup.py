@@ -4,7 +4,8 @@ from distutils.core import setup
 
 _data_files = [
 	('share/applications', ['gummi/misc/gummi.desktop']),
-	('share/pixmaps', ['gummi/misc/gummi.png'])	
+	('share/pixmaps', ['gummi/misc/gummi.png']),
+	('share/man/man1', ['gummi/misc/gummi.1'])
 	]
 
 files = ["gui/gummi.glade",
