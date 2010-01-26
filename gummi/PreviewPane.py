@@ -33,6 +33,8 @@ from ctypes import *
 class PreviewPane:
 
 	def __init__(self, builder, pdffile=None):
+
+		self.libgobject = self.setlibgobject()
 		
 		self.drawarea = builder.get_object("preview_drawarea")
 		self.toolbar = builder.get_object("preview_toolbar")
@@ -63,9 +65,12 @@ class PreviewPane:
 		self.page_width = None # to check if have been set (succesful refresh)
 
 	def unref_object(self, object):
-		glib = CDLL("libgobject-2.0.so")
-		glib.g_object_unref(hash(object))
-		del object
+		if self.libgobject is not None:
+			try:
+				glib = CDLL(self.libgobject)
+				glib.g_object_unref(hash(object))
+				del object
+			except AttributeError: pass
 
 	def set_pdffile(self, pdffile):
 		if pdffile:
@@ -203,6 +208,26 @@ class PreviewPane:
 				self.fit_width = True
 		else:
 			self.scale = zoomlist[zoom-2]
-
 		self.drawarea.queue_draw()
+
+	def setlibgobject(self):
+		objectfiles = ["libgobject-2.0.so", \
+						"libgobject-2.0.so.12", \
+						"libgobject-2.0.so.0", \
+						"libgobject-2.0.so.1", \
+						"libgobject-2.0.so.2" ]
+		for elem in objectfiles:
+			if self.detectlibobject(elem):
+				return elem
+			else: return None
+
+	def detectlibobject(self, filenm):
+		try:
+			CDLL(filenm)
+			return True
+		except:
+			return False
+
+			
+
 
