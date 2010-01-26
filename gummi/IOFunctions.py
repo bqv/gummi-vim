@@ -42,9 +42,12 @@ class IOFunctions:
 		self.filename = None
 		self.texpath = None
 		self.workfile = None
+		self.workfd = None
 		self.pdffile = None
 
 	def make_environment(self, filename=None):
+		if self.workfd: # close previous workfile
+			os.close(self.workfd)
 		self.filename = filename
 		self.create_envfiles(filename)
 		env = self.return_envfiles()
@@ -61,7 +64,7 @@ class IOFunctions:
 				self.texname = os.path.basename(self.filename)[:-4]
 			else:
 				self.texname = os.path.basename(self.filename)
-		self.workfile = tempfile.mkstemp(".tex")[1]
+		(self.workfd, self.workfile) = tempfile.mkstemp(".tex")
 		self.pdffile = self.workfile[:-4] + ".pdf"
 		print ("\nEnvironment created for: \n" + \
 				"TEX: " + str(self.filename) + "\n" \

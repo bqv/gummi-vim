@@ -38,6 +38,7 @@ class Motion:
 		self.config = config
 		self.editorpane = editor
 		self.previewpane = preview
+		self.pdffile = None
 
 		self.status = 1
 		self.laststate = None
@@ -65,6 +66,8 @@ class Motion:
 		glib.timeout_add_seconds(1, self.update_preview)
 
 	def update_envfiles(self, envfile):
+		if self.pdffile is not None:
+			self.cleanup_fd(100)			
 		self.tempdir = envfile[0]
 		self.filename = envfile[1]
 		self.texpath = envfile[2]
@@ -140,7 +143,7 @@ class Motion:
 		else: pass
 		self.laststate = errorstate
 
-	def cleanup_fd(self):
+	def cleanup_fd(self, end=15):
 		""" Dirty way to clean up the file descriptors from poppler
 			objects that refuse to close. Also, xelatex appears to
 			create many temp files that are deleted but not cleaned
@@ -148,19 +151,19 @@ class Motion:
 			The call to /proc/ was only tested on linux systems. 
 			FreeBSD won't work for lack of a fat linux-like procfs"""
 		popplers = []
-		end = 9
-		if self.texcmd == "xelatex":
-			end = 15
-		try:
-			for i in range(6,end):
-				fd = '/proc/self/fd/' + str(i)
+		for i in range(6,end):
+			fd = '/proc/self/fd/' + str(i)
+			try:
 				if os.readlink(fd) == self.pdffile:
 					popplers.append(i)
 				elif "(deleted)" in os.readlink(fd):
 					os.close(i)
-			if len(popplers) > 1:
-				os.close(min(popplers))
-		except: pass
+			except:
+				break
+		if len(popplers) > 1:
+			os.close(min(popplers))
+
+
 
 	def update_preview(self):
 		try:
