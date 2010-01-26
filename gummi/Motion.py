@@ -69,7 +69,7 @@ class Motion:
 
 	def update_envfiles(self, envfile):
 		if self.pdffile is not None:
-			self.cleanup_fd(100)			
+			self.cleanup_fd(100, self.platform)			
 		self.tempdir = envfile[0]
 		self.filename = envfile[1]
 		self.texpath = envfile[2]
