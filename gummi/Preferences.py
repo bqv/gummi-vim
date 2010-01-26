@@ -27,7 +27,8 @@ import os
 import ConfigParser
 
 VERSION = "svn"
-UPDATEURL = "http://gummi.googlecode.com/svn/trunk/dev/latest"
+UPDATEURL = "http://dev.midnightcoding.org/redmine/projects/" + \
+			"gummi/repository/raw/trunk/dev/latest"
 
 CFGDEFAULTS = {
 'line_numbers': True,
