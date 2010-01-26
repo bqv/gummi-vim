@@ -151,17 +151,19 @@ class Motion:
 			The call to /proc/ was only tested on linux systems. 
 			FreeBSD won't work for lack of a fat linux-like procfs"""
 		popplers = []
-		for i in range(6,end):
-			fd = '/proc/self/fd/' + str(i)
-			try:
-				if os.readlink(fd) == self.pdffile:
-					popplers.append(i)
-				elif "(deleted)" in os.readlink(fd):
-					os.close(i)
-			except:
-				break
-		if len(popplers) > 1:
-			os.close(min(popplers))
+		try:
+			for i in range(6,end):
+				fd = '/proc/self/fd/' + str(i)
+				try:
+					if os.readlink(fd) == self.pdffile:
+						popplers.append(i)
+					elif "(deleted)" in os.readlink(fd):
+						os.close(i)
+				except:
+					break
+			if len(popplers) > 1:
+				os.close(min(popplers))
+		except: pass
 
 
 
