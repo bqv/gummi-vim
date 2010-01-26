@@ -26,6 +26,7 @@ from __future__ import division # needed for proper int devision
 import gtk
 import os
 import poppler
+from ctypes import *
 
 # TODO: Documentation
 
@@ -61,42 +62,52 @@ class PreviewPane:
 		self.page_ratio = None # init now so we use them later in on_expose
 		self.page_width = None # to check if have been set (succesful refresh)
 
+	def unref_object(self, object):
+		glib = CDLL("libgobject-2.0.so")
+		glib.g_object_unref(hash(object))
+		del object
 
 	def set_pdffile(self, pdffile):
 		if pdffile:
 			self.pdffile = pdffile
-			uri = 'file://' + pdffile
-			self.document = poppler.document_new_from_file(uri, None)
 			self.current_page = 0 #reset to 0 on new pdf load
-			self.page_total = self.document.get_n_pages()
+
+			uri = 'file://' + pdffile
+			document = poppler.document_new_from_file(uri, None)
+			self.page_total = document.get_n_pages()
+
 			self.pagelabel.set_text('of ' + str(self.page_total))
 			self.pageinput.set_text(str(self.current_page + 1))
 			# TODO: determine page_width/page_height per page
-			self.page_width, self.page_height = self.get_page().get_size()
+			page = document.get_page(self.current_page)
+			self.page_width, self.page_height = page.get_size()
 			self.page_ratio = self.page_width / self.page_height
 			self.goto_page(0)
+			self.unref_object(document)
+			self.unref_object(page)
 		else:
 			self.pdffile = None
 
-	def get_page(self):
-		return self.document.get_page(self.current_page)
 
 	def refresh_preview(self):
 		if not os.path.exists(self.pdffile):
 			print "can't refresh without a pdf file!"
 			return
 		uri = 'file://' + self.pdffile
-		self.document = poppler.document_new_from_file(uri, None)
-		self.page_total = self.document.get_n_pages()
+		document = poppler.document_new_from_file(uri, None)
+		self.page_total = document.get_n_pages()
 		if self.page_total - 1 > self.current_page:
 			self.next.set_sensitive(True)
 		elif self.current_page >= self.page_total:
 			self.goto_page(self.page_total - 1)
 		self.pagelabel.set_text('of ' + str(self.page_total))
 		self.pageinput.set_text(str(self.current_page + 1))
-		self.page_width, self.page_height = self.get_page().get_size()
+		page = document.get_page(self.current_page)
+		self.page_width, self.page_height = page.get_size()
 		self.page_ratio = self.page_width / self.page_height
 		self.drawarea.queue_draw()
+		self.unref_object(document)
+		self.unref_object(page)
 
 	def on_expose(self, drawarea, data):
 		cr = drawarea.window.cairo_create()		
@@ -135,21 +146,29 @@ class PreviewPane:
 		cr.set_source_rgb(1, 1, 1)
 		cr.rectangle(0, 0, self.page_width, self.page_height)
 		cr.fill()
+		uri = 'file://' + self.pdffile
+		document = poppler.document_new_from_file(uri, None)
+		page = document.get_page(self.current_page)
+		page.render(cr)
+		self.unref_object(document)
+		self.unref_object(page)
 
-		self.get_page().render(cr)
 
 	def goto_page(self, page):
 		if page < 0 or page >= self.page_total:
 			return
 
 		self.current_page = page
-
 		self.prev.set_sensitive(page > 0)
 		self.next.set_sensitive(page < self.page_total - 1)
 		self.pageinput.set_text(str(self.current_page + 1))
-
-		self.page_width, self.page_height = self.get_page().get_size()
+		uri = 'file://' + self.pdffile
+		document = poppler.document_new_from_file(uri, None)
+		page = document.get_page(self.current_page)
+		self.page_width, self.page_height = page.get_size()
 		self.drawarea.queue_draw()
+		self.unref_object(document)
+		self.unref_object(page)
 
 	def next_page(self, button):
 		self.goto_page(self.current_page + 1)
