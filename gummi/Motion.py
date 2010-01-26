@@ -108,8 +108,6 @@ class Motion:
 		except: 
 			print traceback.print_exc()
 
-		
-
 	def update_pdffile(self):
 		try:
 			pdfmaker = subprocess.Popen(self.texcmd + \
@@ -122,8 +120,6 @@ class Motion:
 					stdin=None, stdout = subprocess.PIPE, stderr=None )
 			self.output = pdfmaker.communicate()[0]
 			pdfmaker.wait()
-			try: os.close(6) # very important
-			except: pass # do not remove
 			self.errorbuffer.set_text(self.output)
 			if pdfmaker.returncode:
 				self.statuslight.set_stock_id("gtk-no")
@@ -144,6 +140,28 @@ class Motion:
 		else: pass
 		self.laststate = errorstate
 
+	def cleanup_fd(self):
+		""" Dirty way to clean up the file descriptors from poppler
+			objects that refuse to close. Also, xelatex appears to
+			create many temp files that are deleted but not cleaned
+			up properly, they are removed if xelatex is being used
+			The call to /proc/ was only tested on linux systems. 
+			FreeBSD won't work for lack of a fat linux-like procfs"""
+		popplers = []
+		end = 9
+		if self.texcmd == "xelatex":
+			end = 15
+		try:
+			for i in range(6,end):
+				fd = '/proc/self/fd/' + str(i)
+				if os.readlink(fd) == self.pdffile:
+					popplers.append(i)
+				elif "(deleted)" in os.readlink(fd):
+					os.close(i)
+			if len(popplers) > 1:
+				os.close(min(popplers))
+		except: pass
+
 	def update_preview(self):
 		try:
 			if self.previewpane and self.editorpane.check_buffer_changed():
@@ -151,6 +169,7 @@ class Motion:
 				self.update_workfile()
 				retcode = self.update_pdffile()
 				self.update_errortags(retcode)
+				self.cleanup_fd()
 				self.previewpane.refresh_preview()
 		except:
 			print traceback.print_exc()
