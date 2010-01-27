@@ -2,6 +2,31 @@
 Gummi CHANGELOG
 -----------------------------------------------------------------------------
 
+Gummi 0.4.5 (January 27th, 2010):
+
+	Bugs fixed:
+	* pdf compiling should no langer make gummi hang in certain cases
+	* Workaround/fix for the pdf render memory leak
+	* Xelatex should no longer leak file descriptors and crash
+	* Unavailable recent files are now removed from the menu
+	* Preview now shows correct page on file load with < pages
+	* Preview update event now in seconds (less cpu ticks)
+	* Removed /proc call for workfile generate (incompatible with bsd)
+	* Fixed empty lines in template documents
+	* Statusbar/Toolbar can be displayed/hidden
+	* Correct active typesetter displayed in Preferences menu
+	* Templates now set the correct filename
+	* Miscelaneous cosmetic & spelling updates
+
+	Features added:
+	* Gconf replaced with ConfigParser (gconf deps dropped)
+	* Better bibtex support including reference parser
+	* Autosaving function added
+	* Editor font now configurable
+	* Added man page for gummi executable
+	* More advanced search function
+	* Restyled interface for import tabs
+
 Gummi 0.4.2 (November 2th, 2009):
 	
 	Bugs fixed:
