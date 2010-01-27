@@ -185,6 +185,7 @@ class MainGUI:
 
 	def on_button_searchwindow_close_clicked(self, button, data=None):
 		self.searchgui.close_searchwindow()
+		return True
 
 	def on_button_searchwindow_find_clicked(self, button, data=None):
 		self.searchgui.start_search()
