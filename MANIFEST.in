@@ -12,6 +12,7 @@ include gummi/docs/INSTALL
 include gummi/misc/gummi
 include gummi/misc/gummi.desktop
 include gummi/misc/gummi.png
+include gummi/misc/gummi.1
 
 
 
