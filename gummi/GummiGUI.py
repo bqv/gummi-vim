@@ -277,7 +277,7 @@ class MainGUI:
 		self.editorpane.set_buffer_changed()
 
 	def on_menu_preferences_activate(self, menuitem, data=None):
-		prefsgui = PrefsGUI(self.config, self.editorpane, self.path, self.mainwindow)
+		prefsgui = PrefsGUI(self.config, self.editorpane, self.path, self.mainwindow, self.iofunc)
 
 	def on_menu_update_activate(self, menuitem, data=None):
 		update = UpdateCheck.UpdateCheck()
@@ -446,9 +446,10 @@ class MainGUI:
 
 class PrefsGUI:
 
-	def __init__(self, config, editorpane, path, mainwindow):
+	def __init__(self, config, editorpane, path, mainwindow, iofunc):
 		self.config = config
 		self.editorpane = editorpane
+		self.iofunc = iofunc
 		builder = gtk.Builder()
 		builder.add_from_file(path + "/gui/prefs.glade")
 
@@ -522,13 +523,17 @@ class PrefsGUI:
 		self.config.set_value('editor', widget.get_name(), value)
 		if widget.get_active():
 			self.autosave_timer.set_sensitive(True)
-			self.autosave_timer.set_value(10)
+			time = int(self.config.get_value("editor", "autosave_timer"))
+			self.autosave_timer.set_value(time/60)
+			self.iofunc.start_autosave(time)
 		else:
-			self.autosave_timer.set_sensitive(False)		
+			self.autosave_timer.set_sensitive(False)
+			self.iofunc.stop_autosave()		
 
 	def on_autosave_value_changed(self, event):
 		newvalue = int(event.get_value()) * 60
 		self.config.set_value('editor', 'autosave_timer', newvalue)
+		self.iofunc.reset_autosave()
 
 	def on_editor_font_set(self, widget):
 		selected = widget.get_font_name()

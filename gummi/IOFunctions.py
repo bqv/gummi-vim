@@ -53,8 +53,8 @@ class IOFunctions:
 		env = self.return_envfiles()
 		self.motion.update_envfiles(env)
 		self.motion.initial_preview()
-		#if self.config.get_bool("autosaving"):		
-		#	self.reset_autosave()
+		if self.config.get_value("editor", "autosaving"):		
+			self.reset_autosave()
 
 	def create_envfiles(self, filename):
 		if filename is not None:
@@ -89,6 +89,7 @@ class IOFunctions:
 	def save_file(self, filename):
 		try:		
 			content = self.editorpane.grab_buffer()
+			self.editorpane.editorviewer.grab_focus()
 			encoded = self.editorpane.encode_text(content)
 			self.set_status("Saving file " + self.filename)
 			fout = open(self.filename, "w")
@@ -113,7 +114,8 @@ class IOFunctions:
 
 	def reset_autosave(self):
 		self.stop_autosave()
-		self.start_autosave(self.config.get_int("autosave_timer"))
+		time = int(self.config.get_value("editor", "autosave_timer"))
+		self.start_autosave(time)
 
 	def autosave_document(self):
 		if self.filename is not None:
