@@ -247,6 +247,7 @@ class MainGUI:
 
 
 	def on_menu_bibload_activate(self, menuitem, data=None):
+		print "bla"
 		bibfile = None
 		chooser = gtk.FileChooserDialog("Open File...", self.mainwindow,
 								gtk.FILE_CHOOSER_ACTION_OPEN,
@@ -257,14 +258,13 @@ class MainGUI:
 		bibfilter.add_pattern("*.bib")
 		chooser.add_filter(bibfilter)
 		response = chooser.run()
-		if response == gtk.RESPONSE_CANCEL: return
 		if response == gtk.RESPONSE_OK: 
 			bibfile = chooser.get_filename()
 			if self.biblio.check_valid_file(bibfile):
 				filenm, number = self.biblio.setup_bibliography()
 				bibfilenm = self.builder.get_object("bibfilenm")
 				bibfilenm.set_text(filenm)
-			chooser.destroy()
+		chooser.destroy()
 
 	def on_bibcolumn_clicked(self, item, data=None):
 		sortid = item.get_sort_column_id()
@@ -385,12 +385,10 @@ class MainGUI:
 		response = chooser.run()
 		if response == gtk.RESPONSE_CANCEL:
 			self.exitinterrupt = True
-			return 
 		if response == gtk.RESPONSE_OK:
 			filename = chooser.get_filename()
 			if not ".tex" in filename[-4:]:
 				filename = filename + ".tex"
-			chooser.destroy()
 			self.iofunc.make_environment(filename)
 		chooser.destroy()
 		return filename

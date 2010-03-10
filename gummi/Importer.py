@@ -71,13 +71,14 @@ class Importer:
 		chooser.add_filter(imagefilter)
 
 		response = chooser.run()
-		if response == gtk.RESPONSE_OK: imagefile = chooser.get_filename()
+		if response == gtk.RESPONSE_OK: 
+			imagefile = chooser.get_filename()
+			self.image_label.set_sensitive(True)
+			self.image_scale.set_sensitive(True)
+			self.image_caption.set_sensitive(True)
+			self.scaler.set_value(1.00)
+			self.image_file.set_text(imagefile)
 		chooser.destroy()
-		self.image_label.set_sensitive(True)
-		self.image_scale.set_sensitive(True)
-		self.image_caption.set_sensitive(True)
-		self.scaler.set_value(1.00)
-		self.image_file.set_text(imagefile)
 		return imagefile
 
 	def insert_image(self):
