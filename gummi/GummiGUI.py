@@ -463,6 +463,7 @@ class PrefsGUI:
 		self.default_buffer = self.default_text.get_buffer()
 		self.typesetter = builder.get_object("combo_typesetter")
 		self.editor_font = builder.get_object("editor_font")
+		self.compile_timer = builder.get_object("pdfcompile_timer")
 
 		self.view_box = builder.get_object("view_box")
 		self.set_checkbox_status(self.view_box, 'view')
@@ -470,6 +471,8 @@ class PrefsGUI:
 		self.set_checkbox_status(self.editor_box, 'editor')
 		self.autosave_timer.set_value \
 			(int(self.config.get_value("editor", "autosave_timer"))/60)
+		self.compile_timer.set_value \
+			(int(self.config.get_value("compile", "compile_timer")))
 		self.editor_font.set_font_name(self.config.get_value("editor", "font"))
 		self.default_buffer.set_text \
 			(self.config.get_value("default_text", "welcome"))
@@ -533,6 +536,10 @@ class PrefsGUI:
 		newvalue = int(event.get_value()) * 60
 		self.config.set_value('editor', 'autosave_timer', newvalue)
 		self.iofunc.reset_autosave()
+
+	def on_compile_value_changed(self, event):
+		newvalue = int(event.get_value())
+		self.config.set_value('compile', 'compile_timer', newvalue)
 
 	def on_editor_font_set(self, widget):
 		selected = widget.get_font_name()

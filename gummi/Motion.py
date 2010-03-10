@@ -65,7 +65,8 @@ class Motion:
 		#self.start_updatepreview()
 
 	def start_updatepreview(self):
-		glib.timeout_add_seconds(1, self.update_preview)
+		compile_interval = self.config.get_value("compile", "compile_timer")
+		glib.timeout_add_seconds(int(compile_interval), self.update_preview)
 
 	def update_envfiles(self, envfile):
 		if self.pdffile is not None:

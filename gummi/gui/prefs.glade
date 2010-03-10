@@ -362,34 +362,43 @@
               </packing>
             </child>
             <child>
-              <object class="GtkVBox" id="compile1box">
+              <object class="GtkVBox" id="editorbox2">
                 <property name="visible">True</property>
                 <property name="border_width">5</property>
                 <property name="orientation">vertical</property>
+                <property name="homogeneous">True</property>
                 <child>
-                  <object class="GtkLabel" id="label8">
-                    <property name="height_request">35</property>
+                  <object class="GtkHBox" id="hbox3">
                     <property name="visible">True</property>
-                    <property name="xalign">0</property>
-                    <property name="label" translatable="yes">Typesetter command:</property>
-                    <attributes>
-                      <attribute name="weight" value="bold"/>
-                    </attributes>
+                    <child>
+                      <object class="GtkLabel" id="label8">
+                        <property name="visible">True</property>
+                        <property name="xalign">0</property>
+                        <property name="label" translatable="yes">Typesetter command:</property>
+                        <attributes>
+                          <attribute name="weight" value="bold"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">False</property>
+                        <property name="padding">5</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
                   </object>
                   <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">False</property>
-                    <property name="padding">5</property>
                     <property name="position">0</property>
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkHBox" id="compile_box">
+                  <object class="GtkHBox" id="hbox4">
                     <property name="visible">True</property>
                     <child>
                       <object class="GtkComboBox" id="combo_typesetter">
-                        <property name="width_request">200</property>
-                        <property name="height_request">35</property>
                         <property name="visible">True</property>
                         <property name="model">list_typesetters</property>
                         <property name="active">0</property>
@@ -402,8 +411,6 @@
                         </child>
                       </object>
                       <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">False</property>
                         <property name="position">0</property>
                       </packing>
                     </child>
@@ -412,16 +419,27 @@
                     </child>
                   </object>
                   <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">False</property>
                     <property name="position">1</property>
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkHBox" id="hbox4">
+                  <object class="GtkHBox" id="hbox5">
                     <property name="visible">True</property>
                     <child>
-                      <placeholder/>
+                      <object class="GtkLabel" id="label13">
+                        <property name="visible">True</property>
+                        <property name="xalign">0</property>
+                        <property name="label" translatable="yes">PFD Compiling:</property>
+                        <attributes>
+                          <attribute name="weight" value="bold"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">False</property>
+                        <property name="padding">5</property>
+                        <property name="position">0</property>
+                      </packing>
                     </child>
                     <child>
                       <placeholder/>
@@ -432,13 +450,48 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkHBox" id="hbox5">
+                  <object class="GtkHBox" id="editor_box1">
                     <property name="visible">True</property>
                     <child>
-                      <placeholder/>
+                      <object class="GtkCheckButton" id="pdfcompile">
+                        <property name="label" translatable="yes">_Autocompile every</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">False</property>
+                        <property name="use_underline">True</property>
+                        <property name="draw_indicator">True</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="padding">5</property>
+                        <property name="position">0</property>
+                      </packing>
                     </child>
                     <child>
-                      <placeholder/>
+                      <object class="GtkSpinButton" id="pdfcompile_timer">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="invisible_char">&#x2022;</property>
+                        <property name="xalign">0.5</property>
+                        <property name="adjustment">pdfcompile_time</property>
+                        <signal name="value_changed" handler="on_compile_value_changed"/>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="padding">5</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label14">
+                        <property name="visible">True</property>
+                        <property name="label" translatable="yes">seconds</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="padding">5</property>
+                        <property name="position">2</property>
+                      </packing>
                     </child>
                   </object>
                   <packing>
@@ -474,7 +527,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkHBox" id="hbox3">
+                  <object class="GtkHBox" id="hbox12">
                     <property name="visible">True</property>
                     <child>
                       <object class="GtkImage" id="image2">
@@ -504,7 +557,6 @@
               </object>
               <packing>
                 <property name="position">3</property>
-                <property name="tab_fill">False</property>
               </packing>
             </child>
             <child type="tab">
@@ -598,5 +650,12 @@ for the active tab. </property>
         <col id="0" translatable="yes">xelatex</col>
       </row>
     </data>
+  </object>
+  <object class="GtkAdjustment" id="pdfcompile_time">
+    <property name="value">1</property>
+    <property name="lower">1</property>
+    <property name="upper">60</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
   </object>
 </interface>
