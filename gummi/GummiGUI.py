@@ -615,6 +615,11 @@ class ImportGUI:
 	def __init__(self, builder, editorpane):
 		self.builder = builder
 		self.editorpane = editorpane
+
+		self.mainwindow = builder.get_object("mainwindow")
+
+		self.imagefile = None
+
 		self.setup_importpanes()
 
 	def setup_importpanes(self):
@@ -643,15 +648,25 @@ class ImportGUI:
 		if caller == "table_apply":
 			self.importer.insert_table()
 		elif caller == "image_apply":
-			self.importer.insert_image()
+			self.importer.insert_image(self.imagefile)
 		elif caller == "matrix_apply":
 			self.importer.insert_matrix()
 
 	def choose_imagefile(self):
-		self.importer.prepare_image()	
-
-
-
+		chooser = gtk.FileChooserDialog("Open File...", self.mainwindow,
+								gtk.FILE_CHOOSER_ACTION_OPEN,
+								(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
+								gtk.STOCK_OPEN, gtk.RESPONSE_OK))
+		imagefilter = gtk.FileFilter()
+		imagefilter.set_name('Image files')
+		imagefilter.add_mime_type("image/*")
+		chooser.add_filter(imagefilter)
+		response = chooser.run()
+		if response == gtk.RESPONSE_OK: 
+			imagefile = chooser.get_filename()
+			self.imagefile = imagefile
+			self.importer.activate_imagegui(imagefile, 1)
+		chooser.destroy()
 
 class RecentGUI:
 

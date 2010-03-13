@@ -22,7 +22,6 @@
 # THE SOFTWARE.
 
 import os
-import gtk
 
 CURRENT = "CURRENT"
 LINE = "\hline\n"
@@ -32,8 +31,6 @@ class Importer:
 
 	def __init__(self, editorpane, builder):
 		self.editorpane = editorpane
-
-		self.mainwindow = builder.get_object("mainwindow")
 		self.import_tabs = builder.get_object("import_tabs")
 
 		self.image_pane = builder.get_object("image_pane")
@@ -58,44 +55,28 @@ class Importer:
 		self.matrix_cols.set_value(3)
 		self.matrix_rows.set_value(3)
 
-
-	def prepare_image(self):
-		imagefile = None
-		chooser = gtk.FileChooserDialog("Open File...", self.mainwindow,
-								gtk.FILE_CHOOSER_ACTION_OPEN,
-								(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
-								gtk.STOCK_OPEN, gtk.RESPONSE_OK))
-		imagefilter = gtk.FileFilter()
-		imagefilter.set_name('Image files')
-		imagefilter.add_mime_type("image/*")
-		chooser.add_filter(imagefilter)
-
-		response = chooser.run()
-		if response == gtk.RESPONSE_OK: 
-			imagefile = chooser.get_filename()
-			self.image_label.set_sensitive(True)
-			self.image_scale.set_sensitive(True)
-			self.image_caption.set_sensitive(True)
-			self.scaler.set_value(1.00)
-			self.image_file.set_text(imagefile)
-		chooser.destroy()
-		return imagefile
-
-	def insert_image(self):
-		if os.path.exists(self.image_file.get_text()):
+	def insert_image(self, imagefile):
+		if imagefile is not None and os.path.exists(imagefile):
 			self.editorpane.insert_package("graphicx")
 			f = self.image_file.get_text()
 			s = self.scaler.get_value()
 			c = self.image_caption.get_text()
-			l = self.image_label.get_text()
+			l = imagefile
 			code = self.generate_image(f, s, c, l)
 			position = self.editorpane.get_iterator(CURRENT)
 			self.editorpane.editorbuffer.insert(position, code)
 			self.editorpane.set_buffer_changed()
-			self.image_file.set_text("")
-			self.image_caption.set_text("")
-			self.image_label.set_text("")
+		self.activate_imagegui("", 0)
 		self.import_tabs.set_current_page(0)
+
+	def activate_imagegui(self, image, mode):
+		self.image_label.set_sensitive(mode)
+		self.image_scale.set_sensitive(mode)
+		self.image_caption.set_sensitive(mode)
+		self.image_file.set_text(image)
+		self.image_caption.set_text("")
+		self.image_label.set_text("")
+		self.scaler.set_value(1.00)
 
 	def insert_table(self):
 		position = self.editorpane.get_iterator(CURRENT)
