@@ -60,7 +60,8 @@ class Biblio:
 		
 	def setup_bibliography(self):
 		try:
-			self.editorpane.insert_package("cite")
+			# cite is not a standard package
+			# self.editorpane.insert_package("cite")
 			tempdir = os.environ.get("TMPDIR", "/tmp")
 			bibtitle = self.bibbasename[:-4]
 			shutil.copy2(self.bibdirname + self.bibbasename, tempdir + "/" + self.bibbasename)
