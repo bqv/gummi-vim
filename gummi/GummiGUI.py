@@ -247,7 +247,6 @@ class MainGUI:
 
 
 	def on_menu_bibload_activate(self, menuitem, data=None):
-		print "bla"
 		bibfile = None
 		chooser = gtk.FileChooserDialog("Open File...", self.mainwindow,
 								gtk.FILE_CHOOSER_ACTION_OPEN,
