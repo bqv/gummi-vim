@@ -36,13 +36,14 @@ import Preferences
 
 class MainGUI:
 
-	def __init__(self, parent, config, iofunc, biblio):
+	def __init__(self, parent, config, iofunc, biblio, motion):
 		self.core = parent
 		self.config = config
 		self.editorpane = self.core.editorpane
 		self.previewpane = self.core.previewpane
 		self.iofunc = iofunc
 		self.biblio = biblio
+		self.motion = motion
 
 		self.path = self.core.path
 		self.tempdir = self.core.tempdir
@@ -277,7 +278,8 @@ class MainGUI:
 		self.editorpane.set_buffer_changed()
 
 	def on_menu_preferences_activate(self, menuitem, data=None):
-		prefsgui = PrefsGUI(self.config, self.editorpane, self.path, self.mainwindow, self.iofunc)
+		PrefsGUI(self.config, self.editorpane, self.path, \
+				 self.mainwindow, self.iofunc, self.motion)
 
 	def on_menu_update_activate(self, menuitem, data=None):
 		update = UpdateCheck.UpdateCheck()
@@ -444,10 +446,11 @@ class MainGUI:
 
 class PrefsGUI:
 
-	def __init__(self, config, editorpane, path, mainwindow, iofunc):
+	def __init__(self, config, editorpane, path, mainwindow, iofunc, motion):
 		self.config = config
 		self.editorpane = editorpane
 		self.iofunc = iofunc
+		self.motion = motion
 		builder = gtk.Builder()
 		builder.add_from_file(path + "/gui/prefs.glade")
 
@@ -483,7 +486,6 @@ class PrefsGUI:
 
 		builder.connect_signals(self)
 		self.prefwindow.show_all()
-
 
 	def set_checkbox_status(self, box, page):
 		""" Sets the status for all checkboxes in the Preferences screen."""
@@ -538,6 +540,10 @@ class PrefsGUI:
 	def toggle_compilestatus(self, widget, data=None):
 		value = widget.get_active()
 		self.config.set_value('compile', widget.get_name(), value)
+		if widget.get_active():
+			self.motion.start_updatepreview()
+		else:
+			self.motion.stop_updatepreview()
 
 	def on_autosave_value_changed(self, event):
 		newvalue = int(event.get_value()) * 60
@@ -547,6 +553,8 @@ class PrefsGUI:
 	def on_compile_value_changed(self, event):
 		newvalue = int(event.get_value())
 		self.config.set_value('compile', 'compile_timer', newvalue)
+		self.motion.stop_updatepreview()
+		self.motion.start_updatepreview()
 
 	def on_editor_font_set(self, widget):
 		selected = widget.get_font_name()

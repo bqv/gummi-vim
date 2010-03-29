@@ -66,7 +66,11 @@ class Motion:
 
 	def start_updatepreview(self):
 		compile_interval = self.config.get_value("compile", "compile_timer")
-		glib.timeout_add_seconds(int(compile_interval), self.update_preview)
+		self.update_event = glib.timeout_add_seconds \
+			(int(compile_interval), self.update_preview)
+
+	def stop_updatepreview(self):
+		glib.source_remove(self.update_event)
 
 	def update_envfiles(self, envfile):
 		if self.pdffile is not None:
@@ -83,7 +87,8 @@ class Motion:
 		try:
 			self.previewpane.set_pdffile(self.pdffile)
 			self.previewpane.refresh_preview()
-			self.start_updatepreview()
+			if self.config.get_value("compile", "compile_status"):
+				self.start_updatepreview()
 		except: self.previewpane.drawarea.hide(); return
 
 	def update_workfile(self):
