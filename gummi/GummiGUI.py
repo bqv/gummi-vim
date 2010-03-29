@@ -453,6 +453,7 @@ class PrefsGUI:
 		self.motion = motion
 		builder = gtk.Builder()
 		builder.add_from_file(path + "/gui/prefs.glade")
+		self.builder = builder
 
 		self.prefwindow = builder.get_object("prefwindow")
 		self.notebook = builder.get_object("notebook1")
@@ -565,6 +566,8 @@ class PrefsGUI:
 		model = widget.get_model()
 		newvalue = model[widget.get_active()][0]
 		self.config.set_value('compile', 'typesetter', newvalue)
+		self.builder.get_object("changeimg").show()
+		self.builder.get_object("changelabel").show()
 
 	def on_prefs_close_clicked(self, widget, data=None):
 		if self.notebook.get_current_page() == 2:
@@ -594,7 +597,6 @@ class PrefsGUI:
 			self.compile_timer.set_value \
 				(int(self.config.get_value("compile", "compile_timer")))
 			self.typesetter.set_active(0)
-
 
 
 class SearchGUI:
