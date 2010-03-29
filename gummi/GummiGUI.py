@@ -462,12 +462,15 @@ class PrefsGUI:
 		self.default_buffer = self.default_text.get_buffer()
 		self.typesetter = builder.get_object("combo_typesetter")
 		self.editor_font = builder.get_object("editor_font")
-		self.compile_timer = builder.get_object("pdfcompile_timer")
+		self.compile_timer = builder.get_object("compile_timer")
 
 		self.view_box = builder.get_object("view_box")
 		self.set_checkbox_status(self.view_box, 'view')
-		self.editor_box = builder.get_object("editor_box")		
+		self.editor_box = builder.get_object("editor_box")
 		self.set_checkbox_status(self.editor_box, 'editor')
+		self.compile_box = builder.get_object("compile_box")
+		self.set_checkbox_status(self.compile_box, 'compile')
+
 		self.autosave_timer.set_value \
 			(int(self.config.get_value("editor", "autosave_timer"))/60)
 		self.compile_timer.set_value \
@@ -483,6 +486,7 @@ class PrefsGUI:
 
 
 	def set_checkbox_status(self, box, page):
+		""" Sets the status for all checkboxes in the Preferences screen."""
 		listmy = box.get_children()
 		for item in listmy:
 			if type(item) == gtk.CheckButton:
@@ -529,7 +533,11 @@ class PrefsGUI:
 			self.iofunc.start_autosave(time)
 		else:
 			self.autosave_timer.set_sensitive(False)
-			self.iofunc.stop_autosave()		
+			self.iofunc.stop_autosave()
+
+	def toggle_compilestatus(self, widget, data=None):
+		value = widget.get_active()
+		self.config.set_value('compile', widget.get_name(), value)
 
 	def on_autosave_value_changed(self, event):
 		newvalue = int(event.get_value()) * 60
@@ -574,6 +582,9 @@ class PrefsGUI:
 				(self.config.get_value("default_text", "welcome"))
 		elif self.notebook.get_current_page() == 3:
 			self.config.reset_section("compile")
+			self.set_checkbox_status(self.compile_box, 'compile')
+			self.compile_timer.set_value \
+				(int(self.config.get_value("compile", "compile_timer")))
 			self.typesetter.set_active(0)
 
 

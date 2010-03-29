@@ -144,7 +144,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkVBox" id="editorbox1">
+              <object class="GtkVBox" id="editor_boxtop">
                 <property name="visible">True</property>
                 <property name="border_width">5</property>
                 <property name="orientation">vertical</property>
@@ -362,7 +362,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkVBox" id="editorbox2">
+              <object class="GtkVBox" id="compile_boxtop">
                 <property name="visible">True</property>
                 <property name="border_width">5</property>
                 <property name="orientation">vertical</property>
@@ -450,16 +450,17 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkHBox" id="editor_box1">
+                  <object class="GtkHBox" id="compile_box">
                     <property name="visible">True</property>
                     <child>
-                      <object class="GtkCheckButton" id="pdfcompile">
+                      <object class="GtkCheckButton" id="compile_status">
                         <property name="label" translatable="yes">_Autocompile every</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
                         <property name="use_underline">True</property>
                         <property name="draw_indicator">True</property>
+                        <signal name="toggled" handler="toggle_compilestatus"/>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -468,7 +469,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkSpinButton" id="pdfcompile_timer">
+                      <object class="GtkSpinButton" id="compile_timer">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="invisible_char">&#x2022;</property>
@@ -652,7 +653,7 @@ for the active tab. </property>
     </data>
   </object>
   <object class="GtkAdjustment" id="pdfcompile_time">
-    <property name="value">1</property>
+    <property name="value">1.0000000002235174</property>
     <property name="lower">1</property>
     <property name="upper">60</property>
     <property name="step_increment">1</property>

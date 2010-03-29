@@ -42,6 +42,7 @@ CFGDEFAULTS = {
 'autosave_timer': 600,
 'typesetter': 'pdflatex',
 'compile_timer': 1,
+'compile_status': True,
 'recent1': '',
 'recent2': '',
 'recent3': '',
