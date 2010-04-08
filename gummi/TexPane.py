@@ -26,6 +26,11 @@ import pango
 import locale
 import gtksourceview2
 from datetime import datetime
+try:
+	import gtkspell
+	GTKSPELL_AVAILABLE = True
+except ImportError:
+	print "python-gtkspell not available, spell checking disabled.."
 
 import Formatting
 
@@ -75,7 +80,16 @@ class TexPane:
 		self.errortag.set_property('background', 'red')
 		self.errortag.set_property('foreground', 'white')
 		self.searchtag.set_property('background', 'yellow')
+		if config.get_value("editor", "spelling"):
+			self.activate_spellchecking()				
 
+	def activate_spellchecking(self, set_status=1):
+		# make the default language to spell-check settable by prefs
+		if GTKSPELL_AVAILABLE:
+			if set_status == 1:
+				gtkspell.Spell(self.editorviewer, lang=None)
+			else:
+				gtkspell.get_from_text_view(self.editorviewer).detach()
 
 	def fill_buffer(self, newcontent):
 		"""Clears the buffer and writes new not-undoable data into it"""

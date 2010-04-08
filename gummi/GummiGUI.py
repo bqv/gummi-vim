@@ -70,6 +70,9 @@ class MainGUI:
 			menu_statusbar = self.builder.get_object("menu_statusbar")
 			menu_statusbar.set_active(True)
 			self.iofunc.statusbar.show()
+
+		if self.config.get_value("editor", "spelling"):
+			self.builder.get_object("menu_spelling").set_active(True)
 		
 		self.hpaned = self.builder.get_object("hpaned")
 		mainwidth = self.mainwindow.get_size()[0]
@@ -167,6 +170,14 @@ class MainGUI:
 			self.mainwindow.fullscreen()
 		else:
 			self.mainwindow.unfullscreen()
+
+	def on_menu_spelling_toggled(self, menuitem, data=None):
+		if menuitem.get_active():
+			self.editorpane.activate_spellchecking(1)
+			self.config.set_value("editor", "spelling", True)
+		else:
+			self.editorpane.activate_spellchecking(0)
+			self.config.set_value("editor", "spelling", False)
 
 	def on_menu_toolbar_toggled(self, menuitem, data=None):
 		if menuitem.get_active():
