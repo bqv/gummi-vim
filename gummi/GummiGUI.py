@@ -417,6 +417,7 @@ class MainGUI:
 			self.filename = filename
 			self.recentgui.add_recentfile(self.filename)
 			self.set_window_title(self.filename)
+			os.chdir(os.path.dirname(filename))
 		except:
 			print traceback.print_exc()
 
