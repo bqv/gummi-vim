@@ -43,6 +43,7 @@ PACKAGES = "\\usepackage{"
 class TexPane:
 
 	def __init__(self, config):
+		self.config = config
 		self.editorbuffer = gtksourceview2.Buffer()
 		self.editortags = self.editorbuffer.get_tag_table()
 		self.manager = gtksourceview2.LanguageManager()
@@ -50,7 +51,7 @@ class TexPane:
 		self.searchposition = None
 		self.errortag = gtk.TextTag()
 		self.searchtag = gtk.TextTag()
-		self.configure_texpane(config)
+		self.configure_texpane()
 
 		self.textchange = datetime.now()
 		self.prevchange = datetime.now()
@@ -60,7 +61,7 @@ class TexPane:
 		self.editorbuffer.set_modified(False)
 
 
-	def configure_texpane(self, config):
+	def configure_texpane(self):
 		"""Configures the gtksourceview (editor) widget"""
 		self.language = self.manager.get_language("latex")
 		self.editorbuffer.set_language(self.language)
@@ -68,28 +69,32 @@ class TexPane:
 		self.editorbuffer.set_highlight_syntax(True)
 		self.editorviewer = gtksourceview2.View(self.editorbuffer)
 		self.editorviewer.modify_font \
-			(pango.FontDescription(config.get_value("editor", "font")))
+			(pango.FontDescription(self.config.get_value("editor", "font")))
 		self.editorviewer.set_show_line_numbers( \
-						bool(config.get_value("view", "line_numbers")))
+						bool(self.config.get_value("view", "line_numbers")))
 		self.editorviewer.set_highlight_current_line( \
-						bool(config.get_value("view", "highlighting")))
-		textwrap = config.get_value("view", "textwrapping")
-		wordwrap = config.get_value("view", "wordwrapping")
+						bool(self.config.get_value("view", "highlighting")))
+		textwrap = self.config.get_value("view", "textwrapping")
+		wordwrap = self.config.get_value("view", "wordwrapping")
 		mode = self.grab_wrapmode(textwrap, wordwrap)
 		self.editorviewer.set_wrap_mode(mode)
 		self.errortag.set_property('background', 'red')
 		self.errortag.set_property('foreground', 'white')
 		self.searchtag.set_property('background', 'yellow')
-		if config.get_value("editor", "spelling"):
+		if self.config.get_value("editor", "spelling"):
 			self.activate_spellchecking()				
 
 	def activate_spellchecking(self, set_status=1):
-		# make the default language to spell-check settable by prefs
+		language = self.config.get_value("editor", "spell_language")
 		if GTKSPELL_AVAILABLE:
-			if set_status == 1:
-				gtkspell.Spell(self.editorviewer, lang=None)
-			else:
-				gtkspell.get_from_text_view(self.editorviewer).detach()
+			try:
+				if set_status == 0: # remove spellchecking..
+					gtkspell.get_from_text_view(self.editorviewer).detach()	
+				elif set_status == 1: # start spellchecking..
+					spell = gtkspell.Spell(self.editorviewer, lang=None)
+					spell.set_language(language)
+			except RuntimeError: # probably trying to set None
+				pass
 
 	def fill_buffer(self, newcontent):
 		"""Clears the buffer and writes new not-undoable data into it"""

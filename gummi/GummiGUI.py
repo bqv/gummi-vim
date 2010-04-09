@@ -497,6 +497,8 @@ class PrefsGUI:
 		if self.config.get_value("compile", "typesetter") == "xelatex":
 			self.typesetter.set_active(1)
 
+		self.list_available_spell_languages()
+
 		builder.connect_signals(self)
 		self.prefwindow.show_all()
 
@@ -580,6 +582,30 @@ class PrefsGUI:
 		self.config.set_value('compile', 'typesetter', newvalue)
 		self.builder.get_object("changeimg").show()
 		self.builder.get_object("changelabel").show()
+
+	def on_combo_language_changed(self, widget, data=None):
+		model = widget.get_model()
+		newvalue = model[widget.get_active()][0]
+		self.config.set_value('editor', 'spell_language', newvalue)
+		self.editorpane.activate_spellchecking(0)
+		self.editorpane.activate_spellchecking(1)
+
+	def list_available_spell_languages(self):
+		import re, commands
+		list_languages = self.builder.get_object("list_languages")
+		combo_languages = self.builder.get_object("combo_languages")
+		language_set = self.config.get_value("editor", "spell_language")
+		status, langs = commands.getstatusoutput('enchant-lsmod -list-dicts')
+		combo_languages.set_active(0)
+		if status == 0:		
+			langs = sorted(list(set(re.sub(' \(.*?\)','', langs).split('\n'))))
+			counter = 0			
+			for item in langs:
+				list_languages.append([item])
+				counter += 1
+				if language_set == item:
+					combo_languages.set_active(counter)
+					
 
 	def on_prefs_close_clicked(self, widget, data=None):
 		if self.notebook.get_current_page() == 2:

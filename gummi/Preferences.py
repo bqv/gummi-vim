@@ -36,6 +36,7 @@ CFGDEFAULTS = {
 'textwrapping': True,
 'wordwrapping': True,
 'spelling': False,
+'spell_language': None,
 'toolbar': True,
 'statusbar': True,
 'font': 'Monospace 10',
