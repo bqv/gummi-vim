@@ -213,9 +213,14 @@ class PreviewPane:
 
 	def setlibgobject(self):
 		# TODO: Write Python/Cython module to use this function directly.. 
+		# TODO: Find function to detect system library paths, should exist. 
 		import commands, re
 		status, langs = commands.getstatusoutput('ls /usr/lib/libgobject*.so*')
 		if status == 0:
+			langs = sorted(list(set(re.sub(' \(.*?\)','', langs).split('\n'))))
+			return langs[0]
+		elif status == 512:
+			status, langs = commands.getstatusoutput('ls /lib/libgobject*.so*')
 			langs = sorted(list(set(re.sub(' \(.*?\)','', langs).split('\n'))))
 			return langs[0]
 		else:
