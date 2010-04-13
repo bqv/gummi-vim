@@ -35,6 +35,7 @@ class PreviewPane:
 	def __init__(self, builder, pdffile=None):
 
 		self.libgobject = self.setlibgobject()
+		print "libgobject was detected at " + self.libgobject
 		
 		self.drawarea = builder.get_object("preview_drawarea")
 		self.toolbar = builder.get_object("preview_toolbar")
@@ -211,22 +212,14 @@ class PreviewPane:
 		self.drawarea.queue_draw()
 
 	def setlibgobject(self):
-		objectfiles = ["libgobject-2.0.so", \
-						"libgobject-2.0.so.12", \
-						"libgobject-2.0.so.0", \
-						"libgobject-2.0.so.1", \
-						"libgobject-2.0.so.2" ]
-		for elem in objectfiles:
-			if self.detectlibobject(elem):
-				return elem
-			else: return None
-
-	def detectlibobject(self, filenm):
-		try:
-			CDLL(filenm)
-			return True
-		except:
-			return False
+		# TODO: Write Python/Cython module to use this function directly.. 
+		import commands, re
+		status, langs = commands.getstatusoutput('ls /usr/lib/libgobject*.so*')
+		if status == 0:
+			langs = sorted(list(set(re.sub(' \(.*?\)','', langs).split('\n'))))
+			return langs[0]
+		else:
+			return None
 
 			
 
