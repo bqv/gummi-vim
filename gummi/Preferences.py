@@ -65,8 +65,8 @@ http://gummi.midnightcoding.org}\\\\
 
 class Preferences:
 
-	def __init__(self):
-
+	def __init__(self, path):
+		self.path = path
 		self.config = ConfigParser.RawConfigParser(CFGDEFAULTS)
 		self.cfgpath = os.environ['HOME'] + "/.config/gummi/gummi.cfg"
 

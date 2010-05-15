@@ -97,7 +97,7 @@ class Template:
 
 
 	# TODO add template options (multiple columns support etc.)
-	def __init__(self, builder, cwd):
+	def __init__(self, builder):
 		self.templatewindow = builder.get_object("templatewindow")
 		self.template_ok = builder.get_object("template_ok")
 

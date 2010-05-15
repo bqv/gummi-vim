@@ -36,18 +36,16 @@ import Preferences
 
 class MainGUI:
 
-	def __init__(self, parent, config, iofunc, biblio, motion):
-		self.core = parent
+	def __init__(self, config, builder, iofunc, biblio, motion, editor, preview):
 		self.config = config
-		self.editorpane = self.core.editorpane
-		self.previewpane = self.core.previewpane
+		self.editorpane = editor
+		self.previewpane = preview
 		self.iofunc = iofunc
 		self.biblio = biblio
 		self.motion = motion
 
-		self.path = self.core.path
-		self.tempdir = self.core.tempdir
-		self.builder = self.core.builder
+		self.tempdir = os.environ.get("TMPDIR", "/tmp")
+		self.builder = builder
 		self.exitinterrupt = False
 		
 		self.mainwindow = self.builder.get_object("mainwindow")
@@ -102,7 +100,7 @@ class MainGUI:
 		self.iofunc.make_environment(self.filename)
 
 	def on_menu_template_activate(self, menuitem, data=None):
-		self.template_doc = Template.Template(self.builder, self.path)
+		self.template_doc = Template.Template(self.builder)
 
 	def on_menu_open_activate(self, menuitem, data=None):
 		if os.getcwd() == self.tempdir:
@@ -289,7 +287,7 @@ class MainGUI:
 		self.editorpane.set_buffer_changed()
 
 	def on_menu_preferences_activate(self, menuitem, data=None):
-		PrefsGUI(self.config, self.editorpane, self.path, \
+		PrefsGUI(self.config, self.editorpane, \
 				 self.mainwindow, self.iofunc, self.motion)
 
 	def on_menu_update_activate(self, menuitem, data=None):
@@ -458,13 +456,14 @@ class MainGUI:
 
 class PrefsGUI:
 
-	def __init__(self, config, editorpane, path, mainwindow, iofunc, motion):
+	def __init__(self, config, editorpane, mainwindow, iofunc, motion):
 		self.config = config
+		self.path = self.config.path
 		self.editorpane = editorpane
 		self.iofunc = iofunc
 		self.motion = motion
 		builder = gtk.Builder()
-		builder.add_from_file(path + "/gui/prefs.glade")
+		builder.add_from_file(self.path + "/gui/prefs.glade")
 		self.builder = builder
 
 		self.prefwindow = builder.get_object("prefwindow")
