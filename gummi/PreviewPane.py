@@ -79,7 +79,10 @@ class PreviewPane:
 			self.current_page = 0 #reset to 0 on new pdf load
 
 			uri = 'file://' + pdffile
-			document = poppler.document_new_from_file(uri, None)
+			try:
+				document = poppler.document_new_from_file(uri, None)		
+			except:
+				return False			
 			self.page_total = document.get_n_pages()
 
 			self.pagelabel.set_text('of ' + str(self.page_total))
@@ -91,9 +94,10 @@ class PreviewPane:
 			self.goto_page(0)
 			self.unref_object(document)
 			self.unref_object(page)
-		else:
+			return True
+		else: # unnecessary?
 			self.pdffile = None
-
+			return True
 
 	def refresh_preview(self):
 		if not os.path.exists(self.pdffile):

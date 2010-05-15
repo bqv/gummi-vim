@@ -30,6 +30,7 @@ import subprocess
 import traceback
 import tempfile
 import re
+import gtk
 
 import Preferences
 
@@ -53,6 +54,7 @@ class Motion:
 		self.errormesg = re.compile(':[\d+]+:([^.]+)\.')
 		self.errorline = re.compile(':([\d+]+):')
 
+		self.preview_viewport = builder.get_object("preview_viewport")
 		self.statuslight = builder.get_object("tool_statuslight")
 		self.statusbar = builder.get_object("statusbar")
 		self.statusbar_cid = self.statusbar.get_context_id("Gummi")
@@ -81,15 +83,42 @@ class Motion:
 		self.workfile = envfile[3]
 		self.pdffile = envfile[4]
 
-	def initial_preview(self):
+	def initial_preview(self, errormode=False):
 		self.update_workfile()
 		self.update_pdffile()
-		try:
-			self.previewpane.set_pdffile(self.pdffile)
+		pdffile_set = self.previewpane.set_pdffile(self.pdffile)
+		if pdffile_set: # poppler object only created when pdffile valid
 			self.previewpane.refresh_preview()
 			if self.config.get_value("compile", "compile_status"):
 				self.start_updatepreview()
-		except: self.previewpane.drawarea.hide(); return
+			return True
+		elif not errormode:
+			self.setup_preview_error_mode()
+			return False
+
+
+	def setup_preview_error_mode(self):
+		eventbox = gtk.EventBox()
+		eventbox.set_events(gtk.gdk.BUTTON_PRESS_MASK)
+		eventbox.connect('button-press-event', self.preview_error_mode)
+		label = gtk.Label( \
+			"PDF-Preview could not initialize.\n\n" \
+			"It appears your LaTeX document contains errors.\n" \
+			"Additional information is available on the Error Output tab.\n" \
+			"Please correct the listed errors and click this area\n" \
+			"to reload the preview panel.")
+		label.set_justify(gtk.JUSTIFY_CENTER)
+		eventbox.add(label)
+		self.preview_viewport.remove(self.previewpane.drawarea)
+		self.preview_viewport.add(eventbox)
+
+	def preview_error_mode(self, widget, event):
+		self.preview_viewport.remove(widget)
+		self.preview_viewport.add(self.previewpane.drawarea)
+		if not self.initial_preview(True):
+			self.preview_viewport.remove(self.previewpane.drawarea)
+			self.preview_viewport.add(widget)
+	
 
 	def update_workfile(self):
 		try:
