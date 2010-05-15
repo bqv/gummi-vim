@@ -68,7 +68,7 @@ is licensed under the GPL, see `/usr/share/common-licenses/GPL\n
 '
 
 sed -i s/gummi@unknown/alexvandermey@gmail.com/ copyright
-sed -i s@url://example.com@http://gummi.googlecode.com/@ copyright
+sed -i s@url://example.com@http://gummi.midnightcoding.org/@ copyright
 sed -i s/"put author's name and email here"/"Alexander van der Mey <alexvandermey@gmail.com>"/ copyright
 sed -i s/"Copyright (C) YYYY Name OfAuthor"/"Alexander van der Mey <alexvandermey@gmail.com>"/ copyright
 sed -i '16,24d' copyright

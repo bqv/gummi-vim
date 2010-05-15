@@ -2,7 +2,7 @@
 # Gummi build script for Fedora 11
 # Alexander van der Mey - 8 October 2009
 
-svn co -q http://gummi.googlecode.com/svn/trunk/ gummi-read-only
+svn co -q http://gummi.midnightcoding.org/svn/trunk/ gummi-read-only
 
 cd gummi-read-only
 
