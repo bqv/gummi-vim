@@ -130,9 +130,6 @@ class IOFunctions:
 	def remove_status(self):
 		self.statusbar.push(self.statusbar_cid, "")
 
-	def filename(self):
-		return self.filename
-
 	def return_envfiles(self):
 		return self.tempdir, \
 				self.filename, \

@@ -21,6 +21,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
+from gtk import Buildable
+
 STYLES = ["tool_bold", "tool_italic", "tool_unline"]
 ALLIGN = ["tool_left", "tool_center", "tool_right"]
 
@@ -54,7 +56,7 @@ class Formatting:
 		else: return False
 
 	def get_style_commands(self, widget):
-		caller = gtk.Buildable.get_name(widget)
+		caller = Buildable.get_name(widget)
 		begintag = ""; endtag = ""
 		if caller in STYLES:
 			if caller == "tool_bold": begintag = "\\textbf{"
