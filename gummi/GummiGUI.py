@@ -507,22 +507,22 @@ class PrefsGUI:
 		listmy = box.get_children()
 		for item in listmy:
 			if type(item) == gtk.CheckButton:
-				result = self.config.get_value(page, item.get_name())
+				result = self.config.get_value(page, gtk.Buildable.get_name(item))
 				item.set_active(result)
 
 	def toggle_linenumbers(self, widget, data=None):
 		value = widget.get_active()
-		self.config.set_value('view', widget.get_name(), value)
+		self.config.set_value('view', 'line_numbers', value)
 		self.editorpane.editorviewer.set_show_line_numbers(value)
 
 	def toggle_highlighting(self, widget, data=None):
 		value = widget.get_active()
-		self.config.set_value('view', widget.get_name(), value)
+		self.config.set_value('view', 'highlighting', value)
 		self.editorpane.editorviewer.set_highlight_current_line(value)
 
 	def toggle_textwrapping(self, widget, data=None):
 		value = widget.get_active()
-		self.config.set_value('view', widget.get_name(), value)
+		self.config.set_value('view', 'textwrapping', value)
 		if widget.get_active():
 			self.editorpane.editorviewer.set_wrap_mode(gtk.WRAP_CHAR)
 			self.wordwrap_button.set_sensitive(True)
@@ -534,7 +534,7 @@ class PrefsGUI:
 
 	def toggle_wordwrapping(self, widget, data=None):
 		value = widget.get_active()
-		self.config.set_value('view', widget.get_name(), value)
+		self.config.set_value('view', 'wordwrapping', value)
 		if widget.get_active():
 			self.editorpane.editorviewer.set_wrap_mode(gtk.WRAP_WORD)
 		else:
@@ -542,7 +542,7 @@ class PrefsGUI:
 
 	def toggle_autosaving(self, widget, data=None):
 		value = widget.get_active()
-		self.config.set_value('editor', widget.get_name(), value)
+		self.config.set_value('editor', 'autosaving', value)
 		if widget.get_active():
 			self.autosave_timer.set_sensitive(True)
 			time = int(self.config.get_value("editor", "autosave_timer"))
@@ -554,7 +554,7 @@ class PrefsGUI:
 
 	def toggle_compilestatus(self, widget, data=None):
 		value = widget.get_active()
-		self.config.set_value('compile', widget.get_name(), value)
+		self.config.set_value('compile', 'compile_status', value)
 		if widget.get_active():
 			self.motion.start_updatepreview()
 		else:
@@ -690,7 +690,7 @@ class ImportGUI:
 		self.importer = Importer.Importer(self.editorpane, self.builder)
 
 	def show_importpane(self, notebook, page_num):
-		newactive = notebook.get_nth_page(page_num).get_name()
+		newactive = gtk.Buildable.get_name(notebook.get_nth_page(page_num))
 		self.box_image.foreach(lambda x:self.box_image.remove(x))
 		self.box_table.foreach(lambda x:self.box_table.remove(x))
 		self.box_matrix.foreach(lambda x:self.box_matrix.remove(x))
@@ -702,7 +702,7 @@ class ImportGUI:
 			self.box_matrix.add(self.matrix_pane)
 
 	def insert_object(self, widget):
-		caller = widget.get_name()
+		caller = gtk.Buildable.get_name(widget)
 		if caller == "table_apply":
 			self.importer.insert_table()
 		elif caller == "image_apply":
@@ -761,7 +761,7 @@ class RecentGUI:
 		except IndexError: widget.hide()
 
 	def activate_recentfile(self, widget):
-		indexstr = widget.get_name()[11:] # dirty hack
+		indexstr = gtk.Buildable.get_name(widget)[11:] # dirty hack
 		indexnr = int(indexstr)-1 # to get index number
 		if os.path.exists(self.recentlist[indexnr]):
 			self.load_recentfile(self.recentlist[indexnr])

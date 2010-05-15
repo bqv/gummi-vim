@@ -54,7 +54,7 @@ class Formatting:
 		else: return False
 
 	def get_style_commands(self, widget):
-		caller = widget.get_name()
+		caller = gtk.Buildable.get_name(widget)
 		begintag = ""; endtag = ""
 		if caller in STYLES:
 			if caller == "tool_bold": begintag = "\\textbf{"
