@@ -21,7 +21,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-import gtk
+from gtk import Builder
 import os
 import sys
 import traceback
@@ -45,16 +45,15 @@ class Core:
 		self.filename = None
 
 		# graphical components:
-		builder = gtk.Builder()
+		builder = Builder()
 		builder.add_from_file(path + "/gui/gummi.glade")
-		statusbar = builder.get_object("statusbar")
 
 		# class instances:
 		config = Preferences(path)
 		editorpane = TexPane(config)
 		previewpane = PreviewPane(builder)
 		motion = Motion(config, editorpane, previewpane, builder)
-		iofunc = IOFunctions(config, statusbar, editorpane, motion)
+		iofunc = IOFunctions(config, editorpane, motion, builder)
 		biblio = Biblio(editorpane, motion)
 		gui = MainGUI \
 			(config, builder, iofunc, biblio, motion, editorpane, previewpane)

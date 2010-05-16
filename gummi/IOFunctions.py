@@ -29,13 +29,13 @@ import tempfile
 
 class IOFunctions:
 	
-	def __init__(self, config, statusbar, editorpane, motion):
+	def __init__(self, config, editorpane, motion, builder):
 		
 		self.config = config
 		self.editorpane = editorpane
 		self.motion = motion
 
-		self.statusbar = statusbar
+		self.statusbar = builder.get_object("statusbar")
 		self.statusbar_cid = self.statusbar.get_context_id("Gummi")
 
 		self.tempdir = os.environ.get("TMPDIR", "/tmp")
