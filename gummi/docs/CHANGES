@@ -2,6 +2,23 @@
 Gummi CHANGELOG
 -----------------------------------------------------------------------------
 
+Gummi 0.4.8 (May 16th, 2010):
+
+	Bugs fixed:
+	* Replaced widget.get_name() as it is broken in new pygtk
+	* Current path is now correctly updated on doc load/save
+	* TeX documents with errors no longer crash the preview on start
+	* Slightly cleaner detection method for libgobject hack
+	* Removed cite package inclusion on making a reference
+	* Fixed a number of not working cancel buttons
+	* Preferences warning messages are now hidden by default
+
+	Features added:
+	* Spell checking capabilities through gtkspell
+	* PDF update can be disabled by user
+	* PDF update interval can be set by user
+
+
 Gummi 0.4.5 (January 27th, 2010):
 
 	Bugs fixed:
@@ -27,6 +44,7 @@ Gummi 0.4.5 (January 27th, 2010):
 	* More advanced search function
 	* Restyled interface for import tabs
 
+
 Gummi 0.4.2 (November 2th, 2009):
 	
 	Bugs fixed:
@@ -35,11 +53,13 @@ Gummi 0.4.2 (November 2th, 2009):
 	Features added:
 	* Improved error-checking mode, with automatic error highlighting
 
+
 Gummi 0.4.1 (October 27th, 2009):
 	
 	Bugs fixed:
 	* Replaced thread update model with glib interval event
 	* Python >2.6.3 compatible
+
 
 Gummi 0.4.0 (October 12th, 2009):
 
