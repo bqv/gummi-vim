@@ -158,6 +158,7 @@ msgid ""
 "active document"
 msgstr ""
 "目前文件的錯誤輸出\n"
+" "
 
 #: gummi.glade:775
 msgid "        "
