@@ -20,6 +20,13 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
+import sys
+
+# make lauching gummi from source easier
+if "gummi/" in sys.path[0]:
+    index = sys.path[0].index('gummi')
+    sys.path.insert(0, sys.path[0][:index + len("gummi")])
+
 try:
     from gummi import Core
 except ImportError as e:
