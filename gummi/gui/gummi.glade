@@ -151,7 +151,6 @@
     <child>
       <object class="GtkVBox" id="vbox1">
         <property name="visible">True</property>
-        <property name="orientation">vertical</property>
         <child>
           <object class="GtkMenuBar" id="menu_bar">
             <property name="visible">True</property>
@@ -692,6 +691,29 @@
                     <property name="homogeneous">True</property>
                   </packing>
                 </child>
+                <child>
+                  <object class="GtkSeparatorToolItem" id="tool_separator3">
+                    <property name="visible">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="homogeneous">True</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkToggleToolButton" id="tool_previewoff">
+                    <property name="visible">True</property>
+                    <property name="tooltip_text" translatable="yes">Temporarily disable PDF preview</property>
+                    <property name="label" translatable="yes">toolbutton2</property>
+                    <property name="use_underline">True</property>
+                    <property name="stock_id">gtk-media-pause</property>
+                    <signal name="toggled" handler="on_tool_previewoff_toggled"/>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="homogeneous">True</property>
+                  </packing>
+                </child>
               </object>
               <packing>
                 <property name="position">0</property>
@@ -735,7 +757,6 @@ active document</property>
               <object class="GtkVBox" id="vbox4">
                 <property name="width_request">200</property>
                 <property name="visible">True</property>
-                <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkScrolledWindow" id="editor_scroll">
                     <property name="visible">True</property>
@@ -856,7 +877,6 @@ active document</property>
             <child>
               <object class="GtkVBox" id="vbox2">
                 <property name="visible">True</property>
-                <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkNotebook" id="main_notebook">
                     <property name="visible">True</property>
@@ -865,7 +885,6 @@ active document</property>
                     <child>
                       <object class="GtkVBox" id="vbox7">
                         <property name="visible">True</property>
-                        <property name="orientation">vertical</property>
                         <child>
                           <object class="GtkScrolledWindow" id="preview_scroll">
                             <property name="visible">True</property>
@@ -1053,14 +1072,12 @@ active document</property>
                         <child>
                           <object class="GtkVBox" id="vbox5">
                             <property name="visible">True</property>
-                            <property name="orientation">vertical</property>
                             <child>
                               <object class="GtkHBox" id="hbox5">
                                 <property name="visible">True</property>
                                 <child>
                                   <object class="GtkVBox" id="vbox8">
                                     <property name="visible">True</property>
-                                    <property name="orientation">vertical</property>
                                     <child>
                                       <object class="GtkLabel" id="label12">
                                         <property name="visible">True</property>
@@ -1113,7 +1130,6 @@ active document</property>
                                   <object class="GtkVButtonBox" id="vbuttonbox1">
                                     <property name="height_request">100</property>
                                     <property name="visible">True</property>
-                                    <property name="orientation">vertical</property>
                                     <property name="layout_style">spread</property>
                                     <child>
                                       <object class="GtkButton" id="bibrefresh">
@@ -1350,7 +1366,6 @@ active document</property>
     <child>
       <object class="GtkVBox" id="vbox3">
         <property name="visible">True</property>
-        <property name="orientation">vertical</property>
         <child>
           <object class="GtkHBox" id="hbox2">
             <property name="visible">True</property>
@@ -1372,8 +1387,8 @@ active document</property>
                 <property name="has_focus">True</property>
                 <property name="invisible_char">&#x2022;</property>
                 <property name="primary_icon_stock">gtk-find</property>
-                <accelerator key="Escape" signal="activate" modifiers="GDK_SHIFT_MASK"/>
                 <accelerator key="Return" signal="activate"/>
+                <accelerator key="Escape" signal="activate" modifiers="GDK_SHIFT_MASK"/>
                 <signal name="activate" handler="on_button_searchwindow_find_clicked"/>
               </object>
               <packing>
@@ -1938,7 +1953,6 @@ cells have line borders. </property>
     <child>
       <object class="GtkVBox" id="vbox6">
         <property name="visible">True</property>
-        <property name="orientation">vertical</property>
         <child>
           <object class="GtkViewport" id="viewport3">
             <property name="height_request">80</property>

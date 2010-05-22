@@ -325,6 +325,12 @@ class MainGUI:
 
 	def on_tool_textstyle_activate(self, button, data=None):
 		self.editorpane.set_selection_textstyle(button)
+	
+	def on_tool_previewoff_toggled(self, button, data=None):
+		if button.get_active():
+			self.motion.stop_updatepreview()
+		else:
+			self.motion.start_updatepreview()
 
 	def on_button_import_apply_clicked(self, button, data=None):
 		self.importgui.insert_object(button)
