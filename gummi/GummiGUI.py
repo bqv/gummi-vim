@@ -306,7 +306,7 @@ class MainGUI:
 		"Contributors:",
 		"Thomas van der Burgt",
 		"Cameron Grout"]
-		translators = "(Chinese) - Wei-Ning Huang"	
+		translators = "(Taiwanese) - Wei-Ning Huang"	
 		artwork = ["Template icon set from:\nhttp://www.fatcow.com/free-icons/"]
 		about_dialog = gtk.AboutDialog()
 		about_dialog.set_transient_for(self.mainwindow)
