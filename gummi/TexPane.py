@@ -30,6 +30,7 @@ try:
 	import gtkspell
 	GTKSPELL_AVAILABLE = True
 except ImportError:
+	GTKSPELL_AVAILABLE = False
 	print "python-gtkspell not available, spell checking disabled.."
 
 import Formatting
@@ -95,6 +96,9 @@ class TexPane:
 					spell.set_language(language)
 			except RuntimeError: # probably trying to set None
 				pass
+
+	def gtkspell_available(self):
+		return GTKSPELL_AVAILABLE
 
 	def fill_buffer(self, newcontent):
 		"""Clears the buffer and writes new not-undoable data into it"""

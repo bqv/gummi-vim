@@ -59,6 +59,9 @@ class MainGUI:
 		self.bibprogressval = 0
 		self.list_biblios = self.builder.get_object("list_biblios")
 
+		if not self.editorpane.gtkspell_available():
+			self.builder.get_object("menu_spelling").set_sensitive(False)
+
 		if self.config.get_value("view", "toolbar"):
 			menu_toolbar = self.builder.get_object("menu_toolbar")
 			menu_toolbar.set_active(True)
