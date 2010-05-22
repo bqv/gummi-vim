@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from distutils.core import setup
+from DistUtilsExtra.command import *
 
 _data_files = [
 	('share/applications', ['gummi/misc/gummi.desktop']),
@@ -32,5 +33,7 @@ setup(
 	package_data = {'gummi' : files },
 	scripts = ['gummi/misc/gummi'],
 	data_files = _data_files,
+        cmdclass = { "build": build_extra.build_extra,
+                     "build_i18n": build_i18n.build_i18n }
 )
 
