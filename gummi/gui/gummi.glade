@@ -425,7 +425,7 @@
                     <property name="visible">True</property>
                     <child>
                       <object class="GtkImageMenuItem" id="menu_find">
-                        <property name="label">_Find&#x2026;</property>
+                        <property name="label" translatable="yes">_Find&#x2026;</property>
                         <property name="visible">True</property>
                         <property name="use_underline">True</property>
                         <property name="image">image6</property>
@@ -511,7 +511,7 @@
                     <property name="visible">True</property>
                     <child>
                       <object class="GtkImageMenuItem" id="menu_update">
-                        <property name="label">Check _Updates</property>
+                        <property name="label" translatable="yes">Check _Updates</property>
                         <property name="visible">True</property>
                         <property name="use_underline">True</property>
                         <property name="image">image1</property>
@@ -1387,8 +1387,8 @@ active document</property>
                 <property name="has_focus">True</property>
                 <property name="invisible_char">&#x2022;</property>
                 <property name="primary_icon_stock">gtk-find</property>
-                <accelerator key="Return" signal="activate"/>
                 <accelerator key="Escape" signal="activate" modifiers="GDK_SHIFT_MASK"/>
+                <accelerator key="Return" signal="activate"/>
                 <signal name="activate" handler="on_button_searchwindow_find_clicked"/>
               </object>
               <packing>
