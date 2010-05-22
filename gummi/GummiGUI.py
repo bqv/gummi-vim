@@ -297,15 +297,22 @@ class MainGUI:
 		update = UpdateCheck.UpdateCheck()
 
 	def on_menu_about_activate(self, menuitem, data=None):
-		authors = ["Alexander van der Mey\n<alexvandermey@gmail.com>\n\n"
-					"Contributors:\n"
-					"Thomas van der Burgt <thomas@thvdburgt.nl>\n"
-					"Cameron Grout <camerongrout@gmail.com>\n"]				
+		authors = [
+		"Alexander van der Mey",
+		"<alexvandermey@gmail.com>",
+		"Wei-Ning Huang",
+		"<aitjcize@gmail.com>",
+		"",
+		"Contributors:",
+		"Thomas van der Burgt",
+		"Cameron Grout"]
+		translators = "(Chinese) - Wei-Ning Huang"	
 		artwork = ["Template icon set from:\nhttp://www.fatcow.com/free-icons/"]
 		about_dialog = gtk.AboutDialog()
 		about_dialog.set_transient_for(self.mainwindow)
 		about_dialog.set_destroy_with_parent(True)
 		about_dialog.set_name("Gummi")
+		about_dialog.set_translator_credits(translators)
 		about_dialog.set_license(Preferences.LICENSE)
 		about_dialog.set_version(Preferences.VERSION)
 		about_dialog.set_copyright("Copyright \xc2\xa9 2009 Alexander van der Mey")
