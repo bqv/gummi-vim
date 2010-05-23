@@ -220,6 +220,16 @@
                       </object>
                     </child>
                     <child>
+                      <object class="GtkImageMenuItem" id="menu_exportpdf">
+                        <property name="label" translatable="yes">_Export to PDF</property>
+                        <property name="visible">True</property>
+                        <property name="use_underline">True</property>
+                        <property name="image">image9</property>
+                        <property name="use_stock">False</property>
+                        <signal name="activate" handler="on_menu_exportpdf_activate"/>
+                      </object>
+                    </child>
+                    <child>
                       <object class="GtkSeparatorMenuItem" id="separator1">
                         <property name="visible">True</property>
                       </object>
@@ -583,6 +593,21 @@
                     <property name="use_underline">True</property>
                     <property name="stock_id">gtk-save</property>
                     <signal name="clicked" handler="on_menu_save_activate"/>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="homogeneous">True</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkToolButton" id="tool_exportpdf">
+                    <property name="visible">True</property>
+                    <property name="tooltip_text" translatable="yes">Export to PDF</property>
+                    <property name="is_important">True</property>
+                    <property name="label" translatable="yes">Export to PDF</property>
+                    <property name="use_underline">True</property>
+                    <property name="icon_name">application-pdf</property>
+                    <signal name="clicked" handler="on_menu_exportpdf_activate"/>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -2079,5 +2104,9 @@ cells have line borders. </property>
   <object class="GtkImage" id="image8">
     <property name="visible">True</property>
     <property name="icon_name">accessories-dictionary</property>
+  </object>
+  <object class="GtkImage" id="image9">
+    <property name="visible">True</property>
+    <property name="icon_name">application-pdf</property>
   </object>
 </interface>

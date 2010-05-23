@@ -128,6 +128,11 @@ class MainGUI:
 		self.filename = self.get_save_filename()
 		if self.filename: self.save_document(self.filename)
 
+	def on_menu_exportpdf_activate(self, menuitem, data=None):
+		# We ask user for filename everytime because this is an 'export' util.
+		pdfname = self.get_save_filename(of_pdf=True)
+		if pdfname: self.iofunc.export_pdffile(pdfname)
+
 	def on_menu_recent_activate(self, widget, data=None):
 		self.recentgui.activate_recentfile(widget)
 
@@ -378,17 +383,24 @@ class MainGUI:
 		self.biblio.setup_bibliography()
 		self.mainnotebook.set_current_page(0)
 
-	def set_file_filters(self, dialog):
-		plainfilter = gtk.FileFilter()
-		plainfilter.set_name('Text files')
-		plainfilter.add_mime_type("text/plain")
-		dialog.add_filter(plainfilter)
+	def set_file_filters(self, dialog, to_pdf=False):
+		if to_pdf:
+			pdffilter = gtk.FileFilter()
+			pdffilter.set_name('application/pdf')
+			pdffilter.add_pattern('*.pdf')
+			dialog.add_filter(pdffilter)
+			dialog.set_filter(pdffilter)
+		else:
+			plainfilter = gtk.FileFilter()
+			plainfilter.set_name('Text files')
+			plainfilter.add_mime_type("text/plain")
+			dialog.add_filter(plainfilter)
 
-		latexfilter = gtk.FileFilter()
-		latexfilter.set_name('LaTeX files')
-		latexfilter.add_pattern('*.tex')
-		dialog.add_filter(latexfilter)
-		dialog.set_filter(plainfilter)
+			latexfilter = gtk.FileFilter()
+			latexfilter.set_name('LaTeX files')
+			latexfilter.add_pattern('*.tex')
+			dialog.add_filter(latexfilter)
+			dialog.set_filter(plainfilter)
 
 	def get_open_filename(self):
 		filename = None
@@ -403,21 +415,27 @@ class MainGUI:
 		chooser.destroy()
 		return filename
 
-	def get_save_filename(self):
+	def get_save_filename(self, of_pdf=False):
+		# reuse this function to get save filename of exported pdf
 		filename = None
 		chooser = gtk.FileChooserDialog(_("Save File..."), self.mainwindow,
 										gtk.FILE_CHOOSER_ACTION_SAVE,
 										(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
 										gtk.STOCK_SAVE, gtk.RESPONSE_OK))
-		self.set_file_filters(chooser)
+		self.set_file_filters(chooser, of_pdf)
 		response = chooser.run()
 		if response == gtk.RESPONSE_CANCEL:
 			self.exitinterrupt = True
 		if response == gtk.RESPONSE_OK:
 			filename = chooser.get_filename()
-			if not ".tex" in filename[-4:]:
-				filename = filename + ".tex"
-			self.iofunc.make_environment(filename)
+			if of_pdf:
+				# export_pdffile will add '.pdf'
+				if ".pdf" == filename[-4:]:
+					filename = filename[:-4]
+			else:
+				if not ".tex" in filename[-4:]:
+					filename = filename + ".tex"
+				self.iofunc.make_environment(filename)
 		chooser.destroy()
 		return filename
 

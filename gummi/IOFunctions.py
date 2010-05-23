@@ -97,11 +97,18 @@ class IOFunctions:
 			fout.close()
 		except: print "save_file failed"
 
-	def export_pdffile(self):
+	def export_pdffile(self, alternative_name=None):
+		# alternative_name can be assigned so that the export filename can be
+		# changed.
+		if alternative_name:
+			outname = alternative_name
+		else:
+			outname = self.texpath + self.texname
+
 		try:
-			export = self.texpath + self.texname + ".pdf"
+			export = outname + ".pdf"
 			shutil.copy2(self.pdffile, export)
-			os.chdir(self.texpath)
+			if not alternative_name: os.chdir(self.texpath)
 		except IOError: pass
 
 	def start_autosave(self, time):
