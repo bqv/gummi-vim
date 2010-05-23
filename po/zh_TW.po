@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-05-22 23:45+0800\n"
+"POT-Creation-Date: 2010-05-23 09:18+0800\n"
 "PO-Revision-Date: 2010-05-21 22:11+0800\n"
 "Last-Translator: AZ Huang <aitjcize@gmail.com>\n"
 "Language-Team: \n"
@@ -289,138 +289,146 @@ msgid "Save"
 msgstr "儲存"
 
 #: ../gummi/gui/gummi.glade.h:77
+msgid "Save _As..."
+msgstr "另存新檔...(_A)"
+
+#: ../gummi/gui/gummi.glade.h:78
 msgid "Save the current file"
 msgstr "儲存目前檔案"
 
-#: ../gummi/gui/gummi.glade.h:78
+#: ../gummi/gui/gummi.glade.h:79
 msgid "Scale:"
 msgstr "縮放:"
 
-#: ../gummi/gui/gummi.glade.h:79
+#: ../gummi/gui/gummi.glade.h:80
 msgid "Search backwards"
 msgstr "向後搜尋"
 
-#: ../gummi/gui/gummi.glade.h:80
+#: ../gummi/gui/gummi.glade.h:81
 msgid "Search for:"
 msgstr "尋找:"
 
-#: ../gummi/gui/gummi.glade.h:81
+#: ../gummi/gui/gummi.glade.h:82
 msgid "Single line"
 msgstr "單線"
 
-#: ../gummi/gui/gummi.glade.h:82
+#: ../gummi/gui/gummi.glade.h:83
 msgid "Table"
 msgstr "表格"
 
-#: ../gummi/gui/gummi.glade.h:83
+#: ../gummi/gui/gummi.glade.h:84
 msgid "Template options:"
 msgstr "模版選項:"
 
-#: ../gummi/gui/gummi.glade.h:84
+#: ../gummi/gui/gummi.glade.h:85
 msgid "Temporarily disable PDF preview"
 msgstr "暫時停止即時預覽"
 
-#: ../gummi/gui/gummi.glade.h:85
+#: ../gummi/gui/gummi.glade.h:86
 msgid "Unbracketed"
 msgstr "無括弧"
 
-#: ../gummi/gui/gummi.glade.h:86
+#: ../gummi/gui/gummi.glade.h:87
 msgid "Underline text"
 msgstr "底線"
 
-#: ../gummi/gui/gummi.glade.h:87
+#: ../gummi/gui/gummi.glade.h:88
 msgid "_Autocheck Spelling"
 msgstr "拼字檢查(_A)"
 
-#: ../gummi/gui/gummi.glade.h:88
+#: ../gummi/gui/gummi.glade.h:89
 msgid "_Compile Bibliography"
 msgstr "編譯參考文獻(_C)"
 
-#: ../gummi/gui/gummi.glade.h:89
+#: ../gummi/gui/gummi.glade.h:90
 msgid "_Edit"
 msgstr "編輯(_E)"
 
-#: ../gummi/gui/gummi.glade.h:90
+#: ../gummi/gui/gummi.glade.h:91
 msgid "_File"
 msgstr "檔案(_F)"
 
-#: ../gummi/gui/gummi.glade.h:91
-msgid "_Find&#x2026;"
-msgstr "搜尋&#x2026;(_F)"
-
 #: ../gummi/gui/gummi.glade.h:92
+msgid "_Find..."
+msgstr "搜尋...(_F)"
+
+#: ../gummi/gui/gummi.glade.h:93
 msgid "_Fullscreen"
 msgstr "全螢幕(_T)"
 
-#: ../gummi/gui/gummi.glade.h:93
+#: ../gummi/gui/gummi.glade.h:94
 msgid "_Help"
 msgstr "幫助(_H)"
 
-#: ../gummi/gui/gummi.glade.h:94
+#: ../gummi/gui/gummi.glade.h:95
 msgid "_Insert Bibliography"
 msgstr "插入參考文獻(_I)"
 
-#: ../gummi/gui/gummi.glade.h:95
+#: ../gummi/gui/gummi.glade.h:96
+msgid "_Open..."
+msgstr "開啟...(_O)"
+
+#: ../gummi/gui/gummi.glade.h:97
 msgid "_Search"
 msgstr "搜尋(_S)"
 
-#: ../gummi/gui/gummi.glade.h:96
+#: ../gummi/gui/gummi.glade.h:98
 msgid "_Statusbar"
 msgstr "狀態列(_S)"
 
-#: ../gummi/gui/gummi.glade.h:97
+#: ../gummi/gui/gummi.glade.h:99
 msgid "_Toolbar"
 msgstr "工具列(_T)"
 
-#: ../gummi/gui/gummi.glade.h:98
+#: ../gummi/gui/gummi.glade.h:100
 msgid "_Tools"
 msgstr "工具(_T)"
 
-#: ../gummi/gui/gummi.glade.h:99
+#: ../gummi/gui/gummi.glade.h:101
 msgid "_View"
 msgstr "檢視(_V)"
 
-#: ../gummi/gui/gummi.glade.h:100
+#: ../gummi/gui/gummi.glade.h:102
 msgid "filter:"
 msgstr "篩選:"
 
-#: ../gummi/gui/gummi.glade.h:101
+#: ../gummi/gui/gummi.glade.h:103 ../gummi/GummiGUI.py:248
 msgid "no bibliography file detected"
 msgstr "無法找到參考文獻"
 
-#: ../gummi/gui/gummi.glade.h:102
+#: ../gummi/gui/gummi.glade.h:104
 msgid "none"
 msgstr "無"
 
-#: ../gummi/gui/gummi.glade.h:103
+#: ../gummi/gui/gummi.glade.h:105
 msgid "of 0"
 msgstr "/ 0"
 
-#: ../gummi/gui/gummi.glade.h:104
+#: ../gummi/gui/gummi.glade.h:106
 msgid "shouldnotseeme"
 msgstr "shouldnotseeme"
 
-#: ../gummi/gui/gummi.glade.h:105
+#: ../gummi/gui/gummi.glade.h:107
 msgid "toolbutton1"
 msgstr "toolbutton1"
 
-#: ../gummi/gui/gummi.glade.h:106
+#: ../gummi/gui/gummi.glade.h:108
 msgid "toolbutton2"
 msgstr "toolbutton2"
 
-#: ../gummi/gui/gummi.glade.h:107
+#: ../gummi/gui/gummi.glade.h:109
 msgid "toolbutton3"
 msgstr "toolbutton3"
 
-#: ../gummi/gui/gummi.glade.h:108
+#: ../gummi/gui/gummi.glade.h:110
 msgid "toolbutton5"
 msgstr "toolbutton5"
 
-#: ../gummi/gui/gummi.glade.h:109
+#: ../gummi/gui/gummi.glade.h:111
 msgid "toolbutton6"
 msgstr "toolbutton6"
 
-#: ../gummi/gui/gummi.glade.h:110
+#: ../gummi/gui/gummi.glade.h:112
 msgid "toolbutton7"
 msgstr "toolbutton7"
 
@@ -430,7 +438,7 @@ msgstr "設定會在下一次啟動生效"
 
 #: ../gummi/gui/prefs.glade.h:2
 msgid "Default Text"
-msgstr "預設語言"
+msgstr "預設文字"
 
 #: ../gummi/gui/prefs.glade.h:3
 msgid "Display line numbers"
@@ -476,7 +484,7 @@ msgstr "高亮:"
 msgid "Line numbers:"
 msgstr "行號:"
 
-#: ../gummi/gui/prefs.glade.h:14
+#: ../gummi/gui/prefs.glade.h:14 ../gummi/GummiGUI.py:249
 msgid "None"
 msgstr "無"
 
@@ -508,9 +516,9 @@ msgid ""
 "Only available languages are listed. Install additional \n"
 "myspell packages if your language of choice is missing. "
 msgstr ""
-"拼字檢查的工能是使用MySpell的字庫來達成的。\n"
-"只有支援的語言被列出。如果您的語言不在列表\n"
-"請安裝案額外的MySpell套件。"
+"拼字檢查的工能是使用MySpell的字庫來達成的.\n"
+"只有支援的語言被列出。如果您的語言不在列表,\n"
+"請安裝案額外的MySpell套件."
 
 #: ../gummi/gui/prefs.glade.h:24
 msgid "Typesetter command:"
@@ -547,3 +555,98 @@ msgstr "秒"
 #: ../gummi/gui/prefs.glade.h:32
 msgid "xelatex"
 msgstr "xelatex"
+
+#: ../gummi/GummiGUI.py:256
+msgid "Compiling bibliography file.."
+msgstr "正在編譯參考文獻.."
+
+#: ../gummi/GummiGUI.py:257
+msgid "bibliography compiled without errors"
+msgstr "參考文獻已成功編譯"
+
+#: ../gummi/GummiGUI.py:259
+msgid "Error compiling bibliography file or none detected.."
+msgstr "編譯過程中發生錯誤或無法找到參考文獻.."
+
+#: ../gummi/GummiGUI.py:260
+msgid "error compiling bibliography file"
+msgstr "編譯參考文獻過程發生錯誤"
+
+#: ../gummi/GummiGUI.py:266 ../gummi/GummiGUI.py:395
+msgid "Open File..."
+msgstr "開啟..."
+
+#: ../gummi/GummiGUI.py:408
+msgid "Save File..."
+msgstr "儲存檔案..."
+
+#. we need to prompt for save
+#: ../gummi/GummiGUI.py:428
+msgid "Do you want to save the changes you have made?"
+msgstr "是否儲存變更?"
+
+#: ../gummi/GummiGUI.py:433
+msgid "Save?"
+msgstr "是否儲存?"
+
+#: ../gummi/GummiGUI.py:456
+msgid "Saving file "
+msgstr "正在儲存 "
+
+#: ../gummi/GummiGUI.py:803
+msgid "Error loading recent file: "
+msgstr "載入最近使用文件時發生錯誤: "
+
+#: ../gummi/Motion.py:108
+msgid ""
+"PDF-Preview could not initialize.\n"
+"\n"
+"It appears your LaTeX document contains errors.\n"
+"Additional information is available on the Error Output tab.\n"
+"Please correct the listed errors and click this area\n"
+"to reload the preview panel."
+msgstr ""
+"無法啟動PDF預覽.\n"
+"\n"
+"您的LaTex文件中包含錯誤.\n"
+"更多的訊息請參照錯誤輸出欄.\n"
+"請在更正錯誤後點選此區域\n"
+"來更新預覽."
+
+#: ../gummi/UpdateCheck.py:42
+msgid "Currently installed:\n"
+msgstr "安裝版本:\n"
+
+#: ../gummi/UpdateCheck.py:43
+msgid ""
+"\n"
+"\n"
+"Currently available:\n"
+msgstr ""
+"\n"
+"\n"
+"最新版本:\n"
+
+#: ../gummi/UpdateCheck.py:45
+msgid "Update Check"
+msgstr "檢查更新"
+
+#: ../gummi/UpdateCheck.py:49
+msgid ""
+"The server could not be contacted.\n"
+"\n"
+msgstr ""
+"無法連接到伺服器.\n"
+"\n"
+
+#: ../gummi/UpdateCheck.py:50
+msgid "This function requires an active\n"
+msgstr "此功能需要可用的\n"
+
+#: ../gummi/UpdateCheck.py:51
+msgid "internet connection."
+msgstr "網路連線."
+
+#: ../gummi/UpdateCheck.py:53
+msgid "Error"
+msgstr "錯誤"

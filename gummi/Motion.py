@@ -31,8 +31,11 @@ import traceback
 import tempfile
 import re
 import gtk
+import gettext
 
 import Preferences
+
+_ = gettext.gettext
 
 class Motion:
 
@@ -102,11 +105,11 @@ class Motion:
 		eventbox.set_events(gtk.gdk.BUTTON_PRESS_MASK)
 		eventbox.connect('button-press-event', self.preview_error_mode)
 		label = gtk.Label( \
-			"PDF-Preview could not initialize.\n\n" \
+			_("PDF-Preview could not initialize.\n\n" \
 			"It appears your LaTeX document contains errors.\n" \
 			"Additional information is available on the Error Output tab.\n" \
 			"Please correct the listed errors and click this area\n" \
-			"to reload the preview panel.")
+			"to reload the preview panel."))
 		label.set_justify(gtk.JUSTIFY_CENTER)
 		eventbox.add(label)
 		self.preview_viewport.remove(self.previewpane.drawarea)

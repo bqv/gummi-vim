@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-05-22 23:46+0800\n"
+"POT-Creation-Date: 2010-05-23 09:19+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -288,138 +288,146 @@ msgid "Save"
 msgstr ""
 
 #: ../gummi/gui/gummi.glade.h:77
-msgid "Save the current file"
+msgid "Save _As..."
 msgstr ""
 
 #: ../gummi/gui/gummi.glade.h:78
-msgid "Scale:"
+msgid "Save the current file"
 msgstr ""
 
 #: ../gummi/gui/gummi.glade.h:79
-msgid "Search backwards"
+msgid "Scale:"
 msgstr ""
 
 #: ../gummi/gui/gummi.glade.h:80
-msgid "Search for:"
+msgid "Search backwards"
 msgstr ""
 
 #: ../gummi/gui/gummi.glade.h:81
-msgid "Single line"
+msgid "Search for:"
 msgstr ""
 
 #: ../gummi/gui/gummi.glade.h:82
-msgid "Table"
+msgid "Single line"
 msgstr ""
 
 #: ../gummi/gui/gummi.glade.h:83
-msgid "Template options:"
+msgid "Table"
 msgstr ""
 
 #: ../gummi/gui/gummi.glade.h:84
-msgid "Temporarily disable PDF preview"
+msgid "Template options:"
 msgstr ""
 
 #: ../gummi/gui/gummi.glade.h:85
-msgid "Unbracketed"
+msgid "Temporarily disable PDF preview"
 msgstr ""
 
 #: ../gummi/gui/gummi.glade.h:86
-msgid "Underline text"
+msgid "Unbracketed"
 msgstr ""
 
 #: ../gummi/gui/gummi.glade.h:87
-msgid "_Autocheck Spelling"
+msgid "Underline text"
 msgstr ""
 
 #: ../gummi/gui/gummi.glade.h:88
-msgid "_Compile Bibliography"
+msgid "_Autocheck Spelling"
 msgstr ""
 
 #: ../gummi/gui/gummi.glade.h:89
-msgid "_Edit"
+msgid "_Compile Bibliography"
 msgstr ""
 
 #: ../gummi/gui/gummi.glade.h:90
-msgid "_File"
+msgid "_Edit"
 msgstr ""
 
 #: ../gummi/gui/gummi.glade.h:91
-msgid "_Find&#x2026;"
+msgid "_File"
 msgstr ""
 
 #: ../gummi/gui/gummi.glade.h:92
-msgid "_Fullscreen"
+msgid "_Find..."
 msgstr ""
 
 #: ../gummi/gui/gummi.glade.h:93
-msgid "_Help"
+msgid "_Fullscreen"
 msgstr ""
 
 #: ../gummi/gui/gummi.glade.h:94
-msgid "_Insert Bibliography"
+msgid "_Help"
 msgstr ""
 
 #: ../gummi/gui/gummi.glade.h:95
-msgid "_Search"
+msgid "_Insert Bibliography"
 msgstr ""
 
 #: ../gummi/gui/gummi.glade.h:96
-msgid "_Statusbar"
+msgid "_Open..."
 msgstr ""
 
 #: ../gummi/gui/gummi.glade.h:97
-msgid "_Toolbar"
+msgid "_Search"
 msgstr ""
 
 #: ../gummi/gui/gummi.glade.h:98
-msgid "_Tools"
+msgid "_Statusbar"
 msgstr ""
 
 #: ../gummi/gui/gummi.glade.h:99
-msgid "_View"
+msgid "_Toolbar"
 msgstr ""
 
 #: ../gummi/gui/gummi.glade.h:100
-msgid "filter:"
+msgid "_Tools"
 msgstr ""
 
 #: ../gummi/gui/gummi.glade.h:101
-msgid "no bibliography file detected"
+msgid "_View"
 msgstr ""
 
 #: ../gummi/gui/gummi.glade.h:102
-msgid "none"
+msgid "filter:"
 msgstr ""
 
-#: ../gummi/gui/gummi.glade.h:103
-msgid "of 0"
+#: ../gummi/gui/gummi.glade.h:103 ../gummi/GummiGUI.py:248
+msgid "no bibliography file detected"
 msgstr ""
 
 #: ../gummi/gui/gummi.glade.h:104
-msgid "shouldnotseeme"
+msgid "none"
 msgstr ""
 
 #: ../gummi/gui/gummi.glade.h:105
-msgid "toolbutton1"
+msgid "of 0"
 msgstr ""
 
 #: ../gummi/gui/gummi.glade.h:106
-msgid "toolbutton2"
+msgid "shouldnotseeme"
 msgstr ""
 
 #: ../gummi/gui/gummi.glade.h:107
-msgid "toolbutton3"
+msgid "toolbutton1"
 msgstr ""
 
 #: ../gummi/gui/gummi.glade.h:108
-msgid "toolbutton5"
+msgid "toolbutton2"
 msgstr ""
 
 #: ../gummi/gui/gummi.glade.h:109
-msgid "toolbutton6"
+msgid "toolbutton3"
 msgstr ""
 
 #: ../gummi/gui/gummi.glade.h:110
+msgid "toolbutton5"
+msgstr ""
+
+#: ../gummi/gui/gummi.glade.h:111
+msgid "toolbutton6"
+msgstr ""
+
+#: ../gummi/gui/gummi.glade.h:112
 msgid "toolbutton7"
 msgstr ""
 
@@ -475,7 +483,7 @@ msgstr ""
 msgid "Line numbers:"
 msgstr ""
 
-#: ../gummi/gui/prefs.glade.h:14
+#: ../gummi/gui/prefs.glade.h:14 ../gummi/GummiGUI.py:249
 msgid "None"
 msgstr ""
 
@@ -542,4 +550,88 @@ msgstr ""
 
 #: ../gummi/gui/prefs.glade.h:32
 msgid "xelatex"
+msgstr ""
+
+#: ../gummi/GummiGUI.py:256
+msgid "Compiling bibliography file.."
+msgstr ""
+
+#: ../gummi/GummiGUI.py:257
+msgid "bibliography compiled without errors"
+msgstr ""
+
+#: ../gummi/GummiGUI.py:259
+msgid "Error compiling bibliography file or none detected.."
+msgstr ""
+
+#: ../gummi/GummiGUI.py:260
+msgid "error compiling bibliography file"
+msgstr ""
+
+#: ../gummi/GummiGUI.py:266 ../gummi/GummiGUI.py:395
+msgid "Open File..."
+msgstr ""
+
+#: ../gummi/GummiGUI.py:408
+msgid "Save File..."
+msgstr ""
+
+#. we need to prompt for save
+#: ../gummi/GummiGUI.py:428
+msgid "Do you want to save the changes you have made?"
+msgstr ""
+
+#: ../gummi/GummiGUI.py:433
+msgid "Save?"
+msgstr ""
+
+#: ../gummi/GummiGUI.py:456
+msgid "Saving file "
+msgstr ""
+
+#: ../gummi/GummiGUI.py:803
+msgid "Error loading recent file: "
+msgstr ""
+
+#: ../gummi/Motion.py:108
+msgid ""
+"PDF-Preview could not initialize.\n"
+"\n"
+"It appears your LaTeX document contains errors.\n"
+"Additional information is available on the Error Output tab.\n"
+"Please correct the listed errors and click this area\n"
+"to reload the preview panel."
+msgstr ""
+
+#: ../gummi/UpdateCheck.py:42
+msgid "Currently installed:\n"
+msgstr ""
+
+#: ../gummi/UpdateCheck.py:43
+msgid ""
+"\n"
+"\n"
+"Currently available:\n"
+msgstr ""
+
+#: ../gummi/UpdateCheck.py:45
+msgid "Update Check"
+msgstr ""
+
+#: ../gummi/UpdateCheck.py:49
+msgid ""
+"The server could not be contacted.\n"
+"\n"
+msgstr ""
+
+#: ../gummi/UpdateCheck.py:50
+msgid "This function requires an active\n"
+msgstr ""
+
+#: ../gummi/UpdateCheck.py:51
+msgid "internet connection."
+msgstr ""
+
+#: ../gummi/UpdateCheck.py:53
+msgid "Error"
 msgstr ""

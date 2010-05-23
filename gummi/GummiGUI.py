@@ -26,6 +26,7 @@ import sys
 import glib
 import gtk
 import pango
+import gettext
 import traceback
 
 import Importer
@@ -33,6 +34,7 @@ import UpdateCheck
 import Template
 import Preferences
 
+_ = gettext.gettext
 
 class MainGUI:
 
@@ -243,25 +245,25 @@ class MainGUI:
 			bibrefnr.set_text(str(number))
 			self.bibprogressbar.set_text(filenm + " loaded")
 		else:
-			self.bibprogressbar.set_text("no bibliography file detected")
-			bibfilenm.set_text("None")
+			self.bibprogressbar.set_text(_("no bibliography file detected"))
+			bibfilenm.set_text(_("None"))
 			bibrefnr.set_text("N/A")
 
 	def on_bibcompile_clicked(self, button, data=None):
 		self.bibprogressval = 0
 		glib.timeout_add(10, self.on_bibprogressbar_update)
 		if self.biblio.compile_bibliography(self.bibprogressbar):
-			self.iofunc.set_status("Compiling bibliography file..")
-			self.bibprogressbar.set_text("bibliography compiled without errors")
+			self.iofunc.set_status(_("Compiling bibliography file.."))
+			self.bibprogressbar.set_text(_("bibliography compiled without errors"))
 		else:
-			self.iofunc.set_status("Error compiling bibliography file or none detected..")
-			self.bibprogressbar.set_text("error compiling bibliography file")
+			self.iofunc.set_status(_("Error compiling bibliography file or none detected.."))
+			self.bibprogressbar.set_text(_("error compiling bibliography file"))
 
 
 
 	def on_menu_bibload_activate(self, menuitem, data=None):
 		bibfile = None
-		chooser = gtk.FileChooserDialog("Open File...", self.mainwindow,
+		chooser = gtk.FileChooserDialog(_("Open File..."), self.mainwindow,
 								gtk.FILE_CHOOSER_ACTION_OPEN,
 								(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
 								gtk.STOCK_OPEN, gtk.RESPONSE_OK))
@@ -390,7 +392,7 @@ class MainGUI:
 
 	def get_open_filename(self):
 		filename = None
-		chooser = gtk.FileChooserDialog("Open File...", self.mainwindow,
+		chooser = gtk.FileChooserDialog(_("Open File..."), self.mainwindow,
 										gtk.FILE_CHOOSER_ACTION_OPEN,
 										(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
 										gtk.STOCK_OPEN, gtk.RESPONSE_OK))
@@ -403,7 +405,7 @@ class MainGUI:
 
 	def get_save_filename(self):
 		filename = None
-		chooser = gtk.FileChooserDialog("Save File...", self.mainwindow,
+		chooser = gtk.FileChooserDialog(_("Save File..."), self.mainwindow,
 										gtk.FILE_CHOOSER_ACTION_SAVE,
 										(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
 										gtk.STOCK_SAVE, gtk.RESPONSE_OK))
@@ -423,12 +425,12 @@ class MainGUI:
 		ret = False
 		if self.editorpane.editorbuffer.get_modified():
 			# we need to prompt for save
-			message = "Do you want to save the changes you have made?"
+			message = _("Do you want to save the changes you have made?")
 			dialog = gtk.MessageDialog(self.mainwindow,
 							gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
 							gtk.MESSAGE_QUESTION, gtk.BUTTONS_YES_NO,
 							message)
-			dialog.set_title("Save?")
+			dialog.set_title(_("Save?"))
 			if dialog.run() == gtk.RESPONSE_NO: ret = False
 			else: ret = True
 			dialog.destroy()
@@ -451,7 +453,7 @@ class MainGUI:
 		try:
 			self.iofunc.save_file(filename)
 			if filename: self.filename = filename
-			self.iofunc.set_status("Saving file " + self.filename)
+			self.iofunc.set_status(_("Saving file ") + self.filename)
 			self.iofunc.export_pdffile()
 			self.set_window_title(self.filename)
 		except:
@@ -798,7 +800,7 @@ class RecentGUI:
 
 
 	def remove_recentfile(self, position):
-		self.iofunc.set_status("Error loading recent file: " + str(self.recentlist[position]))
+		self.iofunc.set_status(_("Error loading recent file: ") + str(self.recentlist[position]))
 		self.recentlist.pop(position)
 		for index,value in enumerate(self.recentlist):
 			position = str(index+1)

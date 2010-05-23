@@ -76,6 +76,7 @@ if __name__ == "__main__":
 	path = sys.path[0]
 else: 
 	path = os.path.dirname(__file__)
+	print path
 try:
 	instance = Core()
 except:

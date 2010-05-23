@@ -1,8 +1,8 @@
 # Internationalization support
 
-import locale
 import gettext
 import gtk.glade
+import locale
 
 LOCALE_DIR = '/usr/share/locale'
 

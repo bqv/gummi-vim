@@ -23,9 +23,11 @@
 
 import gtk
 import urllib
+import gettext
 
 import Preferences
 
+_ = gettext.gettext
 
 class UpdateCheck:
 	"""Function that requests latest version info from the Gummi website"""
@@ -37,18 +39,18 @@ class UpdateCheck:
 
 			message = gtk.MessageDialog(None,
 						gtk.DIALOG_MODAL, gtk.MESSAGE_INFO, gtk.BUTTONS_NONE,
-						"Currently installed:\n" + Preferences.VERSION +
-						"\n\nCurrently available:\n" + latest)
+						_("Currently installed:\n") + Preferences.VERSION +
+						_("\n\nCurrently available:\n") + latest)
 			message.add_button(gtk.STOCK_CLOSE, gtk.RESPONSE_CLOSE)
-			message.set_title("Update Check")
+			message.set_title(_("Update Check"))
 		except IOError: # catches no internet connection situations
 			message = gtk.MessageDialog(None,
 						gtk.DIALOG_MODAL, gtk.MESSAGE_INFO, gtk.BUTTONS_NONE,
-						"The server could not be contacted.\n\n" +
-						"This function requires an active\n" +
-						"internet connection.")
+						_("The server could not be contacted.\n\n") +
+						_("This function requires an active\n") +
+						_("internet connection."))
 			message.add_button(gtk.STOCK_CLOSE, gtk.RESPONSE_CLOSE)
-			message.set_title("Error")
+			message.set_title(_("Error"))
 		resp = message.run()
 		if resp == gtk.RESPONSE_CLOSE:
 			message.destroy()
