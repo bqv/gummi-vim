@@ -194,11 +194,11 @@ msgstr "搜尋"
 
 #: ../gummi/gui/gummi.glade.h:53
 msgid "Find Ne_xt"
-msgstr "向後搜尋(_X)"
+msgstr "找下一個(_X)"
 
 #: ../gummi/gui/gummi.glade.h:54
 msgid "Find Pre_vious"
-msgstr "找下一個"
+msgstr "找前一個(_V)"
 
 #: ../gummi/gui/gummi.glade.h:55
 msgid "Fit Page Width"

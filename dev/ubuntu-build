@@ -11,6 +11,9 @@ svn co http://midnightcoding.org/svn/gummi/trunk/ gummi-read-only
 
 cd gummi-read-only
 
+rm po/template*.po
+rename 's/(.*)-[0-9]*/$1/g' po/*.po
+
 echo "What's the version number for this release?"
 
 read rlschoice
@@ -84,4 +87,4 @@ sed -i s/S.E.D/$rlschoice/ control
 
 cd ..
 
-dpkg-buildpackage -us -uc
+fakeroot debian/rules binary

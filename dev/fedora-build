@@ -6,6 +6,9 @@ svn co -q http://dev.midnightcoding.org/svn/gummi/trunk/ gummi-read-only
 
 cd gummi-read-only
 
+rm po/template*.po
+rename 's/(.*)-[0-9]*/$1/g' po/*.po
+
 echo "What's the version number for this release?"
 
 read rlschoice
