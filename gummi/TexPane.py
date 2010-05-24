@@ -222,11 +222,15 @@ class TexPane:
 
 	def jumpto_searchresult(self, direction):
 		try: 
-			if self.searchposition + direction < 0:
-				return False
-			ins, bnd = self.searchresultiters[self.searchposition + direction]
+			position = self.searchposition + direction
+			# wrap around search
+			if position < 0:
+				position = len(self.searchresultiters) -1
+			elif position >= len(self.searchresultiters):
+				position = 0
+			ins, bnd = self.searchresultiters[position]
 			self.editorbuffer.place_cursor(ins)
-			self.searchposition = self.searchposition + direction
+			self.searchposition = position
 		except (IndexError, TypeError): pass
 
 	def start_search(self, term, backwards, wholeword, matchcase=0):
