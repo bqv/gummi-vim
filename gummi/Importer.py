@@ -22,12 +22,9 @@
 # THE SOFTWARE.
 
 import os
-import gettext
 
 CURRENT = "CURRENT"
 LINE = "\hline\n"
-
-_ = gettext.gettext
 
 class Importer:
 
