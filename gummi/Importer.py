@@ -22,10 +22,12 @@
 # THE SOFTWARE.
 
 import os
+import gettext
 
 CURRENT = "CURRENT"
 LINE = "\hline\n"
 
+_ = gettext.gettext
 
 class Importer:
 
@@ -140,13 +142,13 @@ class Importer:
 		return begin + include + scale + filename + caption + label + end
 
 	def generate_matrix(self, rows, columns):
-		bracket = self.matrix_combobracket.get_active_text()
-		if bracket == "Unbracketed": mode = "matrix"
-		elif bracket == "Parentheses": mode = "pmatrix"
-		elif bracket == "Brackets": mode = "bmatrix"
-		elif bracket == "Braces": mode = "Bmatrix"
-		elif bracket == "Single line": mode = "vmatrix"
-		elif bracket == "Double line": mode = "Vmatrix"
+		bracket = self.matrix_combobracket.get_active()
+		if bracket == 0: mode = "matrix"
+		elif bracket == 1: mode = "pmatrix"
+		elif bracket == 2: mode = "bmatrix"
+		elif bracket == 3: mode = "Bmatrix"
+		elif bracket == 4: mode = "vmatrix"
+		elif bracket == 5: mode = "Vmatrix"
 		matrix = ""
 		rows = int(rows) + 1
 		columns = int(columns) + 1
