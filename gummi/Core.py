@@ -45,6 +45,7 @@ class Core:
 
 		# graphical components:
 		builder = Builder()
+		builder.set_translation_domain("gummi")
 		builder.add_from_file(Environment.path + "/gui/gummi.glade")
 
 		# class instances:

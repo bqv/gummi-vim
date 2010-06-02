@@ -498,7 +498,7 @@ class PrefsGUI:
 		self.iofunc = iofunc
 		self.motion = motion
 		builder = gtk.Builder()
-                builder.set_translation_domain("gummi")
+		builder.set_translation_domain("gummi")
 		builder.add_from_file(Environment.path + "/gui/prefs.glade")
 		self.builder = builder
 
