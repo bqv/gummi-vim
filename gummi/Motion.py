@@ -154,7 +154,6 @@ class Motion:
 
 	def update_pdffile(self):
 		try:
-			print Environment.tempdir
 			pdfmaker = subprocess.Popen(self.texcmd + \
 					' -interaction=nonstopmode \
 					-file-line-error \
