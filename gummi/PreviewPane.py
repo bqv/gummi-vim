@@ -28,6 +28,8 @@ import os
 import poppler
 from ctypes import *
 
+import Environment
+
 # TODO: Documentation
 
 class PreviewPane:
@@ -79,7 +81,7 @@ class PreviewPane:
 			self.pdffile = pdffile
 			self.current_page = 0 #reset to 0 on new pdf load
 
-			uri = 'file://' + pdffile
+			uri = self.geturi(pdffile)
 			try:
 				document = poppler.document_new_from_file(uri, None)		
 			except:
@@ -104,7 +106,7 @@ class PreviewPane:
 		if not os.path.exists(self.pdffile):
 			print "can't refresh without a pdf file!"
 			return
-		uri = 'file://' + self.pdffile
+		uri = self.geturi(self.pdffile)
 		document = poppler.document_new_from_file(uri, None)
 		self.page_total = document.get_n_pages()
 		if self.page_total - 1 > self.current_page:
@@ -157,7 +159,7 @@ class PreviewPane:
 		cr.set_source_rgb(1, 1, 1)
 		cr.rectangle(0, 0, self.page_width, self.page_height)
 		cr.fill()
-		uri = 'file://' + self.pdffile
+		uri = self.geturi(self.pdffile)
 		document = poppler.document_new_from_file(uri, None)
 		page = document.get_page(self.current_page)
 		page.render(cr)
@@ -173,7 +175,7 @@ class PreviewPane:
 		self.prev.set_sensitive(page > 0)
 		self.next.set_sensitive(page < self.page_total - 1)
 		self.pageinput.set_text(str(self.current_page + 1))
-		uri = 'file://' + self.pdffile
+		uri = self.geturi(self.pdffile)
 		document = poppler.document_new_from_file(uri, None)
 		page = document.get_page(self.current_page)
 		self.page_width, self.page_height = page.get_size()
@@ -231,6 +233,14 @@ class PreviewPane:
 		status, langs = commands.getstatusoutput('ls ' + path)
 		langs = sorted(list(set(re.sub(' \(.*?\)','', langs).split('\n'))))
 		return status, langs
+
+	def geturi(self, filename):
+		if Environment.running_os == 'Windows':
+			return 'file:///' + filename.replace('\\', '/')
+		else:
+			return 'flie://' + filename
+
+
 		
 			
 

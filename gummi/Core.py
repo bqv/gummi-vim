@@ -27,6 +27,7 @@ import sys
 import traceback
 
 from Biblio import Biblio
+import Environment
 from GummiGUI import MainGUI
 from IOFunctions import IOFunctions
 from Motion import Motion
@@ -40,16 +41,14 @@ class Core:
 	def __init__(self):
 
 		# environment: 
-		self.path = path
-		self.tempdir = os.environ.get("TMPDIR", "/tmp")
 		self.filename = None
 
 		# graphical components:
 		builder = Builder()
-		builder.add_from_file(path + "/gui/gummi.glade")
+		builder.add_from_file(Environment.path + "/gui/gummi.glade")
 
 		# class instances:
-		config = Preferences(path)
+		config = Preferences()
 		editorpane = TexPane(config)
 		previewpane = PreviewPane(builder)
 		motion = Motion(config, editorpane, previewpane, builder)
@@ -73,9 +72,9 @@ class Core:
 
 
 if __name__ == "__main__":
-	path = sys.path[0]
+	Environment.path = sys.path[0]
 else: 
-	path = os.path.dirname(__file__)
+	Environment.path = os.path.dirname(__file__)
 try:
 	instance = Core()
 except:

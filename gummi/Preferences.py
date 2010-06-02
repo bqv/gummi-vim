@@ -24,6 +24,7 @@ THE SOFTWARE.
 """
 
 import os
+import Environment
 import ConfigParser
 
 VERSION = "svn"
@@ -65,8 +66,7 @@ http://gummi.midnightcoding.org}\\\\
 
 class Preferences:
 
-	def __init__(self, path):
-		self.path = path
+	def __init__(self):
 		self.config = ConfigParser.RawConfigParser(CFGDEFAULTS)
 		self.cfgpath = os.environ['HOME'] + "/.config/gummi/gummi.cfg"
 

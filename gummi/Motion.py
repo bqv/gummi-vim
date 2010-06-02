@@ -33,6 +33,7 @@ import re
 import gtk
 import gettext
 
+import Environment
 import Preferences
 
 _ = gettext.gettext
@@ -144,7 +145,7 @@ class Motion:
 				' --draftmode \
 				-interaction=nonstopmode \
 				--output-directory="%s" "%s"' \
-				% (self.tempdir, self.workfile), 
+				% (Environment.tempdir, self.workfile), 
 				shell=True, stdin=None, stdout=subprocess.PIPE, stderr=None)
 			output = auxupdate.communicate()[0]
 			auxupdate.wait()
@@ -153,13 +154,14 @@ class Motion:
 
 	def update_pdffile(self):
 		try:
+			print Environment.tempdir
 			pdfmaker = subprocess.Popen(self.texcmd + \
 					' -interaction=nonstopmode \
 					-file-line-error \
 					-halt-on-error \
 					--output-directory="%s" "%s"' \
-					% (self.tempdir, self.workfile), 
-					shell=True, cwd=self.texpath, close_fds=True, \
+					% (Environment.tempdir, self.workfile), 
+					shell=True, cwd=self.texpath, close_fds=False, \
 					stdin=None, stdout = subprocess.PIPE, stderr=None )
 			self.output = pdfmaker.communicate()[0]
 			pdfmaker.wait()

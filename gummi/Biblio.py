@@ -24,6 +24,7 @@ import re
 import shutil
 import subprocess
 import traceback
+import Environment
 
 
 class Biblio:
@@ -62,9 +63,9 @@ class Biblio:
 		try:
 			# cite is not a standard package
 			# self.editorpane.insert_package("cite")
-			tempdir = os.environ.get("TMPDIR", "/tmp")
 			bibtitle = self.bibbasename[:-4]
-			shutil.copy2(self.bibdirname + self.bibbasename, tempdir + "/" + self.bibbasename)
+			shutil.copy2(self.bibdirname + self.bibbasename,
+					Environment.tempdir + "/" + self.bibbasename)
 			self.editorpane.insert_bib(self.bibdirname + self.bibbasename)
 		except:
 			print traceback.print_exc()
@@ -74,9 +75,8 @@ class Biblio:
 		self.motion.update_workfile()
 		workfile = self.motion.workfile[:-4]
 		self.motion.update_auxfile()
-		tempdir = os.environ.get("TMPDIR", "/tmp")
 		bibcompile = subprocess.Popen('bibtex "%s"' \
-				 % (workfile), cwd=tempdir, 
+				 % (workfile), cwd=Environment.tempdir, 
 				shell=True, stdin=None, 
 				stdout=subprocess.PIPE, stderr=None)
 		bibcompile.wait()
@@ -92,8 +92,7 @@ class Biblio:
 	def parse_entries(self, biblist):
 		""" my dirty dirty parser"""
 		refnr = 0
-		tempdir = os.environ.get("TMPDIR", "/tmp")
-		bibfile = open(tempdir + "/" + self.bibbasename)
+		bibfile = open(Environment.tempdir + "/" + self.bibbasename)
 		bibstr = bibfile.read()
 		entries = re.compile('(@article|@book|@booklet|@conference|@inbook|' \
 			'@incollection|@inproceedings|@manual|@mastersthesis|@misc|' \

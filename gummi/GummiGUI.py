@@ -33,6 +33,7 @@ import Importer
 import UpdateCheck
 import Template
 import Preferences
+import Environment
 
 _ = gettext.gettext
 
@@ -46,7 +47,6 @@ class MainGUI:
 		self.biblio = biblio
 		self.motion = motion
 
-		self.tempdir = os.environ.get("TMPDIR", "/tmp")
 		self.builder = builder
 		self.exitinterrupt = False
 		
@@ -108,14 +108,14 @@ class MainGUI:
 		self.template_doc = Template.Template(self.builder)
 
 	def on_menu_open_activate(self, menuitem, data=None):
-		if os.getcwd() == self.tempdir:
+		if os.getcwd() == Environment.tmpdir:
 			os.chdir(os.environ['HOME'])
 		if self.check_for_save(): self.on_menu_save_activate(None, None)
 		filename = self.get_open_filename()
 		if filename: self.load_document(filename)
 
 	def on_menu_save_activate(self, menuitem, data=None):
-		if os.getcwd() == self.tempdir:
+		if os.getcwd() == Environment.tmpdir:
 			os.chdir(os.environ['HOME'])
 		if self.iofunc.filename is None:
 			filename = self.get_save_filename()
@@ -123,7 +123,7 @@ class MainGUI:
 		else: self.save_document(None)
 
 	def on_menu_saveas_activate(self, menuitem, data=None):
-		if os.getcwd() == self.tempdir:
+		if os.getcwd() == Environment.tmpdir:
 			os.chdir(os.environ['HOME'])
 		self.filename = self.get_save_filename()
 		if self.filename: self.save_document(self.filename)

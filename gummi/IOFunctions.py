@@ -26,6 +26,8 @@ import glib
 import shutil
 import tempfile
 
+import Environment
+
 
 class IOFunctions:
 	
@@ -38,7 +40,6 @@ class IOFunctions:
 		self.statusbar = builder.get_object("statusbar")
 		self.statusbar_cid = self.statusbar.get_context_id("Gummi")
 
-		self.tempdir = os.environ.get("TMPDIR", "/tmp")
 		self.filename = None
 		self.texpath = None
 		self.workfile = None
@@ -138,7 +139,7 @@ class IOFunctions:
 		self.statusbar.push(self.statusbar_cid, "")
 
 	def return_envfiles(self):
-		return self.tempdir, \
+		return Environment.tempdir, \
 				self.filename, \
 				self.texpath, \
 				self.workfile, \
