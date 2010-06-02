@@ -46,7 +46,7 @@ class Core:
 		# graphical components:
 		builder = Builder()
 		builder.set_translation_domain("gummi")
-		builder.add_from_file(Environment.path + "/gui/gummi.glade")
+		builder.add_from_file(Environment.gummi_glade)
 
 		# class instances:
 		config = Preferences()
@@ -70,12 +70,6 @@ class Core:
 		# gui main:
 		gui.main()
 
-
-
-if __name__ == "__main__":
-	Environment.path = sys.path[0]
-else: 
-	Environment.path = os.path.dirname(__file__)
 try:
 	instance = Core()
 except:

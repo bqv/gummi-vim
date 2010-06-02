@@ -108,14 +108,14 @@ class MainGUI:
 		self.template_doc = Template.Template(self.builder)
 
 	def on_menu_open_activate(self, menuitem, data=None):
-		if os.getcwd() == Environment.tmpdir:
+		if os.getcwd() == Environment.tempdir:
 			os.chdir(os.environ['HOME'])
 		if self.check_for_save(): self.on_menu_save_activate(None, None)
 		filename = self.get_open_filename()
 		if filename: self.load_document(filename)
 
 	def on_menu_save_activate(self, menuitem, data=None):
-		if os.getcwd() == Environment.tmpdir:
+		if os.getcwd() == Environment.tempdir:
 			os.chdir(os.environ['HOME'])
 		if self.iofunc.filename is None:
 			filename = self.get_save_filename()
@@ -123,7 +123,7 @@ class MainGUI:
 		else: self.save_document(None)
 
 	def on_menu_saveas_activate(self, menuitem, data=None):
-		if os.getcwd() == Environment.tmpdir:
+		if os.getcwd() == Environment.tempdir:
 			os.chdir(os.environ['HOME'])
 		self.filename = self.get_save_filename()
 		if self.filename: self.save_document(self.filename)
@@ -485,7 +485,7 @@ class MainGUI:
 			print "  {o,o}	  Thanks for using Gummi!"
 			print "  |)__)	  I welcome your feedback at:"
 			print '  -"-"-	  http://gummi.midnightcoding.org\n'
-			quit()
+			sys.exit(0)
 		else: self.exitinterrupt = False; return True
 
 
@@ -499,7 +499,7 @@ class PrefsGUI:
 		self.motion = motion
 		builder = gtk.Builder()
 		builder.set_translation_domain("gummi")
-		builder.add_from_file(Environment.path + "/gui/prefs.glade")
+		builder.add_from_file(Environment.prefs_glade)
 		self.builder = builder
 
 		self.prefwindow = builder.get_object("prefwindow")

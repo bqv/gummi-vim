@@ -26,3 +26,11 @@ import tempfile
 
 running_os = platform.system()
 tempdir = tempfile.gettempdir()
+
+if running_os == 'Windows':
+	path = ''
+else:
+	path = sys.path[0]
+
+gummi_glade = path + 'gui\gummi.glade'
+prefs_glade = path + 'gui\prefs.glade'
