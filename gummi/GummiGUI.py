@@ -494,12 +494,12 @@ class PrefsGUI:
 
 	def __init__(self, config, editorpane, mainwindow, iofunc, motion):
 		self.config = config
-		self.path = self.config.path
 		self.editorpane = editorpane
 		self.iofunc = iofunc
 		self.motion = motion
 		builder = gtk.Builder()
-		builder.add_from_file(self.path + "/gui/prefs.glade")
+                builder.set_translation_domain("gummi")
+		builder.add_from_file(Environment.path + "/gui/prefs.glade")
 		self.builder = builder
 
 		self.prefwindow = builder.get_object("prefwindow")

@@ -238,7 +238,7 @@ class PreviewPane:
 		if Environment.running_os == 'Windows':
 			return 'file:///' + filename.replace('\\', '/')
 		else:
-			return 'flie://' + filename
+			return 'file://' + filename
 
 
 		

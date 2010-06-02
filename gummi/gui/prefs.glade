@@ -9,10 +9,8 @@
     <property name="window_position">center-on-parent</property>
     <property name="icon">icon.png</property>
     <child>
-      <object class="GtkHBox" id="hbox1">
-        <property name="width_request">370</property>
+      <object class="GtkVBox" id="vbox1">
         <property name="visible">True</property>
-        <property name="orientation">vertical</property>
         <child>
           <object class="GtkNotebook" id="notebook1">
             <property name="visible">True</property>
@@ -23,7 +21,6 @@
               <object class="GtkVBox" id="view_box">
                 <property name="visible">True</property>
                 <property name="border_width">5</property>
-                <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkLabel" id="label4">
                     <property name="visible">True</property>
@@ -147,7 +144,6 @@
               <object class="GtkVBox" id="editor_boxtop">
                 <property name="visible">True</property>
                 <property name="border_width">5</property>
-                <property name="orientation">vertical</property>
                 <property name="homogeneous">True</property>
                 <child>
                   <object class="GtkHBox" id="hbox2">
@@ -250,7 +246,7 @@
                       <object class="GtkSpinButton" id="autosave_timer">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
-                        <property name="invisible_char">&#x2022;</property>
+                        <property name="invisible_char">&#x25CF;</property>
                         <property name="xalign">0.5</property>
                         <property name="adjustment">autosave_time</property>
                         <signal name="value_changed" handler="on_autosave_value_changed"/>
@@ -310,9 +306,6 @@
                     <child>
                       <object class="GtkComboBox" id="combo_languages">
                         <property name="visible">True</property>
-                        <property name="tooltip_text" translatable="yes">The spell checker uses myspell dictionaries to function. 
-Only available languages are listed. Install additional 
-myspell packages if your language of choice is missing. </property>
                         <property name="model">list_languages</property>
                         <signal name="changed" handler="on_combo_language_changed"/>
                         <child>
@@ -394,7 +387,6 @@ myspell packages if your language of choice is missing. </property>
               <object class="GtkVBox" id="compile_boxtop">
                 <property name="visible">True</property>
                 <property name="border_width">5</property>
-                <property name="orientation">vertical</property>
                 <property name="homogeneous">True</property>
                 <child>
                   <object class="GtkHBox" id="hbox3">
@@ -487,7 +479,6 @@ myspell packages if your language of choice is missing. </property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
-                        <property name="tooltip_text" translatable="yes">Enable/disable the live preview.</property>
                         <property name="use_underline">True</property>
                         <property name="draw_indicator">True</property>
                         <signal name="toggled" handler="toggle_compilestatus"/>
@@ -502,7 +493,7 @@ myspell packages if your language of choice is missing. </property>
                       <object class="GtkSpinButton" id="compile_timer">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
-                        <property name="invisible_char">&#x2022;</property>
+                        <property name="invisible_char">&#x25CF;</property>
                         <property name="xalign">0.5</property>
                         <property name="adjustment">pdfcompile_time</property>
                         <signal name="value_changed" handler="on_compile_value_changed"/>
@@ -610,17 +601,13 @@ myspell packages if your language of choice is missing. </property>
             <property name="visible">True</property>
             <property name="border_width">10</property>
             <property name="spacing">10</property>
-            <property name="layout_style">end</property>
+            <property name="layout_style">center</property>
             <child>
               <object class="GtkButton" id="prefs_reset">
                 <property name="label" translatable="yes">_Reset defaults</property>
-                <property name="width_request">140</property>
-                <property name="height_request">40</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="tooltip_text" translatable="yes">Resets default settings
-for the active tab. </property>
                 <property name="image">image1</property>
                 <property name="use_underline">True</property>
                 <signal name="clicked" handler="on_prefs_reset_clicked"/>
@@ -634,8 +621,6 @@ for the active tab. </property>
             <child>
               <object class="GtkButton" id="prefs_close">
                 <property name="label">gtk-close</property>
-                <property name="width_request">100</property>
-                <property name="height_request">40</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
@@ -651,15 +636,13 @@ for the active tab. </property>
             </child>
           </object>
           <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
             <property name="position">1</property>
           </packing>
         </child>
       </object>
     </child>
-  </object>
-  <object class="GtkImage" id="image1">
-    <property name="visible">True</property>
-    <property name="stock">gtk-clear</property>
   </object>
   <object class="GtkAdjustment" id="autosave_time">
     <property name="value">10</property>
@@ -699,5 +682,9 @@ for the active tab. </property>
         <col id="0" translatable="yes">None</col>
       </row>
     </data>
+  </object>
+  <object class="GtkImage" id="image1">
+    <property name="visible">True</property>
+    <property name="stock">gtk-clear</property>
   </object>
 </interface>

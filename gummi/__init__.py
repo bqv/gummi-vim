@@ -9,3 +9,4 @@ locale.setlocale(locale.LC_ALL, "")
 
 gettext.bindtextdomain("gummi", LOCALE_DIR)
 gettext.textdomain("gummi")
+gettext.install("gummi", LOCALE_DIR)
