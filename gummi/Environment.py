@@ -21,16 +21,17 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
+import sys
+import os
+import os.path
 import platform
 import tempfile
 
 running_os = platform.system()
 tempdir = tempfile.gettempdir()
 
-if running_os == 'Windows':
-	path = ''
-else:
-	path = sys.path[0]
+path = os.getcwd()
+gummi_glade = path + '\gui\gummi.glade'
+prefs_glade = path + '\gui\prefs.glade'
 
-gummi_glade = path + 'gui\gummi.glade'
-prefs_glade = path + 'gui\prefs.glade'
+HOME = os.path.expanduser('~')

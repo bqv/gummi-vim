@@ -75,7 +75,7 @@ class IOFunctions:
 	def load_default_text(self):
 		self.editorpane.fill_buffer \
 			(self.config.get_value("default_text", "welcome"))
-		os.chdir(os.environ['HOME'])
+		os.chdir(Environment.HOME)
 
 	def load_file(self, filename):
 		try:

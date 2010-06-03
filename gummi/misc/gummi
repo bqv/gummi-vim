@@ -23,7 +23,7 @@
 import sys
 
 # make lauching gummi from source easier
-if "gummi/" in sys.path[0]:
+if "gummi" in sys.path[0]:
     index = sys.path[0].index('gummi')
     sys.path.insert(0, sys.path[0][:index + len("gummi")])
 

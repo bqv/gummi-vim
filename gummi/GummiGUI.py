@@ -109,14 +109,14 @@ class MainGUI:
 
 	def on_menu_open_activate(self, menuitem, data=None):
 		if os.getcwd() == Environment.tempdir:
-			os.chdir(os.environ['HOME'])
+			os.chdir(Environment.HOME)
 		if self.check_for_save(): self.on_menu_save_activate(None, None)
 		filename = self.get_open_filename()
 		if filename: self.load_document(filename)
 
 	def on_menu_save_activate(self, menuitem, data=None):
 		if os.getcwd() == Environment.tempdir:
-			os.chdir(os.environ['HOME'])
+			os.chdir(Environment.HOME)
 		if self.iofunc.filename is None:
 			filename = self.get_save_filename()
 			if filename: self.save_document(filename)
@@ -124,7 +124,7 @@ class MainGUI:
 
 	def on_menu_saveas_activate(self, menuitem, data=None):
 		if os.getcwd() == Environment.tempdir:
-			os.chdir(os.environ['HOME'])
+			os.chdir(Environment.HOME)
 		self.filename = self.get_save_filename()
 		if self.filename: self.save_document(self.filename)
 

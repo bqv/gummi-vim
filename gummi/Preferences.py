@@ -68,7 +68,7 @@ class Preferences:
 
 	def __init__(self):
 		self.config = ConfigParser.RawConfigParser(CFGDEFAULTS)
-		self.cfgpath = os.environ['HOME'] + "/.config/gummi/gummi.cfg"
+		self.cfgpath = Environment.HOME + "/.config/gummi/gummi.cfg"
 
 		if not os.path.exists(os.path.dirname(self.cfgpath)):
 			os.makedirs(os.path.dirname(self.cfgpath))
