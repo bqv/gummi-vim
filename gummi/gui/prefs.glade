@@ -11,6 +11,7 @@
     <child>
       <object class="GtkVBox" id="vbox1">
         <property name="visible">True</property>
+        <property name="orientation">vertical</property>
         <child>
           <object class="GtkNotebook" id="notebook1">
             <property name="visible">True</property>
@@ -21,6 +22,7 @@
               <object class="GtkVBox" id="view_box">
                 <property name="visible">True</property>
                 <property name="border_width">5</property>
+                <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkLabel" id="label4">
                     <property name="visible">True</property>
@@ -144,6 +146,7 @@
               <object class="GtkVBox" id="editor_boxtop">
                 <property name="visible">True</property>
                 <property name="border_width">5</property>
+                <property name="orientation">vertical</property>
                 <property name="homogeneous">True</property>
                 <child>
                   <object class="GtkHBox" id="hbox2">
@@ -387,6 +390,7 @@
               <object class="GtkVBox" id="compile_boxtop">
                 <property name="visible">True</property>
                 <property name="border_width">5</property>
+                <property name="orientation">vertical</property>
                 <property name="homogeneous">True</property>
                 <child>
                   <object class="GtkHBox" id="hbox3">
@@ -601,7 +605,7 @@
             <property name="visible">True</property>
             <property name="border_width">10</property>
             <property name="spacing">10</property>
-            <property name="layout_style">center</property>
+            <property name="layout_style">end</property>
             <child>
               <object class="GtkButton" id="prefs_reset">
                 <property name="label" translatable="yes">_Reset defaults</property>

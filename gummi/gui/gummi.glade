@@ -151,6 +151,7 @@
     <child>
       <object class="GtkVBox" id="vbox1">
         <property name="visible">True</property>
+        <property name="orientation">vertical</property>
         <child>
           <object class="GtkMenuBar" id="menu_bar">
             <property name="visible">True</property>
@@ -782,6 +783,7 @@ active document</property>
               <object class="GtkVBox" id="vbox4">
                 <property name="width_request">200</property>
                 <property name="visible">True</property>
+                <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkScrolledWindow" id="editor_scroll">
                     <property name="visible">True</property>
@@ -902,6 +904,7 @@ active document</property>
             <child>
               <object class="GtkVBox" id="vbox2">
                 <property name="visible">True</property>
+                <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkNotebook" id="main_notebook">
                     <property name="visible">True</property>
@@ -910,6 +913,7 @@ active document</property>
                     <child>
                       <object class="GtkVBox" id="vbox7">
                         <property name="visible">True</property>
+                        <property name="orientation">vertical</property>
                         <child>
                           <object class="GtkScrolledWindow" id="preview_scroll">
                             <property name="visible">True</property>
@@ -1097,12 +1101,14 @@ active document</property>
                         <child>
                           <object class="GtkVBox" id="vbox5">
                             <property name="visible">True</property>
+                            <property name="orientation">vertical</property>
                             <child>
                               <object class="GtkHBox" id="hbox5">
                                 <property name="visible">True</property>
                                 <child>
                                   <object class="GtkVBox" id="vbox8">
                                     <property name="visible">True</property>
+                                    <property name="orientation">vertical</property>
                                     <child>
                                       <object class="GtkLabel" id="label12">
                                         <property name="visible">True</property>
@@ -1241,7 +1247,6 @@ active document</property>
                                         <property name="expand">True</property>
                                         <property name="clickable">True</property>
                                         <property name="sort_order">descending</property>
-                                        <property name="sort_column_id">1</property>
                                         <signal name="clicked" handler="on_bibcolumn_clicked"/>
                                         <child>
                                           <object class="GtkCellRendererText" id="cellrenderertext1"/>
@@ -1260,7 +1265,6 @@ active document</property>
                                         <property name="expand">True</property>
                                         <property name="clickable">True</property>
                                         <property name="sort_order">descending</property>
-                                        <property name="sort_column_id">2</property>
                                         <signal name="clicked" handler="on_bibcolumn_clicked"/>
                                         <child>
                                           <object class="GtkCellRendererText" id="cellrenderertext2"/>
@@ -1278,7 +1282,6 @@ active document</property>
                                         <property name="title">year</property>
                                         <property name="clickable">True</property>
                                         <property name="sort_order">descending</property>
-                                        <property name="sort_column_id">3</property>
                                         <signal name="clicked" handler="on_bibcolumn_clicked"/>
                                         <child>
                                           <object class="GtkCellRendererText" id="cellrenderertext7"/>
@@ -1391,6 +1394,7 @@ active document</property>
     <child>
       <object class="GtkVBox" id="vbox3">
         <property name="visible">True</property>
+        <property name="orientation">vertical</property>
         <child>
           <object class="GtkHBox" id="hbox2">
             <property name="visible">True</property>
@@ -1412,8 +1416,8 @@ active document</property>
                 <property name="has_focus">True</property>
                 <property name="invisible_char">&#x2022;</property>
                 <property name="primary_icon_stock">gtk-find</property>
-                <accelerator key="Escape" signal="activate" modifiers="GDK_SHIFT_MASK"/>
                 <accelerator key="Return" signal="activate"/>
+                <accelerator key="Escape" signal="activate" modifiers="GDK_SHIFT_MASK"/>
                 <signal name="activate" handler="on_button_searchwindow_find_clicked"/>
               </object>
               <packing>
@@ -1470,8 +1474,6 @@ active document</property>
             <child>
               <object class="GtkButton" id="button1">
                 <property name="label">gtk-close</property>
-                <property name="width_request">100</property>
-                <property name="height_request">40</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
@@ -1487,8 +1489,6 @@ active document</property>
             <child>
               <object class="GtkButton" id="button2">
                 <property name="label">gtk-find</property>
-                <property name="width_request">100</property>
-                <property name="height_request">40</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
@@ -1503,6 +1503,8 @@ active document</property>
             </child>
           </object>
           <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
             <property name="position">4</property>
           </packing>
         </child>
@@ -1978,6 +1980,7 @@ cells have line borders. </property>
     <child>
       <object class="GtkVBox" id="vbox6">
         <property name="visible">True</property>
+        <property name="orientation">vertical</property>
         <child>
           <object class="GtkViewport" id="viewport3">
             <property name="height_request">80</property>
