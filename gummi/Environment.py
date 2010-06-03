@@ -31,11 +31,17 @@ running_os = platform.system()
 tempdir = tempfile.gettempdir()
 
 path = os.getcwd()
+
+if running_os == 'Windows':
+	path = '.'
+else:
+	path  = sys.path[0] + '/gummi'
+
 gummi_glade = path + '/gui/gummi.glade'
 prefs_glade = path + '/gui/prefs.glade'
 
 if running_os == 'Windows':
-    gummi_glade.replace('/', '\\')
-    prefs_glade.replace('/', '\\')
+	gummi_glade = gummi_glade.replace('/', '\\')
+	prefs_glade = prefs_glade.replace('/', '\\')
 
 HOME = os.path.expanduser('~')

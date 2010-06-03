@@ -6,10 +6,25 @@ Inherits=hicolor
 Example=directory-x-normal
 
 #Directory list
-Directories=actions/22,actions/48,places/16,places/32,mimes/48,status/32,status/48,status/64
+Directories=actions/16,actions/22,actions/24,actions/32,actions/48,places/16,places/32,mimes/48,status/32,status/48,status/64
+
+[actions/16]
+Size=16
+Context=Actions
+Type=scalable
 
 [actions/22]
 Size=22
+Context=Actions
+Type=scalable
+
+[actions/24]
+Size=24
+Context=Actions
+Type=scalable
+
+[actions/32]
+Size=32
 Context=Actions
 Type=scalable
 
@@ -26,12 +41,12 @@ Type=Scalable
 [places/16]
 Size=16
 Context=Places
-Type=Fixed
+Type=scalable
 
 [places/32]
 Size=32
 Context=Places
-Type=Fixed
+Type=scalable
 
 [status/32]
 Size=32
