@@ -31,12 +31,9 @@ import traceback
 import tempfile
 import re
 import gtk
-import gettext
 
 import Environment
 import Preferences
-
-_ = gettext.gettext
 
 class Motion:
 

@@ -26,7 +26,6 @@ import sys
 import glib
 import gtk
 import pango
-import gettext
 import traceback
 
 import Importer
@@ -34,8 +33,6 @@ import UpdateCheck
 import Template
 import Preferences
 import Environment
-
-_ = gettext.gettext
 
 class MainGUI:
 

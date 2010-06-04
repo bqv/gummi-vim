@@ -23,11 +23,8 @@
 
 import gtk
 import urllib
-import gettext
 
 import Preferences
-
-_ = gettext.gettext
 
 class UpdateCheck:
 	"""Function that requests latest version info from the Gummi website"""
