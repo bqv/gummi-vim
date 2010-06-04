@@ -1,5 +1,4 @@
 gummi/gui/gummi.glade
 gummi/gui/prefs.glade
-gummi/GummiGUI.py
 gummi/Motion.py
 gummi/UpdateCheck.py
