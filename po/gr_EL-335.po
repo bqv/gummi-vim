@@ -621,7 +621,7 @@ msgstr ""
 
 #: ../gummi/UpdateCheck.py:42
 msgid "Currently installed:\n"
-msgstr "Τρέχοντα εγκατεστημένα:"
+msgstr "Τρέχοντα εγκατεστημένα:\n"
 
 #: ../gummi/UpdateCheck.py:43
 msgid ""
@@ -647,7 +647,7 @@ msgstr ""
 
 #: ../gummi/UpdateCheck.py:50
 msgid "This function requires an active\n"
-msgstr "Αυτή η λειτουργία απαιτεί μια ενεργή"
+msgstr "Αυτή η λειτουργία απαιτεί μια ενεργή\n"
 
 #: ../gummi/UpdateCheck.py:51
 msgid "internet connection."
