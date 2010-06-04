@@ -2,12 +2,14 @@
 # Gummi win32 build script
 # by Wei-Ning Huang
 #
-# You need to run this script under MSYS and with NSIS installed.
+# You need to run this script under MSYS.
+#
+# Depends: MSYS, NSIS, python, Gummi dependencies.
 #
 
 wd=`pwd`
 
-dest=win32build
+dest=build.win32
 mkdir $dest
 cp -r ../gummi $dest
 cp -r ../po $dest
@@ -25,21 +27,19 @@ done
 for i in `ls *.po`; do
   msgfmt $i -o ${i%.po}.mo
 done
-cd ..
 
 # Manage version
-cd gummi
+cd ../gummi
 echo "What's the version number for this release?"
 read rlschoice
 
-# sed on windows does not have the -i option
-sed s/svn/$rlschoice/ setup.py > setup.py2
-mv setup.py2 setup.py
-sed s/svn/$rlschoice/ Installer.nsi > Installer.nsi2
-mv Installer.nsi2 Installer.nsi
-sed s/svn/$rlschoice/ Preferences.py > Preferences.py2
-mv Preferences.py2 Preferences.py
+# sed in MSYS may be out of date and does not support the -i option, get latest
+# version from http://gnuwin32.sourceforge.net/packages/sed.htm
+sed -i s/svn/$rlschoice/ setup.py
+sed -i s/svn/$rlschoice/ Installer.nsi
+sed -i s/svn/$rlschoice/ Preferences.py
 
+# Copy py2exe related files
 mv misc/gummi gummi.py
 mv misc/gummi_256x256.ico .
 mv misc/gummi_64x64.ico .
@@ -47,20 +47,25 @@ mv misc/gummi_64x64.ico .
 # run py2exe
 python setup.py py2exe -p atk,gio,pango,pangocairo,cairo,poppler,gtksourceview2
 
+# Remove DLLs copied by py2exe becasue py2exe copies Win7 specific DLLs and
+# cause DLL laod failed on WinXP
+rm -f `ls dist/*.dll dist/*.DLL | grep -v 'python26.dll'`
+
 # Copy gtk DLLs, settings
 cp -r $wd/win32/GtkSettings/* $wd/win32/DLLs/*.dll dist
 
 # Copy locales
-cd $wd/win32build/po
+cd $wd/$dest/po
 
 for i in `ls *.mo`; do
+  echo "copying $i ..."
   mos=../gummi/dist/share/locale/${i%.mo}/LC_MESSAGES
-  echo $i
   mkdir -p $mos
   cp $i $mos
 done
 
 # Make Installer
 cd ../gummi
+rm -rf `find -name .svn`
 makensis Installer.nsi
 mv Gummi-$rlschoice-setup.exe $wd
