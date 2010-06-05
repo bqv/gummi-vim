@@ -157,7 +157,8 @@ class Motion:
 					-halt-on-error \
 					--output-directory="%s" "%s"' \
 					% (Environment.tempdir, self.workfile), 
-					shell=True, cwd=self.texpath, close_fds=False, \
+					shell=True, cwd=self.texpath,
+                    close_fds=(Environment.running_os != 'Windows'), \
 					stdin=None, stdout = subprocess.PIPE, stderr=None )
 			self.output = pdfmaker.communicate()[0]
 			pdfmaker.wait()
