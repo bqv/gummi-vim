@@ -244,7 +244,13 @@ class TexPane:
 		self.apply_searchtags(self.searchresults)
 		try:
 			ins, bound = self.searchresults[0]
-			self.editorbuffer.place_cursor(ins)
+			if backwards is True:
+				self.editorbuffer.place_cursor(ins)
+			else:
+				# must place cursor after the word or the next search will find
+				# the current one.
+				self.editorbuffer.place_cursor(bound)
+
 			#self.editorbuffer.select_range(ins, bound)
 			self.editorviewer.scroll_to_iter(ins, 0)
 		except IndexError: pass #no searchresults
