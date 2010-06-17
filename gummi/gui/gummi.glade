@@ -727,20 +727,6 @@
                     <property name="homogeneous">True</property>
                   </packing>
                 </child>
-                <child>
-                  <object class="GtkToggleToolButton" id="tool_previewoff">
-                    <property name="visible">True</property>
-                    <property name="tooltip_text" translatable="yes">Temporarily disable PDF preview</property>
-                    <property name="label" translatable="yes">toolbutton2</property>
-                    <property name="use_underline">True</property>
-                    <property name="stock_id">gtk-media-pause</property>
-                    <signal name="toggled" handler="on_tool_previewoff_toggled"/>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="homogeneous">True</property>
-                  </packing>
-                </child>
               </object>
               <packing>
                 <property name="position">0</property>
@@ -751,6 +737,20 @@
                 <property name="visible">True</property>
                 <property name="toolbar_style">icons</property>
                 <property name="show_arrow">False</property>
+                <property name="icon_size">2</property>
+                <child>
+                  <object class="GtkToggleToolButton" id="tool_previewoff">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">toolbutton2</property>
+                    <property name="use_underline">True</property>
+                    <property name="stock_id">gtk-media-pause</property>
+                    <signal name="toggled" handler="on_tool_previewoff_toggled"/>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="homogeneous">True</property>
+                  </packing>
+                </child>
                 <child>
                   <object class="GtkToolButton" id="tool_statuslight">
                     <property name="visible">True</property>
@@ -1517,23 +1517,23 @@ active document</property>
     <property name="icon_name">system-software-update</property>
   </object>
   <object class="GtkAdjustment" id="image_scaler">
-    <property name="value">1</property>
     <property name="lower">0.10000000000000001</property>
     <property name="upper">3</property>
+    <property name="value">1</property>
     <property name="step_increment">0.10000000000000001</property>
     <property name="page_increment">10</property>
   </object>
   <object class="GtkAdjustment" id="table_rows">
-    <property name="value">3</property>
     <property name="lower">1</property>
     <property name="upper">100</property>
+    <property name="value">3</property>
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
   <object class="GtkAdjustment" id="table_cols">
-    <property name="value">3</property>
     <property name="lower">1</property>
     <property name="upper">100</property>
+    <property name="value">3</property>
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
