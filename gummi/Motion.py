@@ -47,11 +47,9 @@ class Motion:
 		self.laststate = None
 
 		# Timer settings for compilation
-		self.S_IDLE, self.S_ACTIVE = 0, 1
 		self.timer = None
 		self.IDLE_THRESHOLD = int(self.config.get_value\
 							("compile", "idle_threshold"))
-		self.state = self.S_IDLE
 
 		try: 
 			self.texcmd = self.config.get_value("compile", "typesetter")
@@ -74,12 +72,16 @@ class Motion:
 		#self.start_updatepreview()
 
 		self.update_scheme = self.config.get_value("compile", "compile_scheme")
-		if self.update_scheme == 'on_idle':
-			editor.editorviewer.connect('key-press-event', self.on_key_pressed)
-			editor.editorviewer.connect('key-release-event', self.on_key_release)
-
 
 	def start_updatepreview(self):
+		if self.update_scheme == 'on_idle':
+			self.signal_handlers = [
+				self.editorpane.editorviewer.connect('key-press-event',\
+											self.on_key_pressed),
+				self.editorpane.editorviewer.connect('key-release-event',\
+											self.on_key_release)
+			]
+
 		compile_interval = self.config.get_value("compile", "compile_timer")
 		if self.update_scheme == 'on_idle':
 			self.start_timer()
@@ -88,7 +90,11 @@ class Motion:
 				(int(compile_interval), self.update_preview)
 
 	def stop_updatepreview(self):
-		glib.source_remove(self.update_event)
+		if self.update_scheme == 'on_idle':
+			for handler in self.signal_handlers:
+				self.editorpane.editorviewer.disconnect(handler)
+		else:
+			glib.source_remove(self.update_event)
 
 	def update_envfiles(self, envfile):
 		if self.pdffile is not None:
