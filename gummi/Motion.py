@@ -46,6 +46,13 @@ class Motion:
 		self.status = 1
 		self.laststate = None
 
+		# Timer settings for compilation
+		self.S_IDLE, self.S_ACTIVE = 0, 1
+		self.timer = None
+		self.IDLE_THRESHOLD = int(self.config.get_value\
+							("compile", "idle_threshold"))
+		self.state = self.S_IDLE
+
 		try: 
 			self.texcmd = self.config.get_value("compile", "typesetter")
 		except: 
@@ -66,10 +73,19 @@ class Motion:
 		self.editorbuffer = self.editorpane.editorbuffer
 		#self.start_updatepreview()
 
+		self.update_scheme = self.config.get_value("compile", "compile_scheme")
+		if self.update_scheme == 'on_idle':
+			editor.editorviewer.connect('key-press-event', self.on_key_pressed)
+			editor.editorviewer.connect('key-release-event', self.on_key_release)
+
+
 	def start_updatepreview(self):
 		compile_interval = self.config.get_value("compile", "compile_timer")
-		self.update_event = glib.timeout_add_seconds \
-			(int(compile_interval), self.update_preview)
+		if self.update_scheme == 'on_idle':
+			self.start_timer()
+		else:
+			self.update_event = glib.timeout_add_seconds \
+				(int(compile_interval), self.update_preview)
 
 	def stop_updatepreview(self):
 		glib.source_remove(self.update_event)
@@ -221,7 +237,22 @@ class Motion:
 				self.previewpane.refresh_preview()
 		except:
 			print traceback.print_exc()
-		return True 
+
+		return self.update_scheme != 'on_idle'
+
+	def start_timer(self):
+		self.stop_timer()
+		self.timer = glib.timeout_add(self.IDLE_THRESHOLD, self.update_preview)
+
+	def stop_timer(self):
+		if self.timer:
+			 glib.source_remove(self.timer)
+
+	def on_key_pressed(self, view, event):
+		self.stop_timer()
+
+	def on_key_release(self, view, event):
+		self.start_timer()
 
 
 
