@@ -103,14 +103,16 @@ class Motion:
 		eventbox.connect('button-press-event', self.preview_error_mode)
 		label = gtk.Label( \
 			_("PDF-Preview could not initialize.\n\n" \
-			"It appears your LaTeX document contains errors.\n" \
+			"It appears your LaTeX document contains errors or\n" \
+			"the program `%s' was not installed.\n"\
 			"Additional information is available on the Error Output tab.\n" \
 			"Please correct the listed errors and click this area\n" \
-			"to reload the preview panel."))
+			"to reload the preview panel.") % self.texcmd)
 		label.set_justify(gtk.JUSTIFY_CENTER)
 		eventbox.add(label)
 		self.preview_viewport.remove(self.previewpane.drawarea)
 		self.preview_viewport.add(eventbox)
+		self.preview_viewport.show_all()
 
 	def preview_error_mode(self, widget, event):
 		self.preview_viewport.remove(widget)
