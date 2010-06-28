@@ -29,7 +29,7 @@ if "gummi" in sys.path[0]:
 
 try:
     from gummi import Core
-except ImportError as e:
+except ImportError, e:
     print "A required module could not be found!", e
 
 
