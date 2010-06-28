@@ -47,7 +47,7 @@ CFGDEFAULTS = {
 'compile_scheme': 'on_idle',
 'compile_timer': 1,
 'compile_status': True,
-'idle_threshold': 3000,
+'idle_threshold': 2000,
 'recent1': '',
 'recent2': '',
 'recent3': '',

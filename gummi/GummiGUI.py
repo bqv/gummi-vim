@@ -57,7 +57,6 @@ class MainGUI:
 		self.bibprogressmon = self.builder.get_object("bibprogressmon")
 		self.bibprogressval = 0
 		self.list_biblios = self.builder.get_object("list_biblios")
-		self.hpaned = self.builder.get_object("hpaned")
 		self.pane_area = self.builder.get_object("vbox2")
 
 		if not self.editorpane.gtkspell_available():
