@@ -57,6 +57,8 @@ class MainGUI:
 		self.bibprogressmon = self.builder.get_object("bibprogressmon")
 		self.bibprogressval = 0
 		self.list_biblios = self.builder.get_object("list_biblios")
+		self.hpaned = self.builder.get_object("hpaned")
+		self.pane_area = self.builder.get_object("vbox2")
 
 		if not self.editorpane.gtkspell_available():
 			self.builder.get_object("menu_spelling").set_sensitive(False)
@@ -345,6 +347,17 @@ class MainGUI:
 			self.motion.stop_updatepreview()
 		else:
 			self.motion.start_updatepreview()
+	
+	def on_tool_hide_rightpane_toggled(self, button, data=None):
+		pause_button = self.builder.get_object("tool_previewoff")
+		if button.get_active():
+			self.pane_area.hide()
+			pause_button.set_active(True)
+			pause_button.set_sensitive(False)
+		else:
+			self.pane_area.show_all()
+			pause_button.set_active(False)
+			pause_button.set_sensitive(True)
 
 	def on_button_import_apply_clicked(self, button, data=None):
 		self.importgui.insert_object(button)
