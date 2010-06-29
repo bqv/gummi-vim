@@ -57,6 +57,7 @@ class Core:
 		biblio = Biblio(editorpane, motion)
 		gui = MainGUI \
 			(config, builder, iofunc, biblio, motion, editorpane, previewpane)
+		editorpane.set_motion(motion)
 
 		# setup document to load:
 		if len(sys.argv) > 1:

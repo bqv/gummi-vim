@@ -40,6 +40,7 @@ CFGDEFAULTS = {
 'spell_language': None,
 'toolbar': True,
 'statusbar': True,
+'rightpane': True,
 'font': 'Monospace 10',
 'autosaving': False,
 'autosave_timer': 600,

@@ -34,6 +34,7 @@ except ImportError:
 	print "python-gtkspell not available, spell checking disabled.."
 
 import Formatting
+import Motion
 
 START = "START"
 END = "END"
@@ -301,6 +302,7 @@ class TexPane:
 
 	def set_buffer_changed(self, *args):
 		self.textchange = datetime.now()
+		self.motion.start_timer()
 
 	def check_buffer_changed(self):
 		if self.prevchange != self.textchange:
@@ -318,5 +320,8 @@ class TexPane:
 		if self.editorviewer.get_buffer().can_redo():
 			self.editorviewer.get_buffer().redo()
 			self.set_buffer_changed()
+
+	def set_motion(self, motion):
+		self.motion = motion
 
 

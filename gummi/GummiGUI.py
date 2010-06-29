@@ -57,7 +57,7 @@ class MainGUI:
 		self.bibprogressmon = self.builder.get_object("bibprogressmon")
 		self.bibprogressval = 0
 		self.list_biblios = self.builder.get_object("list_biblios")
-		self.pane_area = self.builder.get_object("vbox2")
+		self.rightpane = self.builder.get_object("vbox2")
 
 		if not self.editorpane.gtkspell_available():
 			self.builder.get_object("menu_spelling").set_sensitive(False)
@@ -72,6 +72,14 @@ class MainGUI:
 			menu_statusbar.set_active(True)
 			self.iofunc.statusbar.show()
 
+		if self.config.get_value("view", "rightpane"):
+			menu_rightpane = self.builder.get_object("menu_rightpane")
+			menu_rightpane.set_active(True)
+			self.rightpane.show()
+		else:
+			tool_rightpane = self.builder.get_object("tool_hide_rightpane")
+			tool_rightpane.set_active(True)
+
 		if self.config.get_value("editor", "spelling"):
 			self.builder.get_object("menu_spelling").set_active(True)
 		
@@ -84,7 +92,7 @@ class MainGUI:
 		self.recentgui = RecentGUI(self.builder, self.config, self)
 		self.searchgui = SearchGUI(self.builder, self.editorpane)
 		self.builder.connect_signals(self) #split signals?
-
+		self.mainwindow.show_all()
 
 	def main(self):
 		self.mainwindow.show_all()
@@ -348,15 +356,30 @@ class MainGUI:
 			self.motion.start_updatepreview()
 	
 	def on_tool_hide_rightpane_toggled(self, button, data=None):
+		# This callback served both "tool_hide_rightpane" and "menu_rightpane",
+		# but the behavior is different.
+		#                   active   not_active
+		# checkbutton        show      hide
+		# not_checkbutton    hide      show
+
 		pause_button = self.builder.get_object("tool_previewoff")
-		if button.get_active():
-			self.pane_area.hide()
+		if button.get_active() ^ (type(button) == gtk.CheckMenuItem):
+			self.rightpane.hide()
 			pause_button.set_active(True)
 			pause_button.set_sensitive(False)
 		else:
-			self.pane_area.show_all()
+			self.rightpane.show()
 			pause_button.set_active(False)
 			pause_button.set_sensitive(True)
+
+		# synchronize status of "tool_hide_rightpane" and "menu_rightpane"
+		if type(button) == gtk.CheckMenuItem:
+			tool_button = self.builder.get_object("tool_hide_rightpane")
+			tool_button.set_active(not button.get_active())
+			self.config.set_value("view", "rightpane", button.get_active())
+		else:
+			menu_button = self.builder.get_object("menu_rightpane")
+			menu_button.set_active(not button.get_active())
 
 	def on_button_import_apply_clicked(self, button, data=None):
 		self.importgui.insert_object(button)
