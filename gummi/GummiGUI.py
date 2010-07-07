@@ -728,6 +728,7 @@ class SearchGUI:
 
 	def show_searchwindow(self):
 		self.searchentry.set_text("")
+		self.replaceentry.set_text("")
 		self.searchentry.grab_focus()
 		self.searchwindow.show()
 
