@@ -216,6 +216,12 @@ class MainGUI:
 	def on_button_searchwindow_find_clicked(self, button, data=None):
 		self.searchgui.start_search()
 
+	def on_button_searchwindow_replace_next_clicked(self, button, data=None):
+		self.searchgui.start_replace_next()
+
+	def on_button_searchwindow_replace_all_clicked(self, button, data=None):
+		self.searchgui.start_replace_all()
+
 	def on_import_tabs_switch_page(self, notebook, page, page_num):
 		self.importgui.show_importpane(notebook, page_num)
 
@@ -710,10 +716,12 @@ class SearchGUI:
 		self.builder = builder
 		self.editorpane = editorpane
 		self.setup_searchwindow()
+		self.searchentry.connect('changed', self.on_text_changed_event)
 
 	def setup_searchwindow(self):
 		self.searchwindow = self.builder.get_object("searchwindow")
 		self.searchentry = self.builder.get_object("searchentry")
+		self.replaceentry = self.builder.get_object("replaceentry")
 		self.backwards = self.builder.get_object("toggle_backwards")
 		self.matchcase = self.builder.get_object("toggle_matchcase")
 		self.wholeword = self.builder.get_object("toggle_wholeword")
@@ -733,6 +741,27 @@ class SearchGUI:
 		matchcase = self.matchcase.get_active()
 		wholeword = self.wholeword.get_active()
 		self.editorpane.start_search(term, backwards, wholeword, matchcase)
+
+	def start_replace_next(self):
+		term = self.searchentry.get_text()
+		rpterm = self.replaceentry.get_text()
+		backwards = self.backwards.get_active()
+		matchcase = self.matchcase.get_active()
+		wholeword = self.wholeword.get_active()
+		self.editorpane.start_replace_next(term, rpterm, backwards, wholeword,
+									  matchcase)
+
+	def start_replace_all(self):
+		term = self.searchentry.get_text()
+		rpterm = self.replaceentry.get_text()
+		backwards = self.backwards.get_active()
+		matchcase = self.matchcase.get_active()
+		wholeword = self.wholeword.get_active()
+		self.editorpane.start_replace_all(term, rpterm, backwards, wholeword,
+									matchcase)
+	
+	def on_text_changed_event(self, event):
+		self.editorpane.replace_activated = False
 
 
 class ImportGUI:

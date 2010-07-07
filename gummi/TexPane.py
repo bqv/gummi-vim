@@ -61,6 +61,7 @@ class TexPane:
 
 		self.editorviewer.connect("key-press-event", self.set_buffer_changed,)
 		self.editorbuffer.set_modified(False)
+		self.replace_activated = False
 
 
 	def configure_texpane(self):
@@ -222,17 +223,15 @@ class TexPane:
 			self.editorbuffer.apply_tag(self.searchtag, result[0], result[1])
 
 	def jumpto_searchresult(self, direction):
-		try: 
-			position = self.searchposition + direction
-			# wrap around search
-			if position < 0:
-				position = len(self.searchresultiters) -1
-			elif position >= len(self.searchresultiters):
-				position = 0
-			ins, bnd = self.searchresultiters[position]
-			self.editorbuffer.place_cursor(ins)
-			self.searchposition = position
-		except (IndexError, TypeError): pass
+		position = self.searchposition + direction
+		# wrap around search
+		if position < 0:
+			position = len(self.searchresultiters) -1
+		elif position >= len(self.searchresultiters):
+			position = 0
+		ins, bnd = self.searchresultiters[position]
+		self.editorbuffer.place_cursor(ins)
+		self.searchposition = position
 
 	def start_search(self, term, backwards, wholeword, matchcase=0):
 		self.searchresults = []
@@ -291,6 +290,32 @@ class TexPane:
 			else:
 				break
 		return result_list
+
+	def start_replace_next(self, term, rpterm, backwards, wholeword, matchcase=0):
+		# Move cursor to the matched word on first click, replacement will
+		# start at the second click.
+		if not self.replace_activated:
+			self.start_search(term, backwards, wholeword, matchcase)
+			self.replace_activated = True
+			return True
+
+		try:
+			ins, bound = self.searchresults[0]
+			self.editorbuffer.delete(ins, bound)
+			self.editorbuffer.insert(ins, rpterm)
+			# Since any action that changes the buffer make gtk.TextIter
+			# ivalid, we need to search every time.
+			self.start_search(term, backwards, wholeword, matchcase)
+		except IndexError:
+			self.replace_activated = False
+			# can't find any term to replace
+			return False
+		return True
+
+	def start_replace_all(self, term, rpterm, backwards, wholeword, matchcase=0):
+		self.editorbuffer.place_cursor(self.get_iterator(START))
+		while self.start_replace_next(term, rpterm, backwards, wholeword, matchcase):
+			pass
 
 	def grab_wrapmode(self, textwrap, wordwrap):
 		if textwrap is False:
