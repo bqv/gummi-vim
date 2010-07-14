@@ -327,7 +327,9 @@ class TexPane:
 
 	def set_buffer_changed(self, *args):
 		self.textchange = datetime.now()
-		self.motion.start_timer()
+		if self.config.get_value('compile', 'compile_status') and\
+			self.config.get_value('compile', 'compile_scheme') == 'on_idle':
+			self.motion.start_timer()
 
 	def check_buffer_changed(self):
 		if self.prevchange != self.textchange:

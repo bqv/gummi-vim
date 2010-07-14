@@ -448,6 +448,9 @@
                   </packing>
                 </child>
                 <child>
+                  <placeholder/>
+                </child>
+                <child>
                   <object class="GtkHBox" id="hbox5">
                     <property name="visible">True</property>
                     <child>
@@ -471,7 +474,7 @@
                     </child>
                   </object>
                   <packing>
-                    <property name="position">2</property>
+                    <property name="position">3</property>
                   </packing>
                 </child>
                 <child>
@@ -479,7 +482,6 @@
                     <property name="visible">True</property>
                     <child>
                       <object class="GtkCheckButton" id="compile_status">
-                        <property name="label" translatable="yes">_Autocompile every</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
@@ -489,8 +491,26 @@
                       </object>
                       <packing>
                         <property name="expand">False</property>
-                        <property name="padding">5</property>
+                        <property name="padding">11</property>
                         <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkComboBox" id="combo_compilescheme">
+                        <property name="visible">True</property>
+                        <property name="model">list_compilescheme</property>
+                        <property name="active">0</property>
+                        <signal name="changed" handler="on_combo_compilescheme_changed"/>
+                        <child>
+                          <object class="GtkCellRendererText" id="cellrenderertext3"/>
+                          <attributes>
+                            <attribute name="text">0</attribute>
+                          </attributes>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="position">1</property>
                       </packing>
                     </child>
                     <child>
@@ -504,8 +524,8 @@
                       </object>
                       <packing>
                         <property name="expand">False</property>
-                        <property name="padding">5</property>
-                        <property name="position">1</property>
+                        <property name="padding">10</property>
+                        <property name="position">2</property>
                       </packing>
                     </child>
                     <child>
@@ -516,22 +536,8 @@
                       <packing>
                         <property name="expand">False</property>
                         <property name="padding">5</property>
-                        <property name="position">2</property>
+                        <property name="position">3</property>
                       </packing>
-                    </child>
-                  </object>
-                  <packing>
-                    <property name="position">3</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkHBox" id="hbox6">
-                    <property name="visible">True</property>
-                    <child>
-                      <placeholder/>
-                    </child>
-                    <child>
-                      <placeholder/>
                     </child>
                   </object>
                   <packing>
@@ -655,20 +661,6 @@
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
-  <object class="GtkListStore" id="list_typesetters">
-    <columns>
-      <!-- column-name typesetters -->
-      <column type="gchararray"/>
-    </columns>
-    <data>
-      <row>
-        <col id="0" translatable="yes">pdflatex</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">xelatex</col>
-      </row>
-    </data>
-  </object>
   <object class="GtkAdjustment" id="pdfcompile_time">
     <property name="value">1.0000000002235174</property>
     <property name="lower">1</property>
@@ -690,5 +682,33 @@
   <object class="GtkImage" id="image1">
     <property name="visible">True</property>
     <property name="stock">gtk-clear</property>
+  </object>
+  <object class="GtkListStore" id="list_typesetters">
+    <columns>
+      <!-- column-name typesetters -->
+      <column type="gchararray"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes">pdflatex</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">xelatex</col>
+      </row>
+    </data>
+  </object>
+  <object class="GtkListStore" id="list_compilescheme">
+    <columns>
+      <!-- column-name seheme -->
+      <column type="gchararray"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes">compile when idle for </col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">compile every</col>
+      </row>
+    </data>
   </object>
 </interface>

@@ -48,8 +48,10 @@ class Motion:
 
 		# Timer settings for compilation
 		self.timer = None
+		self.signal_handlers = None
 		self.IDLE_THRESHOLD = int(self.config.get_value\
 							("compile", "idle_threshold"))
+		self.update_event = 0
 
 		try: 
 			self.texcmd = self.config.get_value("compile", "typesetter")
@@ -69,12 +71,13 @@ class Motion:
 
 		self.editorviewer = self.editorpane.editorviewer
 		self.editorbuffer = self.editorpane.editorbuffer
+		self.compilescheme = self.config.get_value("compile", "compile_scheme")
+
 		#self.start_updatepreview()
 
-		self.update_scheme = self.config.get_value("compile", "compile_scheme")
-
 	def start_updatepreview(self):
-		if self.update_scheme == 'on_idle':
+		self.compilescheme = self.config.get_value("compile", "compile_scheme")
+		if self.compilescheme == 'on_idle':
 			self.signal_handlers = [
 				self.editorpane.editorviewer.connect('key-press-event',\
 											self.on_key_pressed),
@@ -83,18 +86,20 @@ class Motion:
 			]
 
 		compile_interval = self.config.get_value("compile", "compile_timer")
-		if self.update_scheme == 'on_idle':
+		if self.compilescheme == 'on_idle':
 			self.start_timer()
 		else:
 			self.update_event = glib.timeout_add_seconds \
 				(int(compile_interval), self.update_preview)
 
 	def stop_updatepreview(self):
-		if self.update_scheme == 'on_idle':
+		if self.compilescheme == 'on_idle':
 			for handler in self.signal_handlers:
 				self.editorpane.editorviewer.disconnect(handler)
+			self.stop_timer()
 		else:
-			glib.source_remove(self.update_event)
+			if self.update_event:
+				glib.source_remove(self.update_event)
 
 	def update_envfiles(self, envfile):
 		if self.pdffile is not None:
@@ -244,7 +249,7 @@ class Motion:
 		except:
 			print traceback.print_exc()
 
-		return self.update_scheme != 'on_idle'
+		return self.compilescheme != 'on_idle'
 
 	def start_timer(self):
 		self.stop_timer()

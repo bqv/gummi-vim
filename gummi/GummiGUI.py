@@ -58,6 +58,7 @@ class MainGUI:
 		self.bibprogressval = 0
 		self.list_biblios = self.builder.get_object("list_biblios")
 		self.rightpane = self.builder.get_object("vbox2")
+		self.pausebutton = self.builder.get_object("tool_previewoff")
 
 		if not self.editorpane.gtkspell_available():
 			self.builder.get_object("menu_spelling").set_sensitive(False)
@@ -79,6 +80,9 @@ class MainGUI:
 		else:
 			tool_rightpane = self.builder.get_object("tool_hide_rightpane")
 			tool_rightpane.set_active(True)
+
+		if not self.config.get_value('compile', 'compile_status'):
+			self.pausebutton.set_active(True)
 
 		if self.config.get_value("editor", "spelling"):
 			self.builder.get_object("menu_spelling").set_active(True)
@@ -310,7 +314,7 @@ class MainGUI:
 
 	def on_menu_preferences_activate(self, menuitem, data=None):
 		PrefsGUI(self.config, self.editorpane, \
-				 self.mainwindow, self.iofunc, self.motion)
+				 self.mainwindow, self.iofunc, self.motion, self.pausebutton)
 
 	def on_menu_update_activate(self, menuitem, data=None):
 		update = UpdateCheck.UpdateCheck()
@@ -356,7 +360,9 @@ class MainGUI:
 		self.editorpane.set_selection_textstyle(button)
 	
 	def on_tool_previewoff_toggled(self, button, data=None):
-		if button.get_active():
+		value = button.get_active()
+		self.config.set_value('compile', 'compile_status', not value)
+		if value:
 			self.motion.stop_updatepreview()
 		else:
 			self.motion.start_updatepreview()
@@ -368,15 +374,14 @@ class MainGUI:
 		# checkbutton        show      hide
 		# not_checkbutton    hide      show
 
-		pause_button = self.builder.get_object("tool_previewoff")
 		if button.get_active() ^ (type(button) == gtk.CheckMenuItem):
 			self.rightpane.hide()
-			pause_button.set_active(True)
-			pause_button.set_sensitive(False)
+			self.pausebutton.set_active(True)
+			self.pausebutton.set_sensitive(False)
 		else:
 			self.rightpane.show()
-			pause_button.set_active(False)
-			pause_button.set_sensitive(True)
+			self.pausebutton.set_active(False)
+			self.pausebutton.set_sensitive(True)
 
 		# synchronize status of "tool_hide_rightpane" and "menu_rightpane"
 		if type(button) == gtk.CheckMenuItem:
@@ -530,11 +535,12 @@ class MainGUI:
 
 class PrefsGUI:
 
-	def __init__(self, config, editorpane, mainwindow, iofunc, motion):
+	def __init__(self, config, editorpane, mainwindow, iofunc, motion, pausebutton):
 		self.config = config
 		self.editorpane = editorpane
 		self.iofunc = iofunc
 		self.motion = motion
+		self.pausebutton = pausebutton
 		builder = gtk.Builder()
 		builder.set_translation_domain("gummi")
 		builder.add_from_file(Environment.prefs_glade)
@@ -551,6 +557,7 @@ class PrefsGUI:
 		self.default_buffer = self.default_text.get_buffer()
 		self.typesetter = builder.get_object("combo_typesetter")
 		self.editor_font = builder.get_object("editor_font")
+		self.compilescheme = builder.get_object("combo_compilescheme")
 		self.compile_timer = builder.get_object("compile_timer")
 
 		self.view_box = builder.get_object("view_box")
@@ -569,6 +576,8 @@ class PrefsGUI:
 			(self.config.get_value("default_text", "welcome"))
 		if self.config.get_value("compile", "typesetter") == "xelatex":
 			self.typesetter.set_active(1)
+		if self.config.get_value("compile","compile_scheme") =='real_time':
+			self.compilescheme.set_active(1)
 
 		self.list_available_spell_languages()
 
@@ -629,9 +638,9 @@ class PrefsGUI:
 		value = widget.get_active()
 		self.config.set_value('compile', 'compile_status', value)
 		if widget.get_active():
-			self.motion.start_updatepreview()
+			self.pausebutton.set_active(False)
 		else:
-			self.motion.stop_updatepreview()
+			self.pausebutton.set_active(True)
 
 	def on_autosave_value_changed(self, event):
 		newvalue = int(event.get_value()) * 60
@@ -641,8 +650,9 @@ class PrefsGUI:
 	def on_compile_value_changed(self, event):
 		newvalue = int(event.get_value())
 		self.config.set_value('compile', 'compile_timer', newvalue)
-		self.motion.stop_updatepreview()
-		self.motion.start_updatepreview()
+		if self.config.get_value('compile', 'compile_status'):
+			self.motion.stop_updatepreview()
+			self.motion.start_updatepreview()
 
 	def on_editor_font_set(self, widget):
 		selected = widget.get_font_name()
@@ -662,6 +672,18 @@ class PrefsGUI:
 		self.config.set_value('editor', 'spell_language', newvalue)
 		self.editorpane.activate_spellchecking(0)
 		self.editorpane.activate_spellchecking(1)
+	
+	def on_combo_compilescheme_changed(self, widget, data=None):
+		model = widget.get_model()
+		newvalue = model[widget.get_active()][0]
+		value = {'compile when idle for ': 'on_idle',
+				 'compile every': 'real_time'}[newvalue]
+		if self.config.get_value('compile', 'compile_status'):
+			self.motion.stop_updatepreview()
+			self.config.set_value('compile', 'compile_scheme', value)
+			self.motion.start_updatepreview()
+		else:
+			self.config.set_value('compile', 'compile_scheme', value)
 
 	def list_available_spell_languages(self):
 		import re, commands
