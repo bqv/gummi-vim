@@ -1,7 +1,16 @@
 #!/usr/bin/env python
 
+from sys import exit
 from distutils.core import setup
-from DistUtilsExtra.command import *
+
+try:
+	from DistUtilsExtra.command import *
+except ImportError:
+	print "For packaging, you are required to have the\n" + \
+		  "python-distutils-extra package installed..\n" + \
+		  "https://launchpad.net/python-distutils-extra"
+	exit()
+
 
 _data_files = [
 	('share/applications', ['gummi/misc/gummi.desktop']),
