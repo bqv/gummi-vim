@@ -311,6 +311,9 @@ class MainGUI:
 		value = self.list_biblios.get_value(myiter, 0)
 		self.editorpane.editorbuffer.insert_at_cursor("\cite{" + value + "}")
 		self.editorpane.set_buffer_changed()
+	
+	def on_menu_docstat_activate(self, item, data=None):
+		pass
 
 	def on_menu_preferences_activate(self, menuitem, data=None):
 		PrefsGUI(self.config, self.editorpane, \
@@ -330,7 +333,10 @@ class MainGUI:
 		"Thomas van der Burgt",
 		"Cameron Grout"]
 		translators = "(Taiwanese) - Wei-Ning Huang"	
-		artwork = ["Template icon set from:\nhttp://www.fatcow.com/free-icons/"]
+		artwork = ["Template icon set from:\nhttp://www.fatcow.com/"
+                           "free-icons/",
+                           "Windows version Icon set from Elemetary "
+                           "Project:\nhttp://www.elementary-project.com/"]
 		about_dialog = gtk.AboutDialog()
 		about_dialog.set_transient_for(self.mainwindow)
 		about_dialog.set_destroy_with_parent(True)
