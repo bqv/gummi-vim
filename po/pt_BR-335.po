@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-05-23 13:56+0800\n"
+"POT-Creation-Date: 2010-07-31 17:21+0800\n"
 "PO-Revision-Date: 2010-06-27 23:14-0300\n"
 "Last-Translator: Fernando Governatore Cruz <fergc@uol.com.br>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -186,255 +186,274 @@ msgstr ""
 "o documento ativo"
 
 #: ../gummi/gui/gummi.glade.h:50
+msgid "Export to PDF"
+msgstr ""
+
+#: ../gummi/gui/gummi.glade.h:51
 msgid "File:"
 msgstr "Arquivo:"
 
-#: ../gummi/gui/gummi.glade.h:51
+#: ../gummi/gui/gummi.glade.h:52
 msgid "Filename:"
 msgstr "Nome do arquivo:"
 
-#: ../gummi/gui/gummi.glade.h:52
+#: ../gummi/gui/gummi.glade.h:53
 msgid "Find"
 msgstr "Procurar"
 
-#: ../gummi/gui/gummi.glade.h:53
+#: ../gummi/gui/gummi.glade.h:54
 msgid "Find Ne_xt"
 msgstr "Encontrar _Proximo"
 
-#: ../gummi/gui/gummi.glade.h:54
+#: ../gummi/gui/gummi.glade.h:55
 msgid "Find Pre_vious"
 msgstr "Encontrar _Anterior"
 
-#: ../gummi/gui/gummi.glade.h:55
+#: ../gummi/gui/gummi.glade.h:56
 msgid "Fit Page Width"
 msgstr "Ajustar à largura"
 
-#: ../gummi/gui/gummi.glade.h:56
+#: ../gummi/gui/gummi.glade.h:57
 msgid "Gummi - LaTeX Editor"
 msgstr "Gummi - Editor LaTeX"
 
-#: ../gummi/gui/gummi.glade.h:57
+#: ../gummi/gui/gummi.glade.h:58
 msgid "Image"
 msgstr "Imagem"
 
-#: ../gummi/gui/gummi.glade.h:58
+#: ../gummi/gui/gummi.glade.h:59
 msgid "Italic text"
 msgstr "Texto em itálico"
 
-#: ../gummi/gui/gummi.glade.h:59
+#: ../gummi/gui/gummi.glade.h:60
 msgid "Label:"
 msgstr "Etiqueta:"
 
-#: ../gummi/gui/gummi.glade.h:60
+#: ../gummi/gui/gummi.glade.h:61
 msgid "Letter"
 msgstr "Carta"
 
-#: ../gummi/gui/gummi.glade.h:61
+#: ../gummi/gui/gummi.glade.h:62
 msgid "Load a file"
 msgstr "Carregar arquivo"
 
-#: ../gummi/gui/gummi.glade.h:62
+#: ../gummi/gui/gummi.glade.h:63
 msgid "Match case"
 msgstr "Casar maiúsculas/minusculas"
 
-#: ../gummi/gui/gummi.glade.h:63
+#: ../gummi/gui/gummi.glade.h:64
 msgid "Match entire word only"
 msgstr "Encontrar somente palvras completas"
 
-#: ../gummi/gui/gummi.glade.h:64
+#: ../gummi/gui/gummi.glade.h:65
 msgid "Matrix"
 msgstr "Matriz"
 
-#: ../gummi/gui/gummi.glade.h:65
+#: ../gummi/gui/gummi.glade.h:66
 msgid "N/A"
 msgstr "N/D"
 
-#: ../gummi/gui/gummi.glade.h:66
+#: ../gummi/gui/gummi.glade.h:67
 msgid "New from _Template"
 msgstr "Novo a partir de _Modelo"
 
-#: ../gummi/gui/gummi.glade.h:67
+#: ../gummi/gui/gummi.glade.h:68
 msgid "Next"
 msgstr "Pŕoximo"
 
-#: ../gummi/gui/gummi.glade.h:68
+#: ../gummi/gui/gummi.glade.h:69
 msgid "No borders"
 msgstr "Sem borda"
 
-#: ../gummi/gui/gummi.glade.h:69
+#: ../gummi/gui/gummi.glade.h:70
 msgid "Open"
 msgstr "Abrir"
 
-#: ../gummi/gui/gummi.glade.h:70
+#: ../gummi/gui/gummi.glade.h:71
 msgid "Parentheses"
 msgstr "Parênteses"
 
-#: ../gummi/gui/gummi.glade.h:71
+#: ../gummi/gui/gummi.glade.h:72
 msgid "Preview Pane"
 msgstr "painel de pre-visualização"
 
-#: ../gummi/gui/gummi.glade.h:72
+#: ../gummi/gui/gummi.glade.h:73
 msgid "Previous"
 msgstr "Anterior"
 
-#: ../gummi/gui/gummi.glade.h:73
+#: ../gummi/gui/gummi.glade.h:74
 msgid "References:"
 msgstr "Referências:"
 
-#: ../gummi/gui/gummi.glade.h:74
+#: ../gummi/gui/gummi.glade.h:75
+msgid "Replace _All"
+msgstr ""
+
+#: ../gummi/gui/gummi.glade.h:76
+msgid "Replace with:"
+msgstr ""
+
+#: ../gummi/gui/gummi.glade.h:77
 msgid "Report"
 msgstr "Relatório"
 
-#: ../gummi/gui/gummi.glade.h:75
+#: ../gummi/gui/gummi.glade.h:78
 msgid "Rows:"
 msgstr "Linhas"
 
-#: ../gummi/gui/gummi.glade.h:76
+#: ../gummi/gui/gummi.glade.h:79
 msgid "Save"
 msgstr "Salvar"
 
-#: ../gummi/gui/gummi.glade.h:77
+#: ../gummi/gui/gummi.glade.h:80
 msgid "Save _As..."
 msgstr "Salvar _Como..."
 
-#: ../gummi/gui/gummi.glade.h:78
+#: ../gummi/gui/gummi.glade.h:81
 msgid "Save the current file"
 msgstr "Salvar arquivo atual"
 
-#: ../gummi/gui/gummi.glade.h:79
+#: ../gummi/gui/gummi.glade.h:82
 msgid "Scale:"
 msgstr "Escala:"
 
-#: ../gummi/gui/gummi.glade.h:80
+#: ../gummi/gui/gummi.glade.h:83
 msgid "Search backwards"
 msgstr "Procurar para atrás"
 
-#: ../gummi/gui/gummi.glade.h:81
+#: ../gummi/gui/gummi.glade.h:84
 msgid "Search for:"
 msgstr "Procurar por:"
 
-#: ../gummi/gui/gummi.glade.h:82
+#: ../gummi/gui/gummi.glade.h:85
 msgid "Single line"
 msgstr "Linha única"
 
-#: ../gummi/gui/gummi.glade.h:83
+#: ../gummi/gui/gummi.glade.h:86
 msgid "Table"
 msgstr "Tabela"
 
-#: ../gummi/gui/gummi.glade.h:84
+#: ../gummi/gui/gummi.glade.h:87
 msgid "Template options:"
 msgstr "Opções de Modelo:"
 
-#: ../gummi/gui/gummi.glade.h:85
-msgid "Temporarily disable PDF preview"
-msgstr "Desabilitar pré-visualização temporariamente"
-
-#: ../gummi/gui/gummi.glade.h:86
+#: ../gummi/gui/gummi.glade.h:88
 msgid "Unbracketed"
 msgstr "Sem colchetes"
 
-#: ../gummi/gui/gummi.glade.h:87
+#: ../gummi/gui/gummi.glade.h:89
 msgid "Underline text"
 msgstr "Sublinhar texto"
 
-#: ../gummi/gui/gummi.glade.h:88
+#: ../gummi/gui/gummi.glade.h:90
 msgid "_Autocheck Spelling"
 msgstr "Checar Ortografia _Automaticamente"
 
-#: ../gummi/gui/gummi.glade.h:89
+#: ../gummi/gui/gummi.glade.h:91
 msgid "_Compile Bibliography"
 msgstr "_Compilar Bibliografia"
 
-#: ../gummi/gui/gummi.glade.h:90
+#: ../gummi/gui/gummi.glade.h:92
+msgid "_Document Statistics"
+msgstr ""
+
+#: ../gummi/gui/gummi.glade.h:93
 msgid "_Edit"
 msgstr "_Editar"
 
-#: ../gummi/gui/gummi.glade.h:91
+#: ../gummi/gui/gummi.glade.h:94
+msgid "_Export to PDF"
+msgstr ""
+
+#: ../gummi/gui/gummi.glade.h:95
 msgid "_File"
 msgstr "_Arquivo"
 
-#: ../gummi/gui/gummi.glade.h:92
-msgid "_Find..."
-msgstr "_Procurar"
-
-#: ../gummi/gui/gummi.glade.h:93
+#: ../gummi/gui/gummi.glade.h:96
 msgid "_Fullscreen"
 msgstr "Tela _Cheia"
 
-#: ../gummi/gui/gummi.glade.h:94
+#: ../gummi/gui/gummi.glade.h:97
 msgid "_Help"
 msgstr "A_juda"
 
-#: ../gummi/gui/gummi.glade.h:95
+#: ../gummi/gui/gummi.glade.h:98
 msgid "_Insert Bibliography"
 msgstr "_Inserir Bibliografia"
 
-#: ../gummi/gui/gummi.glade.h:96
+#: ../gummi/gui/gummi.glade.h:99
 msgid "_Open..."
 msgstr "_Abrir"
 
-#: ../gummi/gui/gummi.glade.h:97
+#: ../gummi/gui/gummi.glade.h:100
+msgid "_Replace"
+msgstr ""
+
+#: ../gummi/gui/gummi.glade.h:101
+msgid "_Right Pane"
+msgstr ""
+
+#: ../gummi/gui/gummi.glade.h:102
 msgid "_Search"
 msgstr "_Procurar"
 
-#: ../gummi/gui/gummi.glade.h:98
+#: ../gummi/gui/gummi.glade.h:103
 msgid "_Statusbar"
 msgstr "_Barra de status"
 
-#: ../gummi/gui/gummi.glade.h:99
+#: ../gummi/gui/gummi.glade.h:104
 msgid "_Toolbar"
 msgstr "Barra de _Ferramentas"
 
-#: ../gummi/gui/gummi.glade.h:100
+#: ../gummi/gui/gummi.glade.h:105
 msgid "_Tools"
 msgstr "Ferramentas"
 
-#: ../gummi/gui/gummi.glade.h:101
+#: ../gummi/gui/gummi.glade.h:106
 msgid "_View"
 msgstr "_Visualizar"
 
-#: ../gummi/gui/gummi.glade.h:102
+#: ../gummi/gui/gummi.glade.h:107
 msgid "filter:"
 msgstr "filtro:"
 
-#: ../gummi/gui/gummi.glade.h:103
-#: ../gummi/GummiGUI.py:248
+#: ../gummi/gui/gummi.glade.h:108
 msgid "no bibliography file detected"
 msgstr "nenhum arquivo de bibliografia encontrado"
 
-#: ../gummi/gui/gummi.glade.h:104
+#: ../gummi/gui/gummi.glade.h:109
 msgid "none"
 msgstr "nenhum"
 
-#: ../gummi/gui/gummi.glade.h:105
+#: ../gummi/gui/gummi.glade.h:110
 msgid "of 0"
 msgstr "de 0"
 
-#: ../gummi/gui/gummi.glade.h:106
+#: ../gummi/gui/gummi.glade.h:111
 msgid "shouldnotseeme"
 msgstr "naodeveriamever"
 
-#: ../gummi/gui/gummi.glade.h:107
+#: ../gummi/gui/gummi.glade.h:112
 msgid "toolbutton1"
 msgstr "botao1"
 
-#: ../gummi/gui/gummi.glade.h:108
+#: ../gummi/gui/gummi.glade.h:113
 msgid "toolbutton2"
 msgstr "botao2"
 
-#: ../gummi/gui/gummi.glade.h:109
+#: ../gummi/gui/gummi.glade.h:114
 msgid "toolbutton3"
 msgstr "botao3"
 
-#: ../gummi/gui/gummi.glade.h:110
+#: ../gummi/gui/gummi.glade.h:115
 msgid "toolbutton5"
 msgstr "botao5"
 
-#: ../gummi/gui/gummi.glade.h:111
+#: ../gummi/gui/gummi.glade.h:116
 msgid "toolbutton6"
 msgstr "botao6"
 
-#: ../gummi/gui/gummi.glade.h:112
+#: ../gummi/gui/gummi.glade.h:117
 msgid "toolbutton7"
 msgstr "botao7"
 
@@ -467,151 +486,93 @@ msgid "Enable text wrapping"
 msgstr "Habilitar quebra de texto"
 
 #: ../gummi/gui/prefs.glade.h:8
-msgid "Enable/disable the live preview."
-msgstr "Habilita/Desabilita pré-visualização autmática"
-
-#: ../gummi/gui/prefs.glade.h:9
 msgid "File saving:"
 msgstr "Gravando Arquivo:"
 
-#: ../gummi/gui/prefs.glade.h:10
+#: ../gummi/gui/prefs.glade.h:9
 msgid "Gummi Preferences"
 msgstr "Preferências do Gummi"
 
-#: ../gummi/gui/prefs.glade.h:11
+#: ../gummi/gui/prefs.glade.h:10
 msgid "Highlight current line"
 msgstr "Destacar linha atual"
 
-#: ../gummi/gui/prefs.glade.h:12
+#: ../gummi/gui/prefs.glade.h:11
 msgid "Highlighting:"
 msgstr "Destaque:"
 
-#: ../gummi/gui/prefs.glade.h:13
+#: ../gummi/gui/prefs.glade.h:12
 msgid "Line numbers:"
 msgstr "Números de linha:"
 
-#: ../gummi/gui/prefs.glade.h:14
-#: ../gummi/GummiGUI.py:249
+#: ../gummi/gui/prefs.glade.h:13
 msgid "None"
 msgstr "Nenhum"
 
-#: ../gummi/gui/prefs.glade.h:15
+#: ../gummi/gui/prefs.glade.h:14
 msgid "PDF Compiling"
 msgstr "Compilando PDF"
 
-#: ../gummi/gui/prefs.glade.h:16
+#: ../gummi/gui/prefs.glade.h:15
 msgid "PDF Compiling:"
 msgstr "Compilando PDF:"
 
-#: ../gummi/gui/prefs.glade.h:17
-msgid ""
-"Resets default settings\n"
-"for the active tab. "
-msgstr ""
-"Reinicializa configuração padrão\n"
-"para a aba atual"
-
-#: ../gummi/gui/prefs.glade.h:19
+#: ../gummi/gui/prefs.glade.h:16
 msgid "Spell check language:"
 msgstr "Lingua:"
 
-#: ../gummi/gui/prefs.glade.h:20
+#: ../gummi/gui/prefs.glade.h:17
 msgid "Text wrapping:"
 msgstr "Quebra de texto:"
 
-#: ../gummi/gui/prefs.glade.h:21
-msgid ""
-"The spell checker uses myspell dictionaries to function. \n"
-"Only available languages are listed. Install additional \n"
-"myspell packages if your language of choice is missing. "
-msgstr ""
-"O corretor ortográfico usa os dicionários myspell para funcionar.\n"
-"Somente as linguas disponíves são listadas. Instale pacotes \n"
-"myspell adicionais se a língua escolhida estiver faltando."
-
-#: ../gummi/gui/prefs.glade.h:24
+#: ../gummi/gui/prefs.glade.h:18
 msgid "Typesetter command:"
 msgstr ""
 
-#: ../gummi/gui/prefs.glade.h:25
+#: ../gummi/gui/prefs.glade.h:19
 msgid "View"
 msgstr "Visualizar"
 
-#: ../gummi/gui/prefs.glade.h:26
-msgid "_Autocompile every"
-msgstr "Compilar _Automáticamente à cada"
-
-#: ../gummi/gui/prefs.glade.h:27
+#: ../gummi/gui/prefs.glade.h:20
 msgid "_Autosave files every"
 msgstr "Salvar _Automáticamente à cada"
 
-#: ../gummi/gui/prefs.glade.h:28
+#: ../gummi/gui/prefs.glade.h:21
 msgid "_Reset defaults"
 msgstr "_Reiniciar padrões"
 
-#: ../gummi/gui/prefs.glade.h:29
+#: ../gummi/gui/prefs.glade.h:22
+#, fuzzy
+msgid "compile every"
+msgstr "Compilar _Automáticamente à cada"
+
+#: ../gummi/gui/prefs.glade.h:23
+msgid "compile when idle for "
+msgstr ""
+
+#: ../gummi/gui/prefs.glade.h:24
 msgid "minutes"
 msgstr "minutos"
 
-#: ../gummi/gui/prefs.glade.h:30
+#: ../gummi/gui/prefs.glade.h:25
 msgid "pdflatex"
 msgstr "pdflatex"
 
-#: ../gummi/gui/prefs.glade.h:31
+#: ../gummi/gui/prefs.glade.h:26
 msgid "seconds"
 msgstr "segundos"
 
-#: ../gummi/gui/prefs.glade.h:32
+#: ../gummi/gui/prefs.glade.h:27
 msgid "xelatex"
 msgstr "xelatex"
 
-#: ../gummi/GummiGUI.py:256
-msgid "Compiling bibliography file.."
-msgstr "Compilando arquivo de bibliografia"
-
-#: ../gummi/GummiGUI.py:257
-msgid "bibliography compiled without errors"
-msgstr "Bibliografia compilada sem erros"
-
-#: ../gummi/GummiGUI.py:259
-msgid "Error compiling bibliography file or none detected.."
-msgstr "Erro compilando arquivo de bibliografia ou nenhum arquivo encontrado..."
-
-#: ../gummi/GummiGUI.py:260
-msgid "error compiling bibliography file"
-msgstr "erro compilando arquivo de bibliografia"
-
-#: ../gummi/GummiGUI.py:266
-#: ../gummi/GummiGUI.py:395
-msgid "Open File..."
-msgstr "Abrir Arquivo..."
-
-#: ../gummi/GummiGUI.py:408
-msgid "Save File..."
-msgstr "Salvar arquivo..."
-
-#. we need to prompt for save
-#: ../gummi/GummiGUI.py:428
-msgid "Do you want to save the changes you have made?"
-msgstr "Deseja salvar as alterações feitas?"
-
-#: ../gummi/GummiGUI.py:433
-msgid "Save?"
-msgstr "Salvar?"
-
-#: ../gummi/GummiGUI.py:456
-msgid "Saving file "
-msgstr "Salvando arquivo"
-
-#: ../gummi/GummiGUI.py:803
-msgid "Error loading recent file: "
-msgstr "Erro ao carregar arquivo recente:"
-
-#: ../gummi/Motion.py:108
+#: ../gummi/Motion.py:132
+#, fuzzy, python-format
 msgid ""
 "PDF-Preview could not initialize.\n"
 "\n"
-"It appears your LaTeX document contains errors.\n"
+"It appears your LaTeX document contains errors or\n"
+"the program `%s' was not installed.\n"
 "Additional information is available on the Error Output tab.\n"
 "Please correct the listed errors and click this area\n"
 "to reload the preview panel."
@@ -623,11 +584,11 @@ msgstr ""
 "Favor corrigir os erros listados e clicar nesta area\n"
 "para recarregar o painel de pré-visulização"
 
-#: ../gummi/UpdateCheck.py:42
+#: ../gummi/UpdateCheck.py:39
 msgid "Currently installed:\n"
 msgstr "Instalado:\n"
 
-#: ../gummi/UpdateCheck.py:43
+#: ../gummi/UpdateCheck.py:40
 msgid ""
 "\n"
 "\n"
@@ -637,11 +598,11 @@ msgstr ""
 "\n"
 "Disponível:\n"
 
-#: ../gummi/UpdateCheck.py:45
+#: ../gummi/UpdateCheck.py:42
 msgid "Update Check"
 msgstr "Atualizar checagem"
 
-#: ../gummi/UpdateCheck.py:49
+#: ../gummi/UpdateCheck.py:46
 msgid ""
 "The server could not be contacted.\n"
 "\n"
@@ -649,15 +610,70 @@ msgstr ""
 "O serivdor não pôde ser contactado\n"
 "\n"
 
-#: ../gummi/UpdateCheck.py:50
+#: ../gummi/UpdateCheck.py:47
 msgid "This function requires an active\n"
 msgstr "Esta função precisa de uma\n"
 
-#: ../gummi/UpdateCheck.py:51
+#: ../gummi/UpdateCheck.py:48
 msgid "internet connection."
 msgstr "conexão à internet"
 
-#: ../gummi/UpdateCheck.py:53
+#: ../gummi/UpdateCheck.py:50
 msgid "Error"
 msgstr "Erro"
 
+#~ msgid "Temporarily disable PDF preview"
+#~ msgstr "Desabilitar pré-visualização temporariamente"
+
+#~ msgid "_Find..."
+#~ msgstr "_Procurar"
+
+#~ msgid "Enable/disable the live preview."
+#~ msgstr "Habilita/Desabilita pré-visualização autmática"
+
+#~ msgid ""
+#~ "Resets default settings\n"
+#~ "for the active tab. "
+#~ msgstr ""
+#~ "Reinicializa configuração padrão\n"
+#~ "para a aba atual"
+
+#~ msgid ""
+#~ "The spell checker uses myspell dictionaries to function. \n"
+#~ "Only available languages are listed. Install additional \n"
+#~ "myspell packages if your language of choice is missing. "
+#~ msgstr ""
+#~ "O corretor ortográfico usa os dicionários myspell para funcionar.\n"
+#~ "Somente as linguas disponíves são listadas. Instale pacotes \n"
+#~ "myspell adicionais se a língua escolhida estiver faltando."
+
+#~ msgid "Compiling bibliography file.."
+#~ msgstr "Compilando arquivo de bibliografia"
+
+#~ msgid "bibliography compiled without errors"
+#~ msgstr "Bibliografia compilada sem erros"
+
+#~ msgid "Error compiling bibliography file or none detected.."
+#~ msgstr ""
+#~ "Erro compilando arquivo de bibliografia ou nenhum arquivo encontrado..."
+
+#~ msgid "error compiling bibliography file"
+#~ msgstr "erro compilando arquivo de bibliografia"
+
+#~ msgid "Open File..."
+#~ msgstr "Abrir Arquivo..."
+
+#~ msgid "Save File..."
+#~ msgstr "Salvar arquivo..."
+
+#~ msgid "Do you want to save the changes you have made?"
+#~ msgstr "Deseja salvar as alterações feitas?"
+
+#~ msgid "Save?"
+#~ msgstr "Salvar?"
+
+#~ msgid "Saving file "
+#~ msgstr "Salvando arquivo"
+
+#~ msgid "Error loading recent file: "
+#~ msgstr "Erro ao carregar arquivo recente:"

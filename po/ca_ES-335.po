@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.4.8\n"
-"Report-Msgid-Bugs-To: marcvinyals@velodius.com\n"
-"POT-Creation-Date: 2010-05-23 13:56+0800\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-07-31 17:21+0800\n"
 "PO-Revision-Date: 2010-05-23 14:45+0200\n"
 "Last-Translator: Marc Vinyals <marcvinyals@velodius.com>\n"
 "Language-Team: CA <marcvinyals@velodius.com>\n"
@@ -180,254 +180,274 @@ msgid ""
 msgstr "Estat d'error del document actiu"
 
 #: ../gummi/gui/gummi.glade.h:50
+msgid "Export to PDF"
+msgstr ""
+
+#: ../gummi/gui/gummi.glade.h:51
 msgid "File:"
 msgstr "Fitxer:"
 
-#: ../gummi/gui/gummi.glade.h:51
+#: ../gummi/gui/gummi.glade.h:52
 msgid "Filename:"
 msgstr "Nom del fitxer:"
 
-#: ../gummi/gui/gummi.glade.h:52
+#: ../gummi/gui/gummi.glade.h:53
 msgid "Find"
 msgstr "Cerca"
 
-#: ../gummi/gui/gummi.glade.h:53
+#: ../gummi/gui/gummi.glade.h:54
 msgid "Find Ne_xt"
 msgstr "Cerca la següe(_n)t"
 
-#: ../gummi/gui/gummi.glade.h:54
+#: ../gummi/gui/gummi.glade.h:55
 msgid "Find Pre_vious"
 msgstr "Cerca l'an(_t)erior"
 
-#: ../gummi/gui/gummi.glade.h:55
+#: ../gummi/gui/gummi.glade.h:56
 msgid "Fit Page Width"
 msgstr "Ajusta a l'amplada de la pàgina"
 
-#: ../gummi/gui/gummi.glade.h:56
+#: ../gummi/gui/gummi.glade.h:57
 msgid "Gummi - LaTeX Editor"
 msgstr "Gummi - Editor de LaTeX"
 
-#: ../gummi/gui/gummi.glade.h:57
+#: ../gummi/gui/gummi.glade.h:58
 msgid "Image"
 msgstr "Imatge"
 
-#: ../gummi/gui/gummi.glade.h:58
+#: ../gummi/gui/gummi.glade.h:59
 msgid "Italic text"
 msgstr "Text en cursiva"
 
-#: ../gummi/gui/gummi.glade.h:59
+#: ../gummi/gui/gummi.glade.h:60
 msgid "Label:"
 msgstr "Etiqueta:"
 
-#: ../gummi/gui/gummi.glade.h:60
+#: ../gummi/gui/gummi.glade.h:61
 msgid "Letter"
 msgstr "Carta"
 
-#: ../gummi/gui/gummi.glade.h:61
+#: ../gummi/gui/gummi.glade.h:62
 msgid "Load a file"
 msgstr "Carrega un fitxer"
 
-#: ../gummi/gui/gummi.glade.h:62
+#: ../gummi/gui/gummi.glade.h:63
 msgid "Match case"
 msgstr "Distingeix entre majúscules i minúscules"
 
-#: ../gummi/gui/gummi.glade.h:63
+#: ../gummi/gui/gummi.glade.h:64
 msgid "Match entire word only"
 msgstr "Només coincideix la paraula sencera"
 
-#: ../gummi/gui/gummi.glade.h:64
+#: ../gummi/gui/gummi.glade.h:65
 msgid "Matrix"
 msgstr "Matriu"
 
-#: ../gummi/gui/gummi.glade.h:65
+#: ../gummi/gui/gummi.glade.h:66
 msgid "N/A"
 msgstr "N/D"
 
-#: ../gummi/gui/gummi.glade.h:66
+#: ../gummi/gui/gummi.glade.h:67
 msgid "New from _Template"
 msgstr "Nou partin(_t) d'una plantilla"
 
-#: ../gummi/gui/gummi.glade.h:67
+#: ../gummi/gui/gummi.glade.h:68
 msgid "Next"
 msgstr "Següent"
 
-#: ../gummi/gui/gummi.glade.h:68
+#: ../gummi/gui/gummi.glade.h:69
 msgid "No borders"
 msgstr "Sense vores"
 
-#: ../gummi/gui/gummi.glade.h:69
+#: ../gummi/gui/gummi.glade.h:70
 msgid "Open"
 msgstr "Obre"
 
-#: ../gummi/gui/gummi.glade.h:70
+#: ../gummi/gui/gummi.glade.h:71
 msgid "Parentheses"
 msgstr "Parèntesis"
 
-#: ../gummi/gui/gummi.glade.h:71
+#: ../gummi/gui/gummi.glade.h:72
 msgid "Preview Pane"
 msgstr "Previsualització"
 
-#: ../gummi/gui/gummi.glade.h:72
+#: ../gummi/gui/gummi.glade.h:73
 msgid "Previous"
 msgstr "Anterior"
 
-#: ../gummi/gui/gummi.glade.h:73
+#: ../gummi/gui/gummi.glade.h:74
 msgid "References:"
 msgstr "Referències:"
 
-#: ../gummi/gui/gummi.glade.h:74
+#: ../gummi/gui/gummi.glade.h:75
+msgid "Replace _All"
+msgstr ""
+
+#: ../gummi/gui/gummi.glade.h:76
+msgid "Replace with:"
+msgstr ""
+
+#: ../gummi/gui/gummi.glade.h:77
 msgid "Report"
 msgstr "Informe"
 
-#: ../gummi/gui/gummi.glade.h:75
+#: ../gummi/gui/gummi.glade.h:78
 msgid "Rows:"
 msgstr "Files:"
 
-#: ../gummi/gui/gummi.glade.h:76
+#: ../gummi/gui/gummi.glade.h:79
 msgid "Save"
 msgstr "Desa"
 
-#: ../gummi/gui/gummi.glade.h:77
+#: ../gummi/gui/gummi.glade.h:80
 msgid "Save _As..."
 msgstr "(_A)nomena i desa..."
 
-#: ../gummi/gui/gummi.glade.h:78
+#: ../gummi/gui/gummi.glade.h:81
 msgid "Save the current file"
 msgstr "Desa el fitxer actual"
 
-#: ../gummi/gui/gummi.glade.h:79
+#: ../gummi/gui/gummi.glade.h:82
 msgid "Scale:"
 msgstr "Escala:"
 
-#: ../gummi/gui/gummi.glade.h:80
+#: ../gummi/gui/gummi.glade.h:83
 msgid "Search backwards"
 msgstr "Cerca cap enrere"
 
-#: ../gummi/gui/gummi.glade.h:81
+#: ../gummi/gui/gummi.glade.h:84
 msgid "Search for:"
 msgstr "Cerca:"
 
-#: ../gummi/gui/gummi.glade.h:82
+#: ../gummi/gui/gummi.glade.h:85
 msgid "Single line"
 msgstr "Línia simple"
 
-#: ../gummi/gui/gummi.glade.h:83
+#: ../gummi/gui/gummi.glade.h:86
 msgid "Table"
 msgstr "Taula"
 
-#: ../gummi/gui/gummi.glade.h:84
+#: ../gummi/gui/gummi.glade.h:87
 msgid "Template options:"
 msgstr "Opcions de la plantilla:"
 
-#: ../gummi/gui/gummi.glade.h:85
-msgid "Temporarily disable PDF preview"
-msgstr "Deshabilita la previsualtzació temporalment"
-
-#: ../gummi/gui/gummi.glade.h:86
+#: ../gummi/gui/gummi.glade.h:88
 msgid "Unbracketed"
 msgstr "Sense delimitadors"
 
-#: ../gummi/gui/gummi.glade.h:87
+#: ../gummi/gui/gummi.glade.h:89
 msgid "Underline text"
 msgstr "Text subratllat"
 
-#: ../gummi/gui/gummi.glade.h:88
+#: ../gummi/gui/gummi.glade.h:90
 msgid "_Autocheck Spelling"
 msgstr "Comprova l'ortografia (_a)utomàticament"
 
-#: ../gummi/gui/gummi.glade.h:89
+#: ../gummi/gui/gummi.glade.h:91
 msgid "_Compile Bibliography"
 msgstr "(_C)ompila la bibliografia"
 
-#: ../gummi/gui/gummi.glade.h:90
+#: ../gummi/gui/gummi.glade.h:92
+msgid "_Document Statistics"
+msgstr ""
+
+#: ../gummi/gui/gummi.glade.h:93
 msgid "_Edit"
 msgstr "(_E)dita"
 
-#: ../gummi/gui/gummi.glade.h:91
+#: ../gummi/gui/gummi.glade.h:94
+msgid "_Export to PDF"
+msgstr ""
+
+#: ../gummi/gui/gummi.glade.h:95
 msgid "_File"
 msgstr "(_F)itxer"
 
-#: ../gummi/gui/gummi.glade.h:92
-msgid "_Find..."
-msgstr "(_C)erca..."
-
-#: ../gummi/gui/gummi.glade.h:93
+#: ../gummi/gui/gummi.glade.h:96
 msgid "_Fullscreen"
 msgstr "Pantalla (_s)encera"
 
-#: ../gummi/gui/gummi.glade.h:94
+#: ../gummi/gui/gummi.glade.h:97
 msgid "_Help"
 msgstr "A(_j)uda"
 
-#: ../gummi/gui/gummi.glade.h:95
+#: ../gummi/gui/gummi.glade.h:98
 msgid "_Insert Bibliography"
 msgstr "(_I)nsereix una bibliografia"
 
-#: ../gummi/gui/gummi.glade.h:96
+#: ../gummi/gui/gummi.glade.h:99
 msgid "_Open..."
 msgstr "(_O)bre..."
 
-#: ../gummi/gui/gummi.glade.h:97
+#: ../gummi/gui/gummi.glade.h:100
+msgid "_Replace"
+msgstr ""
+
+#: ../gummi/gui/gummi.glade.h:101
+msgid "_Right Pane"
+msgstr ""
+
+#: ../gummi/gui/gummi.glade.h:102
 msgid "_Search"
 msgstr "(_C)erca"
 
-#: ../gummi/gui/gummi.glade.h:98
+#: ../gummi/gui/gummi.glade.h:103
 msgid "_Statusbar"
 msgstr "Barra d'e(_s)tat"
 
-#: ../gummi/gui/gummi.glade.h:99
+#: ../gummi/gui/gummi.glade.h:104
 msgid "_Toolbar"
 msgstr "Barra d'(_e)ines"
 
-#: ../gummi/gui/gummi.glade.h:100
+#: ../gummi/gui/gummi.glade.h:105
 msgid "_Tools"
 msgstr "Ei(_n)es"
 
-#: ../gummi/gui/gummi.glade.h:101
+#: ../gummi/gui/gummi.glade.h:106
 msgid "_View"
 msgstr "(_V)isualitza"
 
-#: ../gummi/gui/gummi.glade.h:102
+#: ../gummi/gui/gummi.glade.h:107
 msgid "filter:"
 msgstr "filtre:"
 
-#: ../gummi/gui/gummi.glade.h:103 ../gummi/GummiGUI.py:248
+#: ../gummi/gui/gummi.glade.h:108
 msgid "no bibliography file detected"
 msgstr "no s'ha detectat cap fitxer de bibliografia"
 
-#: ../gummi/gui/gummi.glade.h:104
+#: ../gummi/gui/gummi.glade.h:109
 msgid "none"
 msgstr "cap"
 
-#: ../gummi/gui/gummi.glade.h:105
+#: ../gummi/gui/gummi.glade.h:110
 msgid "of 0"
 msgstr "de 0"
 
-#: ../gummi/gui/gummi.glade.h:106
+#: ../gummi/gui/gummi.glade.h:111
 msgid "shouldnotseeme"
 msgstr "shouldnotseeme"
 
-#: ../gummi/gui/gummi.glade.h:107
+#: ../gummi/gui/gummi.glade.h:112
 msgid "toolbutton1"
 msgstr "toolbutton1"
 
-#: ../gummi/gui/gummi.glade.h:108
+#: ../gummi/gui/gummi.glade.h:113
 msgid "toolbutton2"
 msgstr "toolbutton2"
 
-#: ../gummi/gui/gummi.glade.h:109
+#: ../gummi/gui/gummi.glade.h:114
 msgid "toolbutton3"
 msgstr "toolbutton3"
 
-#: ../gummi/gui/gummi.glade.h:110
+#: ../gummi/gui/gummi.glade.h:115
 msgid "toolbutton5"
 msgstr "toolbutton5"
 
-#: ../gummi/gui/gummi.glade.h:111
+#: ../gummi/gui/gummi.glade.h:116
 msgid "toolbutton6"
 msgstr "toolbutton6"
 
-#: ../gummi/gui/gummi.glade.h:112
+#: ../gummi/gui/gummi.glade.h:117
 msgid "toolbutton7"
 msgstr "toolbutton7"
 
@@ -460,150 +480,93 @@ msgid "Enable text wrapping"
 msgstr "Habilita l'ajustament de text"
 
 #: ../gummi/gui/prefs.glade.h:8
-msgid "Enable/disable the live preview."
-msgstr "Habilita/inhabilita la previsualització dels canvis"
-
-#: ../gummi/gui/prefs.glade.h:9
 msgid "File saving:"
 msgstr "Desat:"
 
-#: ../gummi/gui/prefs.glade.h:10
+#: ../gummi/gui/prefs.glade.h:9
 msgid "Gummi Preferences"
 msgstr "Preferències del Gummi"
 
-#: ../gummi/gui/prefs.glade.h:11
+#: ../gummi/gui/prefs.glade.h:10
 msgid "Highlight current line"
 msgstr "Ressalta la línia actual"
 
-#: ../gummi/gui/prefs.glade.h:12
+#: ../gummi/gui/prefs.glade.h:11
 msgid "Highlighting:"
 msgstr "Ressaltament:"
 
-#: ../gummi/gui/prefs.glade.h:13
+#: ../gummi/gui/prefs.glade.h:12
 msgid "Line numbers:"
 msgstr "Números de línia:"
 
-#: ../gummi/gui/prefs.glade.h:14 ../gummi/GummiGUI.py:249
+#: ../gummi/gui/prefs.glade.h:13
 msgid "None"
 msgstr "Cap"
 
-#: ../gummi/gui/prefs.glade.h:15
+#: ../gummi/gui/prefs.glade.h:14
 msgid "PDF Compiling"
 msgstr "Compilació a PDF"
 
-#: ../gummi/gui/prefs.glade.h:16
+#: ../gummi/gui/prefs.glade.h:15
 msgid "PDF Compiling:"
 msgstr "Compilació a PDF"
 
-#: ../gummi/gui/prefs.glade.h:17
-msgid ""
-"Resets default settings\n"
-"for the active tab. "
-msgstr ""
-"Restaura els valors per defecte\n"
-"de la pestanya actual. "
-
-#: ../gummi/gui/prefs.glade.h:19
+#: ../gummi/gui/prefs.glade.h:16
 msgid "Spell check language:"
 msgstr "Idioma per a la correcció ortogràfica:"
 
-#: ../gummi/gui/prefs.glade.h:20
+#: ../gummi/gui/prefs.glade.h:17
 msgid "Text wrapping:"
 msgstr "Tall de línia:"
 
-#: ../gummi/gui/prefs.glade.h:21
-msgid ""
-"The spell checker uses myspell dictionaries to function. \n"
-"Only available languages are listed. Install additional \n"
-"myspell packages if your language of choice is missing. "
-msgstr ""
-"El corrector ortogràfic fa servir els diccionaris de myspell.\n"
-"Es llisten els idiomes disponibles. Si voleu utilitzar-ne d'altres,\n"
-"instal·leu els paquets de myspell necessaris."
-
-#: ../gummi/gui/prefs.glade.h:24
+#: ../gummi/gui/prefs.glade.h:18
 msgid "Typesetter command:"
 msgstr "Ordre del compilador:"
 
-#: ../gummi/gui/prefs.glade.h:25
+#: ../gummi/gui/prefs.glade.h:19
 msgid "View"
 msgstr "Visualització"
 
-#: ../gummi/gui/prefs.glade.h:26
-msgid "_Autocompile every"
-msgstr "(_C)ompila automàticament cada"
-
-#: ../gummi/gui/prefs.glade.h:27
+#: ../gummi/gui/prefs.glade.h:20
 msgid "_Autosave files every"
 msgstr "(_D)esa els fitxers automàticament cada"
 
-#: ../gummi/gui/prefs.glade.h:28
+#: ../gummi/gui/prefs.glade.h:21
 msgid "_Reset defaults"
 msgstr "(_R)estaura els valors per defecte"
 
-#: ../gummi/gui/prefs.glade.h:29
+#: ../gummi/gui/prefs.glade.h:22
+#, fuzzy
+msgid "compile every"
+msgstr "(_C)ompila automàticament cada"
+
+#: ../gummi/gui/prefs.glade.h:23
+msgid "compile when idle for "
+msgstr ""
+
+#: ../gummi/gui/prefs.glade.h:24
 msgid "minutes"
 msgstr "minuts"
 
-#: ../gummi/gui/prefs.glade.h:30
+#: ../gummi/gui/prefs.glade.h:25
 msgid "pdflatex"
 msgstr "pdflatex"
 
-#: ../gummi/gui/prefs.glade.h:31
+#: ../gummi/gui/prefs.glade.h:26
 msgid "seconds"
 msgstr "segons"
 
-#: ../gummi/gui/prefs.glade.h:32
+#: ../gummi/gui/prefs.glade.h:27
 msgid "xelatex"
 msgstr "xelatex"
 
-#: ../gummi/GummiGUI.py:256
-msgid "Compiling bibliography file.."
-msgstr "S'està compilant la bibliografia.."
-
-#: ../gummi/GummiGUI.py:257
-msgid "bibliography compiled without errors"
-msgstr "s'ha compilat la bibliografia sense errors"
-
-#: ../gummi/GummiGUI.py:259
-msgid "Error compiling bibliography file or none detected.."
-msgstr ""
-"S'ha produït un error mentre es compilava la bibliografia o no s'ha detectat"
-
-#: ../gummi/GummiGUI.py:260
-msgid "error compiling bibliography file"
-msgstr "s'ha produït un error mentre es compilava la bibliografia"
-
-#: ../gummi/GummiGUI.py:266 ../gummi/GummiGUI.py:395
-msgid "Open File..."
-msgstr "Obre el fitxer..."
-
-#: ../gummi/GummiGUI.py:408
-msgid "Save File..."
-msgstr "Desa el fitxer..."
-
-#. we need to prompt for save
-#: ../gummi/GummiGUI.py:428
-msgid "Do you want to save the changes you have made?"
-msgstr "Voleu desar els canvis?"
-
-#: ../gummi/GummiGUI.py:433
-msgid "Save?"
-msgstr "Desa?"
-
-#: ../gummi/GummiGUI.py:456
-msgid "Saving file "
-msgstr "S'està desant el fitxer"
-
-#: ../gummi/GummiGUI.py:803
-msgid "Error loading recent file: "
-msgstr "S'ha produït un error mentre s'estava carregant el fitxer recent:"
-
-#: ../gummi/Motion.py:108
+#: ../gummi/Motion.py:132
+#, fuzzy, python-format
 msgid ""
 "PDF-Preview could not initialize.\n"
 "\n"
-"It appears your LaTeX document contains errors.\n"
+"It appears your LaTeX document contains errors or\n"
+"the program `%s' was not installed.\n"
 "Additional information is available on the Error Output tab.\n"
 "Please correct the listed errors and click this area\n"
 "to reload the preview panel."
@@ -615,11 +578,11 @@ msgstr ""
 "Corregiu la llista d'errors i cliqueu aquesta zona\n"
 "per tornar a carregar la previsualització."
 
-#: ../gummi/UpdateCheck.py:42
+#: ../gummi/UpdateCheck.py:39
 msgid "Currently installed:\n"
 msgstr "Versió instal·lada:\n"
 
-#: ../gummi/UpdateCheck.py:43
+#: ../gummi/UpdateCheck.py:40
 msgid ""
 "\n"
 "\n"
@@ -629,11 +592,11 @@ msgstr ""
 "\n"
 "Versió disponible:\n"
 
-#: ../gummi/UpdateCheck.py:45
+#: ../gummi/UpdateCheck.py:42
 msgid "Update Check"
 msgstr "Cerca actualitzacions"
 
-#: ../gummi/UpdateCheck.py:49
+#: ../gummi/UpdateCheck.py:46
 msgid ""
 "The server could not be contacted.\n"
 "\n"
@@ -641,14 +604,71 @@ msgstr ""
 "No s'ha pogut contactar amb el servidor.\n"
 "\n"
 
-#: ../gummi/UpdateCheck.py:50
+#: ../gummi/UpdateCheck.py:47
 msgid "This function requires an active\n"
 msgstr "Aquesta funció necessita una\n"
 
-#: ../gummi/UpdateCheck.py:51
+#: ../gummi/UpdateCheck.py:48
 msgid "internet connection."
 msgstr "connexió a Internet activa."
 
-#: ../gummi/UpdateCheck.py:53
+#: ../gummi/UpdateCheck.py:50
 msgid "Error"
 msgstr "Error"
+
+#~ msgid "Temporarily disable PDF preview"
+#~ msgstr "Deshabilita la previsualtzació temporalment"
+
+#~ msgid "_Find..."
+#~ msgstr "(_C)erca..."
+
+#~ msgid "Enable/disable the live preview."
+#~ msgstr "Habilita/inhabilita la previsualització dels canvis"
+
+#~ msgid ""
+#~ "Resets default settings\n"
+#~ "for the active tab. "
+#~ msgstr ""
+#~ "Restaura els valors per defecte\n"
+#~ "de la pestanya actual. "
+
+#~ msgid ""
+#~ "The spell checker uses myspell dictionaries to function. \n"
+#~ "Only available languages are listed. Install additional \n"
+#~ "myspell packages if your language of choice is missing. "
+#~ msgstr ""
+#~ "El corrector ortogràfic fa servir els diccionaris de myspell.\n"
+#~ "Es llisten els idiomes disponibles. Si voleu utilitzar-ne d'altres,\n"
+#~ "instal·leu els paquets de myspell necessaris."
+
+#~ msgid "Compiling bibliography file.."
+#~ msgstr "S'està compilant la bibliografia.."
+
+#~ msgid "bibliography compiled without errors"
+#~ msgstr "s'ha compilat la bibliografia sense errors"
+
+#~ msgid "Error compiling bibliography file or none detected.."
+#~ msgstr ""
+#~ "S'ha produït un error mentre es compilava la bibliografia o no s'ha "
+#~ "detectat"
+
+#~ msgid "error compiling bibliography file"
+#~ msgstr "s'ha produït un error mentre es compilava la bibliografia"
+
+#~ msgid "Open File..."
+#~ msgstr "Obre el fitxer..."
+
+#~ msgid "Save File..."
+#~ msgstr "Desa el fitxer..."
+
+#~ msgid "Do you want to save the changes you have made?"
+#~ msgstr "Voleu desar els canvis?"
+
+#~ msgid "Save?"
+#~ msgstr "Desa?"
+
+#~ msgid "Saving file "
+#~ msgstr "S'està desant el fitxer"
+
+#~ msgid "Error loading recent file: "
+#~ msgstr "S'ha produït un error mentre s'estava carregant el fitxer recent:"
