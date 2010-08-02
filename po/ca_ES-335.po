@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.4.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-31 17:21+0800\n"
+"POT-Creation-Date: 2010-08-02 12:24+0800\n"
 "PO-Revision-Date: 2010-05-23 14:45+0200\n"
 "Last-Translator: Marc Vinyals <marcvinyals@velodius.com>\n"
 "Language-Team: CA <marcvinyals@velodius.com>\n"
@@ -411,7 +411,7 @@ msgstr "(_V)isualitza"
 msgid "filter:"
 msgstr "filtre:"
 
-#: ../gummi/gui/gummi.glade.h:108
+#: ../gummi/gui/gummi.glade.h:108 ../gummi/GummiGUI.py:269
 msgid "no bibliography file detected"
 msgstr "no s'ha detectat cap fitxer de bibliografia"
 
@@ -499,7 +499,7 @@ msgstr "Ressaltament:"
 msgid "Line numbers:"
 msgstr "Números de línia:"
 
-#: ../gummi/gui/prefs.glade.h:13
+#: ../gummi/gui/prefs.glade.h:13 ../gummi/GummiGUI.py:270
 msgid "None"
 msgstr "Cap"
 
@@ -616,59 +616,44 @@ msgstr "connexió a Internet activa."
 msgid "Error"
 msgstr "Error"
 
-#~ msgid "Temporarily disable PDF preview"
-#~ msgstr "Deshabilita la previsualtzació temporalment"
+#: ../gummi/GummiGUI.py:277
+msgid "Compiling bibliography file.."
+msgstr "S'està compilant la bibliografia.."
 
-#~ msgid "_Find..."
-#~ msgstr "(_C)erca..."
+#: ../gummi/GummiGUI.py:278
+msgid "bibliography compiled without errors"
+msgstr "s'ha compilat la bibliografia sense errors"
 
-#~ msgid "Enable/disable the live preview."
-#~ msgstr "Habilita/inhabilita la previsualització dels canvis"
+#: ../gummi/GummiGUI.py:280
+msgid "Error compiling bibliography file or none detected.."
+msgstr ""
+"S'ha produït un error mentre es compilava la bibliografia o no s'ha detectat"
 
-#~ msgid ""
-#~ "Resets default settings\n"
-#~ "for the active tab. "
-#~ msgstr ""
-#~ "Restaura els valors per defecte\n"
-#~ "de la pestanya actual. "
+#: ../gummi/GummiGUI.py:281
+msgid "error compiling bibliography file"
+msgstr "s'ha produït un error mentre es compilava la bibliografia"
 
-#~ msgid ""
-#~ "The spell checker uses myspell dictionaries to function. \n"
-#~ "Only available languages are listed. Install additional \n"
-#~ "myspell packages if your language of choice is missing. "
-#~ msgstr ""
-#~ "El corrector ortogràfic fa servir els diccionaris de myspell.\n"
-#~ "Es llisten els idiomes disponibles. Si voleu utilitzar-ne d'altres,\n"
-#~ "instal·leu els paquets de myspell necessaris."
+#: ../gummi/GummiGUI.py:287 ../gummi/GummiGUI.py:454
+msgid "Open File..."
+msgstr "Obre el fitxer..."
 
-#~ msgid "Compiling bibliography file.."
-#~ msgstr "S'està compilant la bibliografia.."
+#: ../gummi/GummiGUI.py:468
+msgid "Save File..."
+msgstr "Desa el fitxer..."
 
-#~ msgid "bibliography compiled without errors"
-#~ msgstr "s'ha compilat la bibliografia sense errors"
+#. we need to prompt for save
+#: ../gummi/GummiGUI.py:493
+msgid "Do you want to save the changes you have made?"
+msgstr "Voleu desar els canvis?"
 
-#~ msgid "Error compiling bibliography file or none detected.."
-#~ msgstr ""
-#~ "S'ha produït un error mentre es compilava la bibliografia o no s'ha "
-#~ "detectat"
+#: ../gummi/GummiGUI.py:498
+msgid "Save?"
+msgstr "Desa?"
 
-#~ msgid "error compiling bibliography file"
-#~ msgstr "s'ha produït un error mentre es compilava la bibliografia"
+#: ../gummi/GummiGUI.py:521
+msgid "Saving file "
+msgstr "S'està desant el fitxer"
 
-#~ msgid "Open File..."
-#~ msgstr "Obre el fitxer..."
-
-#~ msgid "Save File..."
-#~ msgstr "Desa el fitxer..."
-
-#~ msgid "Do you want to save the changes you have made?"
-#~ msgstr "Voleu desar els canvis?"
-
-#~ msgid "Save?"
-#~ msgstr "Desa?"
-
-#~ msgid "Saving file "
-#~ msgstr "S'està desant el fitxer"
-
-#~ msgid "Error loading recent file: "
-#~ msgstr "S'ha produït un error mentre s'estava carregant el fitxer recent:"
+#: ../gummi/GummiGUI.py:909
+msgid "Error loading recent file: "
+msgstr "S'ha produït un error mentre s'estava carregant el fitxer recent:"

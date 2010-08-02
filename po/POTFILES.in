@@ -2,3 +2,4 @@ gummi/gui/gummi.glade
 gummi/gui/prefs.glade
 gummi/Motion.py
 gummi/UpdateCheck.py
+gummi/GummiGUI.py

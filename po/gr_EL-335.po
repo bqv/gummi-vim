@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-31 17:21+0800\n"
+"POT-Creation-Date: 2010-08-02 12:24+0800\n"
 "PO-Revision-Date: 2010-05-24 14:43+0200\n"
 "Last-Translator: Dimitris Leventeas <mydimle@gmail.com>\n"
 "Language-Team: EL <mydimle@gmail.com>>\n"
@@ -416,7 +416,7 @@ msgstr "_Επισκόπιση"
 msgid "filter:"
 msgstr "φίλτρο:"
 
-#: ../gummi/gui/gummi.glade.h:108
+#: ../gummi/gui/gummi.glade.h:108 ../gummi/GummiGUI.py:269
 msgid "no bibliography file detected"
 msgstr "Δεν βρέθηκε αρχείο βιβλιογραφίας"
 
@@ -504,7 +504,7 @@ msgstr "Τονίζοντας:"
 msgid "Line numbers:"
 msgstr "Αριθμοί γραμμών:"
 
-#: ../gummi/gui/prefs.glade.h:13
+#: ../gummi/gui/prefs.glade.h:13 ../gummi/GummiGUI.py:270
 msgid "None"
 msgstr "Κανένα"
 
@@ -621,57 +621,43 @@ msgstr "σύνδεση διαδικτύου"
 msgid "Error"
 msgstr "Σφάλμα"
 
-#~ msgid "Temporarily disable PDF preview"
-#~ msgstr "Προσωρινά απενεργοποίησε προεπισκόπιση PDF"
+#: ../gummi/GummiGUI.py:277
+msgid "Compiling bibliography file.."
+msgstr "Μεταφράζοντας το αρχείο βιβλιογραφίας"
 
-#~ msgid "_Find..."
-#~ msgstr "_Εύρεση..."
+#: ../gummi/GummiGUI.py:278
+msgid "bibliography compiled without errors"
+msgstr "Η βιβλιογραφία μεταφράστηκε χωρίς λάθη"
 
-#~ msgid "Enable/disable the live preview."
-#~ msgstr "Ενεργοποίηση/απενεργοποίηση υποπαραθύρου προεπισκόπισης"
+#: ../gummi/GummiGUI.py:280
+msgid "Error compiling bibliography file or none detected.."
+msgstr "Λάθος μεταφράζοντας το αρχείο βιβλιογραφίας ή δεν βρέθηκε κάποιο"
 
-#~ msgid ""
-#~ "Resets default settings\n"
-#~ "for the active tab. "
-#~ msgstr ""
-#~ "Επαναφορά αρχικών ρυθμίσεων\n"
-#~ "για την ενεργή καρτέλα "
+#: ../gummi/GummiGUI.py:281
+msgid "error compiling bibliography file"
+msgstr "λάθος μεταφράζοντας το αρχείο βιβλιογραφίας"
 
-#~ msgid ""
-#~ "The spell checker uses myspell dictionaries to function. \n"
-#~ "Only available languages are listed. Install additional \n"
-#~ "myspell packages if your language of choice is missing. "
-#~ msgstr ""
-#~ "Ο ορθογραφικός έλεγχος χρησιμοποιεί myspell λεξικά για να λειτουργήσει. \n"
-#~ "Οι διαθέσιμες γλώσσες παρατίθενται. Εγκαταστήστε επιπρόσθετα \n"
-#~ "myspell πακέτα αν η γλώσσα της επιλογής σας λείπει. "
+#: ../gummi/GummiGUI.py:287 ../gummi/GummiGUI.py:454
+msgid "Open File..."
+msgstr "Άνοιγμα Αρχείου..."
 
-#~ msgid "Compiling bibliography file.."
-#~ msgstr "Μεταφράζοντας το αρχείο βιβλιογραφίας"
+#: ../gummi/GummiGUI.py:468
+msgid "Save File..."
+msgstr "Αποθήκευση Αρχείου..."
 
-#~ msgid "bibliography compiled without errors"
-#~ msgstr "Η βιβλιογραφία μεταφράστηκε χωρίς λάθη"
+#. we need to prompt for save
+#: ../gummi/GummiGUI.py:493
+msgid "Do you want to save the changes you have made?"
+msgstr "Θέλετε να αποθηκεύσετε τις αλλαγές που κάνατε;"
 
-#~ msgid "Error compiling bibliography file or none detected.."
-#~ msgstr "Λάθος μεταφράζοντας το αρχείο βιβλιογραφίας ή δεν βρέθηκε κάποιο"
+#: ../gummi/GummiGUI.py:498
+msgid "Save?"
+msgstr "Αποθήκευση;"
 
-#~ msgid "error compiling bibliography file"
-#~ msgstr "λάθος μεταφράζοντας το αρχείο βιβλιογραφίας"
+#: ../gummi/GummiGUI.py:521
+msgid "Saving file "
+msgstr "Αποθηκεύοντας το αρχείο"
 
-#~ msgid "Open File..."
-#~ msgstr "Άνοιγμα Αρχείου..."
-
-#~ msgid "Save File..."
-#~ msgstr "Αποθήκευση Αρχείου..."
-
-#~ msgid "Do you want to save the changes you have made?"
-#~ msgstr "Θέλετε να αποθηκεύσετε τις αλλαγές που κάνατε;"
-
-#~ msgid "Save?"
-#~ msgstr "Αποθήκευση;"
-
-#~ msgid "Saving file "
-#~ msgstr "Αποθηκεύοντας το αρχείο"
-
-#~ msgid "Error loading recent file: "
-#~ msgstr "Σφάλμα φορτώνοντας πρόσφατο αρχείο: "
+#: ../gummi/GummiGUI.py:909
+msgid "Error loading recent file: "
+msgstr "Σφάλμα φορτώνοντας πρόσφατο αρχείο: "

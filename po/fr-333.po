@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-31 17:21+0800\n"
+"POT-Creation-Date: 2010-08-02 12:24+0800\n"
 "PO-Revision-Date: 2010-05-22 19:27:+UTC-2\n"
 "Last-Translator: yvand <yvan.duron@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -417,7 +417,7 @@ msgstr "Affichage"
 msgid "filter:"
 msgstr "Filtre:"
 
-#: ../gummi/gui/gummi.glade.h:108
+#: ../gummi/gui/gummi.glade.h:108 ../gummi/GummiGUI.py:269
 msgid "no bibliography file detected"
 msgstr "Aucun fichier bibliographique détecté"
 
@@ -505,7 +505,7 @@ msgstr "Ligne actuelle:"
 msgid "Line numbers:"
 msgstr "Numéros de ligne:"
 
-#: ../gummi/gui/prefs.glade.h:13
+#: ../gummi/gui/prefs.glade.h:13 ../gummi/GummiGUI.py:270
 msgid "None"
 msgstr "Aucun"
 
@@ -611,56 +611,50 @@ msgstr ""
 msgid "Error"
 msgstr ""
 
-#~ msgid "Temporarily disable PDF preview"
-#~ msgstr "Désactiver temporairement l'aperçu"
-
+#: ../gummi/GummiGUI.py:277
 #, fuzzy
-#~ msgid "_Find..."
-#~ msgstr "Rechercher"
+msgid "Compiling bibliography file.."
+msgstr "Compiler Bibliographie"
 
-#~ msgid "Enable/disable the live preview."
-#~ msgstr "Activer/désactiver l'aperçu en direct"
-
-#~ msgid ""
-#~ "Resets default settings\n"
-#~ "for the active tab. "
-#~ msgstr ""
-#~ "Réinitialise les paramètres\n"
-#~ "par défaut de l'onglet actif."
-
-#~ msgid ""
-#~ "The spell checker uses myspell dictionaries to function. \n"
-#~ "Only available languages are listed. Install additional \n"
-#~ "myspell packages if your language of choice is missing. "
-#~ msgstr ""
-#~ "Le vérificateur orthographique nécessite des dictionnaires myspell pour "
-#~ "fonctionner. \n"
-#~ "Seules les langues disponibles sont listées. Installez un paquet \n"
-#~ "myspell si la langue de votre choix ne figure pas dans la liste."
-
+#: ../gummi/GummiGUI.py:278
 #, fuzzy
-#~ msgid "Compiling bibliography file.."
-#~ msgstr "Compiler Bibliographie"
+msgid "bibliography compiled without errors"
+msgstr "Aucun fichier bibliographique détecté"
 
+#: ../gummi/GummiGUI.py:280
 #, fuzzy
-#~ msgid "bibliography compiled without errors"
-#~ msgstr "Aucun fichier bibliographique détecté"
+msgid "Error compiling bibliography file or none detected.."
+msgstr "Aucun fichier bibliographique détecté"
 
+#: ../gummi/GummiGUI.py:281
 #, fuzzy
-#~ msgid "Error compiling bibliography file or none detected.."
-#~ msgstr "Aucun fichier bibliographique détecté"
+msgid "error compiling bibliography file"
+msgstr "Compiler Bibliographie"
 
+#: ../gummi/GummiGUI.py:287 ../gummi/GummiGUI.py:454
 #, fuzzy
-#~ msgid "error compiling bibliography file"
-#~ msgstr "Compiler Bibliographie"
+msgid "Open File..."
+msgstr "Ouvrir"
 
+#: ../gummi/GummiGUI.py:468
+msgid "Save File..."
+msgstr ""
+
+#. we need to prompt for save
+#: ../gummi/GummiGUI.py:493
+msgid "Do you want to save the changes you have made?"
+msgstr ""
+
+#: ../gummi/GummiGUI.py:498
 #, fuzzy
-#~ msgid "Save?"
-#~ msgstr "Enregistrer"
+msgid "Save?"
+msgstr "Enregistrer"
 
+#: ../gummi/GummiGUI.py:521
 #, fuzzy
-#~ msgid "Saving file "
-#~ msgstr "Simple barre"
+msgid "Saving file "
+msgstr "Simple barre"
 
-#~ msgid "_Find&#x2026;"
-#~ msgstr "Rechercher&#x2026;"
+#: ../gummi/GummiGUI.py:909
+msgid "Error loading recent file: "
+msgstr ""

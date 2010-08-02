@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-31 17:19+0800\n"
+"POT-Creation-Date: 2010-08-02 12:27+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Alexander van der Mey <alexvandermey@gmail.com>\n"
 "Language-Team: Dutch <LL@li.org>\n"
@@ -153,17 +153,19 @@ msgstr "Compileer"
 
 #: ../gummi/gui/gummi.glade.h:42
 msgid "Create a new document"
-msgstr "Creëer nieuw document"
+msgstr "Creer nieuw document"
 
 #: ../gummi/gui/gummi.glade.h:43
 msgid "Create new document.."
-msgstr "Creëer nieuw document"
+msgstr "Creer nieuw document"
 
 #: ../gummi/gui/gummi.glade.h:44
 msgid ""
 "Determines whether the\n"
 "cells have line borders. "
-msgstr "Bepaalt of de cellen\nranden hebben"
+msgstr ""
+"Bepaalt of de cellen\n"
+"randen hebben"
 
 #: ../gummi/gui/gummi.glade.h:46
 msgid "Double line"
@@ -177,7 +179,9 @@ msgstr "Fouten overzicht"
 msgid ""
 "Error status for\n"
 "active document"
-msgstr "Fout status voor\nactieve document"
+msgstr ""
+"Fout status voor\n"
+"actieve document"
 
 #: ../gummi/gui/gummi.glade.h:50
 msgid "Export to PDF"
@@ -411,7 +415,7 @@ msgstr "Bekijk"
 msgid "filter:"
 msgstr ""
 
-#: ../gummi/gui/gummi.glade.h:108
+#: ../gummi/gui/gummi.glade.h:108 ../gummi/GummiGUI.py:269
 msgid "no bibliography file detected"
 msgstr "Geen bibliografie bestanden gedetecteerd"
 
@@ -499,7 +503,7 @@ msgstr "Markering:"
 msgid "Line numbers:"
 msgstr "Regelnummers:"
 
-#: ../gummi/gui/prefs.glade.h:13
+#: ../gummi/gui/prefs.glade.h:13 ../gummi/GummiGUI.py:270
 msgid "None"
 msgstr ""
 
@@ -569,11 +573,11 @@ msgid ""
 "Additional information is available on the Error Output tab.\n"
 "Please correct the listed errors and click this area\n"
 "to reload the preview panel."
-msgstr "PDF preview kon niet geïnitialiseerd worden.\n"
+msgstr "PDF preview kon niet genitialiseerd worden.\n"
 
 #: ../gummi/UpdateCheck.py:39
 msgid "Currently installed:\n"
-msgstr "Momenteel geïnstalleerd:\n"
+msgstr "Momenteel genstalleerd:\n"
 
 #: ../gummi/UpdateCheck.py:40
 msgid ""
@@ -603,3 +607,51 @@ msgstr "internet verbinding."
 #: ../gummi/UpdateCheck.py:50
 msgid "Error"
 msgstr "Fout"
+
+#: ../gummi/GummiGUI.py:277
+#, fuzzy
+msgid "Compiling bibliography file.."
+msgstr "Compileer bibliografie"
+
+#: ../gummi/GummiGUI.py:278
+#, fuzzy
+msgid "bibliography compiled without errors"
+msgstr "Geen bibliografie bestanden gedetecteerd"
+
+#: ../gummi/GummiGUI.py:280
+#, fuzzy
+msgid "Error compiling bibliography file or none detected.."
+msgstr "Geen bibliografie bestanden gedetecteerd"
+
+#: ../gummi/GummiGUI.py:281
+#, fuzzy
+msgid "error compiling bibliography file"
+msgstr "Compileer bibliografie"
+
+#: ../gummi/GummiGUI.py:287 ../gummi/GummiGUI.py:454
+msgid "Open File..."
+msgstr ""
+
+#: ../gummi/GummiGUI.py:468
+#, fuzzy
+msgid "Save File..."
+msgstr "Opslaan als"
+
+#. we need to prompt for save
+#: ../gummi/GummiGUI.py:493
+msgid "Do you want to save the changes you have made?"
+msgstr ""
+
+#: ../gummi/GummiGUI.py:498
+#, fuzzy
+msgid "Save?"
+msgstr "Opslaan"
+
+#: ../gummi/GummiGUI.py:521
+#, fuzzy
+msgid "Saving file "
+msgstr "Enkele lijn"
+
+#: ../gummi/GummiGUI.py:909
+msgid "Error loading recent file: "
+msgstr ""

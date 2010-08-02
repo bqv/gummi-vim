@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-31 17:21+0800\n"
+"POT-Creation-Date: 2010-08-02 12:24+0800\n"
 "PO-Revision-Date: 2010-06-09 10:02+0100\n"
 "Last-Translator: Salvatore Vassallo <vassallosalvatore@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -416,7 +416,7 @@ msgstr "Vista"
 msgid "filter:"
 msgstr "filtra:"
 
-#: ../gummi/gui/gummi.glade.h:108
+#: ../gummi/gui/gummi.glade.h:108 ../gummi/GummiGUI.py:269
 msgid "no bibliography file detected"
 msgstr "nessuna bibliografia trovata"
 
@@ -504,7 +504,7 @@ msgstr "Evidenziazione:"
 msgid "Line numbers:"
 msgstr "Numeri di riga:"
 
-#: ../gummi/gui/prefs.glade.h:13
+#: ../gummi/gui/prefs.glade.h:13 ../gummi/GummiGUI.py:270
 msgid "None"
 msgstr "Nessuno"
 
@@ -621,58 +621,43 @@ msgstr "una connessione internet attiva."
 msgid "Error"
 msgstr "Errore"
 
-#~ msgid "Temporarily disable PDF preview"
-#~ msgstr "Disabilita temporaneamente l'anteprima PDF"
+#: ../gummi/GummiGUI.py:277
+msgid "Compiling bibliography file.."
+msgstr "Compilazione della bibliografia..."
 
-#~ msgid "_Find..."
-#~ msgstr "Trova"
+#: ../gummi/GummiGUI.py:278
+msgid "bibliography compiled without errors"
+msgstr "bibliografia compilata senza errori"
 
-#~ msgid "Enable/disable the live preview."
-#~ msgstr "Abilita/disabilita l'anteprima "
+#: ../gummi/GummiGUI.py:280
+msgid "Error compiling bibliography file or none detected.."
+msgstr "Errore compilando la bibliografia o nessun file trovato..."
 
-#~ msgid ""
-#~ "Resets default settings\n"
-#~ "for the active tab. "
-#~ msgstr ""
-#~ "Ripristina le opzioni predefinite\n"
-#~ "per la scheda attiva."
+#: ../gummi/GummiGUI.py:281
+msgid "error compiling bibliography file"
+msgstr "errore compilando la bibliografia"
 
-#~ msgid ""
-#~ "The spell checker uses myspell dictionaries to function. \n"
-#~ "Only available languages are listed. Install additional \n"
-#~ "myspell packages if your language of choice is missing. "
-#~ msgstr ""
-#~ "Il controllo ortografico utilizza i dizionari myspell.\n"
-#~ "Sono elencati solo i linguaggi disponibili.\n"
-#~ "Qualora il linguaggio desiderato mancasse,\n"
-#~ "installare il relativo pacchetto myspell."
+#: ../gummi/GummiGUI.py:287 ../gummi/GummiGUI.py:454
+msgid "Open File..."
+msgstr "Apri file..."
 
-#~ msgid "Compiling bibliography file.."
-#~ msgstr "Compilazione della bibliografia..."
+#: ../gummi/GummiGUI.py:468
+msgid "Save File..."
+msgstr "Salva file..."
 
-#~ msgid "bibliography compiled without errors"
-#~ msgstr "bibliografia compilata senza errori"
+#. we need to prompt for save
+#: ../gummi/GummiGUI.py:493
+msgid "Do you want to save the changes you have made?"
+msgstr "Salvare le modifiche al documento?"
 
-#~ msgid "Error compiling bibliography file or none detected.."
-#~ msgstr "Errore compilando la bibliografia o nessun file trovato..."
+#: ../gummi/GummiGUI.py:498
+msgid "Save?"
+msgstr "Salvare?"
 
-#~ msgid "error compiling bibliography file"
-#~ msgstr "errore compilando la bibliografia"
+#: ../gummi/GummiGUI.py:521
+msgid "Saving file "
+msgstr "Salvataggio del file in corso"
 
-#~ msgid "Open File..."
-#~ msgstr "Apri file..."
-
-#~ msgid "Save File..."
-#~ msgstr "Salva file..."
-
-#~ msgid "Do you want to save the changes you have made?"
-#~ msgstr "Salvare le modifiche al documento?"
-
-#~ msgid "Save?"
-#~ msgstr "Salvare?"
-
-#~ msgid "Saving file "
-#~ msgstr "Salvataggio del file in corso"
-
-#~ msgid "Error loading recent file: "
-#~ msgstr "Errore nel caricare un file modificato di recente:"
+#: ../gummi/GummiGUI.py:909
+msgid "Error loading recent file: "
+msgstr "Errore nel caricare un file modificato di recente:"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.4.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-31 17:21+0800\n"
+"POT-Creation-Date: 2010-08-02 12:24+0800\n"
 "PO-Revision-Date: 2010-05-23 23:05+0100\n"
 "Last-Translator: Jack Olsen jackolsendk@gmail.com\n"
 "Language-Team: Jack Olsen jackolsendk@gmail.com\n"
@@ -415,7 +415,7 @@ msgstr "_Vis"
 msgid "filter:"
 msgstr "filtrer:"
 
-#: ../gummi/gui/gummi.glade.h:108
+#: ../gummi/gui/gummi.glade.h:108 ../gummi/GummiGUI.py:269
 msgid "no bibliography file detected"
 msgstr "ingen bibliografi-fil fundet"
 
@@ -503,7 +503,7 @@ msgstr "Fremhævning:"
 msgid "Line numbers:"
 msgstr "Linienumre:"
 
-#: ../gummi/gui/prefs.glade.h:13
+#: ../gummi/gui/prefs.glade.h:13 ../gummi/GummiGUI.py:270
 msgid "None"
 msgstr "Ingen"
 
@@ -620,57 +620,43 @@ msgstr "internetforbindelse."
 msgid "Error"
 msgstr "Fejl"
 
-#~ msgid "Temporarily disable PDF preview"
-#~ msgstr "Midlertidigt deaktiver PDF-fremviser"
+#: ../gummi/GummiGUI.py:277
+msgid "Compiling bibliography file.."
+msgstr "Kompilerer bibliografi-filen"
 
-#~ msgid "_Find..."
-#~ msgstr "_Find..."
+#: ../gummi/GummiGUI.py:278
+msgid "bibliography compiled without errors"
+msgstr "bibliografien kompilerede uden fejl"
 
-#~ msgid "Enable/disable the live preview."
-#~ msgstr "Aktiver/deaktiver fremviser."
+#: ../gummi/GummiGUI.py:280
+msgid "Error compiling bibliography file or none detected.."
+msgstr "Fejl ved kompilering af bibliografi-filen eller ingen fundet..."
 
-#~ msgid ""
-#~ "Resets default settings\n"
-#~ "for the active tab. "
-#~ msgstr ""
-#~ "Nulstil standardinstillinger\n"
-#~ "for det aktive faneblad. "
+#: ../gummi/GummiGUI.py:281
+msgid "error compiling bibliography file"
+msgstr "fejl ved kompilering af bibliografi-filen"
 
-#~ msgid ""
-#~ "The spell checker uses myspell dictionaries to function. \n"
-#~ "Only available languages are listed. Install additional \n"
-#~ "myspell packages if your language of choice is missing. "
-#~ msgstr ""
-#~ "Stavekontrollen anvender myspell ordbøger for at fungere. \n"
-#~ "Kun tilgængelige sprog er anført. Installer yderligere \n"
-#~ "myspell pakker hvis det ønskede sprog mangler. "
+#: ../gummi/GummiGUI.py:287 ../gummi/GummiGUI.py:454
+msgid "Open File..."
+msgstr "Åben Fil..."
 
-#~ msgid "Compiling bibliography file.."
-#~ msgstr "Kompilerer bibliografi-filen"
+#: ../gummi/GummiGUI.py:468
+msgid "Save File..."
+msgstr "Gem Fil..."
 
-#~ msgid "bibliography compiled without errors"
-#~ msgstr "bibliografien kompilerede uden fejl"
+#. we need to prompt for save
+#: ../gummi/GummiGUI.py:493
+msgid "Do you want to save the changes you have made?"
+msgstr "Ønsker du at gemme dine ændringer?"
 
-#~ msgid "Error compiling bibliography file or none detected.."
-#~ msgstr "Fejl ved kompilering af bibliografi-filen eller ingen fundet..."
+#: ../gummi/GummiGUI.py:498
+msgid "Save?"
+msgstr "Gem?"
 
-#~ msgid "error compiling bibliography file"
-#~ msgstr "fejl ved kompilering af bibliografi-filen"
+#: ../gummi/GummiGUI.py:521
+msgid "Saving file "
+msgstr "Gemmer fil "
 
-#~ msgid "Open File..."
-#~ msgstr "Åben Fil..."
-
-#~ msgid "Save File..."
-#~ msgstr "Gem Fil..."
-
-#~ msgid "Do you want to save the changes you have made?"
-#~ msgstr "Ønsker du at gemme dine ændringer?"
-
-#~ msgid "Save?"
-#~ msgstr "Gem?"
-
-#~ msgid "Saving file "
-#~ msgstr "Gemmer fil "
-
-#~ msgid "Error loading recent file: "
-#~ msgstr "Fejl ved indlæsning af nyere fil: "
+#: ../gummi/GummiGUI.py:909
+msgid "Error loading recent file: "
+msgstr "Fejl ved indlæsning af nyere fil: "

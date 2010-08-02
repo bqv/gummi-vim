@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-31 17:21+0800\n"
+"POT-Creation-Date: 2010-08-02 12:24+0800\n"
 "PO-Revision-Date: 2010-05-23 16:18+0400\n"
 "Last-Translator: kruvalig <kruvalig@gmail.com>\n"
 "Language-Team: fedora-trans-ru\n"
@@ -420,7 +420,7 @@ msgstr "_Вид"
 msgid "filter:"
 msgstr "Фильтр:"
 
-#: ../gummi/gui/gummi.glade.h:108
+#: ../gummi/gui/gummi.glade.h:108 ../gummi/GummiGUI.py:269
 msgid "no bibliography file detected"
 msgstr "Файл библиографии отсутствует"
 
@@ -508,7 +508,7 @@ msgstr "Выделение:"
 msgid "Line numbers:"
 msgstr "Номера строк:"
 
-#: ../gummi/gui/prefs.glade.h:13
+#: ../gummi/gui/prefs.glade.h:13 ../gummi/GummiGUI.py:270
 msgid "None"
 msgstr "None"
 
@@ -615,27 +615,50 @@ msgstr ""
 msgid "Error"
 msgstr ""
 
-#~ msgid "Temporarily disable PDF preview"
-#~ msgstr "Временно отключить просмотр PDF"
+#: ../gummi/GummiGUI.py:277
+#, fuzzy
+msgid "Compiling bibliography file.."
+msgstr "_Скомпилировать библиографию"
 
-#~ msgid "_Find&#x2026;"
-#~ msgstr "_Найти&#x2026;"
+#: ../gummi/GummiGUI.py:278
+#, fuzzy
+msgid "bibliography compiled without errors"
+msgstr "Файл библиографии отсутствует"
 
-#~ msgid "Enable/disable the live preview."
-#~ msgstr "Включить/выключить предварительный просмотр"
+#: ../gummi/GummiGUI.py:280
+#, fuzzy
+msgid "Error compiling bibliography file or none detected.."
+msgstr "Файл библиографии отсутствует"
 
-#~ msgid ""
-#~ "Resets default settings\n"
-#~ "for the active tab. "
-#~ msgstr ""
-#~ "Сброс настроек по умолчанию\n"
-#~ "для активной вкладки. "
+#: ../gummi/GummiGUI.py:281
+#, fuzzy
+msgid "error compiling bibliography file"
+msgstr "_Скомпилировать библиографию"
 
-#~ msgid ""
-#~ "The spell checker uses myspell dictionaries to function. \n"
-#~ "Only available languages are listed. Install additional \n"
-#~ "myspell packages if your language of choice is missing. "
-#~ msgstr ""
-#~ "Для проверки орфографии используется словарь myspell. \n"
-#~ "Перечислены только доступные языки. Установите дополнительные \n"
-#~ "пакеты myspell если ваш язык отсутствует. "
+#: ../gummi/GummiGUI.py:287 ../gummi/GummiGUI.py:454
+#, fuzzy
+msgid "Open File..."
+msgstr "Открыть"
+
+#: ../gummi/GummiGUI.py:468
+msgid "Save File..."
+msgstr ""
+
+#. we need to prompt for save
+#: ../gummi/GummiGUI.py:493
+msgid "Do you want to save the changes you have made?"
+msgstr ""
+
+#: ../gummi/GummiGUI.py:498
+#, fuzzy
+msgid "Save?"
+msgstr "Сохранить"
+
+#: ../gummi/GummiGUI.py:521
+#, fuzzy
+msgid "Saving file "
+msgstr "Однострочный"
+
+#: ../gummi/GummiGUI.py:909
+msgid "Error loading recent file: "
+msgstr ""

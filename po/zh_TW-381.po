@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-31 17:21+0800\n"
+"POT-Creation-Date: 2010-08-02 12:24+0800\n"
 "PO-Revision-Date: 2010-05-21 22:11+0800\n"
 "Last-Translator: AZ Huang <aitjcize@gmail.com>\n"
 "Language-Team: \n"
@@ -412,7 +412,7 @@ msgstr "檢視(_V)"
 msgid "filter:"
 msgstr "篩選:"
 
-#: ../gummi/gui/gummi.glade.h:108
+#: ../gummi/gui/gummi.glade.h:108 ../gummi/GummiGUI.py:269
 msgid "no bibliography file detected"
 msgstr "無法找到參考文獻"
 
@@ -500,7 +500,7 @@ msgstr "高亮:"
 msgid "Line numbers:"
 msgstr "行號:"
 
-#: ../gummi/gui/prefs.glade.h:13
+#: ../gummi/gui/prefs.glade.h:13 ../gummi/GummiGUI.py:270
 msgid "None"
 msgstr "無"
 
@@ -537,13 +537,12 @@ msgid "_Reset defaults"
 msgstr "重設為預設(_R)"
 
 #: ../gummi/gui/prefs.glade.h:22
-#, fuzzy
 msgid "compile every"
-msgstr "自動編譯間格(_A)"
+msgstr "自動編譯間隔"
 
 #: ../gummi/gui/prefs.glade.h:23
 msgid "compile when idle for "
-msgstr ""
+msgstr "自動編譯: 當閒罝"
 
 #: ../gummi/gui/prefs.glade.h:24
 msgid "minutes"
@@ -562,7 +561,7 @@ msgid "xelatex"
 msgstr "xelatex"
 
 #: ../gummi/Motion.py:132
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "PDF-Preview could not initialize.\n"
 "\n"
@@ -574,7 +573,7 @@ msgid ""
 msgstr ""
 "無法啟動PDF預覽.\n"
 "\n"
-"您的LaTex文件中包含錯誤.\n"
+"您的LaTex文件中包含錯誤或是%s未被案裝.\n"
 "更多的訊息請參照錯誤輸出欄.\n"
 "請在更正錯誤後點選此區域\n"
 "來更新預覽."
@@ -617,55 +616,42 @@ msgstr "網路連線."
 msgid "Error"
 msgstr "錯誤"
 
-#~ msgid "Temporarily disable PDF preview"
-#~ msgstr "暫時停止即時預覽"
+#: ../gummi/GummiGUI.py:277
+msgid "Compiling bibliography file.."
+msgstr "正在編譯參考文獻.."
 
-#~ msgid "_Find..."
-#~ msgstr "搜尋...(_F)"
+#: ../gummi/GummiGUI.py:278
+msgid "bibliography compiled without errors"
+msgstr "參考文獻已成功編譯"
 
-#~ msgid "Enable/disable the live preview."
-#~ msgstr "啟用/禁用及時預覽"
+#: ../gummi/GummiGUI.py:280
+msgid "Error compiling bibliography file or none detected.."
+msgstr "編譯過程中發生錯誤或無法找到參考文獻.."
 
-#~ msgid ""
-#~ "Resets default settings\n"
-#~ "for the active tab. "
-#~ msgstr "重設當前分頁的設定"
+#: ../gummi/GummiGUI.py:281
+msgid "error compiling bibliography file"
+msgstr "編譯參考文獻過程發生錯誤"
 
-#~ msgid ""
-#~ "The spell checker uses myspell dictionaries to function. \n"
-#~ "Only available languages are listed. Install additional \n"
-#~ "myspell packages if your language of choice is missing. "
-#~ msgstr ""
-#~ "拼字檢查的工能是使用MySpell的字庫來達成的.\n"
-#~ "只有支援的語言被列出。如果您的語言不在列表,\n"
-#~ "請安裝案額外的MySpell套件."
+#: ../gummi/GummiGUI.py:287 ../gummi/GummiGUI.py:454
+msgid "Open File..."
+msgstr "開啟..."
 
-#~ msgid "Compiling bibliography file.."
-#~ msgstr "正在編譯參考文獻.."
+#: ../gummi/GummiGUI.py:468
+msgid "Save File..."
+msgstr "儲存檔案..."
 
-#~ msgid "bibliography compiled without errors"
-#~ msgstr "參考文獻已成功編譯"
+#: ../gummi/GummiGUI.py:493
+msgid "Do you want to save the changes you have made?"
+msgstr "是否儲存變更?"
 
-#~ msgid "Error compiling bibliography file or none detected.."
-#~ msgstr "編譯過程中發生錯誤或無法找到參考文獻.."
+#: ../gummi/GummiGUI.py:498
+msgid "Save?"
+msgstr "是否儲存?"
 
-#~ msgid "error compiling bibliography file"
-#~ msgstr "編譯參考文獻過程發生錯誤"
+#: ../gummi/GummiGUI.py:521
+msgid "Saving file "
+msgstr "正在儲存 "
 
-#~ msgid "Open File..."
-#~ msgstr "開啟..."
-
-#~ msgid "Save File..."
-#~ msgstr "儲存檔案..."
-
-#~ msgid "Do you want to save the changes you have made?"
-#~ msgstr "是否儲存變更?"
-
-#~ msgid "Save?"
-#~ msgstr "是否儲存?"
-
-#~ msgid "Saving file "
-#~ msgstr "正在儲存 "
-
-#~ msgid "Error loading recent file: "
-#~ msgstr "載入最近使用文件時發生錯誤: "
+#: ../gummi/GummiGUI.py:909
+msgid "Error loading recent file: "
+msgstr "載入最近使用文件時發生錯誤: "

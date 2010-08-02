@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-31 17:19+0800\n"
+"POT-Creation-Date: 2010-08-02 12:27+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -411,7 +411,7 @@ msgstr ""
 msgid "filter:"
 msgstr ""
 
-#: ../gummi/gui/gummi.glade.h:108
+#: ../gummi/gui/gummi.glade.h:108 ../gummi/GummiGUI.py:269
 msgid "no bibliography file detected"
 msgstr ""
 
@@ -499,7 +499,7 @@ msgstr ""
 msgid "Line numbers:"
 msgstr ""
 
-#: ../gummi/gui/prefs.glade.h:13
+#: ../gummi/gui/prefs.glade.h:13 ../gummi/GummiGUI.py:270
 msgid "None"
 msgstr ""
 
@@ -602,4 +602,45 @@ msgstr ""
 
 #: ../gummi/UpdateCheck.py:50
 msgid "Error"
+msgstr ""
+
+#: ../gummi/GummiGUI.py:277
+msgid "Compiling bibliography file.."
+msgstr ""
+
+#: ../gummi/GummiGUI.py:278
+msgid "bibliography compiled without errors"
+msgstr ""
+
+#: ../gummi/GummiGUI.py:280
+msgid "Error compiling bibliography file or none detected.."
+msgstr ""
+
+#: ../gummi/GummiGUI.py:281
+msgid "error compiling bibliography file"
+msgstr ""
+
+#: ../gummi/GummiGUI.py:287 ../gummi/GummiGUI.py:454
+msgid "Open File..."
+msgstr ""
+
+#: ../gummi/GummiGUI.py:468
+msgid "Save File..."
+msgstr ""
+
+#. we need to prompt for save
+#: ../gummi/GummiGUI.py:493
+msgid "Do you want to save the changes you have made?"
+msgstr ""
+
+#: ../gummi/GummiGUI.py:498
+msgid "Save?"
+msgstr ""
+
+#: ../gummi/GummiGUI.py:521
+msgid "Saving file "
+msgstr ""
+
+#: ../gummi/GummiGUI.py:909
+msgid "Error loading recent file: "
 msgstr ""
