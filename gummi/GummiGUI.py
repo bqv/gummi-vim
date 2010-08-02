@@ -678,10 +678,7 @@ class PrefsGUI:
 		self.editorpane.activate_spellchecking(1)
 	
 	def on_combo_compilescheme_changed(self, widget, data=None):
-		model = widget.get_model()
-		newvalue = model[widget.get_active()][0]
-		value = {'compile when idle for ': 'on_idle',
-				 'compile every': 'real_time'}[newvalue]
+		value = ['on_idle', 'real_time'][widget.get_active()]
 		if self.config.get_value('compile', 'compile_status'):
 			self.motion.stop_updatepreview()
 			self.config.set_value('compile', 'compile_scheme', value)
