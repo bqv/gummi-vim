@@ -182,7 +182,7 @@ msgstr ""
 
 #: ../gummi/gui/gummi.glade.h:50
 msgid "Export to PDF"
-msgstr ""
+msgstr "匯出為PDF"
 
 #: ../gummi/gui/gummi.glade.h:51
 msgid "File:"
@@ -282,11 +282,11 @@ msgstr "參考:"
 
 #: ../gummi/gui/gummi.glade.h:75
 msgid "Replace _All"
-msgstr ""
+msgstr "全部取代(_A)"
 
 #: ../gummi/gui/gummi.glade.h:76
 msgid "Replace with:"
-msgstr ""
+msgstr "取代為:"
 
 #: ../gummi/gui/gummi.glade.h:77
 msgid "Report"
@@ -350,7 +350,7 @@ msgstr "編譯參考文獻(_C)"
 
 #: ../gummi/gui/gummi.glade.h:92
 msgid "_Document Statistics"
-msgstr ""
+msgstr "文件資訊(_D)"
 
 #: ../gummi/gui/gummi.glade.h:93
 msgid "_Edit"
@@ -358,7 +358,7 @@ msgstr "編輯(_E)"
 
 #: ../gummi/gui/gummi.glade.h:94
 msgid "_Export to PDF"
-msgstr ""
+msgstr "匯出為PDF"
 
 #: ../gummi/gui/gummi.glade.h:95
 msgid "_File"
@@ -382,11 +382,11 @@ msgstr "開啟...(_O)"
 
 #: ../gummi/gui/gummi.glade.h:100
 msgid "_Replace"
-msgstr ""
+msgstr "取代"
 
 #: ../gummi/gui/gummi.glade.h:101
 msgid "_Right Pane"
-msgstr ""
+msgstr "右側欄"
 
 #: ../gummi/gui/gummi.glade.h:102
 msgid "_Search"
