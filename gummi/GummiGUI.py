@@ -391,8 +391,6 @@ class MainGUI:
 
 		# synchronize status of "tool_hide_rightpane" and "menu_rightpane"
 		if type(button) == gtk.CheckMenuItem:
-			tool_button = self.builder.get_object("tool_hide_rightpane")
-			tool_button.set_active(not button.get_active())
 			self.config.set_value("view", "rightpane", button.get_active())
 		else:
 			menu_button = self.builder.get_object("menu_rightpane")
