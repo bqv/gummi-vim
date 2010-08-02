@@ -13,7 +13,7 @@ msgstr ""
 "Last-Translator: Alexander van der Mey <alexvandermey@gmail.com>\n"
 "Language-Team: Dutch <LL@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../gummi/gui/gummi.glade.h:1
@@ -573,7 +573,7 @@ msgid ""
 "Additional information is available on the Error Output tab.\n"
 "Please correct the listed errors and click this area\n"
 "to reload the preview panel."
-msgstr "PDF preview kon niet genitialiseerd worden.\n"
+msgstr "PDF preview kon niet genitialiseerd worden."
 
 #: ../gummi/UpdateCheck.py:39
 msgid "Currently installed:\n"
@@ -584,7 +584,10 @@ msgid ""
 "\n"
 "\n"
 "Currently available:\n"
-msgstr "Momenteel verkrijgbaar:\n"
+msgstr ""
+"\n"
+"\n"
+"Momenteel verkrijgbaar:\n"
 
 #: ../gummi/UpdateCheck.py:42
 msgid "Update Check"
