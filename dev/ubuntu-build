@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Gummi build script for Ubuntu 9.04 Jaunty
 # Alexander van der Mey - 8 October 2009
 # Version: 0.1
@@ -27,12 +27,12 @@ cp ./dist/gummi-$rlschoice.tar.gz ../
 cd ..
 rm -rf gummi-read-only
 
-mv gummi-$rlschoice.tar.gz gummi-$rlschoice.orig.tar.gz
+mv gummi-$rlschoice.tar.gz gummi_$rlschoice.orig.tar.gz
 
 export DEBFULLNAME="Alexander van der Mey"
 export DEBEMAIL="alexvandermey@gmail.com"
 
-tar -xf gummi-$rlschoice.orig.tar.gz
+tar -xf gummi_$rlschoice.orig.tar.gz
 cd gummi-$rlschoice
 
 dh_make -s -b
@@ -87,4 +87,8 @@ sed -i s/S.E.D/$rlschoice/ control
 
 cd ..
 
-fakeroot debian/rules binary
+if [ "$1" == "deb" ]; then
+  dpkg-buildpackage -rfakeroot
+elif [ "$1" == "ppa" ]; then
+  debuild -S
+fi
