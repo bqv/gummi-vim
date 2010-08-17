@@ -28,7 +28,7 @@ using std::string;
 class AppConfig: public ConfigFile {
   public:
     AppConfig(string filePath): ConfigFile(filePath) {}
-    virtual void setDefault();
+    virtual void set_default();
     virtual void sync(bool status);
 
     // Editor section

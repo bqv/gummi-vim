@@ -25,7 +25,7 @@
 //
 // @Description: 
 //   To use this class, you need to inherit class ConfigFile. You need to
-// implement setDefault(), sync() two pure virtual functions.
+// implement set_default(), sync() two pure virtual functions.
 // Variables are declared within the class.
 // Example:
 //
@@ -35,7 +35,7 @@
 // class Inherited: public ConfigFile {
 //  public:
 //    Inherited(string filePath): ConfigFile(filePath) {}
-//    virtual void setDefault();
+//    virtual void set_default();
 //
 //  // ----- Place variables here ----- //
 //    int var1;
@@ -44,9 +44,9 @@
 //
 // };
 //
-// * setDefault() - In this functions, you write variables and default values.
+// * set_default() - In this functions, you write variables and default values.
 // Example:
-// void Inherited::setDefault() {
+// void Inherited::set_default() {
 //   var1 = value1;
 //   var2 = value2;
 //   var3 = value3;
@@ -85,7 +85,7 @@
 #include <cstdlib>
 using std::string;
 
-#define CONFIG_LINE_MAX 64
+#define CONFIG_LINE_MAX BUFSIZ
 
 // ----- sync macros ----- //
 // status == 1: STORE
@@ -119,7 +119,7 @@ class ConfigFile {
     ConfigFile(string filePath): m_filePath(filePath) {}
     void load();
     void save();
-    virtual void setDefault() = 0;
+    virtual void set_default() = 0;
 
   protected:
     std::vector<string> key_buf;

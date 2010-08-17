@@ -21,7 +21,7 @@
 
 #include "AppConfig.h"
 
-void AppConfig::setDefault() {
+void AppConfig::set_default() {
   // Editor section
   line_numbers = true;
   highlighting = true;
@@ -49,8 +49,8 @@ void AppConfig::setDefault() {
   recent1 = NULL;
   recent2 = NULL;
   recent3 = NULL;
-  welcome = "\\documentclass{article}\n\\begin{document}\n\n\\begin{center}\n"
-"\\Huge{Welcome to Gummi} \\\\\\\n\\\\\n\\LARGE{You are using the ''' + VERSION + ''' version.\\\\\nI welcome your suggestions at\\\\\nhttp://gummi.midnightcoding.org}\\\\\n\\end{center}\n\n\\end{document}\n";
+  welcome = "\\documentclass{article}\n\\begin{document}\n\\begin{center}\n"
+"\\Huge{Welcome to Gummi} \\\\\\\n\\\\\n\\LARGE{You are using the ''' + VERSION + ''' version.\\\\\nI welcome your suggestions at\\\\\nhttp://gummi.midnightcoding.org}\\\\\n\\end{center}\n\\end{document}";
   sync(1);
 }
 

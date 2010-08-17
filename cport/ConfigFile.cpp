@@ -33,20 +33,26 @@ using std::cout;
 using std::endl;
 
 void ConfigFile::load() {
+  int last = 0, pos = 0;
   char configLine[CONFIG_LINE_MAX];
   char *pstr;
   std::ifstream in(m_filePath.c_str());
 
   while (!in.eof()) {
     in.getline(configLine, CONFIG_LINE_MAX);
+    if (0 == strncmp(configLine, "\t", 1)) {
+      configLine[0] = '\n';
+      value_buf[last] += configLine;
+      continue;
+    }
     pstr = strtok(configLine, "[=]");
     if (pstr == NULL) continue;
-    key_buf.push_back(pstr);
+    last = find_index(pstr);
     pstr = strtok(NULL, "=");
     if (pstr == NULL)
-      value_buf.push_back("NULL");
+      value_buf[last] = ("__NULL__");
     else
-      value_buf.push_back(pstr);
+      value_buf[last] = pstr;
   }
   sync(0); // load variables from vector to memory
   in.close();
@@ -54,10 +60,14 @@ void ConfigFile::load() {
 
 void ConfigFile::save() {
   std::ofstream out(m_filePath.c_str(), ios::out | ios::trunc);
+  int pos = 0;
 
   sync(1); // store variables from memory to vector
-  for (int i = 0; i < key_buf.size(); i++) {
-    if (value_buf[i] == "NULL")
+  for (int i = 0; i < key_buf.size(); ++i) {
+    while (string::npos != (pos = value_buf[i].find("\n", pos + 1)))
+      value_buf[i].replace(pos, 1, "\n\t");
+
+    if (value_buf[i] == "__NULL__")
       out << ((i != 0)? "\n": "") << "[" << key_buf[i] << "]" << endl;
     else
       out << key_buf[i] << "=" << value_buf[i] << endl;
@@ -71,7 +81,7 @@ int ConfigFile::find_index(const char* key) {
     if (key_buf[i] == key)
       return i;
   key_buf.push_back(key);
-  value_buf.push_back("NULL");
+  value_buf.push_back("__NULL__");
   return i;
 }
 
