@@ -45,14 +45,14 @@ void ConfigFile::load() {
       value_buf[last] += configLine;
       continue;
     }
-    pstr = strtok(configLine, "[=]");
+    pstr = strtok(configLine, "[=] ");
     if (pstr == NULL) continue;
     last = find_index(pstr);
     pstr = strtok(NULL, "=");
     if (pstr == NULL)
-      value_buf[last] = ("__NULL__");
+      value_buf[last] = ("__GROUP__");
     else
-      value_buf[last] = pstr;
+      value_buf[last] = pstr + 1;
   }
   sync(0); // load variables from vector to memory
   in.close();
@@ -67,10 +67,10 @@ void ConfigFile::save() {
     while (string::npos != (pos = value_buf[i].find("\n", pos + 1)))
       value_buf[i].replace(pos, 1, "\n\t");
 
-    if (value_buf[i] == "__NULL__")
+    if (value_buf[i] == "__GROUP__")
       out << ((i != 0)? "\n": "") << "[" << key_buf[i] << "]" << endl;
     else
-      out << key_buf[i] << "=" << value_buf[i] << endl;
+      out << key_buf[i] << " = " << value_buf[i] << endl;
   }
   out.close();
 }

@@ -90,7 +90,7 @@ using std::string;
 // ----- sync macros ----- //
 // status == 1: STORE
 // status == 0: LOAD
-#define GROUP( name ) find_index(#name)
+#define GROUP( name ) GET_CONFIG(name) = "__GROUP__"
 #define SYNC_INT( name ) if (status) _STORE_INT(name);\
                           else _LOAD_INT(name);
 #define SYNC_LONG( name ) if (status) _STORE_LONG(name);\
@@ -106,13 +106,13 @@ using std::string;
 #define _STORE_INT( name )  GET_CONFIG(name) = litoa(name)
 #define _STORE_LONG( name )  GET_CONFIG(name) = litoa(name)
 #define _STORE_STR( name )  GET_CONFIG(name) = (name == NULL)? "__NULL__": name
-#define _STORE_BOOL( name )  GET_CONFIG(name) = (name == true)? "true": "false"
+#define _STORE_BOOL( name )  GET_CONFIG(name) = (name == true)? "True": "False"
 // LOAD
 #define _LOAD_INT( name )  name = atoi(GET_CONFIG(name).c_str())
 #define _LOAD_LONG( name )  name = atol(GET_CONFIG(name).c_str())
 #define _LOAD_STR( name )  name = (GET_CONFIG(name) == "__NULL__")?\
                                      0: GET_CONFIG(name).c_str()
-#define _LOAD_BOOL( name )  name = (GET_CONFIG(name) == "true"? 1: 0)
+#define _LOAD_BOOL( name )  name = (GET_CONFIG(name) == "True"? 1: 0)
 
 class ConfigFile {
   public:

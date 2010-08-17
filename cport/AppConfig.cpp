@@ -19,6 +19,10 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+#endif
+
 #include "AppConfig.h"
 
 void AppConfig::set_default() {
@@ -50,7 +54,7 @@ void AppConfig::set_default() {
   recent2 = NULL;
   recent3 = NULL;
   welcome = "\\documentclass{article}\n\\begin{document}\n\\begin{center}\n"
-"\\Huge{Welcome to Gummi} \\\\\\\n\\\\\n\\LARGE{You are using the ''' + VERSION + ''' version.\\\\\nI welcome your suggestions at\\\\\nhttp://gummi.midnightcoding.org}\\\\\n\\end{center}\n\\end{document}";
+"\\Huge{Welcome to Gummi} \\\\\\\n\\\\\n\\LARGE{You are using the " + PACKAGE_VERSION + " version.\\\\\nI welcome your suggestions at\\\\\nhttp://gummi.midnightcoding.org}\\\\\n\\end{center}\n\\end{document}";
   sync(1);
 }
 
